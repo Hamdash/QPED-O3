@@ -1,5 +1,6 @@
 package eu.qped.java.checkers.syntax;
 
+import java.io.IOException;
 import java.util.*;
 
 import eu.qped.framework.CheckLevel;
@@ -47,7 +48,7 @@ public class SyntaxErrorChecker {
         return new SyntaxErrorChecker(answer);
     }
 
-    public void check(){
+    public void check() throws IOException {
         compiler = Compiler.builder().answer(answer).build();
         List<Diagnostic<? extends JavaFileObject>> diagnostics = compiler.compile();
         analyseDiagnostics(diagnostics);
@@ -122,7 +123,7 @@ public class SyntaxErrorChecker {
         return syntaxErrors;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         SyntaxErrorChecker checker = new SyntaxErrorChecker("public void print() {\n" +
                 "    System.out.println(\"hallo\")\n" +
                 "}");
