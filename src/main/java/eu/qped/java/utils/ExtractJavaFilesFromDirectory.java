@@ -15,20 +15,20 @@ import java.util.Objects;
 @Builder
 public class ExtractJavaFilesFromDirectory {
 
-    private static final String DEFAULT_DIR = "testD";
+    private static final String DEFAULT_DIR = "exam-results";
+
+    private String dirPath;
 
     public List<File> filesWithJavaExtension() {
         List<File> allFiles = new ArrayList<>();
         List<File> filesWithJavaExtension = new ArrayList<>();
-        File fileOrDirectory = new File(DEFAULT_DIR);
-
+        File fileOrDirectory = new File(Objects.requireNonNullElse(dirPath, DEFAULT_DIR));
         if (fileOrDirectory.exists()) {
             if (fileOrDirectory.isDirectory()) {
                 allFiles.add(fileOrDirectory);
                 allFiles.addAll(getFilesRecursively(fileOrDirectory));
-            }
-            else {
-                allFiles.add(new File(DEFAULT_DIR));
+            } else {
+                allFiles.add(new File(fileOrDirectory.getPath()));
             }
         }
         for (File file : allFiles) {

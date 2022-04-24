@@ -34,6 +34,7 @@ public class Compiler {
 
     private List<Diagnostic<? extends JavaFileObject>> collectedDiagnostics;
     private String fullSourceCode;
+    private String targetProjectPath;
 
     public boolean compile(String answer){
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
@@ -45,7 +46,7 @@ public class Compiler {
             createJavaClass(writeCodeAsClass(answer));
             files.add(new File(DEFAULT_CLASS_PATH));
         } else {
-            ExtractJavaFilesFromDirectory extractJavaFilesFromDirectory = ExtractJavaFilesFromDirectory.builder().build();
+            ExtractJavaFilesFromDirectory extractJavaFilesFromDirectory = ExtractJavaFilesFromDirectory.builder().dirPath(targetProjectPath).build();
             files = extractJavaFilesFromDirectory.filesWithJavaExtension();
             if (files.size() == 0){
                 return false;
