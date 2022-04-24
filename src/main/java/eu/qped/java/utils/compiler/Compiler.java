@@ -1,7 +1,7 @@
 package eu.qped.java.utils.compiler;
 
 
-import eu.qped.java.checkers.ExtractJavaFilesFromDirectory;
+import eu.qped.java.checkers.mass.ExtractJavaFilesFromDirectory;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,7 +12,9 @@ import javax.tools.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.StringWriter;
 import java.net.URISyntaxException;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -31,51 +33,51 @@ public class Compiler {
     private boolean isCompilable;
     private String fullSourceCode;
 
-//    /**
-//     * die Methode konvertiert ein String-Source zu einem {@link JavaFileObject}
-//     *
-//     * @return SimpleJavaFileObject
-//     */
-//    public SimpleJavaFileObject getJavaFileObjectFromString() {
-//        String javaFileContent = writeCodeAsClass("");
-//        JavaObjectFromString javaObjectFromString = null;
-//        try {
-//            javaObjectFromString = new JavaObjectFromString("TestClass", javaFileContent);
-//        } catch (URISyntaxException e) {
-//            e.printStackTrace();
-//        }
-//        return javaObjectFromString;
-//    }
+    /**
+     * die Methode konvertiert ein String-Source zu einem {@link JavaFileObject}
+     *
+     * @return SimpleJavaFileObject
+     */
+    public SimpleJavaFileObject getJavaFileObjectFromString() {
+        String javaFileContent = writeCodeAsClass("");
+        JavaObjectFromString javaObjectFromString = null;
+        try {
+            javaObjectFromString = new JavaObjectFromString("TestClass", javaFileContent);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return javaObjectFromString;
+    }
 
-//    public List<Diagnostic<? extends JavaFileObject>> compile() {
-//
-//        JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-//        DiagnosticCollector<JavaFileObject> diagnosticCollector = new DiagnosticCollector<>();
-//        StandardJavaFileManager standardJavaFileManager = compiler.getStandardFileManager(diagnosticCollector, Locale.GERMANY, Charset.defaultCharset());
-//        JavaFileObject javaFileObjectFromString = getJavaFileObjectFromString();
-//        Iterable<JavaFileObject> fileObjects = Collections.singletonList(javaFileObjectFromString);
-//
-//        StringWriter output = new StringWriter();
-//
-//        JavaCompiler.CompilationTask task = compiler.getTask(output, standardJavaFileManager, diagnosticCollector, null, null, fileObjects);
-//
-//        Boolean result = task.call();
-//
-//        List<Diagnostic<? extends JavaFileObject>> diagnostics = diagnosticCollector.getDiagnostics();
-//        if (result) {
-//            setCompilable(true);
-//            try {
-//                writeJavaFileContent(fullSourceCode);
-//            } catch (Exception e) {
-//                LogManager.getLogger(getClass()).throwing(e);
-//            }
-//
-//
-//        } else {
-//            setCompilable(false);
-//        }
-//        return diagnostics;
-//    }
+    public List<Diagnostic<? extends JavaFileObject>> compile() {
+
+        JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+        DiagnosticCollector<JavaFileObject> diagnosticCollector = new DiagnosticCollector<>();
+        StandardJavaFileManager standardJavaFileManager = compiler.getStandardFileManager(diagnosticCollector, Locale.GERMANY, Charset.defaultCharset());
+        JavaFileObject javaFileObjectFromString = getJavaFileObjectFromString();
+        Iterable<JavaFileObject> fileObjects = Collections.singletonList(javaFileObjectFromString);
+
+        StringWriter output = new StringWriter();
+
+        JavaCompiler.CompilationTask task = compiler.getTask(output, standardJavaFileManager, diagnosticCollector, null, null, fileObjects);
+
+        Boolean result = task.call();
+
+        List<Diagnostic<? extends JavaFileObject>> diagnostics = diagnosticCollector.getDiagnostics();
+        if (result) {
+            setCompilable(true);
+            try {
+                writeJavaFileContent(fullSourceCode);
+            } catch (Exception e) {
+                LogManager.getLogger(getClass()).throwing(e);
+            }
+
+
+        } else {
+            setCompilable(false);
+        }
+        return diagnostics;
+    }
 
     private String writeCodeAsClass(String answer) {
         StringBuilder javaFileContent = new StringBuilder();
@@ -108,8 +110,8 @@ public class Compiler {
             LogManager.getLogger(getClass()).throwing(e);
         }
     }
-
-    public List<Diagnostic<? extends JavaFileObject>> compile() throws IOException {
+//"TestProject"
+    public List<Diagnostic<? extends JavaFileObject>> compileFiles(String filePath) throws IOException {
         List<File> files = new ArrayList<>();
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
@@ -121,7 +123,7 @@ public class Compiler {
             files.add(new File("TestClass.java"));
         } else {
             // directory Name
-            ExtractJavaFilesFromDirectory extractJavaFilesFromDirectory = ExtractJavaFilesFromDirectory.builder().filePath("TestProject").build();
+            ExtractJavaFilesFromDirectory extractJavaFilesFromDirectory = ExtractJavaFilesFromDirectory.builder().filePath(filePath).build();
             files = extractJavaFilesFromDirectory.filesWithJavaExtension();
 
         }
@@ -143,23 +145,4 @@ public class Compiler {
             LogManager.getLogger(getClass()).throwing(e);
         }
     }
-
-    public static void main(String[] args) throws IOException {
-//        "TestProject"
-        String s = "public int meroooo(){\n" +
-                "        return 10\n" +
-                "    }";
-        String s1 = "";
-        Compiler compiler = Compiler.builder().answer(s1).build();
-        List<Diagnostic<? extends JavaFileObject>> re = compiler.compile();
-        for (Diagnostic diagnostic : re) {
-            System.out.println("/////////////////////");
-            System.out.println(diagnostic.getLineNumber());
-            System.out.println(diagnostic.getMessage(Locale.GERMAN));
-            System.out.println(diagnostic.getCode());
-            System.out.println(diagnostic.getSource());
-            System.out.println("/////////////////////");
-        }
-    }
-
 }
