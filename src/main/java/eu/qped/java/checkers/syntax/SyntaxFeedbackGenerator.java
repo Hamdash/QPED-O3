@@ -307,7 +307,7 @@ public class SyntaxFeedbackGenerator {
                         result.append("You used the braces incorrectly when declaring a method.");
                     } else {
                         result
-                                .append("Every java statement must end with a Semicolon <html><p color=\"red\"> ; </p></html> . ")
+                                .append("Every java statement must end with a Semicolon. ")
                                 .append(NEW_LINE);
                                 setExample(" for example :int oddNumber = 7;");
                     }
