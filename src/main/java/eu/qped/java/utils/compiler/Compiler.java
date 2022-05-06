@@ -37,7 +37,7 @@ public class Compiler {
     private String fullSourceCode;
     private String targetProjectPath;
 
-    public boolean compile(String answer){
+    public boolean compile(String answer) {
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         DiagnosticCollector<JavaFileObject> diagnosticsCollector = new DiagnosticCollector<>();
         StandardJavaFileManager fileManager = compiler.getStandardFileManager(diagnosticsCollector, Locale.GERMANY, Charset.defaultCharset());
@@ -49,13 +49,12 @@ public class Compiler {
         } else {
             ExtractJavaFilesFromDirectory.ExtractJavaFilesFromDirectoryBuilder extractJavaFilesFromDirectoryBuilder = ExtractJavaFilesFromDirectory.builder();
             ExtractJavaFilesFromDirectory extractJavaFilesFromDirectory;
-            if (targetProjectPath == null || targetProjectPath.equals("")){
+            if (targetProjectPath == null || targetProjectPath.equals("")) {
                 extractJavaFilesFromDirectoryBuilder.dirPath(DEFAULT_DIR_PATH);
-            }
-            else extractJavaFilesFromDirectoryBuilder.dirPath(targetProjectPath);
+            } else extractJavaFilesFromDirectoryBuilder.dirPath(targetProjectPath);
             extractJavaFilesFromDirectory = extractJavaFilesFromDirectoryBuilder.build();
             files = extractJavaFilesFromDirectory.filesWithJavaExtension();
-            if (files.size() == 0){
+            if (files.size() == 0) {
                 return false;
             }
         }
@@ -97,11 +96,16 @@ public class Compiler {
         if (isClassOrInterface) {
             javaFileContent.append(answer);
         } else {
-            javaFileContent.append("/**" +
-                    "* Test class" +
-                    "*/" +
-                    "import java.util.*;" +
-                    "class TestClass {").append(answer).append("}");
+            javaFileContent.append(""
+                            + "/**" + "\n"
+                            + "* Test class" + "\n"
+                            + "*/" + "\n"
+                            + "import java.util.*;" + "\n"
+                            + "class TestClass {" + "\n"
+                    ).append(answer.indent(8))
+//                    ).append(answer)
+                    .append(" \n}")
+            ;
         }
         fullSourceCode = javaFileContent.toString();
         return javaFileContent.toString();

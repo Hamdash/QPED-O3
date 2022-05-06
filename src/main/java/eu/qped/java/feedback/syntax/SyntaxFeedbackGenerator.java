@@ -100,12 +100,12 @@ public class SyntaxFeedbackGenerator implements FeedbackGenerator<SyntaxError> {
 
     public static void main(String[] args) {
         String code = ""
-                + " public static void main (String[] args){  "
-                    + "     int i = 0    "
-                + " }"
-                + " public static void test () {"
-                    + " int g = 0;"
-                + " }"
+                + "public static void main (String[] args){  "
+                    + "int i = 0    "
+                + "}"
+                + "public static void test () { "
+                    + "int g = 0;"
+                + "}"
                 ;
 
         SyntaxChecker syntaxChecker = SyntaxChecker.builder().answer(code).level(CheckLevel.ADVANCED).build();
