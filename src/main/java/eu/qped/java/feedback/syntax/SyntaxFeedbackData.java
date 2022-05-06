@@ -33,7 +33,7 @@ public class SyntaxFeedbackData {
 //                                .build(),
                         eu.qped.java.feedback.syntax.SyntaxFeedback.builder()
                                 .feedbackContent("Every java statement must end with a Semicolon.")
-                                .solutionExample("for example: int oddNumber = 7;")
+                                .solutionExample("int oddNumber = 7;")
                                 .errorMessage("';' expected")
                                 .errorInfo(
                                         ErrorInfo.builder()

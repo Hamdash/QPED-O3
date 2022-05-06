@@ -68,14 +68,14 @@ public class SyntaxFeedbackGenerator implements FeedbackGenerator<SyntaxError> {
                 try {
                     CharSequence source = syntaxError.getSource().getCharContent(false);
                     relatedSyntaxFeedback.setBody(""
-                            + "Compiler error:\n"
-                            + "About this Error: " + this.getFeedback(syntaxError).get(0) + "\n"
+                            + "Compiler error\n\n"
+                            + "About this Error: " + this.getFeedback(syntaxError).get(0).getFeedbackContent() + "\n\n"
                             + "Cause of error: "
                                 + source.subSequence(0 , (int) syntaxError.getStartPos())
                                 + "^"
                                 + source.subSequence((int) syntaxError.getStartPos(),source.length()) + ""
-                            + "\n"
-                            + "Example to fix this error:"
+                            + "\n\n"
+                            + "Example to fix this error: "
                                 + relatedSyntaxFeedback.getSolutionExample()
                             + ""
                     );
@@ -146,15 +146,15 @@ public class SyntaxFeedbackGenerator implements FeedbackGenerator<SyntaxError> {
                 CharSequence charSequence = syntaxError.getSource().getCharContent(false);
                 CharSequence contentInError = charSequence.subSequence((int) syntaxError.getStartPos(), (int) syntaxError.getEndPos());
                 CharSequence contentInError1 = charSequence.subSequence((int) syntaxError.getStartPos(), charSequence.length());
-                System.out.println(">>>>" + charSequence);
-                System.out.println(">>>>" + charSequence.subSequence((int)syntaxError.getStartPos(), charSequence.length()));
-                System.out.println(">>>>" + syntaxChecker.getSourceCode());
-                System.out.println(">>>>" + syntaxChecker.getSourceCode().substring((int)syntaxError.getStartPos()));
+//                System.out.println(">>>>" + charSequence);
+//                System.out.println(">>>>" + charSequence.subSequence((int)syntaxError.getStartPos(), charSequence.length()));
+//                System.out.println(">>>>" + syntaxChecker.getSourceCode());
+//                System.out.println(">>>>" + syntaxChecker.getSourceCode().substring((int)syntaxError.getStartPos()));
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
         List<Feedback> newSyntaxFeedbacks = syntaxFeedbackGenerator.generateFeedbacks(syntaxChecker.getSyntaxErrors());
-        System.out.println(syntaxFeedbackGenerator.generateFeedbacks(syntaxChecker.getSyntaxErrors()));
+        System.out.println(newSyntaxFeedbacks.get(0).getBody());
     }
 }
