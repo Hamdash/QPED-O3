@@ -68,14 +68,14 @@ public class SyntaxFeedbackGenerator implements FeedbackGenerator<SyntaxError> {
                 try {
                     CharSequence source = syntaxError.getSource().getCharContent(false);
                     relatedSyntaxFeedback.setBody(""
-                            + "Compiler error\n\n"
-                            + "About this Error: " + this.getFeedback(syntaxError).get(0).getFeedbackContent() + "\n\n"
-                            + "Cause of error: "
+                            + "* Compiler error\n\n"
+                            + "* About this Error: " + this.getFeedback(syntaxError).get(0).getFeedbackContent() + "\n\n"
+                            + "* Cause of error:\n\n"
                                 + source.subSequence(0 , (int) syntaxError.getStartPos())
                                 + "^"
                                 + source.subSequence((int) syntaxError.getStartPos(),source.length()) + ""
                             + "\n\n"
-                            + "Example to fix this error: "
+                            + "* Example to fix this error: "
                                 + relatedSyntaxFeedback.getSolutionExample()
                             + ""
                     );
