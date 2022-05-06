@@ -102,8 +102,7 @@ public class Compiler {
                             + "*/" + "\n"
                             + "import java.util.*;" + "\n"
                             + "class TestClass {" + "\n"
-                    ).append(answer.indent(8))
-//                    ).append(answer)
+                    ).append(answer)
                     .append(" \n}")
             ;
         }
