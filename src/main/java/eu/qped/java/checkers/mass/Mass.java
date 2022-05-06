@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import eu.qped.framework.Checker;
+import eu.qped.framework.Feedback;
 import eu.qped.framework.QfProperty;
 import eu.qped.framework.qf.QfObject;
 import eu.qped.java.checkers.semantics.SemanticChecker;
@@ -138,11 +139,19 @@ public class Mass implements Checker {
             i = i + 2 ;
         }
 
-        for (SyntaxFeedback syntax: syntaxFeedbacks){
-            result[i+1] = syntax.getFeedbackContent() + NEW_LINE
-            + syntax.getBody() + NEW_LINE +
-                    syntax.getSolutionExample() + NEW_LINE
-                    +"--------------------------------------------------";
+//        for (SyntaxFeedback syntax: syntaxFeedbacks){
+//            result[i+1] = syntax.getFeedbackContent() + NEW_LINE
+//            + syntax.getBody() + NEW_LINE +
+//                    syntax.getSolutionExample() + NEW_LINE
+//                    +"--------------------------------------------------";
+//            i = i+2;
+//        }
+        for (Feedback syntax: massExecutor.getNewSyntaxFeedbacks()){
+            result[i+1] = ""
+                    + syntax.getBody()
+                    + NEW_LINE
+                    +"--------------------------------------------------"
+            ;
             i = i+2;
         }
 

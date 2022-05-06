@@ -15,6 +15,7 @@ import eu.qped.java.checkers.style.StyleViolation;
 import eu.qped.java.checkers.syntax.SyntaxError;
 import eu.qped.java.checkers.syntax.SyntaxChecker;
 import eu.qped.java.checkers.syntax.SyntaxFeedback;
+import eu.qped.java.feedback.syntax.SyntaxFeedbackGenerator;
 
 /**
  * Executor class, execute all components of the System to analyze the code
@@ -32,6 +33,7 @@ public class MassExecutor {
     private List<StyleFeedback> styleFeedbacks;
     private List<SemanticFeedback> semanticFeedbacks;
     private List<SyntaxFeedback> syntaxFeedbacks;
+    private List<Feedback> newSyntaxFeedbacks;
 
     private List<StyleViolation> violations;
     private List<SyntaxError> syntaxErrors;
@@ -91,6 +93,9 @@ public class MassExecutor {
             syntaxChecker.setLevel(mainSettingsConfigurator.getSyntaxLevel());
             syntaxFeedbacks = syntaxChecker.getFeedbacks();
 
+            SyntaxFeedbackGenerator syntaxFeedbackGenerator = SyntaxFeedbackGenerator.builder().build();
+            newSyntaxFeedbacks = syntaxFeedbackGenerator.generateFeedbacks(syntaxChecker.getSyntaxErrors());
+
             //auto checker
             syntaxErrors = syntaxChecker.getSyntaxErrors();
         }
@@ -128,6 +133,10 @@ public class MassExecutor {
                 translator.translateStyleBody(prefLanguage, feedback);
             }
         }
+    }
+
+    public List<Feedback> getNewSyntaxFeedbacks() {
+        return newSyntaxFeedbacks;
     }
 
     public List<StyleFeedback> getStyleFeedbacks() {

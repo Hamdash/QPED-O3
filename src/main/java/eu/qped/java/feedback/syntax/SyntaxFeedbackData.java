@@ -20,17 +20,17 @@ public class SyntaxFeedbackData {
         feedbackBySyntaxErrorCode.put(
                 "compiler.err.expected",
                 List.of(
-                        eu.qped.java.feedback.syntax.SyntaxFeedback.builder()
-                                .feedbackContent("You used the braces incorrectly when declaring a method.")
-                                .solutionExample("")
-                                .errorMessage("';' expected")
-                                .errorInfo(
-                                        // TODO create code
-                                        ErrorInfo.builder()
-                                                .errorKey("braces_expected")
-                                                .build()
-                                )
-                                .build(),
+//                        eu.qped.java.feedback.syntax.SyntaxFeedback.builder()
+//                                .feedbackContent("You used the braces incorrectly when declaring a method.")
+//                                .solutionExample("")
+//                                .errorMessage("';' expected")
+//                                .errorInfo(
+//                                        // TODO create code
+//                                        ErrorInfo.builder()
+//                                                .errorKey("braces_expected")
+//                                                .build()
+//                                )
+//                                .build(),
                         eu.qped.java.feedback.syntax.SyntaxFeedback.builder()
                                 .feedbackContent("Every java statement must end with a Semicolon.")
                                 .solutionExample("for example: int oddNumber = 7;")

@@ -65,6 +65,7 @@ public class SyntaxChecker {
                 addProp.put("forSemExpected", forExpected);
             }
             String errorTrigger = splitSource[0];
+
             syntaxErrors.add(
                     SyntaxError.builder()
                             .errorCode(diagnostic.getCode())
@@ -74,8 +75,12 @@ public class SyntaxChecker {
                             .line(diagnostic.getLineNumber())
                             .additionalProperties(addProp)
                             .errorTrigger(errorTrigger)
+                            .kind(diagnostic.getKind())
+                            .columnNumber(diagnostic.getColumnNumber())
+                            .source(diagnostic.getSource())
                             .build()
             );
+
         }
     }
 }
