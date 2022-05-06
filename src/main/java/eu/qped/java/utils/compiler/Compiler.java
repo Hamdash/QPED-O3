@@ -97,13 +97,13 @@ public class Compiler {
             javaFileContent.append(answer);
         } else {
             javaFileContent.append(""
-                            + "/**" + "\n"
-                            + "* Test class" + "\n"
-                            + "*/" + "\n"
-                            + "import java.util.*;" + "\n"
-                            + "class TestClass {" + "\n"
+                            + "/**" + "\n\n"
+                            + "* Test class" + "\n\n"
+                            + "*/" + "\n\n"
+                            + "import java.util.*;" + "\n\n"
+                            + "class TestClass {" + "\n\n"
                     ).append(answer)
-                    .append(" \n}")
+                    .append(" \n\n}")
             ;
         }
         fullSourceCode = javaFileContent.toString();
