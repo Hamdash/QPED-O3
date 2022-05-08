@@ -10,6 +10,7 @@ import eu.qped.java.checkers.semantics.SemanticFeedback;
 import eu.qped.java.checkers.style.StyleChecker;
 import eu.qped.java.checkers.style.StyleFeedback;
 import eu.qped.java.checkers.style.StyleViolation;
+import eu.qped.java.checkers.syntax.SyntaxCheckReport;
 import eu.qped.java.checkers.syntax.SyntaxError;
 import eu.qped.java.checkers.syntax.SyntaxChecker;
 import eu.qped.java.feedback.syntaxLagacy.SyntaxFeedback;
@@ -69,10 +70,9 @@ public class MassExecutor {
         boolean semanticNeeded = Boolean.parseBoolean(mainSettingsConfigurator.getSemanticNeeded());
 
 
-        syntaxChecker.check();
+        SyntaxCheckReport syntaxCheckReport = syntaxChecker.check();
 
-        if (syntaxChecker.isErrorOccurred()) {
-
+        if (syntaxCheckReport.isCompilable()) {
             if (styleNeeded) {
                 styleChecker.check();
                 styleFeedbacks = styleChecker.getStyleFeedbacks();
@@ -81,7 +81,7 @@ public class MassExecutor {
                 violations = styleChecker.getStyleViolationsList();
             }
             if (semanticNeeded) {
-                final String source = syntaxChecker.getSourceCode();
+                final String source = "syntaxChecker.getSourceCode()"; //FIXME
                 semanticChecker.setSource(source);
                 semanticChecker.check();
                 semanticFeedbacks = semanticChecker.getFeedbacks();
@@ -89,7 +89,7 @@ public class MassExecutor {
         } else {
             syntaxChecker.setLevel(mainSettingsConfigurator.getSyntaxLevel());
             SyntaxFeedbackGenerator feedbackGenerator = SyntaxFeedbackGenerator.builder().build();
-            syntaxErrors = syntaxChecker.getSyntaxErrors();
+            syntaxErrors = syntaxCheckReport.getSyntaxErrors();
             syntaxFeedbacks = feedbackGenerator.generateFeedbacks(syntaxErrors);
 
             //auto checker

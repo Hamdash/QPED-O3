@@ -11,7 +11,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -54,30 +53,26 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
             // build Feedback body
             List<SyntaxFeedbackNew> relatedSyntaxFeedbacks = this.getFeedback(syntaxError);
             relatedSyntaxFeedbacks = relatedSyntaxFeedbacks.stream().filter(relatedSyntaxFeedback -> {
-               return relatedSyntaxFeedback.getErrorMessage().equals(syntaxError.getErrorMsg());
+               return relatedSyntaxFeedback.getErrorMessage().equals(syntaxError.getErrorMessage());
             }).collect(Collectors.toList());
             relatedSyntaxFeedbacks.forEach(relatedSyntaxFeedback -> {
-                try {
-                    CharSequence source = syntaxError.getSource().getCharContent(false);
-                    relatedSyntaxFeedback.setBody(""
-                            + "* Compiler error\n\n"
-                            + "* About this Error: " + this.getFeedback(syntaxError).get(0).getFeedbackContent() + "\n\n"
-                            + "* Cause of error:\n\n"
-                                + "------------------------------------------------------------"
-                                + "\n\n"
-                                + source.subSequence(0 , (int) syntaxError.getStartPos())
-                                + "^"
-                                + source.subSequence((int) syntaxError.getStartPos(),source.length()) + ""
-                                + "\n\n"
-                                + "-------------------------------------------"
-                                + "\n\n"
-                            + "* Example to fix this error: "
-                            + relatedSyntaxFeedback.getSolutionExample()
-                            + ""
-                    );
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                //                    CharSequence source = syntaxError.getSource().getCharContent(false);
+                relatedSyntaxFeedback.setBody(""
+                        + "* Compiler error\n\n"
+                        + "* About this Error: " + this.getFeedback(syntaxError).get(0).getFeedbackContent() + "\n\n"
+                        + "* Cause of error:\n\n"
+//                                + "------------------------------------------------------------"
+//                                + "\n\n"
+//                                + source.subSequence(0 , (int) syntaxError.getStartPos())
+//                                + "^"
+//                                + source.subSequence((int) syntaxError.getStartPos(),source.length()) + ""
+//                                + "\n\n"
+//                                + "-------------------------------------------"
+//                                + "\n\n"
+                        + "* Example to fix this error: "
+                        + relatedSyntaxFeedback.getSolutionExample()
+                        + ""
+                );
             });
             result.addAll(relatedSyntaxFeedbacks);
         });
@@ -89,7 +84,7 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
         SyntaxFeedbackDataNew syntaxFeedbackDataNew = SyntaxFeedbackDataNew.builder().build();
         result = SyntaxFeedbackDataNew.getSyntaxFeedbackByErrorCode().get(syntaxError.getErrorCode());
         result.stream().filter(syntaxFeedback -> {
-            return syntaxFeedback.getErrorMessage().equals(syntaxError.getErrorMsg());
+            return syntaxFeedback.getErrorMessage().equals(syntaxError.getErrorMessage());
         });
         return result;
     }
@@ -104,7 +99,7 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
                 + "}"
                 ;
 
-        SyntaxChecker syntaxChecker = SyntaxChecker.builder().answer(code).level(CheckLevel.ADVANCED).build();
+        SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(code).level(CheckLevel.ADVANCED).build();
 //
 
 

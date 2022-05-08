@@ -90,7 +90,7 @@ public class Mass implements Checker {
 
 
         SemanticChecker semanticChecker = SemanticChecker.createSemanticMassChecker(semanticConfigurator);
-        SyntaxChecker syntaxChecker = SyntaxChecker.builder().answer(qfObject.getAnswer()).build();
+        SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(qfObject.getAnswer()).build();
 
         MassExecutor massExecutor = new MassExecutor(styleChecker, semanticChecker, syntaxChecker, mainSettingsConfiguratorConf);
 

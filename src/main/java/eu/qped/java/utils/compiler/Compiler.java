@@ -30,7 +30,7 @@ import java.util.Locale;
 @Builder
 public class Compiler {
 
-    private static final String DEFAULT_CLASS_PATH = "TestClass.java";
+    private static final String DEFAULT_CLASS_PATH = "GrayCode.java";
     private static final String DEFAULT_DIR_PATH = "exam-results";
 
     private List<Diagnostic<? extends JavaFileObject>> collectedDiagnostics;
@@ -38,26 +38,26 @@ public class Compiler {
     private String targetProjectPath;
 
     /**
-     * @param answer can be either FilePath or the code as a string
+     * @param stringAnswer can be either FilePath or the code as a string
      * @return if the code is compilable
      */
 
-    public boolean compile(String answer) {
+    public boolean compile(String stringAnswer) {
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         DiagnosticCollector<JavaFileObject> diagnosticsCollector = new DiagnosticCollector<>();
         StandardJavaFileManager fileManager = compiler.getStandardFileManager(diagnosticsCollector, Locale.GERMANY, Charset.defaultCharset());
         List<File> files = new ArrayList<>();
 
-        if (answer != null && !answer.equals("")) {
-            createJavaClass(writeCodeAsClass(answer));
+        if (stringAnswer != null && !stringAnswer.equals("")) {
+            createJavaClass(writeCodeAsClass(stringAnswer));
             files.add(new File(DEFAULT_CLASS_PATH));
         } else {
             ExtractJavaFilesFromDirectory.ExtractJavaFilesFromDirectoryBuilder extractJavaFilesFromDirectoryBuilder = ExtractJavaFilesFromDirectory.builder();
             ExtractJavaFilesFromDirectory extractJavaFilesFromDirectory;
             if (targetProjectPath == null || targetProjectPath.equals("")){
-                extractJavaFilesFromDirectoryBuilder.dirPath(DEFAULT_DIR_PATH);
+                targetProjectPath = DEFAULT_DIR_PATH;
             }
-            else extractJavaFilesFromDirectoryBuilder.dirPath(targetProjectPath);
+            extractJavaFilesFromDirectoryBuilder.dirPath(targetProjectPath);
             extractJavaFilesFromDirectory = extractJavaFilesFromDirectoryBuilder.build();
             files = extractJavaFilesFromDirectory.filesWithJavaExtension();
             if (files.size() == 0) {
@@ -100,9 +100,9 @@ public class Compiler {
             String classDeclaration = answer.substring(0, answer.indexOf("class"));
             isPublic = classDeclaration.contains("public");
         }
-        if (isPublic) {
-            answer = answer.substring(answer.indexOf("public") + "public".length());
-        }
+//        if (isPublic) {
+//            answer = answer.substring(answer.indexOf("public") + "public".length());
+//        }
         if (isClassOrInterface) {
             javaFileContent.append(answer);
         } else {
