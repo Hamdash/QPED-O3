@@ -3,6 +3,7 @@ package eu.qped.java.feedback.syntax;
 import eu.qped.framework.CheckLevel;
 import eu.qped.java.checkers.mass.MainSettings;
 import eu.qped.java.checkers.mass.MassExecutor;
+import eu.qped.java.checkers.syntax.SyntaxCheckReport;
 import eu.qped.java.checkers.syntax.SyntaxChecker;
 import eu.qped.java.checkers.syntax.SyntaxError;
 import eu.qped.java.feedback.FeedbackGenerator;
@@ -54,11 +55,10 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
             // build Feedback body
             List<SyntaxFeedbackNew> relatedSyntaxFeedbacks = this.getFeedback(syntaxError);
             relatedSyntaxFeedbacks = relatedSyntaxFeedbacks.stream().filter(relatedSyntaxFeedback -> {
-               return relatedSyntaxFeedback.getErrorMessage().equals(syntaxError.getErrorMsg());
+               return relatedSyntaxFeedback.getErrorMessage().equals(syntaxError.getErrorMessage());
             }).collect(Collectors.toList());
             relatedSyntaxFeedbacks.forEach(relatedSyntaxFeedback -> {
-                try {
-                    CharSequence source = syntaxError.getSource().getCharContent(false);
+                    CharSequence source = syntaxError.getErrorSourceCode();
                     relatedSyntaxFeedback.setBody(""
                             + "* Compiler error\n\n"
                             + "* About this Error: " + this.getFeedback(syntaxError).get(0).getFeedbackContent() + "\n\n"
@@ -75,9 +75,6 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
                             + relatedSyntaxFeedback.getSolutionExample()
                             + ""
                     );
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
             });
             result.addAll(relatedSyntaxFeedbacks);
         });
@@ -89,33 +86,34 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
         SyntaxFeedbackDataNew syntaxFeedbackDataNew = SyntaxFeedbackDataNew.builder().build();
         result = SyntaxFeedbackDataNew.getSyntaxFeedbackByErrorCode().get(syntaxError.getErrorCode());
         result.stream().filter(syntaxFeedback -> {
-            return syntaxFeedback.getErrorMessage().equals(syntaxError.getErrorMsg());
+            return syntaxFeedback.getErrorMessage().equals(syntaxError.getErrorMessage());
         });
         return result;
     }
 
     public static void main(String[] args) {
-//        String code = ""
-//                + "public static void main (String[] args) { \n"
-//                    + "int b = 0;    \n"
-//                    + "for(int i  = 0  ; i< 10 ; i++) { int k = 0;}    \n"
-//                + "} \n"
-//                + "public static void test () { \n"
-//                    + "int g = 0; \n"
-//                + "} \n"
-//                ;
+        String code = ""
+                + "public static void main (String[] args) { \n"
+                    + "int b = 0   \n"
+                    + "for(int i  = 0  ; i< 10 ; i++) { int k = 0;}    \n"
+                + "} \n"
+                + "public static void test () { \n"
+                    + "int g = 0; \n"
+                + "} \n"
+                ;
 
-        String code = "";
+//        String code = "";
 
 
-        SyntaxChecker syntaxChecker = SyntaxChecker.builder().answer(code).level(CheckLevel.ADVANCED).build();
+        SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(code).level(CheckLevel.ADVANCED).build();
 //        SyntaxChecker syntaxChecker = SyntaxChecker.builder().level(CheckLevel.ADVANCED).build();
-        syntaxChecker.check();
-//        if(syntaxChecker.getSyntaxErrors() != null) {
-//            for(SyntaxError syntaxError : syntaxChecker.getSyntaxErrors()) {
-//                System.out.println(syntaxError);
-//            }
-//        }
+        SyntaxCheckReport syntaxCheckReport = syntaxChecker.check();
+
+        if(syntaxCheckReport != null) {
+            for(SyntaxError syntaxError : syntaxCheckReport.getSyntaxErrors()) {
+                System.out.println(syntaxError);
+            }
+        }
 
 
 
