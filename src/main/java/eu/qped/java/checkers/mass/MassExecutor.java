@@ -71,7 +71,7 @@ public class MassExecutor {
 
         syntaxChecker.check();
 
-        if (!syntaxChecker.isErrorOccurred()) {
+        if (syntaxChecker.isErrorOccurred()) {
 
             if (styleNeeded) {
                 styleChecker.check();
