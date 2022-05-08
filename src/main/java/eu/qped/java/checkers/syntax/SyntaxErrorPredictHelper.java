@@ -1,7 +1,7 @@
-package eu.qped.java.feedback.syntaxLagacy;
+package eu.qped.java.checkers.syntax;
 
 
-import eu.qped.java.checkers.syntax.SyntaxError;
+import eu.qped.java.feedback.syntaxLagacy.SyntaxFeedback;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,7 +26,7 @@ public class SyntaxErrorPredictHelper {
         String forSemExp = syntaxError.getAdditionalProperties().get("forSemExpected");
         List<SyntaxFeedback> filterFeedbacks =
                 feedbacks.stream().filter(
-                        syntaxFeedback -> syntaxFeedback.getErrorMessage().equalsIgnoreCase(syntaxError.getErrorMsg())
+                        syntaxFeedback -> syntaxFeedback.getErrorMessage().equalsIgnoreCase(syntaxError.getErrorMessage())
                 ).collect(Collectors.toList());
 
         if (this.hasBraces(forSemExp)) {
@@ -48,7 +48,6 @@ public class SyntaxErrorPredictHelper {
             case "compiler.err.illegal.start.of.expr": {
                 boolean hasMod = hasModifier(errorTrigger);
                 if (!isAMethod(errorTrigger) && hasMod) {
-                    System.out.println("variable");
                     errorKind = "variable";
                 } else if (isAMethod(errorTrigger) && !errorTrigger.contains("(")) {
                     errorKind = "braces || strLit";
