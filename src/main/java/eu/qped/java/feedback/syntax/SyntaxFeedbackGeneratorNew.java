@@ -95,45 +95,55 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
     }
 
     public static void main(String[] args) {
-        String code = ""
-                + "public static void main (String[] args){  "
-                    + "int i = 0;    "
-                + "}"
-                + "public static void test () { "
-                    + "int g = 0;"
-                + "}"
-                ;
+//        String code = ""
+//                + "public static void main (String[] args) { \n"
+//                    + "int b = 0;    \n"
+//                    + "for(int i  = 0  ; i< 10 ; i++) { int k = 0;}    \n"
+//                + "} \n"
+//                + "public static void test () { \n"
+//                    + "int g = 0; \n"
+//                + "} \n"
+//                ;
+
+        String code = "";
+
 
         SyntaxChecker syntaxChecker = SyntaxChecker.builder().answer(code).level(CheckLevel.ADVANCED).build();
+//        SyntaxChecker syntaxChecker = SyntaxChecker.builder().level(CheckLevel.ADVANCED).build();
+        syntaxChecker.check();
+//        if(syntaxChecker.getSyntaxErrors() != null) {
+//            for(SyntaxError syntaxError : syntaxChecker.getSyntaxErrors()) {
+//                System.out.println(syntaxError);
+//            }
+//        }
+
+
+
+//        Map<String, String> mainSettings = new HashMap<>();
+//        mainSettings.put("semanticNeeded", "false");
+//        mainSettings.put("syntaxLevel", "2");
+//        mainSettings.put("preferredLanguage", "en");
+//        mainSettings.put("styleNeeded", "false");
 //
-
-
-
-        Map<String, String> mainSettings = new HashMap<>();
-        mainSettings.put("semanticNeeded", "false");
-        mainSettings.put("syntaxLevel", "2");
-        mainSettings.put("preferredLanguage", "en");
-        mainSettings.put("styleNeeded", "false");
-
-
-        MainSettings mainSettingsConfiguratorConf = new MainSettings(mainSettings);
-
-        MassExecutor massE = new MassExecutor(null, null, syntaxChecker, mainSettingsConfiguratorConf);
-        massE.execute();
-        List<String> result = new ArrayList<>();
-//        System.out.println(massE.getSyntaxFeedbacks());
-        for (eu.qped.java.feedback.syntaxLagacy.SyntaxFeedback syntax : massE.getSyntaxFeedbacks()) {
-            result.add(""
-                    + syntax.getFeedbackContent()
-//                    + NEW_LINE
-//                    + syntax.getBody()
-//                    + NEW_LINE
-//                    + syntax.getSolutionExample()
-//                    + NEW_LINE
-                    + "--------------------------------------------------"
-            );
-        }
-        System.out.println(result);
+//
+//        MainSettings mainSettingsConfiguratorConf = new MainSettings(mainSettings);
+//
+//        MassExecutor massE = new MassExecutor(null, null, syntaxChecker, mainSettingsConfiguratorConf);
+//        massE.execute();
+//        List<String> result = new ArrayList<>();
+////        System.out.println(massE.getSyntaxFeedbacks());
+//        for (eu.qped.java.feedback.syntaxLagacy.SyntaxFeedback syntax : massE.getSyntaxFeedbacks()) {
+//            result.add(""
+//                    + syntax.getFeedbackContent()
+////                    + NEW_LINE
+////                    + syntax.getBody()
+////                    + NEW_LINE
+////                    + syntax.getSolutionExample()
+////                    + NEW_LINE
+//                    + "--------------------------------------------------"
+//            );
+//        }
+//        System.out.println(result);
 //        SyntaxFeedbackGeneratorNew syntaxFeedbackGenerator = SyntaxFeedbackGeneratorNew.builder().build();
 //        List<SyntaxError> syntaxErrors = syntaxChecker.getSyntaxErrors();
 //        for (SyntaxError syntaxError : syntaxErrors) {
