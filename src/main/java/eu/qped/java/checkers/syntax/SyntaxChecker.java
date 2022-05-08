@@ -32,8 +32,6 @@ public class SyntaxChecker {
     @Deprecated(forRemoval = true, since = "version 2.0" )
     private CheckLevel level;
 
-    private SyntaxCheckReport checkReport;
-
     public SyntaxCheckReport check() {
         SyntaxCheckReport.SyntaxCheckReportBuilder resultBuilder = SyntaxCheckReport.builder();
         Compiler compiler = Compiler.builder().build();
