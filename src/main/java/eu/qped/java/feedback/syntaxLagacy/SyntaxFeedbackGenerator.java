@@ -1,10 +1,10 @@
-package eu.qped.java.checkers.syntax;
+package eu.qped.java.feedback.syntaxLagacy;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
+import eu.qped.java.checkers.syntax.SyntaxError;
+import eu.qped.java.feedback.FeedbackGenerator;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,7 +17,7 @@ import eu.qped.framework.CheckLevel;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class SyntaxFeedbackGenerator {
+public class SyntaxFeedbackGenerator implements FeedbackGenerator<SyntaxFeedback,SyntaxError> {
 
 
     private final static String ERROR_TRIGGER_CONS = " Error code: ";
@@ -47,15 +47,11 @@ public class SyntaxFeedbackGenerator {
 
     private final StringBuilder result = new StringBuilder();
 
+    @Override
     public List<SyntaxFeedback> generateFeedbacks(List<SyntaxError> syntaxErrors){
         List<SyntaxFeedback> result = new ArrayList<>();
         syntaxErrors.forEach(syntaxError -> result.add(this.getFeedback(syntaxError)));
         return result;
-    }
-
-    public SyntaxFeedbackGenerator(String sourceCode, CheckLevel level) {
-        this.level = level;
-        this.sourceCode = sourceCode;
     }
 
     private StringBuilder appendCliche(String errorMsg, String errorTrigger, long errorLine, StringBuilder result) {
@@ -344,6 +340,7 @@ public class SyntaxFeedbackGenerator {
                 result.append(syntaxError.getErrorMsg());
         }
     }
+
 
 }
 

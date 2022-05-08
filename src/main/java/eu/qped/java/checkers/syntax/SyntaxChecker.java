@@ -1,6 +1,8 @@
 package eu.qped.java.checkers.syntax;
 
 import eu.qped.framework.CheckLevel;
+import eu.qped.java.feedback.syntaxLagacy.SyntaxFeedback;
+import eu.qped.java.feedback.syntaxLagacy.SyntaxFeedbackGenerator;
 import eu.qped.java.utils.compiler.Compiler;
 import lombok.*;
 import lombok.Data;
@@ -28,7 +30,6 @@ public class SyntaxChecker {
     private String sourceCode;
     private CheckLevel level;
     private List<SyntaxError> syntaxErrors;
-    private List<SyntaxFeedback> feedbacks;
     @NonNull
     private boolean errorOccurred;
 
@@ -39,11 +40,6 @@ public class SyntaxChecker {
         this.setSourceCode(compiler.getFullSourceCode());
         if (!diagnostics.isEmpty()) {
             analyseDiagnostics(diagnostics);
-            SyntaxFeedbackGenerator feedbackGenerator = new SyntaxFeedbackGenerator(this.getSourceCode(), this.getLevel());
-            feedbacks = feedbackGenerator.generateFeedbacks(syntaxErrors);
-        } else {
-            syntaxErrors = Collections.emptyList();
-            feedbacks = Collections.emptyList();
         }
     }
 

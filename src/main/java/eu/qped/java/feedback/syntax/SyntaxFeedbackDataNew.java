@@ -13,10 +13,10 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @Builder
-public class SyntaxFeedbackData {
+public class SyntaxFeedbackDataNew {
 
-    public static Map<String, List<eu.qped.java.feedback.syntax.SyntaxFeedback>> getSyntaxFeedbackByErrorCode() {
-        Map<String, List<eu.qped.java.feedback.syntax.SyntaxFeedback>> feedbackBySyntaxErrorCode = new HashMap<>();
+    public static Map<String, List<SyntaxFeedbackNew>> getSyntaxFeedbackByErrorCode() {
+        Map<String, List<SyntaxFeedbackNew>> feedbackBySyntaxErrorCode = new HashMap<>();
         feedbackBySyntaxErrorCode.put(
                 "compiler.err.expected",
                 List.of(
@@ -31,7 +31,7 @@ public class SyntaxFeedbackData {
 //                                                .build()
 //                                )
 //                                .build(),
-                        eu.qped.java.feedback.syntax.SyntaxFeedback.builder()
+                        SyntaxFeedbackNew.builder()
                                 .feedbackContent("Every java statement must end with a Semicolon.")
                                 .solutionExample("int oddNumber = 7;")
                                 .errorMessage("';' expected")
@@ -41,42 +41,42 @@ public class SyntaxFeedbackData {
                                                 .build()
                                 )
                                 .build(),
-                        eu.qped.java.feedback.syntax.SyntaxFeedback.builder()
+                        SyntaxFeedbackNew.builder()
                                 .feedbackContent("'(' expected")
                                 .solutionExample("")
                                 .errorMessage("'(' expected")
                                 .build(),
-                        eu.qped.java.feedback.syntax.SyntaxFeedback.builder()
+                        SyntaxFeedbackNew.builder()
                                 .feedbackContent("= expected")
                                 .solutionExample("")
                                 .errorMessage("= expected")
                                 .build(),
-                        eu.qped.java.feedback.syntax.SyntaxFeedback.builder()
+                        SyntaxFeedbackNew.builder()
                                 .feedbackContent("'.class' expected")
                                 .solutionExample("")
                                 .errorMessage("'.class' expected")
                                 .build(),
-                        eu.qped.java.feedback.syntax.SyntaxFeedback.builder()
+                        SyntaxFeedbackNew.builder()
                                 .feedbackContent("'[' expected")
                                 .solutionExample("")
                                 .errorMessage("'[' expected")
                                 .build(),
-                        eu.qped.java.feedback.syntax.SyntaxFeedback.builder()
+                        SyntaxFeedbackNew.builder()
                                 .feedbackContent("You wrote a block of code somewhere where Java does not expect it, for example: System.out.println (\"Hello\"); inside the class outside a method")
                                 .solutionExample("")
                                 .errorMessage("<identifier> expected")
                                 .build(),
-                        eu.qped.java.feedback.syntax.SyntaxFeedback.builder()
+                        SyntaxFeedbackNew.builder()
                                 .feedbackContent("You have defined a data field without a name, you can define the data field")
                                 .solutionExample("like this: int variable = 5; define")
                                 .errorMessage("<identifier> expected")
                                 .build(),
-                        eu.qped.java.feedback.syntax.SyntaxFeedback.builder()
+                        SyntaxFeedbackNew.builder()
                                 .feedbackContent("if you try to write a method outside of the class, you can clear this error if you write this method inside the class")
                                 .solutionExample("")
                                 .errorMessage("class, interface, or enum expected")
                                 .build(),
-                        eu.qped.java.feedback.syntax.SyntaxFeedback.builder()
+                        SyntaxFeedbackNew.builder()
                                 .feedbackContent("additional curly bracket \"}\" Here the error can be corrected by simply removing the additional curly bracket \"}\" or by observing the indentation")
                                 .solutionExample("")
                                 .errorMessage("class, interface, or enum expected")
@@ -86,7 +86,7 @@ public class SyntaxFeedbackData {
         feedbackBySyntaxErrorCode.put(
                 "compiler.err.var.might.not.have.been.initialized",
                 Collections.singletonList(
-                        eu.qped.java.feedback.syntax.SyntaxFeedback.builder()
+                        SyntaxFeedbackNew.builder()
                                 .feedbackContent("The variable not only had to be declared but also initialized")
                                 .solutionExample("(Declaration) int number = (Initialising) 10")
                                 .errorMessage("?")
@@ -96,7 +96,7 @@ public class SyntaxFeedbackData {
         feedbackBySyntaxErrorCode.put(
                 "compiler.err.already.defined",
                 Collections.singletonList(
-                        eu.qped.java.feedback.syntax.SyntaxFeedback.builder()
+                        SyntaxFeedbackNew.builder()
                                 .feedbackContent("You already have a variable or a method in the common scope with the same name. \n Scope means where the variable or method can be called. \n In each scope, all variables or methods must have unique names.")
                                 .solutionExample("")
                                 .errorMessage("")
@@ -107,7 +107,7 @@ public class SyntaxFeedbackData {
         feedbackBySyntaxErrorCode.put(
                 "compiler.err.cant.resolve.location",
                 Collections.singletonList(
-                        eu.qped.java.feedback.syntax.SyntaxFeedback.builder()
+                        SyntaxFeedbackNew.builder()
                                 .feedbackContent("You have called an undefined symbol (variable), at the above-mentioned position \n it could be that you made a typo with the name or forgot to define the symbol.")
                                 .solutionExample("")
                                 .errorMessage("")
@@ -117,7 +117,7 @@ public class SyntaxFeedbackData {
         feedbackBySyntaxErrorCode.put(
                 "compiler.err.abstract.cant.be.instantiated",
                 Collections.singletonList(
-                        eu.qped.java.feedback.syntax.SyntaxFeedback.builder()
+                        SyntaxFeedbackNew.builder()
                                 .feedbackContent("No object could be created from abstract classes \n it is possible to create an object of a subclass of an abstract class")
                                 .solutionExample("")
                                 .errorMessage("")
@@ -128,7 +128,7 @@ public class SyntaxFeedbackData {
         feedbackBySyntaxErrorCode.put(
                 "compiler.err.repeated.modifier",
                 Collections.singletonList(
-                        eu.qped.java.feedback.syntax.SyntaxFeedback.builder()
+                        SyntaxFeedbackNew.builder()
                                 .feedbackContent("Dont repeat modifiers")
                                 .solutionExample("public public")
                                 .errorMessage("")
@@ -138,7 +138,7 @@ public class SyntaxFeedbackData {
         feedbackBySyntaxErrorCode.put(
                 "compiler.err.illegal.combination.of.modifiers",
                 Collections.singletonList(
-                        eu.qped.java.feedback.syntax.SyntaxFeedback.builder()
+                        SyntaxFeedbackNew.builder()
                                 .feedbackContent( ""
                                         + "Modifiers are additional properties for Java declarations such as methods, variables and classes \n"
                                         + "you always have to specify it at the very beginning of the declaration \n"
@@ -153,7 +153,7 @@ public class SyntaxFeedbackData {
         feedbackBySyntaxErrorCode.put(
                 "compiler.err.illegal.start.of.expr",
                 List.of(
-                        eu.qped.java.feedback.syntax.SyntaxFeedback.builder()
+                        SyntaxFeedbackNew.builder()
                                 .feedbackContent("Access Modifiers must not be used within the method with local variables, as their method area defines their accessibility")
                                 .solutionExample("")
                                 .errorMessage("")
@@ -163,7 +163,7 @@ public class SyntaxFeedbackData {
                                                 .build()
                                 )
                                 .build(),
-                        eu.qped.java.feedback.syntax.SyntaxFeedback.builder()
+                        SyntaxFeedbackNew.builder()
                                 .feedbackContent("A method cannot have another method within its scope")
                                 .solutionExample("")
                                 .errorMessage("")
@@ -173,7 +173,7 @@ public class SyntaxFeedbackData {
                                                 .build()
                                 )
                                 .build(),
-                        eu.qped.java.feedback.syntax.SyntaxFeedback.builder()
+                        SyntaxFeedbackNew.builder()
                                 .feedbackContent(""
                                     + "every block (method) or class definition must begin and end with curly braces. \n"
                                     + "String Character Without Double Quotes E.g. \n"
@@ -194,7 +194,7 @@ public class SyntaxFeedbackData {
                 // TODO
                 "compiler.err.illegal.start.of.type",
                 List.of(
-                        eu.qped.java.feedback.syntax.SyntaxFeedback.builder()
+                        SyntaxFeedbackNew.builder()
                                 .feedbackContent(""
                                         + "you have used the Type:"
                                         + " for"
@@ -209,7 +209,7 @@ public class SyntaxFeedbackData {
                                 )
                                 .build()
                         ,
-                        eu.qped.java.feedback.syntax.SyntaxFeedback.builder()
+                        SyntaxFeedbackNew.builder()
                                 .feedbackContent(""
                                         + "you have used the Type:"
                                         + " switch"
@@ -224,7 +224,7 @@ public class SyntaxFeedbackData {
                                 )
                                 .build()
                         ,
-                        eu.qped.java.feedback.syntax.SyntaxFeedback.builder()
+                        SyntaxFeedbackNew.builder()
                                 .feedbackContent(""
                                         + "you have used the Type:"
                                         + " while"
@@ -238,7 +238,7 @@ public class SyntaxFeedbackData {
                                                 .build()
                                 )
                                 .build()
-                        ,eu.qped.java.feedback.syntax.SyntaxFeedback.builder()
+                        , SyntaxFeedbackNew.builder()
                                 .feedbackContent(""
                                         + "you have used the Type:"
                                         + " if"
@@ -252,7 +252,7 @@ public class SyntaxFeedbackData {
                                                 .build()
                                 )
                                 .build()
-                        ,eu.qped.java.feedback.syntax.SyntaxFeedback.builder()
+                        , SyntaxFeedbackNew.builder()
                                 .feedbackContent(""
                                         + "you have used the Type:"
                                         + " else"
@@ -266,7 +266,7 @@ public class SyntaxFeedbackData {
                                                 .build()
                                 )
                                 .build()
-                        ,eu.qped.java.feedback.syntax.SyntaxFeedback.builder()
+                        , SyntaxFeedbackNew.builder()
                                 .feedbackContent(""
                                         + "you have used the Type:"
                                         + " System"
@@ -281,7 +281,7 @@ public class SyntaxFeedbackData {
                                 )
                                 .build()
                         ,
-                        eu.qped.java.feedback.syntax.SyntaxFeedback.builder()
+                        SyntaxFeedbackNew.builder()
                                 .feedbackContent(""
                                         + "you have used the Type:"
                                         + " break"
@@ -296,7 +296,7 @@ public class SyntaxFeedbackData {
                                 )
                                 .build()
                         ,
-                        eu.qped.java.feedback.syntax.SyntaxFeedback.builder()
+                        SyntaxFeedbackNew.builder()
                                 .feedbackContent(""
                                         + "you have used the Type:"
                                         + " continue"
@@ -311,7 +311,7 @@ public class SyntaxFeedbackData {
                                 )
                                 .build()
                         ,
-                        eu.qped.java.feedback.syntax.SyntaxFeedback.builder()
+                        SyntaxFeedbackNew.builder()
                                 .feedbackContent(""
                                         + "you have used the Type:"
                                         + " case"
@@ -331,7 +331,7 @@ public class SyntaxFeedbackData {
         feedbackBySyntaxErrorCode.put(
                 "compiler.err.not.stmt",
                 List.of(
-                        eu.qped.java.feedback.syntax.SyntaxFeedback.builder()
+                        SyntaxFeedbackNew.builder()
                                 .feedbackContent("You are trying to initialize a statement, but unfortunately the declaration was wrong.")
                                 .solutionExample("For example, a variable can be defined in Java like this: <data type> varName = value;")
                                 .errorMessage("compiler.err.not.stmt")
@@ -341,7 +341,7 @@ public class SyntaxFeedbackData {
                                                 .build()
                                 )
                                 .build(),
-                        eu.qped.java.feedback.syntax.SyntaxFeedback.builder()
+                        SyntaxFeedbackNew.builder()
                                 .feedbackContent( ""
                                         + "You have violated the Java Statement rules because there are the following statements in Java:\n"
                                         + "1) Expression Statments: to change the values of a data field or to load methods or to create an object \n"
@@ -360,7 +360,7 @@ public class SyntaxFeedbackData {
         feedbackBySyntaxErrorCode.put(
                 "compiler.err.unclosed.str.lit",
                 Collections.singletonList(
-                        eu.qped.java.feedback.syntax.SyntaxFeedback.builder()
+                        SyntaxFeedbackNew.builder()
                                 .feedbackContent(""
                                         + "If you want to define a character string with the Java language \n"
                                         + "it would be correct if you wrote within two quotation marks"
@@ -373,7 +373,7 @@ public class SyntaxFeedbackData {
         feedbackBySyntaxErrorCode.put(
                 "compiler.err.else.without.if",
                 Collections.singletonList(
-                        eu.qped.java.feedback.syntax.SyntaxFeedback.builder()
+                        SyntaxFeedbackNew.builder()
                                 .feedbackContent( ""
                                         + "if you want to check conditions in Java, you can use the if statement, you can add else to it\n"
                                         + "but an else statement without an if is problematic"
@@ -386,7 +386,7 @@ public class SyntaxFeedbackData {
         feedbackBySyntaxErrorCode.put(
                 "compiler.err.missing.ret.stmt",
                 Collections.singletonList(
-                        eu.qped.java.feedback.syntax.SyntaxFeedback.builder()
+                        SyntaxFeedbackNew.builder()
                                 .feedbackContent("Every method whose return type is not void needs a \"return\" at the end.")
                                 .solutionExample("")
                                 .errorMessage("")
@@ -396,7 +396,7 @@ public class SyntaxFeedbackData {
         feedbackBySyntaxErrorCode.put(
                 "compiler.err.unreachable.stmt",
                 Collections.singletonList(
-                        eu.qped.java.feedback.syntax.SyntaxFeedback.builder()
+                        SyntaxFeedbackNew.builder()
                                 .feedbackContent("Return always closes a method, so you cannot pass statements after a return")
                                 .solutionExample("")
                                 .errorMessage("")
@@ -407,7 +407,7 @@ public class SyntaxFeedbackData {
         feedbackBySyntaxErrorCode.put(
                 "compiler.err.missing.meth.body.or.decl.abstract",
                 List.of(
-                        eu.qped.java.feedback.syntax.SyntaxFeedback.builder()
+                        SyntaxFeedbackNew.builder()
                                 .feedbackContent( ""
                                         + "The declaration of a method consists of 2 steps:\n"
                                         + "Method header: <return type> methodName () \n"
