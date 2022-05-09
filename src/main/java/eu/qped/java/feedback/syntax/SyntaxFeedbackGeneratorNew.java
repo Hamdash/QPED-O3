@@ -62,17 +62,15 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
                             + "* Where this error happens:"
                             + "\n\n "
                             + "```java\n"
-                            + "int oddNumber = 7 ;\n"
-                            + "int oddNumber = 7 ;"
-//                            + error.getErrorSourceCode()
+                            + error.getErrorSourceCode()
                             + "\n```"
 //                   Example to fix this error
                             + "\n\n "
                             + "* Where this error happens:"
                             + "\n\n "
-                            + "```java "
+                            + "```java\n"
                             + syntaxFeedback.getSolutionExample()
-                            + "```"
+                            + "\n```"
             );
         }
         return null;
