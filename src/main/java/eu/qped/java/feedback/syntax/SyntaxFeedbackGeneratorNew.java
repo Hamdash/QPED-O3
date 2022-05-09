@@ -52,11 +52,11 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
             syntaxFeedbackCounter = syntaxFeedbackCounter + 1 ;
             syntaxFeedback.setBody(""
 //                    Error Header
-                    + "<br/>"
+                    + " <br/> "
                     + "## Error" + String.format("%02d", syntaxFeedbackCounter) + ":"
 //                    Feedback Content
-                    + "<br/>"
-                    + "* **"
+                    + " <br/> "
+                    + " * ** "
                     + syntaxFeedback.getFeedbackContent()
                     + "**"
 //                    Code Where this error happens
