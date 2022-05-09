@@ -59,14 +59,14 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
                             + syntaxFeedback.getFeedbackContent()
 //                    Code Where this error happens
                             + "\n\n "
-                            + "* Where this error happens:"
+                            + "**Where this error happens:**"
                             + "\n\n "
                             + "```java\n"
                             + error.getErrorSourceCode()
                             + "\n\n```"
 //                   Example to fix this error
                             + "\n\n "
-                            + "* Example to fix this error:"
+                            + "**Example to fix this error:**"
                             + "\n\n "
                             + "```java\n"
                             + syntaxFeedback.getSolutionExample()
