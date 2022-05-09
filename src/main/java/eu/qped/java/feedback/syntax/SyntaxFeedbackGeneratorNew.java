@@ -61,11 +61,19 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
                             + "\n\n "
                             + "* Where this error happens:"
                             + "\n\n "
-                            + " ```java "
-//                            + error.getErrorSourceCode()
-                            + "int oddNumber = 7 ;"
-                            + " "
-                            + " ``` "
+                            + "```html\n" +
+                            "<!DOCTYPE html>\n" +
+                            "<html>\n" +
+                            "    <body>\n" +
+                            "        <h1>Hello world!</h1>\n" +
+                            "    </body>\n" +
+                            "</html>\n" +
+                            "```"
+//                            + " ```java "
+////                            + error.getErrorSourceCode()
+//                            + "int oddNumber = 7 ;"
+//                            + " "
+//                            + " ``` "
 //                   Example to fix this error
                             + "\n\n "
                             + "* Where this error happens:"
