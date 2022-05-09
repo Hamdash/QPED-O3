@@ -31,7 +31,7 @@ public class SyntaxFeedbackDataNew {
                                         + "\n\n"
                                         + "* ** This usually happens when you forget to write semicolon or closing parenthesis. **"
                                 )
-                                .solutionExample("int oddNumber = 7<span style=\"color: red;\"> ;</span>")
+                                .solutionExample("int oddNumber = 7 ;")
                                 .errorMessage("';' expected")
                                 .build(),
                         SyntaxFeedbackNew.builder()

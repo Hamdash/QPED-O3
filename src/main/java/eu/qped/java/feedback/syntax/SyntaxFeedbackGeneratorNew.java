@@ -62,7 +62,8 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
                             + "* Where this error happens:"
                             + "\n\n "
                             + " ```java "
-                            + error.getErrorSourceCode()
+//                            + error.getErrorSourceCode()
+                            + "int oddNumber = 7 ;"
                             + " "
                             + " ``` "
 //                   Example to fix this error
