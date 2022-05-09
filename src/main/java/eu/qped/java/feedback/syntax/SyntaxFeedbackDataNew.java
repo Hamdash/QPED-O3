@@ -29,9 +29,9 @@ public class SyntaxFeedbackDataNew {
                                 .feedbackContent( ""
                                         + "**The compilers expect the statements to end with a \";\".**"
                                         + "\n\n"
-                                        + "**This usually happens when you forget to write semicolon or closing parenthesis.**"
+                                        + "**<span style=\"color: red;\">This</span> usually happens when you forget to write semicolon or closing parenthesis.**"
                                 )
-                                .solutionExample("int oddNumber = 7 ;")
+                                .solutionExample("int oddNumber = 7;")
                                 .errorMessage("';' expected")
                                 .build(),
                         SyntaxFeedbackNew.builder()

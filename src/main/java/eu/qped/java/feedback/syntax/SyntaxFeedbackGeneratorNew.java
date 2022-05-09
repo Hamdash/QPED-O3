@@ -63,7 +63,7 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
                             + "\n\n "
                             + "```java\n"
                             + error.getErrorSourceCode()
-                            + "\n\n```"
+                            + "\n```"
 //                   Example to fix this error
                             + "\n\n "
                             + "**Example to fix this error:**"
@@ -104,86 +104,47 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
     public static void main(String[] args) {
         String code = ""
                 + "public static void main (String[] args) { \n"
-                + "int b = 0   \n"
+                + "int b = 0;   \n"
+                + "int b = 0;   \n"
                 + "for(int i  = 0  ; i< 10 ; i++) { int k = 0;}    \n"
                 + "} \n"
                 + "public static void test () { \n"
                 + "int g = 0; \n"
                 + "} \n";
 
-//        String code = " class Test {\n" +
-//                "    private int i ;\n" +
-//                "\n" +
-//                "    public static void main(String[] args) {\n" +
-//                "        int i = 0;\n" +
-//                "        for (int j = 0; j < ; 10 j++) {\n" +
-//                "            \n" +
-//                "        }\n" +
-//                "    }\n" +
-//                "}";
 
 
         SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(code).level(CheckLevel.ADVANCED).build();
-//        SyntaxChecker syntaxChecker = SyntaxChecker.builder().level(CheckLevel.ADVANCED).build();
-//        SyntaxCheckReport syntaxCheckReport = syntaxChecker.check();
-
-//        if(syntaxCheckReport != null) {
-//            for(SyntaxError syntaxError : syntaxCheckReport.getSyntaxErrors()) {
-//                System.out.println(syntaxError);
-//            }
-//        }
-
-//        SyntaxFeedbackGeneratorNew syntaxFeedbackNew = SyntaxFeedbackGeneratorNew.builder().build();
-//        List<SyntaxFeedbackNew> syntaxFeedbacks = syntaxFeedbackNew.generateFeedbacks(syntaxCheckReport.getSyntaxErrors());
-//        for (SyntaxFeedbackNew feedback : syntaxFeedbacks) {
-//            System.out.println(feedback.getBody());
-//        }
-
-
         Map<String, String> mainSettings = new HashMap<>();
         mainSettings.put("semanticNeeded", "false");
         mainSettings.put("syntaxLevel", "2");
         mainSettings.put("preferredLanguage", "en");
         mainSettings.put("styleNeeded", "false");
-//
-//
+
         MainSettings mainSettingsConfiguratorConf = new MainSettings(mainSettings);
-//
+
         MassExecutor massE = new MassExecutor(null, null, syntaxChecker, mainSettingsConfiguratorConf);
         massE.execute();
 
         List<String> result = new ArrayList<>();
-//        System.out.println(massE.getSyntaxFeedbacks());
-        for (eu.qped.java.feedback.syntaxLagacy.SyntaxFeedback syntax : massE.getSyntaxFeedbacks()) {
-            result.add(""
-                            + syntax.getFeedbackContent()
-//                    + NEW_LINE
-//                    + syntax.getBody()
-//                    + NEW_LINE
-//                    + syntax.getSolutionExample()
-//                    + NEW_LINE
-                            + "--------------------------------------------------"
-            );
-        }
 
-//        System.out.println(result);
-//        SyntaxFeedbackGeneratorNew syntaxFeedbackGenerator = SyntaxFeedbackGeneratorNew.builder().build();
-//        List<SyntaxError> syntaxErrors = syntaxChecker.getSyntaxErrors();
-//        for (SyntaxError syntaxError : syntaxErrors) {
-//            try {
-//
-//                CharSequence charSequence = syntaxError.getSource().getCharContent(false);
-//                CharSequence contentInError = charSequence.subSequence((int) syntaxError.getStartPos(), (int) syntaxError.getEndPos());
-//                CharSequence contentInError1 = charSequence.subSequence((int) syntaxError.getStartPos(), charSequence.length());
-////                System.out.println(">>>>" + charSequence);
-////                System.out.println(">>>>" + charSequence.subSequence((int)syntaxError.getStartPos(), charSequence.length()));
-////                System.out.println(">>>>" + syntaxChecker.getSourceCode());
-////                System.out.println(">>>>" + syntaxChecker.getSourceCode().substring((int)syntaxError.getStartPos()));
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        List<SyntaxFeedbackNew> newSyntaxFeedbacks = syntaxFeedbackGenerator.generateFeedbacks(syntaxChecker.getSyntaxErrors());
-//        System.out.println(newSyntaxFeedbacks.get(0).getBody());
+        for (SyntaxFeedback syntax : massE.getSyntaxFeedbacks()) {
+            String s = ""
+                    + syntax.getBody()
+                    + NEW_LINE
+                    + "--------------------------------------------------"
+                    ;
+            System.out.println(s);
+
+        }
+        for (SyntaxFeedbackNew syntax : massE.getSyntaxFeedbackNews()) {
+            String s = ""
+                    + syntax.getBody()
+                    + NEW_LINE
+                    + "--------------------------------------------------"
+                    ;
+            System.out.println(s);
+
+        }
     }
 }
