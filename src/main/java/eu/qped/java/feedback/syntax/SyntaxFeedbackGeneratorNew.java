@@ -56,22 +56,20 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
                             + "## Error" + String.format("%02d", syntaxFeedbackCounter) + ":"
 //                    Feedback Content
                             + " \n\n "
-                            + " * ** "
                             + syntaxFeedback.getFeedbackContent()
-                            + " **"
 //                    Code Where this error happens
                             + "\n\n "
                             + "* Where this error happens:"
                             + "\n\n "
-                            + "```java"
+                            + " ```java "
                             + error.getErrorSourceCode()
                             + " "
-                            + "```"
+                            + " ``` "
 //                   Example to fix this error
                             + "\n\n "
                             + "* Where this error happens:"
                             + "\n\n "
-                            + "```java"
+                            + "```java "
                             + syntaxFeedback.getSolutionExample()
                             + "```"
             );
