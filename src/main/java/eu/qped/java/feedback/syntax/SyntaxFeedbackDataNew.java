@@ -27,9 +27,9 @@ public class SyntaxFeedbackDataNew {
 //                                .build(),
                         SyntaxFeedbackNew.builder()
                                 .feedbackContent( ""
-                                        + "**The compilers expect the statements to end with a \";\".**"
+                                        + "* **The compilers expect the statements to end with a \";\".**"
                                         + "\n\n"
-                                        + "**This usually happens when you forget to write semicolon or closing parenthesis.**"
+                                        + "* **This usually happens when you forget to write semicolon or closing parenthesis.**"
                                 )
                                 .solutionExample("int oddNumber = 7 ;")
                                 .errorMessage("';' expected")
