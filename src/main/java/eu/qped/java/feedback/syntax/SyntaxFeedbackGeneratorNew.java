@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedbackNew,SyntaxError> {
+public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedbackNew, SyntaxError> {
     private final static String ERROR_TRIGGER_CONS = " Error code: ";
     private final static String LINE_NUMBER_CONS = " Line: ";
     private final static String ERROR_MSG_CONS = " Error type: ";
@@ -47,30 +47,32 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
     private List<SyntaxFeedbackNew> syntaxFeedbacks;
     private int syntaxFeedbackCounter;
 
-    public List <SyntaxFeedbackNew> buildSyntaxFeedbackBody(List<SyntaxFeedbackNew> syntaxFeedbacks, SyntaxError error) {
+    public List<SyntaxFeedbackNew> buildSyntaxFeedbackBody(List<SyntaxFeedbackNew> syntaxFeedbacks, SyntaxError error) {
         for (SyntaxFeedbackNew syntaxFeedback : syntaxFeedbacks) {
-            syntaxFeedbackCounter = syntaxFeedbackCounter + 1 ;
+            syntaxFeedbackCounter = syntaxFeedbackCounter + 1;
             syntaxFeedback.setBody(""
 //                    Error Header
-                    + " \n\n "
-                    + "## Error" + String.format("%02d", syntaxFeedbackCounter) + ":"
+                            + " \n\n "
+                            + "## Error" + String.format("%02d", syntaxFeedbackCounter) + ":"
 //                    Feedback Content
-                    + " \n\n "
-                    + " * ** "
-                    + syntaxFeedback.getFeedbackContent()
-                    + "**"
+                            + " \n\n "
+                            + " * ** "
+                            + syntaxFeedback.getFeedbackContent()
+                            + "**"
 //                    Code Where this error happens
-                    + "\n\n"
-                    + "* Where this error happens:"
-                    + "```java"
-                    + error.getErrorSourceCode()
-                    + "```"
+                            + "\n\n"
+                            + "* Where this error happens:"
+                            + "\n\n"
+                            + "```java"
+                            + error.getErrorSourceCode()
+                            + "```"
 //                   Example to fix this error
-                    + "<br/>"
-                    + "* Where this error happens:"
-                    + "```java"
-                    + syntaxFeedback.getSolutionExample()
-                    + "```"
+                            + "\n\n"
+                            + "* Where this error happens:"
+                            + "\n\n"
+                            + "```java"
+                            + syntaxFeedback.getSolutionExample()
+                            + "```"
             );
         }
         return null;
@@ -79,7 +81,7 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
     @Override
     public List<SyntaxFeedbackNew> generateFeedbacks(List<SyntaxError> errors) {
         List<SyntaxFeedbackNew> result = new ArrayList<>();
-        for (SyntaxError error: errors) {
+        for (SyntaxError error : errors) {
             List<SyntaxFeedbackNew> relatedSyntaxFeedbacks = this.getFeedback(error);
             relatedSyntaxFeedbacks = relatedSyntaxFeedbacks.stream().filter(relatedSyntaxFeedback -> {
                 return relatedSyntaxFeedback.getErrorMessage().equals(error.getErrorMessage());
@@ -104,13 +106,12 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
     public static void main(String[] args) {
         String code = ""
                 + "public static void main (String[] args) { \n"
-                    + "int b = 0   \n"
-                    + "for(int i  = 0  ; i< 10 ; i++) { int k = 0;}    \n"
+                + "int b = 0   \n"
+                + "for(int i  = 0  ; i< 10 ; i++) { int k = 0;}    \n"
                 + "} \n"
                 + "public static void test () { \n"
-                    + "int g = 0; \n"
-                + "} \n"
-                ;
+                + "int g = 0; \n"
+                + "} \n";
 
 //        String code = " class Test {\n" +
 //                "    private int i ;\n" +
@@ -141,7 +142,6 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
 //        }
 
 
-
         Map<String, String> mainSettings = new HashMap<>();
         mainSettings.put("semanticNeeded", "false");
         mainSettings.put("syntaxLevel", "2");
@@ -158,13 +158,13 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
 //        System.out.println(massE.getSyntaxFeedbacks());
         for (eu.qped.java.feedback.syntaxLagacy.SyntaxFeedback syntax : massE.getSyntaxFeedbacks()) {
             result.add(""
-                    + syntax.getFeedbackContent()
+                            + syntax.getFeedbackContent()
 //                    + NEW_LINE
 //                    + syntax.getBody()
 //                    + NEW_LINE
 //                    + syntax.getSolutionExample()
 //                    + NEW_LINE
-                    + "--------------------------------------------------"
+                            + "--------------------------------------------------"
             );
         }
 

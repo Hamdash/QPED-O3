@@ -28,7 +28,7 @@ public class SyntaxFeedbackDataNew {
                         SyntaxFeedbackNew.builder()
                                 .feedbackContent( ""
                                         + "The compilers expect the statements to end with a \";\"."
-                                        + "<br />"
+                                        + "\n\n"
                                         + "This usually happens when you forget to write semicolon or closing parenthesis."
                                 )
                                 .solutionExample("int oddNumber = 7<span style=\"color: red;\"> ;</span>")
