@@ -13,6 +13,8 @@ import eu.qped.java.checkers.style.StyleViolation;
 import eu.qped.java.checkers.syntax.SyntaxCheckReport;
 import eu.qped.java.checkers.syntax.SyntaxError;
 import eu.qped.java.checkers.syntax.SyntaxChecker;
+import eu.qped.java.feedback.syntax.SyntaxFeedbackGeneratorNew;
+import eu.qped.java.feedback.syntax.SyntaxFeedbackNew;
 import eu.qped.java.feedback.syntaxLagacy.SyntaxFeedback;
 import eu.qped.java.feedback.syntaxLagacy.SyntaxFeedbackGenerator;
 
@@ -32,6 +34,7 @@ public class MassExecutor {
     private List<StyleFeedback> styleFeedbacks;
     private List<SemanticFeedback> semanticFeedbacks;
     private List<SyntaxFeedback> syntaxFeedbacks;
+    private List<SyntaxFeedbackNew> syntaxFeedbackNews;
 
     private List<StyleViolation> violations;
     private List<SyntaxError> syntaxErrors;
@@ -91,6 +94,7 @@ public class MassExecutor {
             SyntaxFeedbackGenerator feedbackGenerator = SyntaxFeedbackGenerator.builder().build();
             syntaxErrors = syntaxCheckReport.getSyntaxErrors();
             syntaxFeedbacks = feedbackGenerator.generateFeedbacks(syntaxErrors);
+            syntaxFeedbackNews = SyntaxFeedbackGeneratorNew.builder().build().generateFeedbacks(syntaxErrors);
 
             //auto checker
         }
@@ -109,6 +113,9 @@ public class MassExecutor {
         syntaxErrors = new ArrayList<>();
     }
 
+    public List<SyntaxFeedbackNew> getSyntaxFeedbackNews() {
+        return syntaxFeedbackNews;
+    }
 
     private void translate(boolean styleNeeded, boolean semanticNeeded) {
         String prefLanguage = mainSettingsConfigurator.getPreferredLanguage();
