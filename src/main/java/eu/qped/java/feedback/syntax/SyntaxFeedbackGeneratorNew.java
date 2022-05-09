@@ -61,7 +61,7 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
                             + "\n\n "
                             + "* Where this error happens:"
                             + "\n\n "
-                            + "```java\n"
+                            + "```java \n"
                             + error.getErrorSourceCode()
                             + "\n```"
 //                   Example to fix this error
