@@ -53,7 +53,7 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
             syntaxFeedback.setBody(""
 //                    Error Header
                             + " \n\n "
-                            + "## Error" + String.format("%02d", syntaxFeedbackCounter) + ":"
+                            + "## Error " + String.format("%02d", syntaxFeedbackCounter) + ":"
 //                    Feedback Content
                             + " \n\n "
                             + syntaxFeedback.getFeedbackContent()
@@ -62,6 +62,7 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
                             + "* Where this error happens:"
                             + "\n\n "
                             + "```java\n"
+                            + "int oddNumber = 7 ;\n"
                             + "int oddNumber = 7 ;"
 //                            + error.getErrorSourceCode()
                             + "\n```"
