@@ -7,6 +7,7 @@ import eu.qped.java.checkers.syntax.SyntaxCheckReport;
 import eu.qped.java.checkers.syntax.SyntaxChecker;
 import eu.qped.java.checkers.syntax.SyntaxError;
 import eu.qped.java.feedback.FeedbackGenerator;
+import eu.qped.java.feedback.syntaxLagacy.SyntaxFeedback;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -44,40 +45,49 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
     }
 
     private List<SyntaxFeedbackNew> syntaxFeedbacks;
-    private CheckLevel level;
-    private String sourceCode;
-    private String example;
+    private int syntaxFeedbackCounter;
+
+    public List <SyntaxFeedbackNew> buildSyntaxFeedbackBody(List<SyntaxFeedbackNew> syntaxFeedbacks, SyntaxError error) {
+        for (SyntaxFeedbackNew syntaxFeedback : syntaxFeedbacks) {
+            syntaxFeedbackCounter = syntaxFeedbackCounter + 1 ;
+            syntaxFeedback.setBody(""
+//                    Error Header
+                    + "<br/>"
+                    + "## Error" + String.format("%02d", syntaxFeedbackCounter) + ":"
+//                    Feedback Content
+                    + "<br/>"
+                    + "* **"
+                    + syntaxFeedback.getFeedbackContent()
+                    + "**"
+//                    Code Where this error happens
+                    + "<br/>"
+                    + "* Where this error happens:"
+                    + "```java"
+                    + error.getErrorSourceCode()
+                    + "```"
+//                   Example to fix this error
+                    + "<br/>"
+                    + "* Where this error happens:"
+                    + "```java"
+                    + syntaxFeedback.getSolutionExample()
+                    + "```"
+            );
+        }
+        return null;
+    }
 
     @Override
     public List<SyntaxFeedbackNew> generateFeedbacks(List<SyntaxError> errors) {
         List<SyntaxFeedbackNew> result = new ArrayList<>();
-        errors.forEach(syntaxError -> {
-            // build Feedback body
-            List<SyntaxFeedbackNew> relatedSyntaxFeedbacks = this.getFeedback(syntaxError);
+        for (SyntaxError error: errors) {
+            List<SyntaxFeedbackNew> relatedSyntaxFeedbacks = this.getFeedback(error);
             relatedSyntaxFeedbacks = relatedSyntaxFeedbacks.stream().filter(relatedSyntaxFeedback -> {
-               return relatedSyntaxFeedback.getErrorMessage().equals(syntaxError.getErrorMessage());
+                return relatedSyntaxFeedback.getErrorMessage().equals(error.getErrorMessage());
             }).collect(Collectors.toList());
-            relatedSyntaxFeedbacks.forEach(relatedSyntaxFeedback -> {
-                    CharSequence source = syntaxError.getErrorSourceCode();
-                    relatedSyntaxFeedback.setBody(""
-                            + "* Compiler error\n\n"
-                            + "* About this Error: " + this.getFeedback(syntaxError).get(0).getFeedbackContent() + "\n\n"
-                            + "* Cause of error:\n\n"
-                                + "------------------------------------------------------------"
-                                + "\n\n"
-                                + source.subSequence(0 , (int) syntaxError.getStartPos())
-                                + "^"
-                                + source.subSequence((int) syntaxError.getStartPos(),source.length()) + ""
-                                + "\n\n"
-                                + "-------------------------------------------"
-                                + "\n\n"
-                            + "* Example to fix this error: "
-                            + relatedSyntaxFeedback.getSolutionExample()
-                            + ""
-                    );
-            });
+            buildSyntaxFeedbackBody(relatedSyntaxFeedbacks, error);
             result.addAll(relatedSyntaxFeedbacks);
-        });
+        }
+
         return result;
     }
 
@@ -92,27 +102,42 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
     }
 
     public static void main(String[] args) {
-        String code = ""
-                + "public static void main (String[] args) { \n"
-                    + "int b = 0   \n"
-                    + "for(int i  = 0  ; i< 10 ; i++) { int k = 0;}    \n"
-                + "} \n"
-                + "public static void test () { \n"
-                    + "int g = 0; \n"
-                + "} \n"
-                ;
+//        String code = ""
+//                + "public static void main (String[] args) { \n"
+//                    + "int b = 0   \n"
+//                    + "for(int i  = 0  ; i< 10 ; i++) { int k = 0;}    \n"
+//                + "} \n"
+//                + "public static void test () { \n"
+//                    + "int g = 0; \n"
+//                + "} \n"
+//                ;
 
-//        String code = "";
+        String code = " class Test {\n" +
+                "    private int i ;\n" +
+                "\n" +
+                "    public static void main(String[] args) {\n" +
+                "        int i = 0;\n" +
+                "        for (int j = 0; j < ; 10 j++) {\n" +
+                "            \n" +
+                "        }\n" +
+                "    }\n" +
+                "}";
 
 
         SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(code).level(CheckLevel.ADVANCED).build();
 //        SyntaxChecker syntaxChecker = SyntaxChecker.builder().level(CheckLevel.ADVANCED).build();
         SyntaxCheckReport syntaxCheckReport = syntaxChecker.check();
 
-        if(syntaxCheckReport != null) {
-            for(SyntaxError syntaxError : syntaxCheckReport.getSyntaxErrors()) {
-                System.out.println(syntaxError);
-            }
+//        if(syntaxCheckReport != null) {
+//            for(SyntaxError syntaxError : syntaxCheckReport.getSyntaxErrors()) {
+//                System.out.println(syntaxError);
+//            }
+//        }
+
+        SyntaxFeedbackGeneratorNew syntaxFeedbackNew = SyntaxFeedbackGeneratorNew.builder().build();
+        List<SyntaxFeedbackNew> syntaxFeedbacks = syntaxFeedbackNew.generateFeedbacks(syntaxCheckReport.getSyntaxErrors());
+        for (SyntaxFeedbackNew feedback : syntaxFeedbacks) {
+            System.out.println(feedback.getBody());
         }
 
 

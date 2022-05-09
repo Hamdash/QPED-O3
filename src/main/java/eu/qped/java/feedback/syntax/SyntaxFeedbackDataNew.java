@@ -20,26 +20,19 @@ public class SyntaxFeedbackDataNew {
         feedbackBySyntaxErrorCode.put(
                 "compiler.err.expected",
                 List.of(
+//                        SyntaxFeedbackNew.builder()
+//                                .feedbackContent("You used the braces incorrectly when declaring a method.")
+//                                .solutionExample("")
+//                                .errorMessage("';' expected")
+//                                .build(),
                         SyntaxFeedbackNew.builder()
-                                .feedbackContent("You used the braces incorrectly when declaring a method.")
-                                .solutionExample("")
-                                .errorMessage("';' expected")
-                                .errorInfo(
-                                        // TODO create code
-                                        ErrorInfo.builder()
-                                                .errorKey("braces_expected")
-                                                .build()
+                                .feedbackContent( ""
+                                        + "The compilers expect the statements to end with a \";\"."
+                                        + "<br />"
+                                        + "This usually happens when you forget to write semicolon or closing parenthesis."
                                 )
-                                .build(),
-                        SyntaxFeedbackNew.builder()
-                                .feedbackContent("Every java statement must end with a Semicolon.")
-                                .solutionExample("int oddNumber = 7;")
+                                .solutionExample("int oddNumber = 7<span style=\"color: red;\"> ;</span>")
                                 .errorMessage("';' expected")
-                                .errorInfo(
-                                        ErrorInfo.builder()
-                                                .errorKey("semi_expected")
-                                                .build()
-                                )
                                 .build(),
                         SyntaxFeedbackNew.builder()
                                 .feedbackContent("'(' expected")
