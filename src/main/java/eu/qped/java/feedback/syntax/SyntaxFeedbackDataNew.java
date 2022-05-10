@@ -33,10 +33,10 @@ public class SyntaxFeedbackDataNew {
                                         + "**This usually happens when you forget to write semicolon or closing parenthesis.**"
                                 )
                                 .solutionExample(""
-                                        + "// old code"
-                                        + "int oddNumber = 7"
-                                        + "// new code"
-                                        + "int oddNumber = 7;"
+                                        + "// old code\n"
+                                        + "int oddNumber = 7\n"
+                                        + "// new code\n"
+                                        + "int oddNumber = 7;\n"
                                 )
                                 .errorMessage("';' expected")
                                 .build(),
@@ -90,12 +90,12 @@ public class SyntaxFeedbackDataNew {
                                         + "**The compilers expect that you don't define variables or methods twice, where they can be called (scope of that variable or method).**"
                                 )
                                 .solutionExample(""
-                                        + "// old code"
-                                        + "int oddNumber = 7;"
-                                        + "int oddNumber = 7;"
-                                        + "// new code"
-                                        + "int oddNumber = 7;"
-                                        + "int NewOddNumber = 7;"
+                                        + "// old code\n"
+                                        + "int oddNumber = 7;\n"
+                                        + "int oddNumber = 7;\n"
+                                        + "// new code\n"
+                                        + "int oddNumber = 7;\n"
+                                        + "int NewOddNumber = 7;\n"
                                 )
                                 .errorMessage("")
                                 .build()
