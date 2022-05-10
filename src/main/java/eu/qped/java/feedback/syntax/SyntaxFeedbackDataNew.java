@@ -26,12 +26,18 @@ public class SyntaxFeedbackDataNew {
 //                                .errorMessage("';' expected")
 //                                .build(),
                         SyntaxFeedbackNew.builder()
-                                .feedbackContent( ""
-                                        + "**The compilers expect the statements to end with a \";\".**"
+                                // More content: about how it's happens.
+                                .feedbackContent(""
+                                        + "**The compilers expect that you end statements with a \";\".**"
                                         + "\n\n"
-                                        + "**<span style=\"color: red;\">This</span> usually happens when you forget to write semicolon or closing parenthesis.**"
+                                        + "**This usually happens when you forget to write semicolon or closing parenthesis.**"
                                 )
-                                .solutionExample("int oddNumber = 7;")
+                                .solutionExample(""
+                                        + "// old code"
+                                        + "int oddNumber = 7"
+                                        + "// new code"
+                                        + "int oddNumber = 7;"
+                                )
                                 .errorMessage("';' expected")
                                 .build(),
                         SyntaxFeedbackNew.builder()
@@ -77,6 +83,25 @@ public class SyntaxFeedbackDataNew {
                 )
         );
         feedbackBySyntaxErrorCode.put(
+                "compiler.err.already.defined",
+                List.of(
+                        SyntaxFeedbackNew.builder()
+                                .feedbackContent(""
+                                        + "**The compilers expect that you don't define variables or methods twice, where they can be called (scope of that variable or method).**"
+                                )
+                                .solutionExample(""
+                                        + "// old code"
+                                        + "int oddNumber = 7;"
+                                        + "int oddNumber = 7;"
+                                        + "// new code"
+                                        + "int oddNumber = 7;"
+                                        + "int NewOddNumber = 7;"
+                                )
+                                .errorMessage("")
+                                .build()
+                )
+        );
+        feedbackBySyntaxErrorCode.put(
                 "compiler.err.var.might.not.have.been.initialized",
                 Collections.singletonList(
                         SyntaxFeedbackNew.builder()
@@ -86,16 +111,7 @@ public class SyntaxFeedbackDataNew {
                                 .build()
                 )
         );
-        feedbackBySyntaxErrorCode.put(
-                "compiler.err.already.defined",
-                Collections.singletonList(
-                        SyntaxFeedbackNew.builder()
-                                .feedbackContent("You already have a variable or a method in the common scope with the same name. \n Scope means where the variable or method can be called. \n In each scope, all variables or methods must have unique names.")
-                                .solutionExample("")
-                                .errorMessage("")
-                                .build()
-                )
-        );
+
 
         feedbackBySyntaxErrorCode.put(
                 "compiler.err.cant.resolve.location",
@@ -132,7 +148,7 @@ public class SyntaxFeedbackDataNew {
                 "compiler.err.illegal.combination.of.modifiers",
                 Collections.singletonList(
                         SyntaxFeedbackNew.builder()
-                                .feedbackContent( ""
+                                .feedbackContent(""
                                         + "Modifiers are additional properties for Java declarations such as methods, variables and classes \n"
                                         + "you always have to specify it at the very beginning of the declaration \n"
                                         + "you can also combine them but unfortunately not like what you have done \n"
@@ -168,10 +184,10 @@ public class SyntaxFeedbackDataNew {
                                 .build(),
                         SyntaxFeedbackNew.builder()
                                 .feedbackContent(""
-                                    + "every block (method) or class definition must begin and end with curly braces. \n"
-                                    + "String Character Without Double Quotes E.g. \n"
-                                    + "A method cannot have another method within its scope \n"
-                                    + "Access Modifiers must not be used within the method with local variables, as their method area defines their accessibility."
+                                        + "every block (method) or class definition must begin and end with curly braces. \n"
+                                        + "String Character Without Double Quotes E.g. \n"
+                                        + "A method cannot have another method within its scope \n"
+                                        + "Access Modifiers must not be used within the method with local variables, as their method area defines their accessibility."
                                 )
                                 .solutionExample("String = \"a\";")
                                 .errorMessage("")
@@ -335,7 +351,7 @@ public class SyntaxFeedbackDataNew {
                                 )
                                 .build(),
                         SyntaxFeedbackNew.builder()
-                                .feedbackContent( ""
+                                .feedbackContent(""
                                         + "You have violated the Java Statement rules because there are the following statements in Java:\n"
                                         + "1) Expression Statments: to change the values of a data field or to load methods or to create an object \n"
                                         + "2) Declaration Statment: to declare variables E.g.: int <varName>; \n"
@@ -367,7 +383,7 @@ public class SyntaxFeedbackDataNew {
                 "compiler.err.else.without.if",
                 Collections.singletonList(
                         SyntaxFeedbackNew.builder()
-                                .feedbackContent( ""
+                                .feedbackContent(""
                                         + "if you want to check conditions in Java, you can use the if statement, you can add else to it\n"
                                         + "but an else statement without an if is problematic"
                                 )
@@ -401,7 +417,7 @@ public class SyntaxFeedbackDataNew {
                 "compiler.err.missing.meth.body.or.decl.abstract",
                 List.of(
                         SyntaxFeedbackNew.builder()
-                                .feedbackContent( ""
+                                .feedbackContent(""
                                         + "The declaration of a method consists of 2 steps:\n"
                                         + "Method header: <return type> methodName () \n"
                                         + "Method body: {code block and a return if necessary}"

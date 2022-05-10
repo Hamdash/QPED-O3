@@ -51,38 +51,34 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
         for (SyntaxFeedbackNew syntaxFeedback : syntaxFeedbacks) {
             syntaxFeedbackCounter = syntaxFeedbackCounter + 1;
             syntaxFeedback.setBody(""
+//                    add compiler msg if no element in the list  --> may other template
 //                    Error Header
-                            + " \n\n "
-                            + "## Error " + String.format("%02d", syntaxFeedbackCounter) + ":"
-//                    Feedback Content
-                            + " \n\n "
-                            + syntaxFeedback.getFeedbackContent()
-//                    Code Where this error happens
-                            + "\n\n "
-                            + "**Where this error happens:**"
-                            + "\n\n "
-                            + "```java\n"
-                            + error.getErrorSourceCode()
-                            + "\n```"
-//                   Example to fix this error
-                            + "\n\n "
-                            + "**Example to fix this error:**"
-                            + "\n\n "
-                            + "```java\n"
-                            + syntaxFeedback.getSolutionExample()
-                            + "\n```"
+                            + buildFeedbackHeader(syntaxFeedback, error)
+//                    Feedback Content + and more Content + may use tokens
+                            + buildFeedbackContent(syntaxFeedback, error)
+//                    Code Where this error happens or line number
+                            + buildFeedbackErrorSourceCode(syntaxFeedback, error)
+//                    Example to fix this error
+                            + buildFeedbackSolutionExample(syntaxFeedback, error)
             );
         }
         return null;
     }
+
+
 
     @Override
     public List<SyntaxFeedbackNew> generateFeedbacks(List<SyntaxError> errors) {
         List<SyntaxFeedbackNew> result = new ArrayList<>();
         for (SyntaxError error : errors) {
             List<SyntaxFeedbackNew> relatedSyntaxFeedbacks = this.getFeedback(error);
+            // check for length bigger than 1 or 0
+            // ignore some errors // End pos may can use
             relatedSyntaxFeedbacks = relatedSyntaxFeedbacks.stream().filter(relatedSyntaxFeedback -> {
-                return relatedSyntaxFeedback.getErrorMessage().equals(error.getErrorMessage());
+                return relatedSyntaxFeedback.getErrorMessage() == null
+                        || relatedSyntaxFeedback.getErrorMessage().equals("")
+                        || relatedSyntaxFeedback.getErrorMessage().equals(error.getErrorMessage())
+                        ;
             }).collect(Collectors.toList());
             buildSyntaxFeedbackBody(relatedSyntaxFeedbacks, error);
             result.addAll(relatedSyntaxFeedbacks);
@@ -101,6 +97,51 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
         return result;
     }
 
+    private String buildFeedbackHeader(SyntaxFeedbackNew syntaxFeedback, SyntaxError error) {
+        return ""
+                + " \n\n "
+                + "## Error " + String.format("%02d", syntaxFeedbackCounter) + ":"
+                ;
+    }
+
+    private String buildFeedbackSolutionExample(SyntaxFeedbackNew syntaxFeedback, SyntaxError error) {
+        return ""
+                + "\n\n "
+                + "**Example to fix this error:**"
+                + "\n\n "
+                + "```java\n"
+                + syntaxFeedback.getSolutionExample()
+                + "\n```"
+                ;
+    }
+
+    private String buildFeedbackErrorSourceCode(SyntaxFeedbackNew syntaxFeedback, SyntaxError error) {
+        return ""
+                + "\n\n "
+                + "**Where this error happens:**"
+                + "\n\n "
+                + "```java\n"
+                + error.getErrorSourceCode()
+                + "\n```"
+                ;
+    }
+
+    private String buildFeedbackContent(SyntaxFeedbackNew syntaxFeedback, SyntaxError error) {
+        String result = "";
+        if (syntaxFeedback.getErrorMessage() == null && syntaxFeedback.getErrorMessage().equals("")) {
+            result += ""
+                    + "\n\n"
+                    + error.getErrorMessage()
+            ;
+        } else {
+            result += ""
+                    + "\n\n"
+                    + syntaxFeedback.getFeedbackContent()
+            ;
+        }
+        return result;
+    }
+
     public static void main(String[] args) {
         String code = ""
                 + "public static void main (String[] args) { \n"
@@ -111,7 +152,6 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
                 + "public static void test () { \n"
                 + "int g = 0; \n"
                 + "} \n";
-
 
 
         SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(code).level(CheckLevel.ADVANCED).build();
@@ -130,10 +170,9 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
 
         for (SyntaxFeedback syntax : massE.getSyntaxFeedbacks()) {
             String s = ""
-                    + syntax.getBody()
+                    + syntax.getFeedbackContent()
                     + NEW_LINE
-                    + "--------------------------------------------------"
-                    ;
+                    + "--------------------------------------------------";
             System.out.println(s);
 
         }
@@ -141,8 +180,7 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
             String s = ""
                     + syntax.getBody()
                     + NEW_LINE
-                    + "--------------------------------------------------"
-                    ;
+                    + "--------------------------------------------------";
             System.out.println(s);
 
         }
