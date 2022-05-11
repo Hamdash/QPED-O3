@@ -60,6 +60,13 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
                             + buildFeedbackErrorSourceCode(syntaxFeedback, error)
 //                    Example to fix this error
                             + buildFeedbackSolutionExample(syntaxFeedback, error)
+                            + "\n\n"
+                            + "<details>\n\n"
+                            + "<summary>TITLE</summary>\n\n"
+                            + "\n\n"
+                            + "BODY CONTENT"
+                            + "\n\n"
+                            + "</details>"
             );
         }
         return null;
