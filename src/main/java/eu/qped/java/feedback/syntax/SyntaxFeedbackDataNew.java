@@ -28,7 +28,7 @@ public class SyntaxFeedbackDataNew {
                         SyntaxFeedbackNew.builder()
                                 // More content: about how it's happens.
                                 .feedbackContent(""
-                                        + "**The compilers expect that you end statements with a \";\".**"
+                                        + "**The compiler expect that you end statements with a \";\".**"
                                         + "\n\n"
                                         + "**This usually happens when you forget to write semicolon or closing parenthesis.**"
                                 )
@@ -87,7 +87,7 @@ public class SyntaxFeedbackDataNew {
                 List.of(
                         SyntaxFeedbackNew.builder()
                                 .feedbackContent(""
-                                        + "**The compilers expect that you don't define variables or methods twice, where they can be called (scope of that variable or method).**"
+                                        + "**The compiler expect that you don't define variables or methods twice, where they can be called (scope of that variable or method).**"
                                 )
                                 .solutionExample(""
                                         + "// old code\n"
