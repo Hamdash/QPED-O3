@@ -61,7 +61,7 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
 //                    Example to fix this error
                             + buildFeedbackSolutionExample(syntaxFeedback, error)
                             + "\n\n"
-                            + "<details>\n\n"
+                            + "<details> \n\n \n\n "
                             + "<summary>TITLE</summary>\n\n"
                             + "\n\n"
                             + "BODY CONTENT"
