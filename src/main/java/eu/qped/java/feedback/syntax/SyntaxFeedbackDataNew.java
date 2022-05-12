@@ -170,7 +170,7 @@ public class SyntaxFeedbackDataNew {
                                         + "}" + NEWLINE
                                         + "// new code." + NEWLINE
                                         + "int myMethod(){" + NEWLINE
-                                        + "return 0;" + NEWLINE
+                                        + "    return 0;" + NEWLINE
                                         + "}" + NEWLINE
 
                                 )
