@@ -132,8 +132,8 @@ public class SyntaxFeedbackDataNew {
                                         + "     myLastName\";\n"
                                         + "// new code. \n"
                                         + "String firstName = \"myFirstName\";\n"
-                                        + "String name = \"myFirstName \n"
-                                        + "     + myLastName\";"
+                                        + "String name = \"myFirstName\" \n"
+                                        + "     + \"myLastName\";"
                                 )
                                 .errorMessage("unclosed string literal")
                                 .build()
