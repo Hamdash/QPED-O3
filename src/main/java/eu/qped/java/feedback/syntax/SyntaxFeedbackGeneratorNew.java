@@ -135,10 +135,14 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
 
     private String buildFeedbackContent(SyntaxFeedbackNew syntaxFeedback, SyntaxError error) {
         String result = "";
-        if (syntaxFeedback.getErrorMessage() == null && syntaxFeedback.getErrorMessage().equals("")) {
+        if (syntaxFeedback.getErrorMessage() == null || syntaxFeedback.getErrorMessage().equals("")) {
             result += ""
                     + "\n\n"
+                    + "**"
                     + error.getErrorMessage()
+                    + "**"
+                    + "\n\n"
+                    + syntaxFeedback.getFeedbackContent()
             ;
         } else {
             result += ""
@@ -152,9 +156,12 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
     public static void main(String[] args) {
         String code = ""
                 + "public static void main (String[] args) { \n"
-                + "int b = 0;   \n"
-                + "int b = 0;   \n"
-                + "for(int i  = 0  ; i< 10 ; i++) { int k = 0;}    \n"
+                + "int i = 0;   \n"
+                + " if (i == 1) \"one\";  \n"
+//                + "int b = 0;   \n"
+//                + " int b  = 3 + (2 + 3);   \n"
+//                + " b = b + 10;   \n"
+                + "for(int i = 0  ; i< 10 ; i++) { int k = 0;}    \n"
                 + "} \n"
                 + "public static void test () { \n"
                 + "int g = 0; \n"

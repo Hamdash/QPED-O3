@@ -102,6 +102,38 @@ public class SyntaxFeedbackDataNew {
                 )
         );
         feedbackBySyntaxErrorCode.put(
+                "compiler.err.not.stmt",
+                List.of(
+                        SyntaxFeedbackNew.builder()
+                                .feedbackContent("**The compiler expected that you write a statement, but instead you wrote something different.**")
+                                .solutionExample(""
+                                        + "// old code. We write expression in the if statement instead a statement.\n"
+                                        + "if (i == 1) {\n"
+                                        + "     \"one\";\n"
+                                        + "}\n"
+                                        + "// new code. \"one\" is a expression and not a statement.\n"
+                                        + "if (i == 1) {\n"
+                                        + "     System.out.println(\"one\");\n"
+                                        + "}\n"
+                                )
+                                .errorMessage("not a statement")
+                                .build()
+                )
+        );
+        feedbackBySyntaxErrorCode.put(
+                "compiler.err.unclosed.str.lit",
+                Collections.singletonList(
+                        SyntaxFeedbackNew.builder()
+                                .feedbackContent(""
+                                        + "If you want to define a character string with the Java language \n"
+                                        + "it would be correct if you wrote within two quotation marks"
+                                )
+                                .solutionExample("like: String <var name> =\"value\"")
+                                .errorMessage("")
+                                .build()
+                )
+        );
+        feedbackBySyntaxErrorCode.put(
                 "compiler.err.var.might.not.have.been.initialized",
                 Collections.singletonList(
                         SyntaxFeedbackNew.builder()
@@ -337,48 +369,8 @@ public class SyntaxFeedbackDataNew {
                 )
 
         );
-        feedbackBySyntaxErrorCode.put(
-                "compiler.err.not.stmt",
-                List.of(
-                        SyntaxFeedbackNew.builder()
-                                .feedbackContent("You are trying to initialize a statement, but unfortunately the declaration was wrong.")
-                                .solutionExample("For example, a variable can be defined in Java like this: <data type> varName = value;")
-                                .errorMessage("compiler.err.not.stmt")
-                                .errorInfo(
-                                        ErrorInfo.builder()
-                                                .errorKey("compiler.err.not.stmt+µ+=")
-                                                .build()
-                                )
-                                .build(),
-                        SyntaxFeedbackNew.builder()
-                                .feedbackContent(""
-                                        + "You have violated the Java Statement rules because there are the following statements in Java:\n"
-                                        + "1) Expression Statments: to change the values of a data field or to load methods or to create an object \n"
-                                        + "2) Declaration Statment: to declare variables E.g.: int <varName>; \n"
-                                )
-                                .solutionExample("int <varName> = value1;" + " " + "<varName> = value2;")
-                                .errorMessage("")
-                                .errorInfo(
-                                        ErrorInfo.builder()
-                                                .errorKey("compiler.err.not.stmt+µ+Not=")
-                                                .build()
-                                )
-                                .build()
-                )
-        );
-        feedbackBySyntaxErrorCode.put(
-                "compiler.err.unclosed.str.lit",
-                Collections.singletonList(
-                        SyntaxFeedbackNew.builder()
-                                .feedbackContent(""
-                                        + "If you want to define a character string with the Java language \n"
-                                        + "it would be correct if you wrote within two quotation marks"
-                                )
-                                .solutionExample("like: String <var name> =\"value\"")
-                                .errorMessage("")
-                                .build()
-                )
-        );
+
+
         feedbackBySyntaxErrorCode.put(
                 "compiler.err.else.without.if",
                 Collections.singletonList(
