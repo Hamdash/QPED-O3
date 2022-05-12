@@ -149,14 +149,14 @@ public class SyntaxFeedbackDataNew {
                                         + "// old code." + NEWLINE
                                         + "else {" + NEWLINE
                                         + "" + NEWLINE
-                                        + "     }" + NEWLINE
+                                        + "}" + NEWLINE
                                         + "// new code." + NEWLINE
                                         + "if(true) {"
                                         + "" + NEWLINE
-                                        + "     }" + NEWLINE
+                                        + "}" + NEWLINE
                                         + "else {" + NEWLINE
                                         + "" + NEWLINE
-                                        + "     }" +NEWLINE
+                                        + "}" +NEWLINE
                                 )
                                 .errorMessage("'else' without 'if'")
                                 .build()
