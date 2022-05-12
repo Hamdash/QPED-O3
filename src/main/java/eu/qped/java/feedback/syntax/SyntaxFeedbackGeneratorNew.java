@@ -155,7 +155,7 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
 
     public static void main(String[] args) {
         String code = ""
-                + "public static void main (String[] args) { \n"
+                + "public static int main (String[] args) { \n"
                 + " if(true) {int b = 1;} else {}  \n"
 //                + "int i = 0;   \n"
 //                + " if (i == 1) \"one\";  \n"

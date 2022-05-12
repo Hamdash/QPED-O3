@@ -148,17 +148,33 @@ public class SyntaxFeedbackDataNew {
                                 .solutionExample(""
                                         + "// old code." + NEWLINE
                                         + "else {" + NEWLINE
-                                        + "" + NEWLINE
                                         + "}" + NEWLINE
                                         + "// new code." + NEWLINE
-                                        + "if(true) {"
-                                        + "" + NEWLINE
+                                        + "if(true) {" + NEWLINE
                                         + "}" + NEWLINE
                                         + "else {" + NEWLINE
-                                        + "" + NEWLINE
                                         + "}" +NEWLINE
                                 )
                                 .errorMessage("'else' without 'if'")
+                                .build()
+                )
+        );
+        feedbackBySyntaxErrorCode.put(
+                "compiler.err.missing.ret.stmt",
+                Collections.singletonList(
+                        SyntaxFeedbackNew.builder()
+                                .feedbackContent("**Every method who has return type need a return statement at the end.**")
+                                .solutionExample(""
+                                        + "// old code." + NEWLINE
+                                        + "int myMethod(){" + NEWLINE
+                                        + "}" + NEWLINE
+                                        + "// new code." + NEWLINE
+                                        + "int myMethod(){" + NEWLINE
+                                        + "return 0;" + NEWLINE
+                                        + "}" + NEWLINE
+
+                                )
+                                .errorMessage("missing return statement")
                                 .build()
                 )
         );
@@ -401,16 +417,7 @@ public class SyntaxFeedbackDataNew {
 
 
 
-        feedbackBySyntaxErrorCode.put(
-                "compiler.err.missing.ret.stmt",
-                Collections.singletonList(
-                        SyntaxFeedbackNew.builder()
-                                .feedbackContent("Every method whose return type is not void needs a \"return\" at the end.")
-                                .solutionExample("")
-                                .errorMessage("")
-                                .build()
-                )
-        );
+
         feedbackBySyntaxErrorCode.put(
                 "compiler.err.unreachable.stmt",
                 Collections.singletonList(
