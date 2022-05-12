@@ -14,6 +14,7 @@ import java.util.Map;
 @AllArgsConstructor
 @Builder
 public class SyntaxFeedbackDataNew {
+    private final static String NEWLINE = "\n";
 
     public static Map<String, List<SyntaxFeedbackNew>> getSyntaxFeedbackByErrorCode() {
         Map<String, List<SyntaxFeedbackNew>> feedbackBySyntaxErrorCode = new HashMap<>();
@@ -28,7 +29,7 @@ public class SyntaxFeedbackDataNew {
                         SyntaxFeedbackNew.builder()
                                 // More content: about how it's happens.
                                 .feedbackContent(""
-                                        + "**The compiler expect that you end statements with a \";\".**"
+                                        + "**The compiler expects that you end statements with a \";\".**"
                                         + "\n\n"
                                         + "**This usually happens when you forget to write semicolon or closing parenthesis.**"
                                 )
@@ -87,7 +88,7 @@ public class SyntaxFeedbackDataNew {
                 List.of(
                         SyntaxFeedbackNew.builder()
                                 .feedbackContent(""
-                                        + "**The compiler expect that you don't define variables or methods twice, where they can be called (scope of that variable or method).**"
+                                        + "**The compiler expects that you don't define variables or methods twice, where they can be called (scope of that variable or method).**"
                                 )
                                 .solutionExample(""
                                         + "// old code\n"
@@ -105,7 +106,7 @@ public class SyntaxFeedbackDataNew {
                 "compiler.err.not.stmt",
                 List.of(
                         SyntaxFeedbackNew.builder()
-                                .feedbackContent("**The compiler expected that you write a statement, but instead you wrote something different.**")
+                                .feedbackContent("**The compiler expects that you write a statement, but instead you wrote something different.**")
                                 .solutionExample(""
                                         + "// old code. We write expression in the if statement instead a statement.\n"
                                         + "if (i == 1) {\n"
@@ -124,7 +125,7 @@ public class SyntaxFeedbackDataNew {
                 "compiler.err.unclosed.str.lit",
                 Collections.singletonList(
                         SyntaxFeedbackNew.builder()
-                                .feedbackContent("**The compiler expected that you close string literal always with \".**")
+                                .feedbackContent("**The compiler expects that you close string literal always with \".**")
                                 .solutionExample(""
                                         + "// old code.\n"
                                         + "String firstName = \"myFirstName;\n"
@@ -136,6 +137,28 @@ public class SyntaxFeedbackDataNew {
                                         + "     + \"myLastName\";"
                                 )
                                 .errorMessage("unclosed string literal")
+                                .build()
+                )
+        );
+        feedbackBySyntaxErrorCode.put(
+                "compiler.err.else.without.if",
+                Collections.singletonList(
+                        SyntaxFeedbackNew.builder()
+                                .feedbackContent("**The compiler expects that else statement always come after if statement.**")
+                                .solutionExample(""
+                                        + "// old code." + NEWLINE
+                                        + "else {" + NEWLINE
+                                        + "" + NEWLINE
+                                        + "     }" + NEWLINE
+                                        + "// new code." + NEWLINE
+                                        + "if(true) {"
+                                        + "" + NEWLINE
+                                        + "     }" + NEWLINE
+                                        + "else {" + NEWLINE
+                                        + "" + NEWLINE
+                                        + "     }" +NEWLINE
+                                )
+                                .errorMessage("'else' without 'if'")
                                 .build()
                 )
         );
@@ -377,19 +400,7 @@ public class SyntaxFeedbackDataNew {
         );
 
 
-        feedbackBySyntaxErrorCode.put(
-                "compiler.err.else.without.if",
-                Collections.singletonList(
-                        SyntaxFeedbackNew.builder()
-                                .feedbackContent(""
-                                        + "if you want to check conditions in Java, you can use the if statement, you can add else to it\n"
-                                        + "but an else statement without an if is problematic"
-                                )
-                                .solutionExample("")
-                                .errorMessage("")
-                                .build()
-                )
-        );
+
         feedbackBySyntaxErrorCode.put(
                 "compiler.err.missing.ret.stmt",
                 Collections.singletonList(
