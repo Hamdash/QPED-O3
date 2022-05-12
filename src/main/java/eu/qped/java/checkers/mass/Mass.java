@@ -46,7 +46,7 @@ public class Mass implements Checker {
         mainSettingsConfiguratorConf.setStyleNeeded(true);
         mainSettingsConfiguratorConf.setSemanticNeeded("true");
 
-        SemanticConfigurator semanticConfigurator = SemanticConfigurator.createSemanticConfigurator(new QFSemSettings());
+        SemanticConfigurator semanticConfigurator = SemanticConfigurator.createSemanticConfigurator(semSettings);
 
 
         SemanticChecker semanticChecker = SemanticChecker.createSemanticMassChecker(semanticConfigurator);
