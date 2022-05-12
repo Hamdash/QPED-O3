@@ -127,12 +127,12 @@ public class SyntaxFeedbackDataNew {
                                 .feedbackContent("**The compiler expected that you close string literal always with \".**")
                                 .solutionExample(""
                                         + "// old code.\n"
-                                        + "String firstName = \"myfirstName;\n"
-                                        + "String name = \"myfirstName \n"
-                                        + "     myLastName\";"
-                                        + "// new code. \"one\" is a expression and not a statement.\n"
-                                        + "String firstName = \"myfirstName\";\n"
-                                        + "String name = \"myfirstName \n"
+                                        + "String firstName = \"myFirstName;\n"
+                                        + "String name = \"myFirstName \n"
+                                        + "     myLastName\";\n"
+                                        + "// new code. \n"
+                                        + "String firstName = \"myFirstName\";\n"
+                                        + "String name = \"myFirstName \n"
                                         + "     + myLastName\";"
                                 )
                                 .errorMessage("unclosed string literal")
