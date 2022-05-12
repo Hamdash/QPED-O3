@@ -156,8 +156,9 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
     public static void main(String[] args) {
         String code = ""
                 + "public static void main (String[] args) { \n"
-                + "int i = 0;   \n"
-                + " if (i == 1) \"one\";  \n"
+                + "String s = \"abc\n;   \n"
+//                + "int i = 0;   \n"
+//                + " if (i == 1) \"one\";  \n"
 //                + "int b = 0;   \n"
 //                + " int b  = 3 + (2 + 3);   \n"
 //                + " b = b + 10;   \n"

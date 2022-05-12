@@ -124,12 +124,18 @@ public class SyntaxFeedbackDataNew {
                 "compiler.err.unclosed.str.lit",
                 Collections.singletonList(
                         SyntaxFeedbackNew.builder()
-                                .feedbackContent(""
-                                        + "If you want to define a character string with the Java language \n"
-                                        + "it would be correct if you wrote within two quotation marks"
+                                .feedbackContent("**The compiler expected that you close string literal always with \".**")
+                                .solutionExample(""
+                                        + "// old code.\n"
+                                        + "String firstName = \"myfirstName;\n"
+                                        + "String name = \"myfirstName \n"
+                                        + "     myLastName\";"
+                                        + "// new code. \"one\" is a expression and not a statement.\n"
+                                        + "String firstName = \"myfirstName\";\n"
+                                        + "String name = \"myfirstName \n"
+                                        + "     + myLastName\";"
                                 )
-                                .solutionExample("like: String <var name> =\"value\"")
-                                .errorMessage("")
+                                .errorMessage("unclosed string literal")
                                 .build()
                 )
         );
