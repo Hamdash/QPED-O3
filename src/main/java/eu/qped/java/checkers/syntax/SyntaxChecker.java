@@ -24,7 +24,7 @@ import java.util.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SyntaxChecker {
+public class SyntaxChecker{
 
     private String stringAnswer;
     private String targetProject;
@@ -100,15 +100,6 @@ public class SyntaxChecker {
         return syntaxErrors;
     }
 
-    class test {
-        public void print() {
-            int x = 3;
-            x = 2;
-            System.out.println();
-        }
-    }
-
-
     public static void main(String[] args) throws IOException {
         String code = "import java.util.ArrayList;\n" +
                 "import java.util.Arrays;\n" +
@@ -161,8 +152,10 @@ public class SyntaxChecker {
                 "    }\n" +
                 "}";
 
+
         SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(code).build();
         System.out.println(syntaxChecker.check());
 //        System.out.println(syntaxChecker.check().getSyntaxErrors().get(0).getErrorSourceCode());
     }
+
 }
