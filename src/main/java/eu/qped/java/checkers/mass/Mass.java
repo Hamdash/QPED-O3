@@ -98,7 +98,7 @@ public class Mass implements Checker {
             result[i + 1] = ""
                     + syntax.getFeedbackContent()
                     + NEW_LINE
-                    + syntax.getSyntaxError().getLine()
+                    + "At Line: " +  syntax.getSyntaxError().getLine()
                     + NEW_LINE
                     + "--------------------------------------------------"
             ;
