@@ -16,7 +16,8 @@ import java.util.Map;
 public class SyntaxFeedbackDataNew {
     private final static String NEWLINE = "\n";
 
-    public static Map<String, List<SyntaxFeedbackNew>> getSyntaxFeedbackByErrorCode() {
+    //FIXME no static
+    public Map<String, List<SyntaxFeedbackNew>> getSyntaxFeedbackByErrorCode() {
         Map<String, List<SyntaxFeedbackNew>> feedbackBySyntaxErrorCode = new HashMap<>();
         feedbackBySyntaxErrorCode.put(
                 "compiler.err.expected",

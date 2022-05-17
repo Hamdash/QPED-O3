@@ -23,33 +23,23 @@ import java.util.stream.Collectors;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedbackNew, SyntaxError> {
-    private final static String ERROR_TRIGGER_CONS = " Error code: ";
-    private final static String LINE_NUMBER_CONS = " Line: ";
-    private final static String ERROR_MSG_CONS = " Error type: ";
-    private final static String FEEDBACK_CONS = " Feedback: ";
+public class SyntaxFeedbackGeneratorNew extends FeedbackBuilder implements FeedbackGenerator<SyntaxFeedbackNew, SyntaxError> {
+
     private final static String NEW_LINE = "\n\n";
-    private final static ArrayList<String> TYPES = new ArrayList<>();
 
-    static {
-        TYPES.add("for");
-        TYPES.add("switch");
-        TYPES.add("while");
-        TYPES.add("if");
-        TYPES.add("else");
-        TYPES.add("System");
-        TYPES.add("break");
-        TYPES.add("continue");
-        TYPES.add("case");
-    }
+    private int syntaxFeedbackCounter; //todo what is that?
 
-    private List<SyntaxFeedbackNew> syntaxFeedbacks;
-    private int syntaxFeedbackCounter;
+    // buildSyntaxFeedback
 
-    public List<SyntaxFeedbackNew> buildSyntaxFeedbackBody(List<SyntaxFeedbackNew> syntaxFeedbacks, SyntaxError error) {
+    /**
+     * todo why the param is also a Feedback
+     * use {@link StringBuilder}.
+     */
+    public void buildSyntaxFeedbackBody(List<SyntaxFeedbackNew> syntaxFeedbacks, SyntaxError error) {
         for (SyntaxFeedbackNew syntaxFeedback : syntaxFeedbacks) {
             syntaxFeedbackCounter = syntaxFeedbackCounter + 1;
             syntaxFeedback.setBody(""
+                            //FIXME remove comments
 //                    add compiler msg if no element in the list  --> may other template
 //                    Error Header
                             + buildFeedbackHeader(syntaxFeedback, error)
@@ -68,7 +58,6 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
                             + "</details>"
             );
         }
-        return null;
     }
 
 
@@ -105,16 +94,11 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
         return null;
     }
 
-    public List<SyntaxFeedbackNew> getFeedback(SyntaxError syntaxError) {
-        List<SyntaxFeedbackNew> result = new ArrayList<>();
-        SyntaxFeedbackDataNew syntaxFeedbackDataNew = SyntaxFeedbackDataNew.builder().build();
-        result = SyntaxFeedbackDataNew.getSyntaxFeedbackByErrorCode().get(syntaxError.getErrorCode());
-        result.stream().filter(syntaxFeedback -> {
-            return syntaxFeedback.getErrorMessage().equals(syntaxError.getErrorMessage());
-        });
-        return result;
+    public List<SyntaxFeedbackNew> getFeedbacksByErrorCode(String errorCode) {
+        return SyntaxFeedbackDataNew.builder().build().getSyntaxFeedbackByErrorCode().get(errorCode);
     }
 
+    //todo why is the params
     private String buildFeedbackHeader(SyntaxFeedbackNew syntaxFeedback, SyntaxError error) {
         return ""
                 + " \n\n "
