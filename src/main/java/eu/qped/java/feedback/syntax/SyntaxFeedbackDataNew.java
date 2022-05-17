@@ -21,13 +21,7 @@ public class SyntaxFeedbackDataNew {
         feedbackBySyntaxErrorCode.put(
                 "compiler.err.expected",
                 List.of(
-//                        SyntaxFeedbackNew.builder()
-//                                .feedbackContent("You used the braces incorrectly when declaring a method.")
-//                                .solutionExample("")
-//                                .errorMessage("';' expected")
-//                                .build(),
                         SyntaxFeedbackNew.builder()
-                                // More content: about how it's happens.
                                 .feedbackContent(""
                                         + "**The compiler expects that you end statements with a \";\".**"
                                         + "\n\n"
@@ -172,9 +166,29 @@ public class SyntaxFeedbackDataNew {
                                         + "int myMethod(){" + NEWLINE
                                         + "    return 0;" + NEWLINE
                                         + "}" + NEWLINE
-
                                 )
                                 .errorMessage("missing return statement")
+                                .build()
+                )
+        );
+        feedbackBySyntaxErrorCode.put(
+                "compiler.err.unreachable.stmt",
+                Collections.singletonList(
+                        SyntaxFeedbackNew.builder()
+                                .feedbackContent("**The compiler expects that you not write any code after the return statement.**")
+                                .solutionExample(""
+                                        + "// old code." + NEWLINE
+                                        + "int myMethod(){" + NEWLINE
+                                        + "    return 0;" + NEWLINE
+                                        + "    int a = 0;" + NEWLINE
+                                        + "}" + NEWLINE
+                                        + "// new code." + NEWLINE
+                                        + "int myMethod(){" + NEWLINE
+                                        + "    int a = 0;" + NEWLINE
+                                        + "    return a;" + NEWLINE
+                                        + "}" + NEWLINE
+                                )
+                                .errorMessage("")
                                 .build()
                 )
         );
@@ -418,16 +432,7 @@ public class SyntaxFeedbackDataNew {
 
 
 
-        feedbackBySyntaxErrorCode.put(
-                "compiler.err.unreachable.stmt",
-                Collections.singletonList(
-                        SyntaxFeedbackNew.builder()
-                                .feedbackContent("Return always closes a method, so you cannot pass statements after a return")
-                                .solutionExample("")
-                                .errorMessage("")
-                                .build()
-                )
-        );
+
 
         feedbackBySyntaxErrorCode.put(
                 "compiler.err.missing.meth.body.or.decl.abstract",

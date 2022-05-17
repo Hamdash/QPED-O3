@@ -3,9 +3,9 @@ package eu.qped.java.feedback.syntax;
 import eu.qped.framework.CheckLevel;
 import eu.qped.java.checkers.mass.MainSettings;
 import eu.qped.java.checkers.mass.MassExecutor;
-import eu.qped.java.checkers.syntax.SyntaxCheckReport;
 import eu.qped.java.checkers.syntax.SyntaxChecker;
 import eu.qped.java.checkers.syntax.SyntaxError;
+import eu.qped.java.feedback.FeedbackBuilder;
 import eu.qped.java.feedback.FeedbackGenerator;
 import eu.qped.java.feedback.syntaxLagacy.SyntaxFeedback;
 import lombok.AllArgsConstructor;
@@ -13,7 +13,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -73,25 +72,37 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
     }
 
 
-
     @Override
     public List<SyntaxFeedbackNew> generateFeedbacks(List<SyntaxError> errors) {
-        List<SyntaxFeedbackNew> result = new ArrayList<>();
-        for (SyntaxError error : errors) {
-            List<SyntaxFeedbackNew> relatedSyntaxFeedbacks = this.getFeedback(error);
-            // check for length bigger than 1 or 0
-            // ignore some errors // End pos may can use
-            relatedSyntaxFeedbacks = relatedSyntaxFeedbacks.stream().filter(relatedSyntaxFeedback -> {
-                return relatedSyntaxFeedback.getErrorMessage() == null
+
+//        List<SyntaxFeedbackNew> result = new ArrayList<>();
+//        for (SyntaxError error : errors) {
+        // get by error Code
+//            List<SyntaxFeedbackNew> relatedSyntaxFeedbacks = this.getFeedbacksByErrorCode(error.getErrorCode());
+//            // get by error MSG
+//            relatedSyntaxFeedbacks = relatedSyntaxFeedbacks.stream().filter(relatedSyntaxFeedback ->
+//                    relatedSyntaxFeedback.getErrorMessage() == null
+//                    || relatedSyntaxFeedback.getErrorMessage().equals("")
+//                    || relatedSyntaxFeedback.getErrorMessage().equals(error.getErrorMessage())
+//            ).collect(Collectors.toList());
+//            buildSyntaxFeedbackBody(relatedSyntaxFeedbacks, error);
+//            result.addAll(relatedSyntaxFeedbacks);
+//        }
+
+        return errors.stream().map(this::generateFeedback).collect(Collectors.toList());
+    }
+
+    public SyntaxFeedbackNew generateFeedback(SyntaxError error) {
+        // potential Feedbacks Data
+        List<SyntaxFeedbackNew> relatedSyntaxFeedbacks = this.getFeedbacksByErrorCode(error.getErrorCode());
+        // filter potential Feedback data by error MSG
+        relatedSyntaxFeedbacks = relatedSyntaxFeedbacks.stream().filter(relatedSyntaxFeedback ->
+                relatedSyntaxFeedback.getErrorMessage() == null
                         || relatedSyntaxFeedback.getErrorMessage().equals("")
                         || relatedSyntaxFeedback.getErrorMessage().equals(error.getErrorMessage())
-                        ;
-            }).collect(Collectors.toList());
-            buildSyntaxFeedbackBody(relatedSyntaxFeedbacks, error);
-            result.addAll(relatedSyntaxFeedbacks);
-        }
-
-        return result;
+        ).collect(Collectors.toList());
+        buildSyntaxFeedbackBody(relatedSyntaxFeedbacks, error);
+        return null;
     }
 
     public List<SyntaxFeedbackNew> getFeedback(SyntaxError syntaxError) {
@@ -199,5 +210,29 @@ public class SyntaxFeedbackGeneratorNew implements FeedbackGenerator<SyntaxFeedb
             System.out.println(s);
 
         }
+    }
+
+    @Override
+    public String buildHeader() {
+        // get HeaderBY Code
+        // get HeaderBY MSG
+        return "";
+    }
+
+    @Override
+    public String buildSolutionExample() {
+        // get example by error
+        return "";
+    }
+
+    @Override
+    public String buildBody(String error) {
+        // call get content by error
+        return "";
+    }
+
+    @Override
+    public String buildErrorSourceCode(String error) {
+        return "";
     }
 }
