@@ -5,7 +5,6 @@ import java.util.List;
 
 import eu.qped.java.checkers.syntax.SyntaxError;
 import eu.qped.java.checkers.syntax.SyntaxErrorPredictHelper;
-import eu.qped.java.feedback.FeedbackGenerator;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +17,7 @@ import eu.qped.framework.CheckLevel;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class SyntaxFeedbackGenerator implements FeedbackGenerator<SyntaxFeedback,SyntaxError> {
+public class SyntaxFeedbackGenerator  {
 
 
     private final static String ERROR_TRIGGER_CONS = " Error code: ";
@@ -48,7 +47,7 @@ public class SyntaxFeedbackGenerator implements FeedbackGenerator<SyntaxFeedback
 
     private final StringBuilder result = new StringBuilder();
 
-    @Override
+
     public List<SyntaxFeedback> generateFeedbacks(List<SyntaxError> syntaxErrors){
         List<SyntaxFeedback> result = new ArrayList<>();
         syntaxErrors.forEach(syntaxError -> result.add(this.getFeedback(syntaxError)));
