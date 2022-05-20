@@ -146,7 +146,7 @@ public class Mass implements Checker {
 
         for (SyntaxFeedbackNew syntax : massExecutor.getSyntaxFeedbackNews()) {
             result[i + 1] = ""
-                    + syntax.getBody()
+                    + syntax.toString()
                     + NEW_LINE
                     + "--------------------------------------------------"
             ;

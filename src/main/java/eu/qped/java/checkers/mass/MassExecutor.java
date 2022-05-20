@@ -115,7 +115,7 @@ public class MassExecutor {
     }
 
     public List<SyntaxFeedbackNew> getSyntaxFeedbackNews() {
-        return syntaxFeedbackNews;
+        return syntaxFeedbackNews != null? syntaxFeedbackNews : new ArrayList<>();
     }
 
     private void translate(boolean styleNeeded, boolean semanticNeeded) {
