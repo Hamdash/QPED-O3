@@ -13,6 +13,7 @@ import eu.qped.java.checkers.style.StyleViolation;
 import eu.qped.java.checkers.syntax.SyntaxCheckReport;
 import eu.qped.java.checkers.syntax.SyntaxError;
 import eu.qped.java.checkers.syntax.SyntaxChecker;
+import eu.qped.java.feedback.syntax.AbstractFeedbackGenerator;
 import eu.qped.java.feedback.syntax.SyntaxFeedbackGeneratorNew;
 import eu.qped.java.feedback.syntax.SyntaxFeedbackNew;
 import eu.qped.java.feedback.syntaxLagacy.SyntaxFeedback;

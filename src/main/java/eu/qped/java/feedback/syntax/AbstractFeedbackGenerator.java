@@ -1,14 +1,16 @@
-package eu.qped.java.feedback;
+package eu.qped.java.feedback.syntax;
 
 import eu.qped.java.checkers.syntax.SyntaxError;
-import eu.qped.java.feedback.syntax.SyntaxFeedbackNew;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public abstract class AbstractFeedbackGenerator {
     public List<SyntaxFeedbackNew> generateFeedbacks(List<SyntaxError> syntaxErrors) {
-        return syntaxErrors.stream().map(this::generateFeedback).collect(Collectors.toUnmodifiableList());
+        return syntaxErrors.stream()
+                .map(this::generateFeedback)
+                .map(SyntaxFeedbackFormatter::formatFeedback)
+                .collect(Collectors.toUnmodifiableList());
     }
 
     protected SyntaxFeedbackNew generateFeedback(SyntaxError syntaxError) {
@@ -30,4 +32,6 @@ public abstract class AbstractFeedbackGenerator {
     protected abstract String generateErrorSource(SyntaxError syntaxError);
 
     protected abstract String generateSolutionExample(SyntaxError syntaxError);
+
+
 }

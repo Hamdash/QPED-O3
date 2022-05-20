@@ -10,10 +10,16 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
+
 public class SyntaxFeedbackNew extends Feedback {
     private String header;
     private String feedbackMessage;
     private String errorSource;
     private String solutionExample;
     private String errorLine;
+
+    @Override
+    public String toString() {
+        return header + feedbackMessage + errorSource + solutionExample;
+    }
 }
