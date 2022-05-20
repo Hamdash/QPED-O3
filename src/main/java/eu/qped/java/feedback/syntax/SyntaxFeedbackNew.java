@@ -20,6 +20,6 @@ public class SyntaxFeedbackNew extends Feedback {
 
     @Override
     public String toString() {
-        return header + feedbackMessage + errorSource + solutionExample;
+        return header + feedbackMessage + errorLine + errorSource + solutionExample;
     }
 }

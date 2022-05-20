@@ -41,9 +41,10 @@ public class SyntaxFeedbackGeneratorNew extends AbstractFeedbackGenerator {
     }
 
     @Override
-    public String generateErrorLine(SyntaxError syntaxError){
-        return String.valueOf(syntaxError.getLine());
+    public String generateErrorLine(SyntaxError syntaxError) {
+        return "At line :" + String.format("%d", syntaxError.getLine());
     }
+
     @Override
     public String generateErrorSource(SyntaxError syntaxError) {
         return syntaxError.getErrorSourceCode();
@@ -73,7 +74,7 @@ public class SyntaxFeedbackGeneratorNew extends AbstractFeedbackGenerator {
     public static void main(String[] args) {
         String code = ""
                 + "public static void main (String[] args) { \n"
-                + " int i = 0;   \n"
+                + " int i = 0; b = 0;  \n"
                 + "  \n"
                 + "} \n";
 
