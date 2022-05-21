@@ -111,6 +111,9 @@ public class Compiler {
                 targetProjectOrClassPath = fileName + ".java";
             }
         }
+        else {
+            targetProjectOrClassPath = DEFAULT_CLASS_PATH;
+        }
         if (isClassOrInterface) {
             javaFileContent.append(answer);
         } else {

@@ -28,8 +28,6 @@ public class SyntaxChecker {
 
     private String stringAnswer;
 
-
-
     private String targetProject;
 
     @Deprecated(forRemoval = true)
@@ -53,7 +51,7 @@ public class SyntaxChecker {
 
         List<Diagnostic<? extends JavaFileObject>> diagnostics = compiler.getCollectedDiagnostics();
         List<SyntaxError> collectedErrors = new ArrayList<>();
-        if (!diagnostics.isEmpty()) {
+        if (diagnostics != null) {
             collectedErrors = analyseDiagnostics(diagnostics);
         }
         resultBuilder.syntaxErrors(collectedErrors);
@@ -102,56 +100,56 @@ public class SyntaxChecker {
         }
         return syntaxErrors;
     }
-//
-//    public static void main(String[] args) throws IOException {
-//        String code = "import java.util.ArrayList;\n" +
-//                "import java.util.Arrays;\n" +
-//                "import java.util.List;\n" +
-//                "\n" +
-//                "public class AbTeetres {\n" +
-//                "\n" +
-//                "    public static List<String> grayCodeStrings(int n) {\n" +
-//                "        List<String> list = new ArrayList<>();\n" +
-//                "        if (n == 0) {\n" +
-//                "            list.add(\"\");\n" +
-//                "            return list;\n" +
-//                "        } else if (n == 1) {\n" +
-//                "            list.add(\"0\");\n" +
-//                "            list.add(\"1\");\n" +
-//                "            return list;\n" +
-//                "        } else {\n" +
-//                "            List<String> prev = grayCodeStrings(n - 1);\n" +
-//                "            list.addAll(prev);\n" +
-//                "            for (int i = prev.size() - 1; i >= 0; i--) {\n" +
-//                "                String bits = \"abc\" \n + \"ccc\"; \n" +
-//                "                list.set(i, \"0\" + bits);\n" +
-//                "                list.add(\"1\" + bits);\n" +
-//                "            }\n" +
-//                "            return list;\n" +
-//                "        }\n" +
-//                "    }\n" +
-//                "}";
-//
-//        String[] codeLines = code.split("\n");
-//
-//
-//        SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(code).build();
-//
-//        int line = (int) syntaxChecker.check().getSyntaxErrors().get(0).getLine();
-//        System.out.println(codeLines[line - 1].trim());
-//
-//        String lineCode = codeLines[line - 1].trim();
-//
-//        int column = (int) syntaxChecker.check().getSyntaxErrors().get(0).getColumnNumber();
-//
-//
-//        System.out.println(
-//                "custom Feedback \n" +
-//                        syntaxChecker.check().getSyntaxErrors().get(0).getErrorMessage() + "\n" +
-//                        "at line: " + syntaxChecker.check().getSyntaxErrors().get(0).getColumnNumber() + "\n" +
-//                        "for example:  int var = value;"
-//        );
-////        System.out.println(syntaxChecker.check().getSyntaxErrors().get(0).getErrorSourceCode());
-//    }
+
+    public static void main(String[] args) throws IOException {
+        String code = "import java.util.ArrayList;\n" +
+                "import java.util.Arrays;\n" +
+                "import java.util.List;\n" +
+                "\n" +
+                "public class AbTeetres {\n" +
+                "\n" +
+                "    public static List<String> grayCodeStrings(int n) {\n" +
+                "        List<String> list = new ArrayList<>();\n" +
+                "        if (n == 0) {\n" +
+                "            list.add(\"\");\n" +
+                "            return list;\n" +
+                "        } else if (n == 1) {\n" +
+                "            list.add(\"0\");\n" +
+                "            list.add(\"1\");\n" +
+                "            return list;\n" +
+                "        } else {\n" +
+                "            List<String> prev = grayCodeStrings(n - 1);\n" +
+                "            list.addAll(prev);\n" +
+                "            for (int i = prev.size() - 1; i >= 0; i--) {\n" +
+                "                String bits = \"abc\" \n + \"ccc\"; \n" +
+                "                list.set(i, \"0\" + bits);\n" +
+                "                list.add(\"1\" + bits);\n" +
+                "            }\n" +
+                "            return list;\n" +
+                "        }\n" +
+                "    }\n" +
+                "}";
+
+        String[] codeLines = code.split("\n");
+
+
+        SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(code).build();
+
+        int line = (int) syntaxChecker.check().getSyntaxErrors().get(0).getLine();
+        System.out.println(codeLines[line - 1].trim());
+
+        String lineCode = codeLines[line - 1].trim();
+
+        int column = (int) syntaxChecker.check().getSyntaxErrors().get(0).getColumnNumber();
+
+
+        System.out.println(
+                "custom Feedback \n" +
+                        syntaxChecker.check().getSyntaxErrors().get(0).getErrorMessage() + "\n" +
+                        "at line: " + syntaxChecker.check().getSyntaxErrors().get(0).getColumnNumber() + "\n" +
+                        "for example:  int var = value;"
+        );
+//        System.out.println(syntaxChecker.check().getSyntaxErrors().get(0).getErrorSourceCode());
+    }
 
 }
