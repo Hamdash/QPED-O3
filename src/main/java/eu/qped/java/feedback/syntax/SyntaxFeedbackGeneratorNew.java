@@ -70,46 +70,45 @@ public class SyntaxFeedbackGeneratorNew extends AbstractFeedbackGenerator {
 
 
 
-//
-//    public static void main(String[] args) {
-//        String code = ""
-//                + "public static void main (String[] args) { \n"
-//                + " int i = 0; b = 0;  \n"
-//                + "  \n"
-//                + "} \n";
-//
-//
-//        SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(code).level(CheckLevel.ADVANCED).build();
-//        Map<String, String> mainSettings = new HashMap<>();
-//        mainSettings.put("semanticNeeded", "false");
-//        mainSettings.put("syntaxLevel", "2");
-//        mainSettings.put("preferredLanguage", "en");
-//        mainSettings.put("styleNeeded", "false");
-//
-//        MainSettings mainSettingsConfiguratorConf = new MainSettings(mainSettings);
-//
-//        MassExecutor massE = new MassExecutor(null, null, syntaxChecker, mainSettingsConfiguratorConf);
-//        massE.execute();
-//
-//        List<String> result = new ArrayList<>();
-//
-////        for (SyntaxFeedback syntax : massE.getSyntaxFeedbacks()) {
-////            String s = ""
-////                    + syntax.getFeedbackContent()
-////                    + "\n\n"
-////                    + "--------------------------------------------------";
-////            System.out.println(s);
-////
-////        }
-//        for (SyntaxFeedbackNew syntax : massE.getSyntaxFeedbackNews()) {
+    public static void main(String[] args) {
+        String code = ""
+                + "public static void main (String[] args) { \n"
+                + " int i = 0; b = 0;  \n"
+                + "  \n"
+                + "} \n";
+
+
+        SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(code).level(CheckLevel.ADVANCED).build();
+        Map<String, String> mainSettings = new HashMap<>();
+        mainSettings.put("semanticNeeded", "false");
+        mainSettings.put("syntaxLevel", "2");
+        mainSettings.put("preferredLanguage", "en");
+        mainSettings.put("styleNeeded", "false");
+
+        MainSettings mainSettingsConfiguratorConf = new MainSettings(mainSettings);
+
+        MassExecutor massE = new MassExecutor(null, null, syntaxChecker, mainSettingsConfiguratorConf);
+        massE.execute();
+
+        List<String> result = new ArrayList<>();
+
+//        for (SyntaxFeedback syntax : massE.getSyntaxFeedbacks()) {
 //            String s = ""
-//                    + syntax.toString()
+//                    + syntax.getFeedbackContent()
 //                    + "\n\n"
 //                    + "--------------------------------------------------";
 //            System.out.println(s);
 //
 //        }
-//    }
+        for (SyntaxFeedbackNew syntax : massE.getSyntaxFeedbackNews()) {
+            String s = ""
+                    + syntax.toString()
+                    + "\n\n"
+                    + "--------------------------------------------------";
+            System.out.println(s);
+
+        }
+    }
 
 
 }

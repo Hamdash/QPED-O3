@@ -204,7 +204,7 @@ public class MassExecutor {
         StyleChecker styleChecker = new StyleChecker(styleConfigurator);
 
         SemanticChecker semanticChecker = SemanticChecker.createSemanticMassChecker(semanticConfigurator);
-        SyntaxChecker syntaxChecker = SyntaxChecker.builder().answer(code).build();
+        SyntaxChecker syntaxChecker = SyntaxChecker.builder().build();
 
 
         MassExecutor massE = new MassExecutor(styleChecker, semanticChecker, syntaxChecker, mainSettingsConfiguratorConf);

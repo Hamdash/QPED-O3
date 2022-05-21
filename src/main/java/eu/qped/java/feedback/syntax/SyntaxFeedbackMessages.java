@@ -19,6 +19,65 @@ public class SyntaxFeedbackMessages {
                     , ""
                             + "The compiler expects that you don't define variables or methods twice, where they can be called (scope of that variable or method)."
             );
+            put("compiler.err.not.stmt"
+                    , ""
+                            + "The compiler expects that you write a statement, but instead you wrote something different."
+            );
+            put("compiler.err.unclosed.str.lit"
+                    , ""
+                            + "The compiler expects that you close string literal always with \"."
+            );
+            put("compiler.err.else.without.if"
+                    , ""
+                            + "The compiler expects that else statement always come after if statement."
+            );
+            put("compiler.err.missing.ret.stmt"
+                    , ""
+                            + "Every method who has return type need a return statement at the end."
+            );
+            put("compiler.err.unreachable.stmt"
+                    , ""
+                            + "The compiler expects that you not write any code after the return statement."
+            );
+            // new
+            put("compiler.err.var.might.not.have.been.initialized"
+                    , ""
+                            + "The variable not only had to be declared but also initialized"
+            );
+            put("compiler.err.cant.resolve.location"
+                    , ""
+                            + "You have called an undefined symbol (variable), at the above-mentioned position."
+                            + NEW_Double_LINE
+                            + "it could be that you made a typo with the name or forgot to define the symbol."
+            );
+            put("compiler.err.abstract.cant.be.instantiated"
+                    , ""
+                            + "No object could be created from abstract classes."
+                            + NEW_Double_LINE
+                            + "it is possible to create an object of a subclass of an abstract class"
+            );
+            put("compiler.err.repeated.modifier"
+                    , ""
+                            + "Dont repeat modifiers"
+            );
+            put("compiler.err.illegal.combination.of.modifiers"
+                    , ""
+                            + "Modifiers are additional properties for Java declarations such as methods, variables and classes"
+                            + NEW_Double_LINE
+                            + "you always have to specify it at the very beginning of the declaration"
+                            + NEW_Double_LINE
+                            + "you can also combine them but unfortunately not like what you have done"
+                            + NEW_Double_LINE
+                            + "You can combine almost all modifiers with static, but you are not allowed to combine it public with itself or with private or protected"
+            );
+            put("compiler.err.missing.meth.body.or.decl.abstract"
+                    , ""
+                            + "The declaration of a method consists of 2 steps:"
+                            + NEW_Double_LINE
+                            + "Method header: <return type> methodName()"
+                            + NEW_Double_LINE
+                            + "Method body: {code block and a return if necessary}"
+            );
         }};
     }
 
