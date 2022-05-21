@@ -287,7 +287,7 @@ public class SyntaxFeedbackGenerator  {
                 result.append(syntaxError.getErrorMessage()).append(LINE_NUMBER_CONS).append(syntaxError.getLine());
         }
         result.append(NEW_LINE);
-        return new SyntaxFeedback( result.toString() , syntaxError.getErrorCode() , "",null, null);
+        return new SyntaxFeedback( result.toString() , syntaxError.getErrorCode() , "",syntaxError, null);
     }
 
 
