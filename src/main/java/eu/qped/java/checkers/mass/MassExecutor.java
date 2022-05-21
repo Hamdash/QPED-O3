@@ -1,13 +1,17 @@
 package eu.qped.java.checkers.mass;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import eu.qped.framework.Feedback;
 import eu.qped.framework.Translator;
 import eu.qped.java.checkers.semantics.SemanticChecker;
+import eu.qped.java.checkers.semantics.SemanticConfigurator;
 import eu.qped.java.checkers.semantics.SemanticFeedback;
 import eu.qped.java.checkers.style.StyleChecker;
+import eu.qped.java.checkers.style.StyleConfigurator;
 import eu.qped.java.checkers.style.StyleFeedback;
 import eu.qped.java.checkers.style.StyleViolation;
 import eu.qped.java.checkers.syntax.SyntaxCheckReport;
@@ -81,7 +85,7 @@ public class MassExecutor {
                 violations = styleChecker.getStyleViolationsList();
             }
             if (semanticNeeded) {
-                final String source = "syntaxChecker.getSourceCode()"; //FIXME
+                final String source = syntaxCheckReport.getCodeAsString();
                 semanticChecker.setSource(source);
                 semanticChecker.check();
                 semanticFeedbacks = semanticChecker.getFeedbacks();
@@ -151,7 +155,7 @@ public class MassExecutor {
         return syntaxErrors;
     }
 
-
+//
 //    public static void main(String[] args) {
 //        long start = System.nanoTime();
 //
@@ -163,19 +167,9 @@ public class MassExecutor {
 //        mainSettings.put("styleNeeded", "true");
 //
 //
-//        MainSettingsConfigurator mainSettingsConfiguratorConf = new MainSettingsConfigurator(mainSettings);
+//        MainSettings mainSettingsConfiguratorConf = new MainSettings(mainSettings);
 //
 //
-//        Map<String, String> semanticConf = new HashMap<>();
-//
-//        semanticConf.put("methodName", "recR");
-//        semanticConf.put("recursionAllowed", "false");
-//        semanticConf.put("whereLoop", "-1");
-//        semanticConf.put("forLoop", "1");
-//        semanticConf.put("forEachLoop", "-1");
-//        semanticConf.put("ifElseStmt", "-1");
-//        semanticConf.put("doWhileLoop", "-1");
-//        semanticConf.put("returnType", "int");
 //
 //        QFSemSettings qfSemSettings = new QFSemSettings();
 //        qfSemSettings.setMethodName("recR");
@@ -201,7 +195,7 @@ public class MassExecutor {
 //        StyleConfigurator styleConfigurator = StyleConfigurator.createStyleConfigurator(qfStyleSettings);
 //
 //
-//        StyleChecker styleChecker = StyleCheckerFactory.createStyleChecker(styleConfigurator);
+//        StyleChecker styleChecker = StyleChecker ;
 //        SemanticChecker semanticChecker = SemanticChecker.createSemanticMassChecker(semanticConfigurator);
 //        SyntaxErrorChecker syntaxErrorChecker = SyntaxErrorChecker.createSyntaxErrorChecker(code);
 //		final StyleChecker styleChecker1 = styleChecker;

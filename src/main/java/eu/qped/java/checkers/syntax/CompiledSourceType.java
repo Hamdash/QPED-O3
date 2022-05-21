@@ -1,6 +1,6 @@
 package eu.qped.java.checkers.syntax;
 
-public enum CompiledSource {
+public enum CompiledSourceType {
     STRING,
     PROJECT
 }

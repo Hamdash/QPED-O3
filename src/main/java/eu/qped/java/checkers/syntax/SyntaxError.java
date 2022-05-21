@@ -14,11 +14,15 @@ import java.util.Map;
 @Builder
 public class SyntaxError {
 
+    @Deprecated(forRemoval = true)
     private Map<String, String> additionalProperties;
 
     private String errorCode;
     private String errorMessage;
+
+    @Deprecated(forRemoval = true)
     private String errorSourceCode;
+
     private String errorTrigger;
     private String fileName;
 

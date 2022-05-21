@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Deprecated(forRemoval = true)
 public class SyntaxErrorPredictHelper {
 
 

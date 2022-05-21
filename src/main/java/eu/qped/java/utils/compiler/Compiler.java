@@ -1,6 +1,5 @@
 package eu.qped.java.utils.compiler;
 
-
 import eu.qped.java.utils.ExtractJavaFilesFromDirectory;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,12 +29,17 @@ import java.util.Locale;
 @Builder
 public class Compiler {
 
-    private static final String DEFAULT_CLASS_PATH = "GrayCode.java";
+    private static final String DEFAULT_CLASS_PATH = "TestClass.java";
+    private static final String DEFAULT_CLASS_Name = "TestClass";
+
     private static final String DEFAULT_DIR_PATH = "exam-results";
 
     private List<Diagnostic<? extends JavaFileObject>> collectedDiagnostics;
+
+    private String fileName;
+
     private String fullSourceCode;
-    private String targetProjectPath;
+    private String targetProjectOrClassPath;
 
     /**
      * @param stringAnswer can be either FilePath or the code as a string
@@ -50,14 +54,14 @@ public class Compiler {
 
         if (stringAnswer != null && !stringAnswer.equals("")) {
             createJavaClass(writeCodeAsClass(stringAnswer));
-            files.add(new File(DEFAULT_CLASS_PATH));
+            files.add(new File(targetProjectOrClassPath));
         } else {
             ExtractJavaFilesFromDirectory.ExtractJavaFilesFromDirectoryBuilder extractJavaFilesFromDirectoryBuilder = ExtractJavaFilesFromDirectory.builder();
             ExtractJavaFilesFromDirectory extractJavaFilesFromDirectory;
-            if (targetProjectPath == null || targetProjectPath.equals("")){
-                targetProjectPath = DEFAULT_DIR_PATH;
+            if (targetProjectOrClassPath == null || targetProjectOrClassPath.equals("")){
+                targetProjectOrClassPath = DEFAULT_DIR_PATH;
             }
-            extractJavaFilesFromDirectoryBuilder.dirPath(targetProjectPath);
+            extractJavaFilesFromDirectoryBuilder.dirPath(targetProjectOrClassPath);
             extractJavaFilesFromDirectory = extractJavaFilesFromDirectoryBuilder.build();
             files = extractJavaFilesFromDirectory.filesWithJavaExtension();
             if (files.size() == 0) {
@@ -71,7 +75,7 @@ public class Compiler {
     }
 
     private void writeJavaFileContent(String code) {
-        try (OutputStream output = Files.newOutputStream(Paths.get(DEFAULT_CLASS_PATH))) {
+        try (OutputStream output = Files.newOutputStream(Paths.get(targetProjectOrClassPath))) {
             output.write(code.getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {
             LogManager.getLogger(getClass()).throwing(e);
@@ -87,7 +91,6 @@ public class Compiler {
         }
     }
 
-
     /**
      * @param answer the code
      * @return If the code does not contain a class, a default class is created and return it
@@ -95,25 +98,33 @@ public class Compiler {
     private String writeCodeAsClass(String answer) {
         StringBuilder javaFileContent = new StringBuilder();
         boolean isClassOrInterface = answer.contains("class") || answer.contains("interface");
-        boolean isPublic = false;
+
         if (isClassOrInterface) {
-            String classDeclaration = answer.substring(0, answer.indexOf("class"));
-            isPublic = classDeclaration.contains("public");
+            String classDeclaration = answer.substring(answer.indexOf("class"), answer.indexOf("{") );
+
+            String[] declarationArray = classDeclaration.split(" ");
+
+            if (declarationArray.length < 2) {
+                fileName = DEFAULT_CLASS_Name;
+            } else {
+                fileName = declarationArray[1].trim(); // class name by student
+                targetProjectOrClassPath = fileName + ".java";
+            }
         }
-//        if (isPublic) {
-//            answer = answer.substring(answer.indexOf("public") + "public".length());
-//        }
         if (isClassOrInterface) {
             javaFileContent.append(answer);
         } else {
-            javaFileContent.append("/**" +
-                    "* Test class" +
-                    "*/" +
-                    "import java.util.*;" +
-                    "class TestClass {").append(answer).append("}");
+            javaFileContent.append("/**" + "public")
+                    .append(fileName)
+                    .append("*/")
+                    .append("import java.util.*;")
+                    .append("class")
+                    .append(fileName)
+                    .append("{")
+                    .append(answer)
+                    .append("}");
         }
         fullSourceCode = javaFileContent.toString();
         return javaFileContent.toString();
     }
-
 }
