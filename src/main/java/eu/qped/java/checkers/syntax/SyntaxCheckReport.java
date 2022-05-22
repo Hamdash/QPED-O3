@@ -15,16 +15,17 @@ import java.util.List;
 public class SyntaxCheckReport {
 
     private List<SyntaxError> syntaxErrors;
-    private boolean isCompilable;
     private String path;
-    private CompiledSource compiledSource;
+    private CompiledSourceType compiledSourceType;
+    private boolean isCompilable;
+    private String codeAsString;
 
     @Override
     public String toString() {
         return
                 "Compilable: " + isCompilable + "\n" +
                         "path: " + path + "\n" +
-                        "Compilation unit type: " + compiledSource + "\n" +
+                        "Compilation unit type: " + compiledSourceType + "\n" +
                         "errors count: " + syntaxErrors.size();
     }
 
