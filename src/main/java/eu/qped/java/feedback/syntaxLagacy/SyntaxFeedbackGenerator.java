@@ -295,7 +295,7 @@ public class SyntaxFeedbackGenerator implements FeedbackGenerator<SyntaxFeedback
     private void expectedSubSwitch(StringBuilder result, SyntaxErrorPredictHelper syntaxErrorPredictHelper, SyntaxError syntaxError) {
 
         example = "";
-        String forSemExp = syntaxError.getAdditionalProperties().get("forSemExpected");
+        String forSemExp = "";
 
         switch (syntaxError.getErrorMessage()) {
             case "';' expected":

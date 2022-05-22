@@ -96,7 +96,6 @@ public class MassExecutor {
             syntaxErrors = syntaxCheckReport.getSyntaxErrors();
             syntaxFeedbacks = feedbackGenerator.generateFeedbacks(syntaxErrors);
 
-            //auto checker
         }
 
         // translate Feedback body if needed
@@ -228,16 +227,44 @@ public class MassExecutor {
 
         MassExecutor massE = new MassExecutor(styleChecker, semanticChecker, syntaxChecker, mainSettingsConfiguratorConf);
 
-
-//        MassExecutor massExecutor = MassExecutorFactory.createExecutor(styleConfigurator, semanticConfigurator, mainSettingsConf, code);
         massE.execute();
-//        new ArrayList<StyleViolation>(massExecutor.getViolations()).forEach(x -> System.out.println(x.getRule()));
-
 
         //todo false Alarm: Here was Semicolon expected!
+
+        for (SyntaxFeedback syntaxFeedback : massE.getSyntaxFeedbacks()){
+            System.out.println(syntaxFeedback);
+        }
 
         for (Feedback s : massE.semanticFeedbacks) {
             System.out.println(s.getBody());
         }
+
+
+        /*
+        for Style Errors
+         */
+
+        List<StyleFeedback> feedbacks = massE.styleFeedbacks;
+
+        for (StyleFeedback f : feedbacks) {
+            System.out.println(f.getDesc());
+            System.out.println(f.getBody());
+            System.out.println(f.getLine());
+            System.out.println(f.getExample());
+            System.out.println("-----------------------------------------------------------------");
+        }
+
+        /*
+        for Syntax Errors
+         */
+        List<SyntaxFeedback> arrayList = massE.syntaxFeedbacks;
+        for (SyntaxFeedback s : arrayList) {
+            System.out.println(s.getBody());
+            System.out.println(s.getBody());
+            System.out.println(s.getSolutionExample());
+            System.out.println("--------0T0----------");
+        }
+        long end = System.nanoTime() - start;
+        System.out.println("Feedback generated in: " + end * Math.pow(10.0, -9.0) + " sec");
     }
 }
