@@ -103,14 +103,14 @@ public class SyntaxFeedbackGeneratorNew extends AbstractFeedbackGenerator {
 //        }
 
 
-        for (SyntaxFeedbackNew syntax : massE.getSyntaxFeedbackNews()) {
-            String s = ""
-                    + syntax.toString()
-                    + "\n\n"
-                    + "--------------------------------------------------";
-            System.out.println(s);
-
-        }
+//        for (SyntaxFeedbackNew syntax : massE.getSyntaxFeedbackNews()) {
+//            String s = ""
+//                    + syntax.toString()
+//                    + "\n\n"
+//                    + "--------------------------------------------------";
+//            System.out.println(s);
+//
+//        }
     }
 
 

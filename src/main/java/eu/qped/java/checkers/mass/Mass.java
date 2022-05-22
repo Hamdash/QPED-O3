@@ -112,14 +112,6 @@ public class Mass implements Checker {
             i = i + 2;
         }
 
-        for (SyntaxFeedbackNew syntax : massExecutor.getSyntaxFeedbackNews()) {
-            result[i + 1] = ""
-                    + syntax.toString()
-                    + NEW_LINE
-                    + "--------------------------------------------------"
-            ;
-            i = i + 2;
-        }
 
         qfObject.setFeedback(result);
     }
