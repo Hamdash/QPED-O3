@@ -77,13 +77,13 @@ public class MassExecutor {
         SyntaxCheckReport syntaxCheckReport = syntaxChecker.check();
 
         if (syntaxCheckReport.isCompilable()) {
-            if (styleNeeded) {
-                styleChecker.check();
-                styleFeedbacks = styleChecker.getStyleFeedbacks();
 
-                //auto checker
-                violations = styleChecker.getStyleViolationsList();
-            }
+            styleChecker.check();
+            styleFeedbacks = styleChecker.getStyleFeedbacks();
+
+            //auto checker
+            violations = styleChecker.getStyleViolationsList();
+
             if (semanticNeeded) {
                 final String source = syntaxCheckReport.getCodeAsString();
                 semanticChecker.setSource(source);
@@ -231,7 +231,7 @@ public class MassExecutor {
 
         //todo false Alarm: Here was Semicolon expected!
 
-        for (SyntaxFeedback syntaxFeedback : massE.getSyntaxFeedbacks()){
+        for (SyntaxFeedback syntaxFeedback : massE.getSyntaxFeedbacks()) {
             System.out.println(syntaxFeedback);
         }
 
