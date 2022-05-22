@@ -129,7 +129,7 @@ public class XmlFileManager {
 				throw new RuntimeException(e);
 			}
 		}
-		return mainRulesetFile.toURI().getPath();
+		return mainRulesetFile.getPath();
 	}
 
 //    public void clearXmlFile() {
