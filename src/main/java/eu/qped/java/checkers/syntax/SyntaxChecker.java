@@ -106,7 +106,7 @@ public class SyntaxChecker {
                 "import java.util.Arrays;\n" +
                 "import java.util.List;\n" +
                 "\n" +
-                "public class AbTeetres {\n" +
+                "public class meroo {\n" +
                 "\n" +
                 "    public static List<String> grayCodeStrings(int n) {\n" +
                 "        List<String> list = new ArrayList<>();\n" +

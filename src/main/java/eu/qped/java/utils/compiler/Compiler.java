@@ -36,10 +36,11 @@ public class Compiler {
 
     private List<Diagnostic<? extends JavaFileObject>> collectedDiagnostics;
 
+    private String targetProjectOrClassPath;
     private String fileName;
 
     private String fullSourceCode;
-    private String targetProjectOrClassPath;
+
 
     /**
      * @param stringAnswer can be either FilePath or the code as a string
@@ -106,6 +107,7 @@ public class Compiler {
 
             if (declarationArray.length < 2) {
                 fileName = DEFAULT_CLASS_Name;
+                targetProjectOrClassPath = DEFAULT_CLASS_PATH;
             } else {
                 fileName = declarationArray[1].trim(); // class name by student
                 targetProjectOrClassPath = fileName + ".java";

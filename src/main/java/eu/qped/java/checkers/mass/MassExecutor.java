@@ -169,12 +169,12 @@ public class MassExecutor {
         MainSettings mainSettingsConfiguratorConf = new MainSettings(mainSettings);
 
         QFSemSettings qfSemSettings = new QFSemSettings();
-        qfSemSettings.setMethodName("rec");
+        qfSemSettings.setMethodName("grayCodeStrings");
         qfSemSettings.setRecursionAllowed("true");
         qfSemSettings.setWhileLoop("-1");
         qfSemSettings.setForLoop("2");
         qfSemSettings.setForEachLoop("-1");
-        qfSemSettings.setIfElseStmt("-1");
+        qfSemSettings.setIfElseStmt("0");
         qfSemSettings.setDoWhileLoop("-1");
         qfSemSettings.setReturnType("int");
 
