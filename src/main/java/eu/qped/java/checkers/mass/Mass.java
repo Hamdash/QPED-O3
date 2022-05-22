@@ -67,14 +67,16 @@ public class Mass implements Checker {
         /*
          feedbacks
          */
-        List<StyleFeedback> styleFeedbacks;
-        styleFeedbacks = massExecutor.getStyleFeedbacks();
+
 
         List<SyntaxFeedback> syntaxFeedbacks;
         syntaxFeedbacks = massExecutor.getSyntaxFeedbacks();
 
         List<SemanticFeedback> semanticFeedbacks;
         semanticFeedbacks = massExecutor.getSemanticFeedbacks();
+
+        List<StyleFeedback> styleFeedbacks;
+        styleFeedbacks = massExecutor.getStyleFeedbacks();
 
 
         String[] result = new String[styleFeedbacks.size() + semanticFeedbacks.size() + syntaxFeedbacks.size() + 100];
