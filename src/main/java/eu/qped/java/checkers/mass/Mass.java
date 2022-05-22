@@ -101,6 +101,7 @@ public class Mass implements Checker {
         for (SyntaxFeedbackNew syntax : syntaxFeedbacks) {
             result[i + 1] = ""
                     + syntax.toString()
+                    + NEW_LINE
                     + "--------------------------------------------------"
             ;
             i = i + 2;
