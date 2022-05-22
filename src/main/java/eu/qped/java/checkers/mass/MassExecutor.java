@@ -184,7 +184,7 @@ public class MassExecutor {
                 "import java.util.Arrays;\n" +
                 "import java.util.List;\n" +
                 "\n" +
-                "public class TestClass {\n" +
+                "public class GrayCode {\n" +
                 "\n" +
                 "    public static List<String> grayCodeStrings(int n) {\n" +
                 "        List<String> list = new ArrayList<>();\n" +

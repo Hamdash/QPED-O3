@@ -43,9 +43,6 @@ public class Mass implements Checker {
 
 
         MainSettings mainSettingsConfiguratorConf = new MainSettings(mainSettingMap);
-//        mainSettingsConfiguratorConf.setSyntaxLevel(CheckLevel.BEGINNER);
-//        mainSettingsConfiguratorConf.setStyleNeeded(true);
-//        mainSettingsConfiguratorConf.setSemanticNeeded("true");
 
 
         StyleConfigurator styleConfigurator = StyleConfigurator.createStyleConfigurator(this.styleSettings);
@@ -56,9 +53,9 @@ public class Mass implements Checker {
 
 
         SemanticConfigurator semanticConfigurator = SemanticConfigurator.createSemanticConfigurator(semSettings);
-
-
         SemanticChecker semanticChecker = SemanticChecker.createSemanticMassChecker(semanticConfigurator);
+
+
         SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(qfObject.getAnswer()).build();
 
         MassExecutor massExecutor = new MassExecutor(styleChecker, semanticChecker, syntaxChecker, mainSettingsConfiguratorConf);
