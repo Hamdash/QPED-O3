@@ -80,7 +80,7 @@ public class Mass implements Checker {
         int i = 0;
 
         for (StyleFeedback styleFeedback : styleFeedbacks) {
-            result[i] = "style Feedback";
+            result[i] = "style Feedback: " + mainSettings.getSemanticNeeded();
             result[i + 1] = styleFeedback.getDesc()
                     + NEW_LINE
                     + styleFeedback.getBody()
