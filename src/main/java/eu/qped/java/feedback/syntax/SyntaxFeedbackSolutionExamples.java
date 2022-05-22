@@ -7,6 +7,9 @@ import lombok.Data;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static eu.qped.java.utils.markdown.MarkdownFormatterUtility.NEW_Double_LINE;
+
 @Data
 @AllArgsConstructor
 @Builder
@@ -100,6 +103,31 @@ public class SyntaxFeedbackSolutionExamples {
                             + "int oddNumber = 7" + MarkdownFormatterUtility.NEW_LINE
                             + "// new code" + MarkdownFormatterUtility.NEW_LINE
                             + "int oddNumber = 7;" + MarkdownFormatterUtility.NEW_LINE
+            );
+            put("'(' expected"
+                    , ""
+                            + "// old code" + MarkdownFormatterUtility.NEW_LINE
+                            + "if true) {" + MarkdownFormatterUtility.NEW_LINE
+                            + "}" + MarkdownFormatterUtility.NEW_LINE
+                            + "// new code" + MarkdownFormatterUtility.NEW_LINE
+                            + "if (true) {" + MarkdownFormatterUtility.NEW_LINE
+                            + "}" + MarkdownFormatterUtility.NEW_LINE
+            );
+            put("')' expected"
+                    , ""
+                            + "// old code" + MarkdownFormatterUtility.NEW_LINE
+                            + "if (true {" + MarkdownFormatterUtility.NEW_LINE
+                            + "}" + MarkdownFormatterUtility.NEW_LINE
+                            + "// new code" + MarkdownFormatterUtility.NEW_LINE
+                            + "if (true) {" + MarkdownFormatterUtility.NEW_LINE
+                            + "}" + MarkdownFormatterUtility.NEW_LINE
+            );
+            put("<identifier> expected"
+                    , ""
+                            + "// old code" + MarkdownFormatterUtility.NEW_LINE
+                            + "int  = 7; // no name" + MarkdownFormatterUtility.NEW_LINE
+                            + "// new code" + MarkdownFormatterUtility.NEW_LINE
+                            + "int i = 7;" + MarkdownFormatterUtility.NEW_LINE
             );
         }};
     }

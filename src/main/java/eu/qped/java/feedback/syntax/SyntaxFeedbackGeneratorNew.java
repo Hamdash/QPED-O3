@@ -77,7 +77,7 @@ public class SyntaxFeedbackGeneratorNew extends AbstractFeedbackGenerator {
                 + "  \n"
                 + "} \n";
 
-
+        System.out.println("ABC");
         SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(code).level(CheckLevel.ADVANCED).build();
         Map<String, String> mainSettings = new HashMap<>();
         mainSettings.put("semanticNeeded", "false");
@@ -92,6 +92,7 @@ public class SyntaxFeedbackGeneratorNew extends AbstractFeedbackGenerator {
 
         List<String> result = new ArrayList<>();
 
+
 //        for (SyntaxFeedback syntax : massE.getSyntaxFeedbacks()) {
 //            String s = ""
 //                    + syntax.getFeedbackContent()
@@ -100,6 +101,8 @@ public class SyntaxFeedbackGeneratorNew extends AbstractFeedbackGenerator {
 //            System.out.println(s);
 //
 //        }
+
+
         for (SyntaxFeedbackNew syntax : massE.getSyntaxFeedbackNews()) {
             String s = ""
                     + syntax.toString()

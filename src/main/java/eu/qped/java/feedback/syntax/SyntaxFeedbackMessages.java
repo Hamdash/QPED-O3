@@ -78,6 +78,18 @@ public class SyntaxFeedbackMessages {
                             + NEW_Double_LINE
                             + "Method body: {code block and a return if necessary}"
             );
+            put("compiler.err.illegal.start.of.expr"
+                    , ""
+                            + "The compiler expects that you write legal expression."
+                            + NEW_Double_LINE
+                            + "This usually happens when you:"
+                            + NEW_Double_LINE
+                            + "1. write method or class inside of another method"
+                            + NEW_Double_LINE
+                            + "2. write method or class inside of another method"
+                            + NEW_Double_LINE
+                            + "3. forget to write a curly braces \"{\" or \"}\" "
+            );
         }};
     }
 
@@ -88,6 +100,30 @@ public class SyntaxFeedbackMessages {
                             + "The compiler expects that you end statements with a \";\""
                             + NEW_Double_LINE
                             + "This usually happens when you forget to write semicolon or closing parenthesis."
+            );
+            put("'(' expected"
+                    , ""
+                            + "The compiler expects that you write a \"(\""
+                            + NEW_Double_LINE
+                            + "This usually happens when you forget to write a left parenthesis in your code."
+            );
+            put("')' expected"
+                    , ""
+                            + "The compiler expects that you write a \")\""
+                            + NEW_Double_LINE
+                            + "This usually happens when you forget to write a right parenthesis in your code."
+            );
+            put("<identifier> expected"
+                    , ""
+                            + "The compiler expects that you write a \"identifier\""
+                            + NEW_Double_LINE
+                            + "This usually happens when you want to define a variable without a name or write code somewhere where Java does not expect."
+            );
+            put("class, interface, or enum expected"
+                    , ""
+                            + "The compiler expects that you create a \"class\", \"interface\" or \"enum\"."
+                            + NEW_Double_LINE
+                            + "This usually happens when you want to write a method outside of the class or or write additional curly bracket \"}\"."
             );
         }};
     }
