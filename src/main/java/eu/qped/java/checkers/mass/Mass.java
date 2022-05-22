@@ -104,7 +104,7 @@ public class Mass implements Checker {
         }
 
         for (SemanticFeedback semanticFeedback : semanticFeedbacks) {
-            result[i] = "semantic Feedback: " +  styleSettings;
+            result[i] = "semantic Feedback: " +  styleSettings.toString();
             result[i + 1] = semanticFeedback.getBody() + NEW_LINE
                     + "--------------------------------------------------";
             i = i + 2;
