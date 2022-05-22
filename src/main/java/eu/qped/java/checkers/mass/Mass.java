@@ -1,6 +1,5 @@
 package eu.qped.java.checkers.mass;
 
-import eu.qped.framework.CheckLevel;
 import eu.qped.framework.Checker;
 import eu.qped.framework.QfProperty;
 import eu.qped.framework.qf.QfObject;
@@ -11,7 +10,6 @@ import eu.qped.java.checkers.style.StyleChecker;
 import eu.qped.java.checkers.style.StyleConfigurator;
 import eu.qped.java.checkers.style.StyleFeedback;
 import eu.qped.java.checkers.syntax.SyntaxChecker;
-import eu.qped.java.feedback.syntax.SyntaxFeedbackNew;
 import eu.qped.java.feedback.syntaxLagacy.SyntaxFeedback;
 
 import java.util.HashMap;
@@ -34,7 +32,6 @@ public class Mass implements Checker {
 
     @Override
     public void check(QfObject qfObject) throws Exception {
-
 
 
         StyleConfigurator styleConfigurator = StyleConfigurator.createStyleConfigurator(this.styleSettings);
@@ -105,7 +102,7 @@ public class Mass implements Checker {
             result[i + 1] = ""
                     + syntax.getFeedbackContent()
                     + NEW_LINE
-                    + "At Line: " +  syntax.getSyntaxError().getLine()
+                    + "At Line: " + syntax.getSyntaxError().getLine()
                     + NEW_LINE
                     + "--------------------------------------------------"
             ;

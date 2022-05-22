@@ -9,7 +9,7 @@ public abstract class AbstractFeedbackGenerator {
     public List<SyntaxFeedbackNew> generateFeedbacks(List<SyntaxError> syntaxErrors) {
         return syntaxErrors.stream()
                 .map(this::generateFeedback)
-                .map(SyntaxFeedbackFormatter::formatFeedback)
+                .map(syntaxFeedback -> SyntaxFeedbackFormatter.builder().build().formatFeedback(syntaxFeedback))
                 .collect(Collectors.toUnmodifiableList());
     }
 

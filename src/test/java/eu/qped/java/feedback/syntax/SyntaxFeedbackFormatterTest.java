@@ -25,7 +25,7 @@ class SyntaxFeedbackFormatterTest {
 
     @Test
     void formatFeedback() {
-        SyntaxFeedbackFormatter.formatFeedback(syntaxFeedback);
+        SyntaxFeedbackFormatter.builder().build().formatFeedback(syntaxFeedback);
         Assertions.assertNotEquals("", syntaxFeedback.getHeader());
         Assertions.assertNotEquals("", syntaxFeedback.getFeedbackMessage());
         Assertions.assertNotEquals("", syntaxFeedback.getErrorLine());
@@ -35,7 +35,7 @@ class SyntaxFeedbackFormatterTest {
 
     @Test
     void formatEmptyFeedback() {
-        SyntaxFeedbackFormatter.formatFeedback(emptySyntaxFeedback);
+        SyntaxFeedbackFormatter.builder().build().formatFeedback(emptySyntaxFeedback);
         Assertions.assertEquals("", emptySyntaxFeedback.getHeader());
         Assertions.assertEquals("", emptySyntaxFeedback.getFeedbackMessage());
         Assertions.assertEquals("", emptySyntaxFeedback.getErrorLine());

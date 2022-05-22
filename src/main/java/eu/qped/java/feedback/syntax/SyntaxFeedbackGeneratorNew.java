@@ -5,7 +5,6 @@ import eu.qped.java.checkers.mass.MainSettings;
 import eu.qped.java.checkers.mass.MassExecutor;
 import eu.qped.java.checkers.syntax.SyntaxChecker;
 import eu.qped.java.checkers.syntax.SyntaxError;
-import eu.qped.java.feedback.syntaxLagacy.SyntaxFeedback;
 import lombok.Builder;
 
 import java.util.ArrayList;
@@ -62,12 +61,6 @@ public class SyntaxFeedbackGeneratorNew extends AbstractFeedbackGenerator {
         }
         return result;
     }
-
-
-
-
-
-
 
 
     public static void main(String[] args) {
