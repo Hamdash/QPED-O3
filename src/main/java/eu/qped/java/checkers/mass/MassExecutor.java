@@ -208,21 +208,6 @@ public class MassExecutor {
                 "    }\n" +
                 "}";
 
-        /*
-
-        qf.styleSettings= {
- "mainLevel":"beg",
- "compLevel":"adv"  ,
- "namesLevel":"beg"  ,
- "basisLevel":"beg" ,
- "classLength":"100" ,
- "methodLength":"10" ,
- "cycloComplexity":"10" ,
- "fieldsCount":"-1" ,
- "varName":"undefined" ,
- "methodName":"undefined",
- "className":"undefined"};
-         */
 
         QFStyleSettings qfStyleSettings = new QFStyleSettings();
         qfStyleSettings.setNamesLevel("adv");

@@ -15,6 +15,7 @@ import eu.qped.java.feedback.syntaxLagacy.SyntaxFeedback;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class Mass implements Checker {
@@ -34,16 +35,25 @@ public class Mass implements Checker {
     public void check(QfObject qfObject) throws Exception {
 
 
+        Map<String, String> mainSettingMap = new HashMap<>();
+        mainSettingMap.put("semanticNeeded", mainSettings.getSemanticNeeded());
+        mainSettingMap.put("syntaxLevel", mainSettings.getSyntaxLevel());
+        mainSettingMap.put("preferredLanguage", mainSettings.getPreferredLanguage());
+        mainSettingMap.put("styleNeeded", mainSettings.getStyleNeeded());
+
+
+        MainSettings mainSettingsConfiguratorConf = new MainSettings(mainSettingMap);
+//        mainSettingsConfiguratorConf.setSyntaxLevel(CheckLevel.BEGINNER);
+//        mainSettingsConfiguratorConf.setStyleNeeded(true);
+//        mainSettingsConfiguratorConf.setSemanticNeeded("true");
+
 
         StyleConfigurator styleConfigurator = StyleConfigurator.createStyleConfigurator(this.styleSettings);
 
         StyleChecker styleChecker = new StyleChecker(styleConfigurator);
 
 
-        MainSettings mainSettingsConfiguratorConf = new MainSettings(new HashMap<>());
-        mainSettingsConfiguratorConf.setSyntaxLevel(CheckLevel.BEGINNER);
-        mainSettingsConfiguratorConf.setStyleNeeded(true);
-        mainSettingsConfiguratorConf.setSemanticNeeded("true");
+
 
         SemanticConfigurator semanticConfigurator = SemanticConfigurator.createSemanticConfigurator(semSettings);
 
