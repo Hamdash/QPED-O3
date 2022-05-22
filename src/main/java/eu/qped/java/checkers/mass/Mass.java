@@ -40,7 +40,7 @@ public class Mass implements Checker {
 
         Map<String, String> mainSettingsMap = new HashMap<>();
 
-        mainSettingsMap.put("semanticNeeded", "true");
+        mainSettingsMap.put("semanticNeeded", "false");
         mainSettingsMap.put("syntaxLevel", "2");
         mainSettingsMap.put("preferredLanguage", "en");
         mainSettingsMap.put("styleNeeded", "true");
