@@ -15,7 +15,6 @@ import eu.qped.java.feedback.syntaxLagacy.SyntaxFeedback;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class Mass implements Checker {
@@ -36,39 +35,21 @@ public class Mass implements Checker {
 
 
 
+        StyleConfigurator styleConfigurator = StyleConfigurator.createStyleConfigurator(this.styleSettings);
+
+        StyleChecker styleChecker = new StyleChecker(styleConfigurator);
 
 
-        Map<String, String> mainSettingsMap = new HashMap<>();
-
-        mainSettingsMap.put("semanticNeeded", "true");
-        mainSettingsMap.put("styleNeeded", "true");
-        mainSettingsMap.put("syntaxLevel", "2");
-        mainSettingsMap.put("preferredLanguage", "en");
-
-
-
-
-        MainSettings mainSettingsConfiguratorConf = new MainSettings(mainSettingsMap);
-//        mainSettingsConfiguratorConf.setSyntaxLevel(CheckLevel.BEGINNER);
-//        mainSettingsConfiguratorConf.setStyleNeeded(true);
-//        mainSettingsConfiguratorConf.setSemanticNeeded("true");
+        MainSettings mainSettingsConfiguratorConf = new MainSettings(new HashMap<>());
+        mainSettingsConfiguratorConf.setSyntaxLevel(CheckLevel.BEGINNER);
+        mainSettingsConfiguratorConf.setStyleNeeded(true);
+        mainSettingsConfiguratorConf.setSemanticNeeded("true");
 
         SemanticConfigurator semanticConfigurator = SemanticConfigurator.createSemanticConfigurator(semSettings);
 
 
         SemanticChecker semanticChecker = SemanticChecker.createSemanticMassChecker(semanticConfigurator);
         SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(qfObject.getAnswer()).build();
-
-
-
-        QFStyleSettings qfStyleSettings = new QFStyleSettings();
-        qfStyleSettings.setNamesLevel("adv");
-        qfStyleSettings.setMethodName("[AA]");
-        qfStyleSettings.setBasisLevel("adv");
-        qfStyleSettings.setClassLength("10");
-        qfStyleSettings.setMethodLength("10");
-        StyleConfigurator styleConfigurator = StyleConfigurator.createStyleConfigurator(qfStyleSettings);
-        StyleChecker styleChecker = new StyleChecker(styleConfigurator);
 
         MassExecutor massExecutor = new MassExecutor(styleChecker, semanticChecker, syntaxChecker, mainSettingsConfiguratorConf);
 
@@ -77,16 +58,14 @@ public class Mass implements Checker {
         /*
          feedbacks
          */
-
+        List<StyleFeedback> styleFeedbacks;
+        styleFeedbacks = massExecutor.getStyleFeedbacks();
 
         List<SyntaxFeedback> syntaxFeedbacks;
         syntaxFeedbacks = massExecutor.getSyntaxFeedbacks();
 
         List<SemanticFeedback> semanticFeedbacks;
         semanticFeedbacks = massExecutor.getSemanticFeedbacks();
-
-        List<StyleFeedback> styleFeedbacks;
-        styleFeedbacks = massExecutor.getStyleFeedbacks();
 
 
         String[] result = new String[styleFeedbacks.size() + semanticFeedbacks.size() + syntaxFeedbacks.size() + 100];
@@ -95,13 +74,20 @@ public class Mass implements Checker {
 
         for (StyleFeedback styleFeedback : styleFeedbacks) {
             result[i] = "style Feedback";
-            result[i + 1] = styleFeedbacks.size()
+            result[i + 1] = styleFeedback.getDesc()
+                    + NEW_LINE
+                    + styleFeedback.getBody()
+                    + NEW_LINE
+                    + styleFeedback.getLine()
+                    + NEW_LINE
+                    + styleFeedback.getExample()
+                    + NEW_LINE
                     + "------------------------------------------------------------------------------";
             i = i + 2;
         }
 
         for (SemanticFeedback semanticFeedback : semanticFeedbacks) {
-            result[i] = "semantic Feedback: " +  styleChecker.getStyleViolationsList().size();
+            result[i] = "semantic Feedback";
             result[i + 1] = semanticFeedback.getBody() + NEW_LINE
                     + "--------------------------------------------------";
             i = i + 2;
