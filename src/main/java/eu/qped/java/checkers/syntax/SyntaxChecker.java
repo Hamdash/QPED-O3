@@ -50,7 +50,7 @@ public class SyntaxChecker {
             resultBuilder.codeAsString(compiler.getFullSourceCode());
         } else {
             compiler.setTargetProjectOrClassPath(targetProject);
-            compileResult = compiler.compile(stringAnswer);
+            compileResult = compiler.compile(null);
             resultBuilder.compiledSourceType(CompiledSourceType.PROJECT);
         }
         resultBuilder.isCompilable(compileResult);

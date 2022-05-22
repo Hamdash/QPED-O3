@@ -19,6 +19,8 @@ import javax.tools.Diagnostic;
 import javax.tools.JavaFileObject;
 import java.io.*;
 import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Locale;
 
@@ -32,13 +34,14 @@ public class SyntaxCheckerTest {
     private Compiler compiler;
 
     @BeforeEach
-    public void beforeEach(){
+    public void beforeEach() {
         syntaxChecker = new SyntaxChecker();
         syntaxChecker.setCompiler(compiler);
     }
 
+
     @Test
-    public void checkPassTest(){
+    public void checkPassTest() {
 
         String code = "correct code";
 
@@ -49,9 +52,10 @@ public class SyntaxCheckerTest {
 
         SyntaxCheckReport report = syntaxChecker.check();
 
-        Assertions.assertEquals(report.getSyntaxErrors().size(),0);
+        Assertions.assertEquals(report.getSyntaxErrors().size(), 0);
         Assertions.assertTrue(report.isCompilable());
     }
+
 
     @Test
     public void checkFailTest() {
@@ -183,6 +187,30 @@ public class SyntaxCheckerTest {
         Assertions.assertEquals(report.getSyntaxErrors().size(), 1);
         Assertions.assertEquals(report.getSyntaxErrors().get(0).getErrorMessage(), "; expected");
         Assertions.assertFalse(report.isCompilable());
+    }
+
+    @Test
+    public void checkProjectPass() throws IOException {
+
+        Path tempDir = Files.createTempDirectory("src");
+
+        File class1 = File.createTempFile("Class1", ".java", tempDir.toFile());
+        File class2 = File.createTempFile("Class2", ".java", tempDir.toFile());
+
+        compiler.setTargetProjectOrClassPath(tempDir.toUri().getPath());
+
+        Mockito.when(compiler.compile(null))
+                .thenReturn(true);
+
+        Mockito.when(compiler.getTargetProjectOrClassPath())
+                .thenReturn(tempDir.toUri().getPath());
+
+        syntaxChecker.setTargetProject(tempDir.toUri().getPath());
+        SyntaxCheckReport report = syntaxChecker.check();
+
+        Assertions.assertEquals(report.getPath(), tempDir.toUri().getPath());
+
+
     }
 
 }
