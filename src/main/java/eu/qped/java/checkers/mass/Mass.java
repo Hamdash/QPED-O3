@@ -58,7 +58,17 @@ public class Mass implements Checker {
         SemanticChecker semanticChecker = SemanticChecker.createSemanticMassChecker(semanticConfigurator);
         SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(qfObject.getAnswer()).build();
 
-        StyleConfigurator styleConfigurator = StyleConfigurator.createStyleConfigurator(styleSettings);
+
+
+        QFStyleSettings qfStyleSettings = new QFStyleSettings();
+        qfStyleSettings.setNamesLevel("adv");
+        qfStyleSettings.setMethodName("[AA]");
+        qfStyleSettings.setBasisLevel("adv");
+        qfStyleSettings.setClassLength("10");
+        qfStyleSettings.setMethodLength("10");
+
+        StyleConfigurator styleConfigurator = StyleConfigurator.createStyleConfigurator(qfStyleSettings);
+
 
         StyleChecker styleChecker = new StyleChecker(styleConfigurator);
 
