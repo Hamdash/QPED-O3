@@ -77,14 +77,14 @@ public class MassExecutor {
         SyntaxCheckReport syntaxCheckReport = syntaxChecker.check();
 
         if (syntaxCheckReport.isCompilable()) {
+            if (styleNeeded){
+                styleChecker.setTargetPath(syntaxCheckReport.getPath());
+                styleChecker.check();
+                styleFeedbacks = styleChecker.getStyleFeedbacks();
 
-            styleChecker.setTargetPath(syntaxCheckReport.getPath());
-            styleChecker.check();
-            styleFeedbacks = styleChecker.getStyleFeedbacks();
-
-            //auto checker
-            violations = styleChecker.getStyleViolationsList();
-
+                //auto checker
+                violations = styleChecker.getStyleViolationsList();
+            }
             if (semanticNeeded) {
                 final String source = syntaxCheckReport.getCodeAsString();
                 semanticChecker.setSource(source);
