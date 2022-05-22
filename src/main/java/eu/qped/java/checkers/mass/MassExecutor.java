@@ -78,6 +78,7 @@ public class MassExecutor {
 
         if (syntaxCheckReport.isCompilable()) {
 
+            styleChecker.setTargetPath(syntaxCheckReport.getPath());
             styleChecker.check();
             styleFeedbacks = styleChecker.getStyleFeedbacks();
 
