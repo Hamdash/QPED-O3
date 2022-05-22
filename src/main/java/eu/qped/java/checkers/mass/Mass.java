@@ -10,7 +10,7 @@ import eu.qped.java.checkers.style.StyleChecker;
 import eu.qped.java.checkers.style.StyleConfigurator;
 import eu.qped.java.checkers.style.StyleFeedback;
 import eu.qped.java.checkers.syntax.SyntaxChecker;
-import eu.qped.java.feedback.syntaxLagacy.SyntaxFeedback;
+import eu.qped.java.feedback.syntax.SyntaxFeedbackNew;
 
 import java.util.HashMap;
 import java.util.List;
@@ -66,7 +66,7 @@ public class Mass implements Checker {
         List<StyleFeedback> styleFeedbacks;
         styleFeedbacks = massExecutor.getStyleFeedbacks();
 
-        List<SyntaxFeedback> syntaxFeedbacks;
+        List<SyntaxFeedbackNew> syntaxFeedbacks;
         syntaxFeedbacks = massExecutor.getSyntaxFeedbacks();
 
         List<SemanticFeedback> semanticFeedbacks;
@@ -98,12 +98,9 @@ public class Mass implements Checker {
             i = i + 2;
         }
 
-        for (SyntaxFeedback syntax : syntaxFeedbacks) {
+        for (SyntaxFeedbackNew syntax : syntaxFeedbacks) {
             result[i + 1] = ""
-                    + syntax.getFeedbackContent()
-                    + NEW_LINE
-                    + "At Line: " + syntax.getSyntaxError().getLine()
-                    + NEW_LINE
+                    + syntax.toString()
                     + "--------------------------------------------------"
             ;
             i = i + 2;

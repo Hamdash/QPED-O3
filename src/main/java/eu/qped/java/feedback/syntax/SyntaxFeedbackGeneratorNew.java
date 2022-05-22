@@ -1,20 +1,12 @@
 package eu.qped.java.feedback.syntax;
 
-import eu.qped.framework.CheckLevel;
-import eu.qped.java.checkers.mass.MainSettings;
-import eu.qped.java.checkers.mass.MassExecutor;
-import eu.qped.java.checkers.syntax.SyntaxChecker;
 import eu.qped.java.checkers.syntax.SyntaxError;
 import lombok.Builder;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Builder
-public class SyntaxFeedbackGeneratorNew extends AbstractFeedbackGenerator {
+public class SyntaxFeedbackGeneratorNew extends AbstractSyntaxFeedbackGenerator {
 
     private final AtomicInteger feedbackCounter = new AtomicInteger(0);
 
@@ -61,50 +53,5 @@ public class SyntaxFeedbackGeneratorNew extends AbstractFeedbackGenerator {
         }
         return result;
     }
-
-
-    public static void main(String[] args) {
-        String code = ""
-                + "public static void main (String[] args) { \n"
-                + " int a = b;  \n"
-                + "  \n"
-                + "} \n";
-
-        System.out.println("ABC");
-        SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(code).level(CheckLevel.ADVANCED).build();
-        Map<String, String> mainSettings = new HashMap<>();
-        mainSettings.put("semanticNeeded", "false");
-        mainSettings.put("syntaxLevel", "2");
-        mainSettings.put("preferredLanguage", "en");
-        mainSettings.put("styleNeeded", "false");
-
-        MainSettings mainSettingsConfiguratorConf = new MainSettings(mainSettings);
-
-        MassExecutor massE = new MassExecutor(null, null, syntaxChecker, mainSettingsConfiguratorConf);
-        massE.execute();
-
-        List<String> result = new ArrayList<>();
-
-
-//        for (SyntaxFeedback syntax : massE.getSyntaxFeedbacks()) {
-//            String s = ""
-//                    + syntax.getFeedbackContent()
-//                    + "\n\n"
-//                    + "--------------------------------------------------";
-//            System.out.println(s);
-//
-//        }
-
-
-//        for (SyntaxFeedbackNew syntax : massE.getSyntaxFeedbackNews()) {
-//            String s = ""
-//                    + syntax.toString()
-//                    + "\n\n"
-//                    + "--------------------------------------------------";
-//            System.out.println(s);
-//
-//        }
-    }
-
 
 }

@@ -5,7 +5,7 @@ import eu.qped.java.checkers.syntax.SyntaxError;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class AbstractFeedbackGenerator {
+public abstract class AbstractSyntaxFeedbackGenerator {
     public List<SyntaxFeedbackNew> generateFeedbacks(List<SyntaxError> syntaxErrors) {
         return syntaxErrors.stream()
                 .map(this::generateFeedback)
