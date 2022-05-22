@@ -67,10 +67,7 @@ public class Mass implements Checker {
         qfStyleSettings.setBasisLevel("adv");
         qfStyleSettings.setClassLength("10");
         qfStyleSettings.setMethodLength("10");
-
         StyleConfigurator styleConfigurator = StyleConfigurator.createStyleConfigurator(qfStyleSettings);
-
-
         StyleChecker styleChecker = new StyleChecker(styleConfigurator);
 
         MassExecutor massExecutor = new MassExecutor(styleChecker, semanticChecker, syntaxChecker, mainSettingsConfiguratorConf);

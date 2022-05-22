@@ -133,7 +133,7 @@ public class StyleChecker {
 
     private void executePMD() {
         final PMDConfiguration configuration = new PMDConfiguration();
-        configuration.setInputPaths("TestClass.java");
+        configuration.setInputPaths("GrayCode.java");
         configuration.setRuleSets(xmlFileManager.getFilename());
         configuration.setReportFormat("json");
         configuration.setReportFile("report.json");
