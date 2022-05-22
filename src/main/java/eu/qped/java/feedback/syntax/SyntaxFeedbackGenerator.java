@@ -6,7 +6,7 @@ import lombok.Builder;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Builder
-public class SyntaxFeedbackGeneratorNew extends AbstractSyntaxFeedbackGenerator {
+public class SyntaxFeedbackGenerator extends AbstractSyntaxFeedbackGenerator {
 
     private final AtomicInteger feedbackCounter = new AtomicInteger(0);
 

@@ -13,8 +13,8 @@ import eu.qped.java.checkers.syntax.SyntaxCheckReport;
 import eu.qped.java.checkers.syntax.SyntaxChecker;
 import eu.qped.java.checkers.syntax.SyntaxError;
 import eu.qped.java.feedback.syntax.AbstractSyntaxFeedbackGenerator;
-import eu.qped.java.feedback.syntax.SyntaxFeedbackGeneratorNew;
-import eu.qped.java.feedback.syntax.SyntaxFeedbackNew;
+import eu.qped.java.feedback.syntax.SyntaxFeedbackGenerator;
+import eu.qped.java.feedback.syntax.SyntaxFeedback;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,7 +36,7 @@ public class MassExecutor {
 
     private List<StyleFeedback> styleFeedbacks;
     private List<SemanticFeedback> semanticFeedbacks;
-    private List<SyntaxFeedbackNew> syntaxFeedbacks;
+    private List<SyntaxFeedback> syntaxFeedbacks;
 
     private List<StyleViolation> violations;
     private List<SyntaxError> syntaxErrors;
@@ -95,7 +95,7 @@ public class MassExecutor {
         } else {
             syntaxChecker.setLevel(mainSettingsConfigurator.getSyntaxLevel());
             syntaxErrors = syntaxCheckReport.getSyntaxErrors();
-            AbstractSyntaxFeedbackGenerator syntaxFeedbackGenerator = SyntaxFeedbackGeneratorNew.builder().build();
+            AbstractSyntaxFeedbackGenerator syntaxFeedbackGenerator = SyntaxFeedbackGenerator.builder().build();
             syntaxFeedbacks = syntaxFeedbackGenerator.generateFeedbacks(syntaxErrors);
 
         }
@@ -120,7 +120,7 @@ public class MassExecutor {
         Translator translator = new Translator();
 
         //List is Empty when the syntax is correct
-        for (SyntaxFeedbackNew feedback : syntaxFeedbacks) {
+        for (SyntaxFeedback feedback : syntaxFeedbacks) {
             translator.translateBody(prefLanguage, feedback);
         }
         if (semanticNeeded) {
@@ -144,7 +144,7 @@ public class MassExecutor {
         return semanticFeedbacks;
     }
 
-    public List<SyntaxFeedbackNew> getSyntaxFeedbacks() {
+    public List<SyntaxFeedback> getSyntaxFeedbacks() {
         return syntaxFeedbacks;
     }
 
@@ -233,7 +233,7 @@ public class MassExecutor {
 
         //todo false Alarm: Here was Semicolon expected!
 
-        for (SyntaxFeedbackNew syntaxFeedback : massE.getSyntaxFeedbacks()) {
+        for (SyntaxFeedback syntaxFeedback : massE.getSyntaxFeedbacks()) {
             System.out.println(syntaxFeedback);
         }
 
@@ -259,8 +259,8 @@ public class MassExecutor {
         /*
         for Syntax Errors
          */
-        List<SyntaxFeedbackNew> arrayList = massE.syntaxFeedbacks;
-        for (SyntaxFeedbackNew s : arrayList) {
+        List<SyntaxFeedback> arrayList = massE.syntaxFeedbacks;
+        for (SyntaxFeedback s : arrayList) {
             System.out.println(s.getBody());
             System.out.println(s.getBody());
             System.out.println(s.getSolutionExample());

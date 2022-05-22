@@ -6,15 +6,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public abstract class AbstractSyntaxFeedbackGenerator {
-    public List<SyntaxFeedbackNew> generateFeedbacks(List<SyntaxError> syntaxErrors) {
+    public List<SyntaxFeedback> generateFeedbacks(List<SyntaxError> syntaxErrors) {
         return syntaxErrors.stream()
                 .map(this::generateFeedback)
                 .map(syntaxFeedback -> SyntaxFeedbackFormatter.builder().build().formatFeedback(syntaxFeedback))
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    protected SyntaxFeedbackNew generateFeedback(SyntaxError syntaxError) {
-        return SyntaxFeedbackNew.builder()
+    protected SyntaxFeedback generateFeedback(SyntaxError syntaxError) {
+        return SyntaxFeedback.builder()
                 .header(generateHeader())
                 .feedbackMessage(generateFeedbackMessage(syntaxError))
                 .errorLine(generateErrorLine(syntaxError))
