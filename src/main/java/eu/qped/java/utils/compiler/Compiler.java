@@ -11,6 +11,7 @@ import javax.tools.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.StringWriter;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -30,7 +31,7 @@ import java.util.Locale;
 public class Compiler {
 
     private static final String DEFAULT_CLASS_PATH = "TestClass.java";
-    private static final String DEFAULT_CLASS_Name = "TestClass";
+    private static final String DEFAULT_CLASS_NAME = "TestClass";
 
     private static final String DEFAULT_DIR_PATH = "exam-results";
 
@@ -69,8 +70,19 @@ public class Compiler {
                 return false;
             }
         }
+        StringWriter stringWriter = new StringWriter();
         Iterable<? extends JavaFileObject> compilationUnits = fileManager.getJavaFileObjectsFromFiles(files);
-        boolean result = compiler.getTask(null, fileManager, diagnosticsCollector, null, null, compilationUnits).call();
+
+        List<String> options = List.of(
+                "-g",
+                "-Xlint",
+                "-verbose",
+                "-deprecation",
+                "-h compiled"
+        );
+
+        boolean result = compiler.getTask(stringWriter, fileManager, diagnosticsCollector, options, null, compilationUnits).call();
+        compiler.run(System.in, System.out, System.err);
         this.setCollectedDiagnostics(diagnosticsCollector.getDiagnostics());
         return result;
     }
@@ -106,7 +118,7 @@ public class Compiler {
             String[] declarationArray = classDeclaration.split(" ");
 
             if (declarationArray.length < 2) {
-                fileName = DEFAULT_CLASS_Name;
+                fileName = DEFAULT_CLASS_NAME;
                 targetProjectOrClassPath = DEFAULT_CLASS_PATH;
             } else {
                 fileName = declarationArray[1].trim(); // class name by student
@@ -114,7 +126,7 @@ public class Compiler {
             }
         }
         else {
-            fileName = DEFAULT_CLASS_Name;
+            fileName = DEFAULT_CLASS_NAME;
             targetProjectOrClassPath = DEFAULT_CLASS_PATH;
         }
         if (isClassOrInterface) {
