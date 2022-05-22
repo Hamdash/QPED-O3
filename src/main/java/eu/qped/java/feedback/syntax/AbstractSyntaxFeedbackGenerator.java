@@ -17,8 +17,8 @@ public abstract class AbstractSyntaxFeedbackGenerator {
         return SyntaxFeedback.builder()
                 .header(generateHeader())
                 .feedbackMessage(generateFeedbackMessage(syntaxError))
-                .errorLine(generateErrorLine(syntaxError))
-                .errorSource(generateErrorSource(syntaxError))
+                .errorLine(generateErrorLine(syntaxError.getLine()))
+                .errorSource(generateErrorSource(syntaxError.getErrorTrigger()))
                 .solutionExample(generateSolutionExample(syntaxError))
                 .build();
     }
@@ -27,9 +27,9 @@ public abstract class AbstractSyntaxFeedbackGenerator {
 
     protected abstract String generateFeedbackMessage(SyntaxError syntaxError);
 
-    protected abstract String generateErrorLine(SyntaxError syntaxError);
+    protected abstract String generateErrorLine(long errorLine);
 
-    protected abstract String generateErrorSource(SyntaxError syntaxError);
+    protected abstract String generateErrorSource(String errorTrigger);
 
     protected abstract String generateSolutionExample(SyntaxError syntaxError);
 

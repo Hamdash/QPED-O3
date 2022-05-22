@@ -31,12 +31,12 @@ class SyntaxFeedbackGeneratorNewTest {
 
     @Test
     void generateErrorLine() {
-        Assertions.assertNotEquals("", SyntaxFeedbackGenerator.builder().build().generateErrorLine(syntaxError));
+        Assertions.assertNotEquals("", SyntaxFeedbackGenerator.builder().build().generateErrorLine(syntaxError.getLine()));
     }
 
     @Test
     void generateErrorSource() {
-        Assertions.assertNotEquals("", SyntaxFeedbackGenerator.builder().build().generateErrorSource(syntaxError));
+        Assertions.assertNotEquals("", SyntaxFeedbackGenerator.builder().build().generateErrorSource(syntaxError.getErrorTrigger()));
     }
 
     @Test

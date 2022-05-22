@@ -32,13 +32,13 @@ public class SyntaxFeedbackGenerator extends AbstractSyntaxFeedbackGenerator {
     }
 
     @Override
-    protected String generateErrorLine(SyntaxError syntaxError) {
-        return "At line :" + String.format("%d", syntaxError.getLine());
+    protected String generateErrorLine(long errorLine) {
+        return "At line :" + String.format("%d", errorLine);
     }
 
     @Override
-    protected String generateErrorSource(SyntaxError syntaxError) {
-        return syntaxError.getErrorSourceCode();
+    protected String generateErrorSource(String errorTrigger) {
+        return errorTrigger;
     }
 
     @Override
