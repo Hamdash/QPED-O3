@@ -12,9 +12,7 @@ import eu.qped.java.checkers.style.StyleFeedback;
 import eu.qped.java.checkers.syntax.SyntaxChecker;
 import eu.qped.java.feedback.syntax.SyntaxFeedback;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class Mass implements Checker {
@@ -38,17 +36,8 @@ public class Mass implements Checker {
 
         StyleChecker styleChecker = new StyleChecker(styleConfigurator);
 
-        Map<String, String> mainSettingsMap = new HashMap<>();
-        mainSettingsMap.put("semanticNeeded", mainSettings.getSemanticNeeded());
-        mainSettingsMap.put("syntaxLevel", mainSettings.getSyntaxLevel());
-        mainSettingsMap.put("preferredLanguage", mainSettings.getPreferredLanguage());
-        mainSettingsMap.put("styleNeeded", mainSettings.getStyleNeeded());
 
-
-        MainSettings mainSettingsConfiguratorConf = new MainSettings(mainSettingsMap);
-//        mainSettingsConfiguratorConf.setSyntaxLevel(CheckLevel.BEGINNER);
-//        mainSettingsConfiguratorConf.setStyleNeeded(true);
-//        mainSettingsConfiguratorConf.setSemanticNeeded("true");
+        MainSettings mainSettingsConfiguratorConf = new MainSettings(mainSettings);
 
         SemanticConfigurator semanticConfigurator = SemanticConfigurator.createSemanticConfigurator(semSettings);
 
