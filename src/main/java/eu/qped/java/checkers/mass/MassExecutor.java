@@ -161,9 +161,9 @@ public class MassExecutor {
 
 
         Map<String, String> mainSettings = new HashMap<>();
-        mainSettings.put("semanticNeeded", "true");
+        mainSettings.put("semanticNeeded", "false");
         mainSettings.put("syntaxLevel", "2");
-        mainSettings.put("preferredLanguage", "de");
+        mainSettings.put("preferredLanguage", "en");
         mainSettings.put("styleNeeded", "true");
 
 

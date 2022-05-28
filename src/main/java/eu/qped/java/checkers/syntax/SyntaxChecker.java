@@ -102,29 +102,33 @@ public class SyntaxChecker {
     }
 
     public static void main(String[] args) throws IOException {
-        String code = "private void print() {\n" +
-            "        System.out.println();\n" +
-                    "    }";
+        String code = " List<String> xx(){\n" +
+                "        List list = new ArrayList();\n" +
+                "        list.add(\"8888\");\n" +
+                "        return list;\n" +
+                "    }";
 
         String[] codeLines = code.split("\n");
 
 
         SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(code).build();
+        SyntaxCheckReport syntaxCheckReport = syntaxChecker.check();
+        System.out.println(syntaxCheckReport);
 
-        int line = (int) syntaxChecker.check().getSyntaxErrors().get(0).getLine();
-        System.out.println(codeLines[line - 1].trim());
-
-        String lineCode = codeLines[line - 1].trim();
-
-        int column = (int) syntaxChecker.check().getSyntaxErrors().get(0).getColumnNumber();
-
-
-        System.out.println(
-                "custom Feedback \n" +
-                        syntaxChecker.check().getSyntaxErrors().get(0).getErrorMessage() + "\n" +
-                        "at line: " + syntaxChecker.check().getSyntaxErrors().get(0).getColumnNumber() + "\n" +
-                        "for example:  int var = value;"
-        );
+//        int line = (int) syntaxChecker.check().getSyntaxErrors().get(0).getLine();
+//        System.out.println(codeLines[line - 1].trim());
+//
+//        String lineCode = codeLines[line - 1].trim();
+//
+//        int column = (int) syntaxChecker.check().getSyntaxErrors().get(0).getColumnNumber();
+//
+//
+//        System.out.println(
+//                "custom Feedback \n" +
+//                        syntaxChecker.check().getSyntaxErrors().get(0).getErrorMessage() + "\n" +
+//                        "at line: " + syntaxChecker.check().getSyntaxErrors().get(0).getColumnNumber() + "\n" +
+//                        "for example:  int var = value;"
+//        );
 //        System.out.println(syntaxChecker.check().getSyntaxErrors().get(0).getErrorSourceCode());
     }
 
