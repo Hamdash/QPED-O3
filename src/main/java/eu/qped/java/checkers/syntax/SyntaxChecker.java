@@ -30,12 +30,18 @@ public class SyntaxChecker {
 
     private String targetProject;
 
+    private Compiler compiler;
+
     @Deprecated(forRemoval = true)
     private CheckLevel level;
 
     public SyntaxCheckReport check() {
         SyntaxCheckReport.SyntaxCheckReportBuilder resultBuilder = SyntaxCheckReport.builder();
-        Compiler compiler = Compiler.builder().build();
+
+        if (compiler == null) {
+            compiler = Compiler.builder().build();
+        }
+
         boolean compileResult;
 
         if (stringAnswer != null && !stringAnswer.equals("")) {
@@ -44,7 +50,7 @@ public class SyntaxChecker {
             resultBuilder.codeAsString(compiler.getFullSourceCode());
         } else {
             compiler.setTargetProjectOrClassPath(targetProject);
-            compileResult = compiler.compile(stringAnswer);
+            compileResult = compiler.compile(null);
             resultBuilder.compiledSourceType(CompiledSourceType.PROJECT);
         }
         resultBuilder.isCompilable(compileResult);
@@ -77,7 +83,7 @@ public class SyntaxChecker {
 
         int line = (int) diagnostic.getLineNumber();
 
-        return codeSplitByLine[line -1];
+        return codeSplitByLine[line - 1];
     }
 
     private List<SyntaxError> analyseDiagnostics(List<Diagnostic<? extends JavaFileObject>> diagnostics) {
@@ -102,18 +108,13 @@ public class SyntaxChecker {
     }
 
     public static void main(String[] args) throws IOException {
-        String code = " List<String> xx(){\n" +
-                "        List list = new ArrayList();\n" +
-                "        list.add(\"8888\");\n" +
-                "        return list;\n" +
-                "    }";
+
 
         String[] codeLines = code.split("\n");
 
+        Compiler compiler = Compiler.builder().build();
 
-        SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(code).build();
-        SyntaxCheckReport syntaxCheckReport = syntaxChecker.check();
-        System.out.println(syntaxCheckReport);
+
 
 //        int line = (int) syntaxChecker.check().getSyntaxErrors().get(0).getLine();
 //        System.out.println(codeLines[line - 1].trim());
