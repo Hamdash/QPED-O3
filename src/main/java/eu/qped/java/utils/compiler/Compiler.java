@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.core.config.plugins.processor.PluginProcessor;
 
 import javax.tools.*;
 import java.io.File;
@@ -86,7 +85,6 @@ public class Compiler implements CompilerInterface {
         if (options == null) {
             setDefaultOptions();
         }
-
         JavaCompiler.CompilationTask task = compiler.getTask(stringWriter, fileManager, diagnosticsCollector, options, null, compilationUnits);
         boolean result = task.call();
 
@@ -108,7 +106,7 @@ public class Compiler implements CompilerInterface {
         }
         options.add("-d");
         options.add(path);
-        options.add("-s");
+        options.add("-sourcepath");
         options.add(path);
     }
 
@@ -205,7 +203,7 @@ public class Compiler implements CompilerInterface {
         boolean compile = compiler.compile("import java.util.ArrayList;\n" +
                 "import java.util.List;\n" +
                 "\n" +
-                "public class GrayCode {\n" +
+                "public GrayCode {\n" +
                 "\n" +
                 "    public GrayCode() {\n" +
                 "    }\n" +
