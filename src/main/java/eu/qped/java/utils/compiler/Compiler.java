@@ -86,6 +86,7 @@ public class Compiler implements CompilerInterface {
         if (options == null) {
             setDefaultOptions();
         }
+
         JavaCompiler.CompilationTask task = compiler.getTask(stringWriter, fileManager, diagnosticsCollector, options, null, compilationUnits);
         boolean result = task.call();
 
