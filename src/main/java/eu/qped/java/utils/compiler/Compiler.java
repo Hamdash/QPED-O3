@@ -106,7 +106,7 @@ public class Compiler implements CompilerInterface {
         }
         options.add("-d");
         options.add(path);
-        options.add("-sourcepath");
+        options.add("-s");
         options.add(path);
     }
 
@@ -203,7 +203,7 @@ public class Compiler implements CompilerInterface {
         boolean compile = compiler.compile("import java.util.ArrayList;\n" +
                 "import java.util.List;\n" +
                 "\n" +
-                "public GrayCode {\n" +
+                "public class GrayCode {\n" +
                 "\n" +
                 "    public GrayCode() {\n" +
                 "    }\n" +
