@@ -1,6 +1,8 @@
 package eu.qped.java.checkers.design;
 
 /**
+ * Metrics enum representing all possible class metrics for the design checker.
+ *
  * @author Jannik Seus
  */
 public enum Metric {

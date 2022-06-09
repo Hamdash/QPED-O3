@@ -15,11 +15,11 @@ import org.apache.bcel.generic.*;
 import java.util.*;
 
 /**
- * custom visitor class for the metrics:
+ * Custom visitor class for the metrics:
  * IC {@link Metric#IC} and
  * CBM {@link Metric#CBM}.
  *
- * @author marian
+ * @author marian (from CKJM-extended tool)
  * @author Jannik Seus (edited)
  */
 public class QPEDIcAndCbmClassVisitor extends AbstractClassVisitor {
