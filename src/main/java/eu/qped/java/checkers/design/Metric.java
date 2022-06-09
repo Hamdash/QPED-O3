@@ -16,7 +16,7 @@ public enum Metric {
     CA("Afferent coupling"),
     CE("Efferent coupling"),
     NPM("Number of Public Methods for a class"),
-    CIS("Class Interface Size"),
+    CIS("Class Interface Size"),    //TODO MISSING?
     LCOM3("Lack of cohesion in methods Henderson-Sellers version"),
     LOC("Lines of Code"),
     DAM("Data Access Metric"),
@@ -26,7 +26,7 @@ public enum Metric {
     IC("Inheritance Coupling"),
     CBM("Coupling Between Methods"),
     AMC("Average Method Complexity"),
-    CC("McCabe's Cyclomatic Complexity");
+    CC("McCabe's Cyclomatic Complexity"); // MISSING?
 
     Metric(String description) {}
 }
