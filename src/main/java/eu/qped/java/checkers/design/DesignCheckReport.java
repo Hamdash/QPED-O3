@@ -22,7 +22,7 @@ public class DesignCheckReport {
      * (k1: classname, v1: (k2: metric, v2: value) )
      */
     private Map<String, Map<Metric, Double>> metricsMap;
-    private Map<Metric, String> metricsThresholds;  //TODO implement thresholds, path, codeAsString
+    private Map<Metric, Double> metricsThresholds;  //TODO implement thresholds, path, codeAsString
     private String codeAsString;
     private String path;
 

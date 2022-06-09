@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
+ * Test class for {@link DesignChecker}
+ *
  * @author Jannik Seus
  */
 class DesignCheckerTest {
@@ -67,6 +69,7 @@ class DesignCheckerTest {
         assertEquals(Metric.values().length - 2, b.check().getMetricsMap().get(b.check().getMetricsMap().keySet().iterator().next()).size());
 
     }
+
 
     private void createTestClass() {
         Compiler c = Compiler.builder().build();
