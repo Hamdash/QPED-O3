@@ -3,11 +3,15 @@ package eu.qped.java.checkers.design.ckjm;
 import eu.qped.java.checkers.design.Metric;
 import gr.spinellis.ckjm.*;
 import gr.spinellis.ckjm.utils.LoggerHelper;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.apache.bcel.classfile.ClassParser;
 import org.apache.bcel.classfile.JavaClass;
 
 import java.io.IOException;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.logging.Level;
@@ -20,6 +24,7 @@ import java.util.logging.Logger;
  * @author <a href="http://www.spinellis.gr">Diomidis Spinellis</a> (from CKJM-extended tool)
  * @author Jannik Seus (edited)
  */
+@RequiredArgsConstructor
 public class QPEDMetricsFilter implements ICountingProperities {
 
     /**
@@ -35,12 +40,12 @@ public class QPEDMetricsFilter implements ICountingProperities {
     /**
      * The same instance of MoaClassVisitor must be used to process all class, so it must be a class field.
      */
-    private MoaClassVisitor moaVisitor;
+    private final MoaClassVisitor moaVisitor;
 
     /**
      * container for available metrics
      */
-    private IClassMetricsContainer metricsContainer;
+    private final IClassMetricsContainer metricsContainer;
 
     public QPEDMetricsFilter() {
         metricsContainer = new ClassMetricsContainer(this);
@@ -54,7 +59,7 @@ public class QPEDMetricsFilter implements ICountingProperities {
      * @param files class files to be analyzed
      * @param outputHandler an implementation of the CkjmOutputHandler interface
      */
-    public static void runMetrics(String[] files, CkjmOutputHandler outputHandler, boolean includeJDK) {
+    public static void runMetrics(List<String> files, CkjmOutputHandler outputHandler, boolean includeJDK) {
         QPEDMetricsFilter qmf = new QPEDMetricsFilter();
         qmf.includeJdk = includeJDK;
 
@@ -144,6 +149,8 @@ public class QPEDMetricsFilter implements ICountingProperities {
             icVisitor.visitJavaClass(javaClass);
             AmcClassVisitor amcVisitor = new AmcClassVisitor(metricsContainer);
             amcVisitor.visitJavaClass(javaClass);
+        } else {
+            LoggerHelper.printError("Given class ist null.");
         }
     }
 
@@ -154,7 +161,7 @@ public class QPEDMetricsFilter implements ICountingProperities {
      * @param files         class files to be analyzed
      * @param outputHandler an implementation of the CkjmOutputHandler interface
      */
-    public void runMetricsInternal(String[] files, CkjmOutputHandler outputHandler) {
+    public void runMetricsInternal(List<String> files, CkjmOutputHandler outputHandler) {
 
         for (String file : files) {
             processClass(file);

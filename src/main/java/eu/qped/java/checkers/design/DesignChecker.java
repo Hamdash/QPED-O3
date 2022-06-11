@@ -1,8 +1,12 @@
 package eu.qped.java.checkers.design;
 
+import eu.qped.framework.qf.QfObject;
 import eu.qped.java.checkers.design.ckjm.QPEDMetricsFilter;
 import eu.qped.java.checkers.design.ckjm.SaveMapResults;
+import eu.qped.java.utils.compiler.Compiler;
 import gr.spinellis.ckjm.CkjmOutputHandler;
+import gr.spinellis.ckjm.ClassMetricsContainer;
+import gr.spinellis.ckjm.MoaClassVisitor;
 import gr.spinellis.ckjm.utils.CmdLineParser;
 import lombok.Builder;
 import lombok.Data;
@@ -41,8 +45,7 @@ public class DesignChecker {
         CkjmOutputHandler handler;
         handler = new SaveMapResults(metricsMap);
 
-        String[] tmp = new String[1];
-        qmf.runMetricsInternal(cmdParser.getClassNames().toArray(tmp), handler);
+        qmf.runMetricsInternal(cmdParser.getClassNames(), handler);
 
         resultBuilder.metricsMap(((SaveMapResults) handler).getOutputMetrics());
         //resultBuilder.metricsThresholds();
@@ -52,7 +55,7 @@ public class DesignChecker {
     }
 
     // for removal
-    /*
+
     public static void main(String[] args) {
 
         String answer = "import java.util.List;\n" +
@@ -75,5 +78,5 @@ public class DesignChecker {
         b.setAnswer(answer);
         b.check().getMetricsMap().forEach((k, v) -> System.out.println(k + " : " + v));
     }
-     */
+
 }
