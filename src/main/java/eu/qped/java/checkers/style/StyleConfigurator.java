@@ -9,6 +9,8 @@ import org.apache.logging.log4j.LogManager;
 import eu.qped.framework.CheckLevel;
 import eu.qped.java.checkers.mass.QFStyleSettings;
 
+import java.util.List;
+
 /**
  * Style checker configs manager.
  * The class manage all the settings for the style checker and create a Setting Object to control the checker.
@@ -25,7 +27,7 @@ public class StyleConfigurator {
 
 
     private static final CheckLevel DEFAULT_CHECK_LEVEL = CheckLevel.BEGINNER;
-	private int maxClassLength;
+    private int maxClassLength;
     private int maxMethodLength;
     private int maxFieldsCount;
     private int maxCycloComplexity;
@@ -42,8 +44,7 @@ public class StyleConfigurator {
     private CheckLevel basisLevel;
 
 
-    private  QFStyleSettings qfStyleSettings;
-
+    private QFStyleSettings qfStyleSettings;
 
 
     private StyleConfigurator(QFStyleSettings qfStyleSettings) {
@@ -55,96 +56,37 @@ public class StyleConfigurator {
         return new StyleConfigurator(qfStyleSettings);
     }
 
-    public static StyleConfigurator createDefaultStyleConfigurator () {
+    public static StyleConfigurator createDefaultStyleConfigurator() {
         return new StyleConfigurator(null);
     }
 
 
-
     protected void readSettings() {
 
-        setDefaultValues();
-        if (qfStyleSettings != null){
-            if (qfStyleSettings.getBasisLevel() != null) {
-                setBasisConfLevel(qfStyleSettings.getBasisLevel());
-            }
-            if (qfStyleSettings.getNamesLevel() != null){
-                setNamesConfLevel(qfStyleSettings.getNamesLevel());
-            }
-            if (qfStyleSettings.getCompLevel() != null){
-                setComplexityConfLevel(qfStyleSettings.getCompLevel());
-            }
-            if (qfStyleSettings.getClassLength() != null) {
-                setMaxClassLength(Integer.parseInt(qfStyleSettings.getClassLength()));
-            }
-            if (qfStyleSettings.getMethodLength() != null){
-                setMaxMethodLength(Integer.parseInt(qfStyleSettings.getMethodLength()));
-            }
-            if (qfStyleSettings.getFieldsCount() != null) {
-                setMaxFieldsCount(Integer.parseInt(qfStyleSettings.getFieldsCount()));
-            }
-            if (qfStyleSettings.getCycloComplexity() != null){
-                setMaxCycloComplexity(Integer.parseInt(qfStyleSettings.getCycloComplexity()));
-            }
-            if (qfStyleSettings.getVarName() != null) {
-                setVarNamesRegEx(qfStyleSettings.getVarName());
-            }
-            if (qfStyleSettings.getMethodName() != null){
-                setMethodNamesRegEx(qfStyleSettings.getMethodName());
-            }
-            if (qfStyleSettings.getClassName() != null) {
-                setClassNameRegEx(qfStyleSettings.getClassName());
-            }
+        try {
+            maxClassLength = qfStyleSettings.getClassLength() != null ? Integer.parseInt(qfStyleSettings.getClassLength()) : -1;
+            maxMethodLength = qfStyleSettings.getMethodLength() != null ? Integer.parseInt(qfStyleSettings.getMethodLength()) : -1;
+            maxFieldsCount = qfStyleSettings.getFieldsCount() != null ? Integer.parseInt(qfStyleSettings.getFieldsCount()) : -1;
+            maxCycloComplexity = qfStyleSettings.getCycloComplexity() != null ? Integer.parseInt(qfStyleSettings.getCycloComplexity()) : -1;
+            varNamesRegEx = qfStyleSettings.getVarName() != null ? qfStyleSettings.getVarName() : "undefined";
+            methodNamesRegEx = qfStyleSettings.getMethodName() != null ? qfStyleSettings.getMethodName() : "undefined";
+            classNameRegEx = qfStyleSettings.getClassName() != null ? qfStyleSettings.getClassName() : "undefined";
+            mainLevel = isCheckLevel(qfStyleSettings.getMainLevel()) ? (CheckLevel.valueOf(qfStyleSettings.getMainLevel())) : CheckLevel.BEGINNER;
+            namesLevel = isCheckLevel(qfStyleSettings.getNamesLevel()) ? (CheckLevel.valueOf(qfStyleSettings.getNamesLevel())) : CheckLevel.BEGINNER;
+            complexityLevel = isCheckLevel(qfStyleSettings.getCompLevel()) ? (CheckLevel.valueOf(qfStyleSettings.getCompLevel())) : CheckLevel.BEGINNER;
+            basisLevel = isCheckLevel(qfStyleSettings.getBasisLevel()) ? (CheckLevel.valueOf(qfStyleSettings.getBasisLevel())) : CheckLevel.BEGINNER;
+        } catch (IllegalArgumentException | NullPointerException e) {
+            LogManager.getLogger(getClass()).warn(e.getMessage());
         }
     }
 
-
-    private void setDefaultValues() {
-
-        this.setMaxClassLength(-1);
-        this.setMaxMethodLength(-1);
-        this.setMaxFieldsCount(-1);
-        this.setMaxCycloComplexity(-1);
-        this.setVarNamesRegEx("undefined");
-        this.setClassNameRegEx("undefined");
-        this.setMethodNamesRegEx("undefined");
-
-        setMainLevel(CheckLevel.BEGINNER);
-
-        setBasisLevel(CheckLevel.BEGINNER);
-
-        setNamesLevel(CheckLevel.BEGINNER);
-
-        setComplexityLevel(CheckLevel.BEGINNER);
-
-    }
-
-
-    private void setBasisConfLevel(String level) {
-    	try {
-    		setBasisLevel(CheckLevel.valueOf(level));
-		} catch (IllegalArgumentException | NullPointerException e) {
-			LogManager.getLogger(getClass()).warn("Unsupported check-level (" + level + "), fall back to " + DEFAULT_CHECK_LEVEL);
-			setBasisLevel(DEFAULT_CHECK_LEVEL);
-		}
-    }
-
-    private void setNamesConfLevel(String level) {
-    	try {
-    		setNamesLevel(CheckLevel.valueOf(level));
-		} catch (IllegalArgumentException | NullPointerException e) {
-			LogManager.getLogger(getClass()).warn("Unsupported check-level (" + level + "), fall back to " + DEFAULT_CHECK_LEVEL);
-			setNamesLevel(DEFAULT_CHECK_LEVEL);
-		}
-    }
-
-    private void setComplexityConfLevel(String level) {
-    	try {
-    		setComplexityLevel(CheckLevel.valueOf(level));
-		} catch (IllegalArgumentException | NullPointerException e) {
-			LogManager.getLogger(getClass()).warn("Unsupported check-level (" + level + "), fall back to " + DEFAULT_CHECK_LEVEL);
-			setComplexityLevel(DEFAULT_CHECK_LEVEL);
-		}
+    public boolean isCheckLevel(String checkLevel) {
+        try {
+            List<CheckLevel> checkLevels = List.of(CheckLevel.BEGINNER, CheckLevel.INTERMEDIATE, CheckLevel.ADVANCED);
+            return checkLevels.contains(CheckLevel.valueOf(checkLevel));
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
     }
 }
 

@@ -31,21 +31,22 @@ public class Mass implements Checker {
     @Override
     public void check(QfObject qfObject) throws Exception {
 
-
-        StyleConfigurator styleConfigurator = StyleConfigurator.createStyleConfigurator(this.styleSettings);
-
-        StyleChecker styleChecker = new StyleChecker(styleConfigurator);
-
-
+        // Main Settings
         MainSettings mainSettings = new MainSettings(this.mainSettings);
 
-        SemanticConfigurator semanticConfigurator = SemanticConfigurator.createSemanticConfigurator(semSettings);
-
-        SemanticChecker semanticChecker = SemanticChecker.createSemanticMassChecker(semanticConfigurator);
+        // Syntax Checker
         SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(qfObject.getAnswer()).build();
 
-        MassExecutor massExecutor = new MassExecutor(styleChecker, semanticChecker, syntaxChecker, mainSettings);
+        // Style Checker
+        StyleConfigurator styleConfigurator = StyleConfigurator.createStyleConfigurator(this.styleSettings);
+        StyleChecker styleChecker = new StyleChecker(styleConfigurator);
 
+        // Semantic Checker
+        SemanticConfigurator semanticConfigurator = SemanticConfigurator.createSemanticConfigurator(semSettings);
+        SemanticChecker semanticChecker = SemanticChecker.createSemanticMassChecker(semanticConfigurator);
+
+        //Mass
+        MassExecutor massExecutor = new MassExecutor(styleChecker, semanticChecker, syntaxChecker, mainSettings);
         massExecutor.execute();
 
         /*

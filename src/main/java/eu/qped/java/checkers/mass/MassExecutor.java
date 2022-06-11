@@ -205,9 +205,11 @@ public class MassExecutor {
 
 
         QFStyleSettings qfStyleSettings = new QFStyleSettings();
-        qfStyleSettings.setNamesLevel("adv");
+        qfStyleSettings.setNamesLevel("ADV");
+        qfStyleSettings.setCompLevel("ADV");
+        qfStyleSettings.setMainLevel("ADV");
         qfStyleSettings.setMethodName("[AA]");
-        qfStyleSettings.setBasisLevel("adv");
+        qfStyleSettings.setBasisLevel("ADVANCED");
         qfStyleSettings.setClassLength("10");
         qfStyleSettings.setMethodLength("10");
 
