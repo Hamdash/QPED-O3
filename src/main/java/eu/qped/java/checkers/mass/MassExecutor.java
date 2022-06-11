@@ -156,7 +156,7 @@ public class MassExecutor {
         QFMainSettings qfMainSettings = new QFMainSettings();
         qfMainSettings.setSyntaxLevel(CheckLevel.ADVANCED.name());
         qfMainSettings.setSemanticNeeded("true");
-        qfMainSettings.setStyleNeeded("false");
+        qfMainSettings.setStyleNeeded("true");
         qfMainSettings.setPreferredLanguage("en");
 
 
