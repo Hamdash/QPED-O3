@@ -14,8 +14,8 @@ import eu.qped.java.checkers.syntax.SyntaxCheckReport;
 import eu.qped.java.checkers.syntax.SyntaxChecker;
 import eu.qped.java.checkers.syntax.SyntaxError;
 import eu.qped.java.feedback.syntax.AbstractSyntaxFeedbackGenerator;
-import eu.qped.java.feedback.syntax.SyntaxFeedbackGenerator;
 import eu.qped.java.feedback.syntax.SyntaxFeedback;
+import eu.qped.java.feedback.syntax.SyntaxFeedbackGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -155,7 +155,7 @@ public class MassExecutor {
 
         QFMainSettings qfMainSettings = new QFMainSettings();
         qfMainSettings.setSyntaxLevel(CheckLevel.ADVANCED.name());
-        qfMainSettings.setSemanticNeeded("true");
+        qfMainSettings.setSemanticNeeded("false");
         qfMainSettings.setStyleNeeded("true");
         qfMainSettings.setPreferredLanguage("en");
 
@@ -218,7 +218,9 @@ public class MassExecutor {
         StyleChecker styleChecker = new StyleChecker(styleConfigurator);
 
         SemanticChecker semanticChecker = SemanticChecker.createSemanticMassChecker(semanticConfigurator);
-        SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(code).build();
+
+
+        SyntaxChecker syntaxChecker = SyntaxChecker.builder().targetProject("src/main/resources/testProject").build();
 
 
         MassExecutor massE = new MassExecutor(styleChecker, semanticChecker, syntaxChecker, mainSettingsConfiguratorConf);
