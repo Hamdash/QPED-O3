@@ -3,10 +3,12 @@ package eu.qped.java.checkers.mass;
 import eu.qped.framework.Checker;
 import eu.qped.framework.QfProperty;
 import eu.qped.framework.qf.QfObject;
+import eu.qped.java.checkers.design.DesignChecker;
 import eu.qped.java.checkers.semantics.SemanticChecker;
 import eu.qped.java.checkers.semantics.SemanticConfigurator;
 import eu.qped.java.checkers.semantics.SemanticFeedback;
 import eu.qped.java.checkers.style.StyleChecker;
+import eu.qped.java.checkers.style.StyleConfigurator;
 import eu.qped.java.checkers.style.StyleFeedback;
 import eu.qped.java.checkers.syntax.SyntaxChecker;
 import eu.qped.java.feedback.syntax.SyntaxFeedback;
@@ -30,22 +32,22 @@ public class Mass implements Checker {
     @Override
     public void check(QfObject qfObject) throws Exception {
 
-        // Main Settings
+
+        StyleConfigurator styleConfigurator = StyleConfigurator.createStyleConfigurator(this.styleSettings);
+
+        StyleChecker styleChecker = new StyleChecker(styleConfigurator);
+
+
         MainSettings mainSettings = new MainSettings(this.mainSettings);
 
-        // Syntax Checker
-        SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(qfObject.getAnswer()).build();
-
-        // Style Checker
-
-        StyleChecker styleChecker = StyleChecker.builder().qfStyleSettings(styleSettings).build();
-
-        // Semantic Checker
         SemanticConfigurator semanticConfigurator = SemanticConfigurator.createSemanticConfigurator(semSettings);
-        SemanticChecker semanticChecker = SemanticChecker.createSemanticMassChecker(semanticConfigurator);
 
-        //Mass
-        MassExecutor massExecutor = new MassExecutor(styleChecker, semanticChecker, syntaxChecker, mainSettings);
+
+        SemanticChecker semanticChecker = SemanticChecker.createSemanticMassChecker(semanticConfigurator);
+        SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(qfObject.getAnswer()).build();
+        DesignChecker designChecker = DesignChecker.builder().answer(qfObject.getAnswer()).build(); //TODO is this correct?
+        MassExecutor massExecutor = new MassExecutor(styleChecker, semanticChecker, syntaxChecker, designChecker, mainSettings);
+
         massExecutor.execute();
 
         /*

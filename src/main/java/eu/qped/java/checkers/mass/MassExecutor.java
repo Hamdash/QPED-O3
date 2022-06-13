@@ -3,18 +3,20 @@ package eu.qped.java.checkers.mass;
 import eu.qped.framework.CheckLevel;
 import eu.qped.framework.Feedback;
 import eu.qped.framework.Translator;
+import eu.qped.java.checkers.design.DesignChecker;
 import eu.qped.java.checkers.semantics.SemanticChecker;
 import eu.qped.java.checkers.semantics.SemanticConfigurator;
 import eu.qped.java.checkers.semantics.SemanticFeedback;
 import eu.qped.java.checkers.style.StyleChecker;
+import eu.qped.java.checkers.style.StyleConfigurator;
 import eu.qped.java.checkers.style.StyleFeedback;
 import eu.qped.java.checkers.style.StyleViolation;
 import eu.qped.java.checkers.syntax.SyntaxCheckReport;
 import eu.qped.java.checkers.syntax.SyntaxChecker;
 import eu.qped.java.checkers.syntax.SyntaxError;
 import eu.qped.java.feedback.syntax.AbstractSyntaxFeedbackGenerator;
-import eu.qped.java.feedback.syntax.SyntaxFeedback;
 import eu.qped.java.feedback.syntax.SyntaxFeedbackGenerator;
+import eu.qped.java.feedback.syntax.SyntaxFeedback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +45,7 @@ public class MassExecutor {
     private final SemanticChecker semanticChecker;
     private final SyntaxChecker syntaxChecker;
 
+
     /**
      * To create an Object use the factory Class @MassExecutorFactory
      *
@@ -61,6 +64,7 @@ public class MassExecutor {
         this.mainSettingsConfigurator = mainSettingsConfigurator;
     }
 
+
     /**
      * execute the Mass System
      */
@@ -78,6 +82,8 @@ public class MassExecutor {
                 styleChecker.setTargetPath(syntaxCheckReport.getPath());
                 styleChecker.check();
                 styleFeedbacks = styleChecker.getStyleFeedbacks();
+
+                //auto checker
                 violations = styleChecker.getStyleViolationsList();
             }
             if (semanticNeeded) {
@@ -91,6 +97,7 @@ public class MassExecutor {
             syntaxErrors = syntaxCheckReport.getSyntaxErrors();
             AbstractSyntaxFeedbackGenerator syntaxFeedbackGenerator = SyntaxFeedbackGenerator.builder().build();
             syntaxFeedbacks = syntaxFeedbackGenerator.generateFeedbacks(syntaxErrors);
+
         }
 
         // translate Feedback body if needed
@@ -154,8 +161,8 @@ public class MassExecutor {
 
         QFMainSettings qfMainSettings = new QFMainSettings();
         qfMainSettings.setSyntaxLevel(CheckLevel.ADVANCED.name());
-        qfMainSettings.setSemanticNeeded("false");
-        qfMainSettings.setStyleNeeded("true");
+        qfMainSettings.setSemanticNeeded("true");
+        qfMainSettings.setStyleNeeded("false");
         qfMainSettings.setPreferredLanguage("en");
 
 
@@ -204,20 +211,22 @@ public class MassExecutor {
 
 
         QFStyleSettings qfStyleSettings = new QFStyleSettings();
-        qfStyleSettings.setNamesLevel("ADV");
-        qfStyleSettings.setCompLevel("ADV");
-        qfStyleSettings.setMainLevel("ADV");
+        qfStyleSettings.setNamesLevel("adv");
         qfStyleSettings.setMethodName("[AA]");
-        qfStyleSettings.setBasisLevel("ADVANCED");
+        qfStyleSettings.setBasisLevel("adv");
         qfStyleSettings.setClassLength("10");
         qfStyleSettings.setMethodLength("10");
 
-        StyleChecker styleChecker = StyleChecker.builder().qfStyleSettings(qfStyleSettings).build();
+
+        StyleConfigurator styleConfigurator = StyleConfigurator.createStyleConfigurator(qfStyleSettings);
+
+
+        StyleChecker styleChecker = new StyleChecker(styleConfigurator);
 
         SemanticChecker semanticChecker = SemanticChecker.createSemanticMassChecker(semanticConfigurator);
-
-
         SyntaxChecker syntaxChecker = SyntaxChecker.builder().targetProject("src/main/resources/testProject").build();
+        //SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(code).build();
+        DesignChecker designChecker = DesignChecker.builder().answer(code).build();
 
 
         MassExecutor massE = new MassExecutor(styleChecker, semanticChecker, syntaxChecker, mainSettingsConfiguratorConf);
