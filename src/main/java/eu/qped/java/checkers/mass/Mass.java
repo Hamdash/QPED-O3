@@ -3,6 +3,7 @@ package eu.qped.java.checkers.mass;
 import eu.qped.framework.Checker;
 import eu.qped.framework.QfProperty;
 import eu.qped.framework.qf.QfObject;
+import eu.qped.java.checkers.design.DesignChecker;
 import eu.qped.java.checkers.semantics.SemanticChecker;
 import eu.qped.java.checkers.semantics.SemanticConfigurator;
 import eu.qped.java.checkers.semantics.SemanticFeedback;
@@ -26,6 +27,9 @@ public class Mass implements Checker {
     @QfProperty
     private QFSemSettings semSettings;
 
+    @QfProperty
+    private QFDesignSettings designSettings;
+
     private final static String NEW_LINE = "\n" + "\n";
 
     @Override
@@ -44,8 +48,8 @@ public class Mass implements Checker {
 
         SemanticChecker semanticChecker = SemanticChecker.createSemanticMassChecker(semanticConfigurator);
         SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(qfObject.getAnswer()).build();
-
-        MassExecutor massExecutor = new MassExecutor(styleChecker, semanticChecker, syntaxChecker, mainSettings);
+        DesignChecker designChecker = DesignChecker.builder().answer(qfObject.getAnswer()).build(); //TODO is this correct?
+        MassExecutor massExecutor = new MassExecutor(styleChecker, semanticChecker, syntaxChecker, designChecker, mainSettings);
 
         massExecutor.execute();
 

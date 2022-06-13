@@ -3,6 +3,8 @@ package eu.qped.java.checkers.mass;
 import eu.qped.framework.CheckLevel;
 import eu.qped.framework.Feedback;
 import eu.qped.framework.Translator;
+import eu.qped.java.checkers.design.DesignCheckReport;
+import eu.qped.java.checkers.design.DesignChecker;
 import eu.qped.java.checkers.semantics.SemanticChecker;
 import eu.qped.java.checkers.semantics.SemanticConfigurator;
 import eu.qped.java.checkers.semantics.SemanticFeedback;
@@ -13,6 +15,7 @@ import eu.qped.java.checkers.style.StyleViolation;
 import eu.qped.java.checkers.syntax.SyntaxCheckReport;
 import eu.qped.java.checkers.syntax.SyntaxChecker;
 import eu.qped.java.checkers.syntax.SyntaxError;
+import eu.qped.java.checkers.design.DesignFeedback;
 import eu.qped.java.feedback.syntax.AbstractSyntaxFeedbackGenerator;
 import eu.qped.java.feedback.syntax.SyntaxFeedbackGenerator;
 import eu.qped.java.feedback.syntax.SyntaxFeedback;
@@ -36,6 +39,7 @@ public class MassExecutor {
     private List<StyleFeedback> styleFeedbacks;
     private List<SemanticFeedback> semanticFeedbacks;
     private List<SyntaxFeedback> syntaxFeedbacks;
+    private List<DesignFeedback> designFeedbacks;
 
     private List<StyleViolation> violations;
     private List<SyntaxError> syntaxErrors;
@@ -43,23 +47,27 @@ public class MassExecutor {
     private final StyleChecker styleChecker;
     private final SemanticChecker semanticChecker;
     private final SyntaxChecker syntaxChecker;
+    private final DesignChecker designChecker;
 
 
     /**
      * To create an Object use the factory Class @MassExecutorFactory
-     *
-     * @param styleChecker             style checker component
+     *  @param styleChecker             style checker component
      * @param semanticChecker          semantic checker component
      * @param syntaxChecker            syntax checker component
+     * @param designChecker             design checker component
      * @param mainSettingsConfigurator settings
      */
 
     public MassExecutor(final StyleChecker styleChecker, final SemanticChecker semanticChecker,
-                        final SyntaxChecker syntaxChecker, final MainSettings mainSettingsConfigurator) {
+                        final SyntaxChecker syntaxChecker, final DesignChecker designChecker,
+                        final MainSettings mainSettingsConfigurator
+                        ) {
 
         this.styleChecker = styleChecker;
         this.semanticChecker = semanticChecker;
         this.syntaxChecker = syntaxChecker;
+        this.designChecker = designChecker;
         this.mainSettingsConfigurator = mainSettingsConfigurator;
     }
 
@@ -72,9 +80,11 @@ public class MassExecutor {
 
         boolean styleNeeded = mainSettingsConfigurator.isStyleNeeded();
         boolean semanticNeeded = mainSettingsConfigurator.isSemanticNeeded();
+        boolean designNeeded = mainSettingsConfigurator.isDesignNeeded();
 
 
         SyntaxCheckReport syntaxCheckReport = syntaxChecker.check();
+        DesignCheckReport designCheckReport = designChecker.check();
 
         if (syntaxCheckReport.isCompilable()) {
             if (styleNeeded) {
@@ -90,7 +100,15 @@ public class MassExecutor {
                 semanticChecker.setSource(source);
                 semanticChecker.check();
                 semanticFeedbacks = semanticChecker.getFeedbacks();
+
             }
+            if (designNeeded) {
+                final String source = designCheckReport.getCodeAsString();
+                designChecker.setTargetProject(source);
+                designChecker.check();
+                semanticFeedbacks = semanticChecker.getFeedbacks();
+            }
+
         } else {
             syntaxChecker.setLevel(mainSettingsConfigurator.getSyntaxLevel());
             syntaxErrors = syntaxCheckReport.getSyntaxErrors();
@@ -224,9 +242,11 @@ public class MassExecutor {
 
         SemanticChecker semanticChecker = SemanticChecker.createSemanticMassChecker(semanticConfigurator);
         SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(code).build();
+        DesignChecker designChecker = DesignChecker.builder().answer(code).build();
 
 
-        MassExecutor massE = new MassExecutor(styleChecker, semanticChecker, syntaxChecker, mainSettingsConfiguratorConf);
+        MassExecutor massE = new MassExecutor(styleChecker, semanticChecker, syntaxChecker, designChecker,
+                mainSettingsConfiguratorConf);
 
         massE.execute();
 

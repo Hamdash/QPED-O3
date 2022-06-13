@@ -3,6 +3,7 @@ package eu.qped.java.style;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
+import eu.qped.java.checkers.design.DesignChecker;
 import eu.qped.java.checkers.mass.QFMainSettings;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -49,9 +50,10 @@ class MassStyleTest {
                 + "}";
 
         SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(code).build();
+        DesignChecker designChecker = DesignChecker.builder().answer(code).build();
 
         MassExecutor massE = new MassExecutor(styleChecker, null, syntaxChecker,
-                mainSettingsConfiguratorConf);
+                designChecker, mainSettingsConfiguratorConf);
 
         massE.execute();
 
