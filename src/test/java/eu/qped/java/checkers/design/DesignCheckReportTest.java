@@ -43,9 +43,9 @@ class DesignCheckReportTest {
         designCheckReport1 = new DesignCheckReport();
         designCheckReport2 = new DesignCheckReport(
                 mock(Map.class),
-                mock(Map.class),
                 "codeAsString",
-                "path");
+                "path",
+                mock(DesignConfigurator.class));
 
 
     }
@@ -84,8 +84,8 @@ class DesignCheckReportTest {
         Field metricsThresholdsField = getFieldByName("metricsThresholds");
         if (metricsThresholdsField != null) {
             metricsThresholdsField.setAccessible(true);
-            designCheckReport1.setMetricsThresholds(sampleMapThresholds);
-            designCheckReport2.setMetricsThresholds(sampleMapThresholds);
+            designCheckReport1.getDesignConfigurator().setMetricsThresholds(sampleMapThresholds);
+            designCheckReport2.getDesignConfigurator().setMetricsThresholds(sampleMapThresholds);
 
             assertEquals(sampleMapThresholds, metricsThresholdsField.get(designCheckReport1));
             assertEquals(sampleMapThresholds, metricsThresholdsField.get(designCheckReport2));
@@ -97,10 +97,10 @@ class DesignCheckReportTest {
         Field metricsThresholdsField = getFieldByName("metricsThresholds");
         if (metricsThresholdsField != null) {
             metricsThresholdsField.setAccessible(true);
-            designCheckReport1.setMetricsThresholds(sampleMapThresholds); //setter already tested
-            designCheckReport2.setMetricsThresholds(sampleMapThresholds);
-            Map<Metric, Double> retrievedMap1 = designCheckReport1.getMetricsThresholds();
-            Map<Metric, Double> retrievedMap2 = designCheckReport2.getMetricsThresholds();
+            designCheckReport1.getDesignConfigurator().setMetricsThresholds(sampleMapThresholds); //setter already tested
+            designCheckReport2.getDesignConfigurator().setMetricsThresholds(sampleMapThresholds);
+            Map<Metric, Double> retrievedMap1 = designCheckReport1.getDesignConfigurator().getMetricsThresholds();
+            Map<Metric, Double> retrievedMap2 = designCheckReport2.getDesignConfigurator().getMetricsThresholds();
 
             assertEquals(sampleMapThresholds, retrievedMap1);
             assertEquals(sampleMapThresholds, retrievedMap2);

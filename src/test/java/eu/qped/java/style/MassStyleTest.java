@@ -50,9 +50,8 @@ class MassStyleTest {
                 + "}";
 
         SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(code).build();
-
         MassExecutor massE = new MassExecutor(styleChecker, null, syntaxChecker,
-                mainSettingsConfiguratorConf);
+                null, mainSettingsConfiguratorConf);
 
         massE.execute();
 
