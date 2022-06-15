@@ -84,7 +84,6 @@ public class MassExecutor {
 
 
         SyntaxCheckReport syntaxCheckReport = syntaxChecker.check();
-        DesignCheckReport designCheckReport = designChecker.check();
 
         if (syntaxCheckReport.isCompilable()) {
             if (styleNeeded) {
@@ -103,7 +102,7 @@ public class MassExecutor {
 
             }
             if (designNeeded) {
-                final String source = designCheckReport.getCodeAsString();
+                final String source = syntaxCheckReport.getCodeAsString();
                 designChecker.setTargetProject(source);
                 designChecker.check();
                 semanticFeedbacks = semanticChecker.getFeedbacks();

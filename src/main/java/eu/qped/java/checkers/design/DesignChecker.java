@@ -71,7 +71,7 @@ public class DesignChecker {
         Compiler c = Compiler.builder().build();
         c.compile(answer);
 
-        String pathToClass = "/Users/jannik/ProgrammingProjects/IdeaProjects/uni/ba/fork/QPED-O3/Mmm.class";
+        String pathToClass = "/Users/jannik/ProgrammingProjects/IdeaProjects/uni/bachelorarbeit/fork/Mmm.class";
 
         DesignChecker b = DesignChecker.builder().answer(new QfObject().getAnswer()).build();
         b.setTargetProject(pathToClass);
