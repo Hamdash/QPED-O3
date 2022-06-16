@@ -13,13 +13,13 @@ import eu.qped.java.checkers.mass.MainSettings;
 import eu.qped.java.checkers.mass.MassExecutor;
 import eu.qped.java.checkers.mass.QFStyleSettings;
 import eu.qped.java.checkers.style.StyleChecker;
-import eu.qped.java.checkers.style.StyleConfigurator;
+
 import eu.qped.java.checkers.syntax.SyntaxChecker;
 
 class MassStyleTest {
 
     private MainSettings mainSettingsConfiguratorConf;
-    private StyleConfigurator styleConfigurator;
+
     private StyleChecker styleChecker;
 
     @BeforeEach
@@ -37,8 +37,8 @@ class MassStyleTest {
         qfStyleSettings.setNamesLevel(CheckLevel.ADVANCED.name());
         qfStyleSettings.setMethodName("[a-z][a-zA-Z0-9_]*");
 
-        styleConfigurator = StyleConfigurator.createStyleConfigurator(qfStyleSettings);
-        styleChecker = new StyleChecker(styleConfigurator);
+
+        styleChecker = StyleChecker.builder().qfStyleSettings(qfStyleSettings).build();
 
     }
 

@@ -83,6 +83,6 @@ class DesignCheckerTest {
                 "            return list;\n" +
                 "        }\n" +
                 "    }";
-        c.compile(stringAnswer);
+        c.compileFromString(stringAnswer);
     }
 }

@@ -9,7 +9,6 @@ import eu.qped.java.checkers.semantics.SemanticChecker;
 import eu.qped.java.checkers.semantics.SemanticConfigurator;
 import eu.qped.java.checkers.semantics.SemanticFeedback;
 import eu.qped.java.checkers.style.StyleChecker;
-import eu.qped.java.checkers.style.StyleConfigurator;
 import eu.qped.java.checkers.style.StyleFeedback;
 import eu.qped.java.checkers.style.StyleViolation;
 import eu.qped.java.checkers.syntax.SyntaxCheckReport;
@@ -84,7 +83,6 @@ public class MassExecutor {
 
 
         SyntaxCheckReport syntaxCheckReport = syntaxChecker.check();
-        DesignCheckReport designCheckReport = designChecker.check();
 
         if (syntaxCheckReport.isCompilable()) {
             if (styleNeeded) {
@@ -103,6 +101,7 @@ public class MassExecutor {
 
             }
             if (designNeeded) {
+                DesignCheckReport designCheckReport = designChecker.check();
                 final String source = designCheckReport.getCodeAsString();
                 designChecker.setTargetProject(source);
                 designChecker.check();
@@ -178,8 +177,8 @@ public class MassExecutor {
 
         QFMainSettings qfMainSettings = new QFMainSettings();
         qfMainSettings.setSyntaxLevel(CheckLevel.ADVANCED.name());
-        qfMainSettings.setSemanticNeeded("true");
-        qfMainSettings.setStyleNeeded("false");
+        qfMainSettings.setSemanticNeeded("false");
+        qfMainSettings.setStyleNeeded("true");
         qfMainSettings.setPreferredLanguage("en");
 
 
@@ -228,25 +227,26 @@ public class MassExecutor {
 
 
         QFStyleSettings qfStyleSettings = new QFStyleSettings();
-        qfStyleSettings.setNamesLevel("adv");
+        qfStyleSettings.setNamesLevel("ADV");
+        qfStyleSettings.setCompLevel("ADV");
+        qfStyleSettings.setMainLevel("ADV");
         qfStyleSettings.setMethodName("[AA]");
-        qfStyleSettings.setBasisLevel("adv");
+        qfStyleSettings.setBasisLevel("ADVANCED");
         qfStyleSettings.setClassLength("10");
         qfStyleSettings.setMethodLength("10");
 
-
-        StyleConfigurator styleConfigurator = StyleConfigurator.createStyleConfigurator(qfStyleSettings);
-
-
-        StyleChecker styleChecker = new StyleChecker(styleConfigurator);
+        StyleChecker styleChecker = StyleChecker.builder().qfStyleSettings(qfStyleSettings).build();
 
         SemanticChecker semanticChecker = SemanticChecker.createSemanticMassChecker(semanticConfigurator);
-        SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(code).build();
-        DesignChecker designChecker = DesignChecker.builder().answer(code).build();
 
 
-        MassExecutor massE = new MassExecutor(styleChecker, semanticChecker, syntaxChecker, designChecker,
-                mainSettingsConfiguratorConf);
+        SyntaxChecker syntaxChecker = SyntaxChecker.builder().targetProject("src/main/resources/testProject").build();
+
+
+        DesignChecker designChecker = DesignChecker.builder().targetProject("src/main/resources/testProject").build();
+
+        MassExecutor massE = new MassExecutor(
+                styleChecker, semanticChecker, syntaxChecker, designChecker, mainSettingsConfiguratorConf);
 
         massE.execute();
 
