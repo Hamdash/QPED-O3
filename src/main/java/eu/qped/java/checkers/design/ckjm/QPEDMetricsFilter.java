@@ -1,10 +1,7 @@
 package eu.qped.java.checkers.design.ckjm;
 
-import eu.qped.java.checkers.design.Metric;
 import gr.spinellis.ckjm.*;
 import gr.spinellis.ckjm.utils.LoggerHelper;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.apache.bcel.classfile.ClassParser;
 import org.apache.bcel.classfile.JavaClass;

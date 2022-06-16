@@ -4,9 +4,12 @@ import lombok.*;
 
 import java.util.Map;
 
-import static eu.qped.java.checkers.design.Metric.*;
+import static eu.qped.java.checkers.design.helper.SaveMapResults.*;
+import static eu.qped.java.checkers.design.helper.SaveMapResults.Metric.*;
 
 /**
+ * Class representing a configurator for the {@link DesignChecker}'s design guidelines.
+ *
  * @author Jannik Seus
  */
 @AllArgsConstructor
@@ -15,7 +18,11 @@ import static eu.qped.java.checkers.design.Metric.*;
 @Setter
 @Builder
 public class DesignConfigurator {
+
     //@Builder.Default If used, IDE keeps getting stuck on parsing when compiling
+    /**
+     *
+     */
     private Map<Metric, Double> metricsThresholds = Map.ofEntries(
             Map.entry(WMC, 0d),
             Map.entry(DIT, 0d),
@@ -39,4 +46,14 @@ public class DesignConfigurator {
             Map.entry(CC, 0d)
             //TODO choose useful default values
     );
+
+    /**
+     * Method configuring a specific key-value-pair in the {@link #metricsThresholds}.
+     *
+     * @param metric the metric whose value is to be set (key)
+     * @param value the given metric's value who is to bet set (value)
+     */
+    public void configure(Metric metric, double value) {
+        this.metricsThresholds.put(metric, value);
+    }
 }

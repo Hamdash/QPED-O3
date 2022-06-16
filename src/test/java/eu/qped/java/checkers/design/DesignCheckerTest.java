@@ -1,11 +1,12 @@
 package eu.qped.java.checkers.design;
 
 import eu.qped.framework.qf.QfObject;
+import eu.qped.java.checkers.design.helper.SaveMapResults;
 import eu.qped.java.utils.compiler.Compiler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test class for {@link DesignChecker}
@@ -66,7 +67,7 @@ class DesignCheckerTest {
     @Test
     void check() {
         assertEquals(1, b.check().getMetricsMap().size());
-        assertEquals(Metric.values().length - 2, b.check().getMetricsMap().get(b.check().getMetricsMap().keySet().iterator().next()).size());
+        assertEquals(SaveMapResults.Metric.values().length - 2, b.check().getMetricsMap().get(b.check().getMetricsMap().keySet().iterator().next()).size());
 
     }
 
@@ -82,6 +83,6 @@ class DesignCheckerTest {
                 "            return list;\n" +
                 "        }\n" +
                 "    }";
-        c.compileFromString(stringAnswer);
+        c.compile(stringAnswer);
     }
 }

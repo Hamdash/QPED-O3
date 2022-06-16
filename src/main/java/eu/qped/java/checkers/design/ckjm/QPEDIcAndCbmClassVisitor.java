@@ -1,6 +1,5 @@
 package eu.qped.java.checkers.design.ckjm;
 
-import eu.qped.java.checkers.design.Metric;
 import gr.spinellis.ckjm.AbstractClassVisitor;
 import gr.spinellis.ckjm.IClassMetricsContainer;
 import gr.spinellis.ckjm.utils.FieldAccess;
@@ -16,8 +15,8 @@ import java.util.*;
 
 /**
  * Custom visitor class for the metrics:
- * IC {@link Metric#IC} and
- * CBM {@link Metric#CBM}.
+ * IC {@link eu.qped.java.checkers.design.helper.SaveMapResults.Metric#IC} and
+ * CBM {@link eu.qped.java.checkers.design.helper.SaveMapResults.Metric#CBM}.
  *
  * @author marian (from CKJM-extended tool)
  * @author Jannik Seus (edited)
