@@ -1,5 +1,6 @@
 package eu.qped.java.checkers.design;
 
+import eu.qped.java.checkers.design.helper.SaveMapResults;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,11 +18,12 @@ import java.util.Map;
 @AllArgsConstructor
 @Builder
 public class DesignCheckReport {
+
     /**
      * the map where the calculated metrics are stored in.
      * (k1: classname, v1: (k2: metric, v2: value) )
      */
-    private Map<String, Map<Metric, Double>> metricsMap;
+    private Map<String, Map<SaveMapResults.Metric, Double>> metricsMap;
     private String codeAsString;
     private String path;
     private DesignConfigurator designConfigurator;

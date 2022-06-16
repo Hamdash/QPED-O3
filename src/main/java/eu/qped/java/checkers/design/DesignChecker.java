@@ -2,17 +2,19 @@ package eu.qped.java.checkers.design;
 
 import eu.qped.framework.qf.QfObject;
 import eu.qped.java.checkers.design.ckjm.QPEDMetricsFilter;
-import eu.qped.java.checkers.design.ckjm.SaveMapResults;
+//import eu.qped.java.checkers.design.helper.Metric;
+import eu.qped.java.checkers.design.helper.SaveMapResults;
 import eu.qped.java.utils.compiler.Compiler;
 import gr.spinellis.ckjm.CkjmOutputHandler;
-import gr.spinellis.ckjm.ClassMetricsContainer;
-import gr.spinellis.ckjm.MoaClassVisitor;
 import gr.spinellis.ckjm.utils.CmdLineParser;
 import lombok.Builder;
 import lombok.Data;
 
 import java.util.HashMap;
 import java.util.Map;
+import static eu.qped.java.checkers.design.helper.SaveMapResults.Metric.*;
+
+
 
 /**
  * Class represents a checker for class design.
@@ -30,12 +32,12 @@ public class DesignChecker {
 
     /**
      * is able to check one or multiple .class files
-     * for defined metrics ({@link Metric}).
+     * for defined metrics ({@link eu.qped.java.checkers.design.helper.SaveMapResults.Metric}).
      * The output is printed on the console (plain or xml) or saved in {@link DesignCheckReport#getMetricsMap()} ).
      */
     public DesignCheckReport check() {
         DesignCheckReport.DesignCheckReportBuilder resultBuilder = DesignCheckReport.builder();
-        Map<String, Map<Metric, Double>> metricsMap = new HashMap<>();
+        Map<String, Map<SaveMapResults.Metric, Double>> metricsMap = new HashMap<>();
 
         QPEDMetricsFilter qmf = new QPEDMetricsFilter();
         CmdLineParser cmdParser = new CmdLineParser();

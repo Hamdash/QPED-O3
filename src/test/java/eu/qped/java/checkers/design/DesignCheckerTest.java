@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static eu.qped.java.checkers.design.helper.SaveMapResults.*;
 
 /**
  * Test class for {@link DesignChecker}
@@ -19,8 +20,8 @@ class DesignCheckerTest {
     private String answer;
     private DesignChecker b;
 
-    private static String DIRECTORY = ""; // root dir
-    private static String SEP = "/"; // root dir
+    private static String DIRECTORY = ""; // root dir can
+    private static String SEP = "/";
 
     @BeforeEach
     void setUp() {
