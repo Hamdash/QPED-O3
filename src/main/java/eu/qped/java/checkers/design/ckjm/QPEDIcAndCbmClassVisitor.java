@@ -15,8 +15,8 @@ import java.util.*;
 
 /**
  * Custom visitor class for the metrics:
- * IC {@link eu.qped.java.checkers.design.helper.SaveMapResults.Metric#IC} and
- * CBM {@link eu.qped.java.checkers.design.helper.SaveMapResults.Metric#CBM}.
+ * IC {@link SaveMapResults.Metric#IC} and
+ * CBM {@link SaveMapResults.Metric#CBM}.
  *
  * @author marian (from CKJM-extended tool)
  * @author Jannik Seus (edited)

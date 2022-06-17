@@ -1,11 +1,14 @@
 package eu.qped.java.checkers.design;
 
-import eu.qped.java.checkers.design.helper.SaveMapResults;
+import eu.qped.java.checkers.design.ckjm.SaveMapResults;
+import eu.qped.java.checkers.syntax.CompiledSourceType;
+import eu.qped.java.checkers.syntax.SyntaxError;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Map;
 
 /**

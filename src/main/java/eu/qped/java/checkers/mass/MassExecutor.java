@@ -105,7 +105,7 @@ public class MassExecutor {
                 final String source = designCheckReport.getCodeAsString();
                 designChecker.setTargetProject(source);
                 designChecker.check();
-                semanticFeedbacks = semanticChecker.getFeedbacks();
+                designFeedbacks = designChecker.getFeedbacks();
             }
 
         } else {
@@ -173,12 +173,57 @@ public class MassExecutor {
     }
 
     public static void main(String[] args) {
+        designMassExecution();
+        //previousMassExecution();
+    }
+
+    private static void designMassExecution() {
+        long start = System.nanoTime();
+
+        QFMainSettings qfMainSettings = new QFMainSettings();
+        qfMainSettings.setSyntaxLevel(CheckLevel.ADVANCED.name());
+        qfMainSettings.setSemanticNeeded("false");
+        qfMainSettings.setStyleNeeded("false");
+        qfMainSettings.setDesignNeeded("true");
+        qfMainSettings.setPreferredLanguage("en");
+
+        MainSettings mainSettingsConfiguratorConf = new MainSettings(qfMainSettings);
+
+
+        SyntaxChecker syntaxChecker = SyntaxChecker.builder().targetProject("src/main/resources/testProject").build();
+        DesignChecker designChecker = DesignChecker.builder().targetProject("src/main/resources/testProject").build();
+
+        MassExecutor massE = new MassExecutor(
+                null, null, syntaxChecker, designChecker, mainSettingsConfiguratorConf);
+
+        massE.execute();
+
+        /*
+        for Design Errors
+         */
+        List<DesignFeedback> feedbackList = massE.designFeedbacks;
+        if (feedbackList != null) {
+            for (DesignFeedback s : feedbackList) {
+                System.out.println(s.getMetric());
+                System.out.println(s.getBody());
+                System.out.println(s.getErrorSource());
+                System.out.println(s.getErrorLine());
+                System.out.println(s.getSolutionExample());
+                System.out.println("--------0T0----------");
+            }
+        }
+        long end = System.nanoTime() - start;
+        System.out.println("Feedback generated in: " + end * Math.pow(10.0, -9.0) + " sec");
+    }
+
+    public static void previousMassExecution() {
         long start = System.nanoTime();
 
         QFMainSettings qfMainSettings = new QFMainSettings();
         qfMainSettings.setSyntaxLevel(CheckLevel.ADVANCED.name());
         qfMainSettings.setSemanticNeeded("false");
         qfMainSettings.setStyleNeeded("true");
+        qfMainSettings.setDesignNeeded("false");
         qfMainSettings.setPreferredLanguage("en");
 
 
@@ -263,8 +308,7 @@ public class MassExecutor {
 
         /*
         for Style Errors
-         */
-
+        */
         List<StyleFeedback> feedbacks = massE.styleFeedbacks;
 
         for (StyleFeedback f : feedbacks) {

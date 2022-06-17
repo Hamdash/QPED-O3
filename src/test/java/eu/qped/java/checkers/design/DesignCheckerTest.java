@@ -1,13 +1,12 @@
 package eu.qped.java.checkers.design;
 
 import eu.qped.framework.qf.QfObject;
-import eu.qped.java.checkers.design.helper.SaveMapResults;
+import eu.qped.java.checkers.design.ckjm.SaveMapResults;
 import eu.qped.java.utils.compiler.Compiler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static eu.qped.java.checkers.design.helper.SaveMapResults.*;
 
 /**
  * Test class for {@link DesignChecker}
