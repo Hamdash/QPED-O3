@@ -5,6 +5,7 @@ import eu.qped.framework.Feedback;
 import eu.qped.framework.Translator;
 import eu.qped.java.checkers.design.DesignCheckReport;
 import eu.qped.java.checkers.design.DesignChecker;
+import eu.qped.java.checkers.design.DesignConfigurator;
 import eu.qped.java.checkers.semantics.SemanticChecker;
 import eu.qped.java.checkers.semantics.SemanticConfigurator;
 import eu.qped.java.checkers.semantics.SemanticFeedback;
@@ -189,9 +190,34 @@ public class MassExecutor {
 
         MainSettings mainSettingsConfiguratorConf = new MainSettings(qfMainSettings);
 
+        QFDesignSettings qfDesignSettings = new QFDesignSettings();
+        qfDesignSettings.setAmc(0, 1);
+        qfDesignSettings.setCoupledAfferentClasses(0, 1);
+        qfDesignSettings.setCam(0, 1);
+        qfDesignSettings.setCbm(0, 1);
+        qfDesignSettings.setCbo(0, 1);
+        qfDesignSettings.setCc(0, 1);
+        qfDesignSettings.setCoupledEfferentClasses(0, 1);
+        qfDesignSettings.setCis(0, 1);
+        qfDesignSettings.setDam(0, 1);
+        qfDesignSettings.setDit(0, 1);
+        qfDesignSettings.setIc(0, 1);
+        qfDesignSettings.setLcom(0, 1);
+        qfDesignSettings.setLcom3(0, 1);
+        qfDesignSettings.setLoc(0, 1);
+        qfDesignSettings.setMoa(0, 1);
+        qfDesignSettings.setMfa(0, 1);
+        qfDesignSettings.setNoc(0, 1);
+        qfDesignSettings.setNpm(0, 1);
+        qfDesignSettings.setRfc(0, 1);
+        qfDesignSettings.setWmc(0, 1);
 
         SyntaxChecker syntaxChecker = SyntaxChecker.builder().targetProject("src/main/resources/testProject").build();
-        DesignChecker designChecker = DesignChecker.builder().targetProject("src/main/resources/testProject").build();
+        DesignConfigurator designConfigurator = DesignConfigurator.createDesignConfigurator();
+        DesignChecker designChecker = DesignChecker.builder()
+                .targetProject("src/main/resources/testProject")
+                .designConfigurator(designConfigurator)
+                .build();
 
         MassExecutor massE = new MassExecutor(
                 null, null, syntaxChecker, designChecker, mainSettingsConfiguratorConf);

@@ -50,33 +50,33 @@ public class SaveMapResults implements CkjmOutputHandler {
      * Metrics enum representing all possible class metrics for the design checker.
      *
      * defaultValue contains an initializing value for a specific metric (before setting the value)
-     * defaultThreshold[0] contains the minimum threshold
-     * defaultThreshold[1] contains the maximum threshold
+     * defaultThreshold[0] contains the default minimum threshold
+     * defaultThreshold[1] contains the default maximum threshold
      *
      * @author Jannik Seus
      */
     public enum Metric {
 
-        WMC("Weighted methods per class", 0d, new double[]{}),
-        DIT("Depth of inheritance tree", 0d, new double[]{}),
-        NOC("Number of Children", 0d, new double[]{}),
-        CBO("Coupling between object classes", 0d, new double[]{}),
-        RFC("Response for a Class", 0d, new double[]{}),
-        LCOM("Lack of cohesion in methods", 0d, new double[]{}),
+        AMC("Average Method Complexity", 0d, new double[]{}),
+        CAM("Cohesion Among Methods of Class", 0d, new double[]{}),
         CA("Afferent coupling", 0d, new double[]{}),
+        CBM("Coupling Between Methods", 0d, new double[]{}),
+        CBO("Coupling between object classes", 0d, new double[]{}),
+        CC("McCabe's Cyclomatic Complexity", 1d, new double[]{}),
         CE("Efferent coupling", 0d, new double[]{}),
-        NPM("Number of Public Methods for a class", 0d, new double[]{}),
         CIS("Class Interface Size", 0d, new double[]{}),
+        DAM("Data Access Metric", 0d, new double[]{}),
+        DIT("Depth of inheritance tree", 0d, new double[]{}),
+        IC("Inheritance Coupling", 0d, new double[]{}),
+        LCOM("Lack of cohesion in methods", 0d, new double[]{}),
         LCOM3("Lack of cohesion in methods Henderson-Sellers version", 0d, new double[]{}),
         LOC("Lines of Code", 0d, new double[]{}),
-        DAM("Data Access Metric", 0d, new double[]{}),
         MOA("Measure of Aggregation", 0d, new double[]{}),
         MFA("Measure of Functional Abstraction", 0d, new double[]{}),
-        CAM("Cohesion Among Methods of Class", 0d, new double[]{}),
-        IC("Inheritance Coupling", 0d, new double[]{}),
-        CBM("Coupling Between Methods", 0d, new double[]{}),
-        AMC("Average Method Complexity", 0d, new double[]{}),
-        CC("McCabe's Cyclomatic Complexity", 1d, new double[]{});
+        NOC("Number of Children", 0d, new double[]{}),
+        NPM("Number of Public Methods for a class", 0d, new double[]{}),
+        RFC("Response for a Class", 0d, new double[]{}),
+        WMC("Weighted methods per class", 0d, new double[]{});
 
         /**
          * Represents a metric's description.

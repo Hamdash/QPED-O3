@@ -23,42 +23,69 @@ public class DesignConfigurator {
 
     //@Builder.Default If used, IDE keeps getting stuck on parsing when compiling
     private Map<Metric, Double> metricsThresholds = Map.ofEntries(
-            Map.entry(WMC, WMC.getInitialValue()),
-            Map.entry(DIT, DIT.getInitialValue()),
-            Map.entry(NOC, NOC.getInitialValue()),
-            Map.entry(CBO, CBO.getInitialValue()),
-            Map.entry(RFC, RFC.getInitialValue()),
-            Map.entry(LCOM, LCOM.getInitialValue()),
+            Map.entry(AMC, AMC.getInitialValue()),
             Map.entry(CA, CA.getInitialValue()),
+            Map.entry(CAM, CAM.getInitialValue()),
+            Map.entry(CBM, CBM.getInitialValue()),
+            Map.entry(CBO, CBO.getInitialValue()),
+            Map.entry(CC, CC.getInitialValue()),
             Map.entry(CE, CE.getInitialValue()),
-            Map.entry(NPM, NPM.getInitialValue()),
             Map.entry(CIS, CIS.getInitialValue()),
+            Map.entry(DAM, DAM.getInitialValue()),
+            Map.entry(DIT, DIT.getInitialValue()),
+            Map.entry(IC, IC.getInitialValue()),
+            Map.entry(LCOM, LCOM.getInitialValue()),
             Map.entry(LCOM3, LCOM3.getInitialValue()),
             Map.entry(LOC, LOC.getInitialValue()),
-            Map.entry(DAM, DAM.getInitialValue()),
-            Map.entry(MOA, MOA.getInitialValue()),
             Map.entry(MFA, MFA.getInitialValue()),
-            Map.entry(CAM, CAM.getInitialValue()),
-            Map.entry(IC, IC.getInitialValue()),
-            Map.entry(CBM, CBM.getInitialValue()),
-            Map.entry(AMC, AMC.getInitialValue()),
-            Map.entry(CC, CC.getInitialValue())
+            Map.entry(MOA, MOA.getInitialValue()),
+            Map.entry(NOC, NOC.getInitialValue()),
+            Map.entry(NPM, NPM.getInitialValue()),
+            Map.entry(RFC, RFC.getInitialValue()),
+            Map.entry(WMC, WMC.getInitialValue())
     );
+
+    public static DesignConfigurator createDesignConfigurator() {
+        return new DesignConfigurator.DesignConfiguratorBuilder().metricsThresholds(
+                Map.ofEntries(
+                        Map.entry(AMC, AMC.getInitialValue()),
+                        Map.entry(CA, CA.getInitialValue()),
+                        Map.entry(CAM, CAM.getInitialValue()),
+                        Map.entry(CBM, CBM.getInitialValue()),
+                        Map.entry(CBO, CBO.getInitialValue()),
+                        Map.entry(CC, CC.getInitialValue()),
+                        Map.entry(CE, CE.getInitialValue()),
+                        Map.entry(CIS, CIS.getInitialValue()),
+                        Map.entry(DAM, DAM.getInitialValue()),
+                        Map.entry(DIT, DIT.getInitialValue()),
+                        Map.entry(IC, IC.getInitialValue()),
+                        Map.entry(LCOM, LCOM.getInitialValue()),
+                        Map.entry(LCOM3, LCOM3.getInitialValue()),
+                        Map.entry(LOC, LOC.getInitialValue()),
+                        Map.entry(MFA, MFA.getInitialValue()),
+                        Map.entry(MOA, MOA.getInitialValue()),
+                        Map.entry(NOC, NOC.getInitialValue()),
+                        Map.entry(NPM, NPM.getInitialValue()),
+                        Map.entry(RFC, RFC.getInitialValue()),
+                        Map.entry(WMC, WMC.getInitialValue())))
+                .build();
+    }
 
     public QFDesignSettings generateDesignSettings() {
         QFDesignSettings designSettings = new QFDesignSettings();
         try {
-            designSettings.setAmc(0,99);
+            designSettings.setAmc(0, 99);
         } catch (IllegalArgumentException | NullPointerException e) {
             LogManager.getLogger(getClass()).warn(e.getMessage());
         }
-        return designSettings;    }
+        return designSettings;
+    }
 
     /**
      * Method configuring a specific key-value-pair in the {@link #metricsThresholds}.
      *
      * @param metric the metric whose value is to be set (key)
-     * @param value the given metric's value who is to bet set (value)
+     * @param value  the given metric's value who is to bet set (value)
      */
     public void configure(Metric metric, double value) {
         this.metricsThresholds.put(metric, value);

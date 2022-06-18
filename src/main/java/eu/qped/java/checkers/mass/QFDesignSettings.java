@@ -1,7 +1,6 @@
 package eu.qped.java.checkers.mass;
 
 import eu.qped.framework.qf.QfObjectBase;
-import eu.qped.java.checkers.design.ckjm.SaveMapResults;
 
 import static eu.qped.java.checkers.design.ckjm.SaveMapResults.Metric.*;
 
@@ -120,8 +119,21 @@ public class QFDesignSettings extends QfObjectBase {
     private double amcMin;
     private double amcMax;
 
+    /**
+     * Coupling between object classes
+     */
+    private double cboMin;
+    private double cboMax;
 
+    /**
+     * Class interface size
+     */
+    private double cisMin;
+    private double cisMax;
 
+    /*
+     * GETTER
+     */
 
     public double getLocMin() {
         return locMin;
@@ -267,6 +279,18 @@ public class QFDesignSettings extends QfObjectBase {
         return amcMax;
     }
 
+    public double getCboMin() {
+        return cboMin;
+    }
+
+    public double getCboMax() {
+        return cboMax;
+    }
+
+    /*
+     * SETTER
+     */
+
     public void setLoc(double locMin, double locMax) {
         if (locMin < 0) {
             this.locMin = LOC.getDefaultThresholdMin();
@@ -319,7 +343,7 @@ public class QFDesignSettings extends QfObjectBase {
         }
     }
 
-    public void setEfferentCoupledClasses(double efferentCoupledClassesMin, double efferentCoupledClassesMax) {
+    public void setCoupledEfferentClasses(double efferentCoupledClassesMin, double efferentCoupledClassesMax) {
         if (efferentCoupledClassesMin < 0) {
             this.efferentCoupledClassesMin = CE.getDefaultThresholdMin();
         } else {
@@ -332,7 +356,7 @@ public class QFDesignSettings extends QfObjectBase {
         }
     }
 
-    public void setAfferentCoupledClasses(double afferentCoupledClassesMin, double afferentCoupledClassesMax) {
+    public void setCoupledAfferentClasses(double afferentCoupledClassesMin, double afferentCoupledClassesMax) {
         if (afferentCoupledClassesMin < 0) {
             this.afferentCoupledClassesMin = CA.getDefaultThresholdMin();
         } else {
@@ -500,4 +524,29 @@ public class QFDesignSettings extends QfObjectBase {
             this.amcMax = amcMax;
         }
     }
+
+    public void setCbo(double cboMin, double cboMax) {
+        if (cboMin < 0) {
+            this.cboMin = CBO.getDefaultThresholdMin();
+        } else {
+            this.cboMin = cboMin;
+        }
+        if (cboMax < 0) {
+            this.cboMax = CBO.getDefaultThresholdMax();
+        } else {
+            this.cboMax = cboMax;
+        }
+    }
+
+    public void setCis(double cisMin, double cisMax) {
+        if (cisMin < 0) {
+            this.cisMin = CIS.getDefaultThresholdMin();
+        } else {
+            this.cisMin = cisMin;
+        }
+        if (cisMax < 0) {
+            this.cisMax = CIS.getDefaultThresholdMax();
+        } else {
+            this.cisMax = cisMax;
+        }    }
 }

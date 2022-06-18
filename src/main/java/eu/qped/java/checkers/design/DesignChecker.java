@@ -3,12 +3,8 @@ package eu.qped.java.checkers.design;
 import eu.qped.framework.qf.QfObject;
 import eu.qped.java.checkers.design.ckjm.QPEDMetricsFilter;
 import eu.qped.java.checkers.design.ckjm.SaveMapResults;
-import eu.qped.java.checkers.semantics.SemanticFeedback;
-import eu.qped.java.checkers.syntax.CompiledSourceType;
-import eu.qped.java.checkers.syntax.SyntaxCheckReport;
 import eu.qped.java.utils.ExtractJavaFilesFromDirectory;
 import eu.qped.java.utils.compiler.Compiler;
-import gr.spinellis.ckjm.CkjmOutputHandler;
 import gr.spinellis.ckjm.utils.CmdLineParser;
 import lombok.Builder;
 import lombok.Data;
@@ -42,8 +38,9 @@ public class DesignChecker {
 
     private ArrayList<DesignFeedback> feedbacks;
 
+    private DesignConfigurator designConfigurator;
 
-    private final static String PATH_CLASS_FILES = "src/main/java/eu/qped/java/utils/compiler/compiledFiles";
+    private final static String PATH_TO_CLASSFILES = "src/main/java/eu/qped/java/utils/compiler/compiledFiles";
 
     /**
      * is able to check one or multiple .class files
@@ -68,11 +65,13 @@ public class DesignChecker {
         if (answer != null && !answer.equals("")) {
             compileResult = compiler.compileFromString(answer);
             resultBuilder.codeAsString(compiler.getFullSourceCode());
+            resultBuilder.designConfigurator(this.designConfigurator);
+            //TODO resultBuilder.path()
         } else {
             compileResult = compiler.compileFromProject(targetProject);
         }
         List<File> classFiles
-                = ExtractJavaFilesFromDirectory.builder().dirPath(PATH_CLASS_FILES).build().filesWithExtension("class");
+                = ExtractJavaFilesFromDirectory.builder().dirPath(PATH_TO_CLASSFILES).build().filesWithExtension("class");
         String[] classFileNames = new String[classFiles.size()];
         for (int i = 0; i < classFiles.size(); i++) {
             classFileNames[i] = classFiles.get(i).getPath();
@@ -80,14 +79,14 @@ public class DesignChecker {
         cmdParser.parse(classFileNames);
         qmf.runMetricsInternal(cmdParser.getClassNames(), handler);
         resultBuilder.metricsMap(handler.getOutputMetrics());
-        generateBaseFeedback();
-        //resultBuilder.metricsThresholds();
-        //resultBuilder.codeAsString();
-        //resultBuilder.path();
-        return resultBuilder.build();
+
+        DesignCheckReport builtReport = resultBuilder.build();
+        generateBaseFeedback(builtReport.getMetricsMap());
+
+        return builtReport;
     }
 
-    void generateBaseFeedback() {
+    public void generateBaseFeedback(Map<String, Map<SaveMapResults.Metric, Double>> metricsMap) {
         this.feedbacks = new ArrayList<>();
         this.feedbacks.add(new DesignFeedback(SaveMapResults.Metric.WMC.toString(),"th?","error","errorLine", "ex"));
         this.feedbacks.add(new DesignFeedback(SaveMapResults.Metric.AMC.toString(),"th?","error","errorLine", "ex"));
