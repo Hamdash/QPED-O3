@@ -124,7 +124,6 @@ public class StyleFeedbackGenerator {
         return resultList.stream().collect(Collectors.groupingBy(
                 StyleFeedback::getFile
         ));
-
     }
 
 
