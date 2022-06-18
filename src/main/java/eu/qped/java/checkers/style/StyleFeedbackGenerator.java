@@ -129,7 +129,6 @@ public class StyleFeedbackGenerator {
 
 
     private String getFeedbackBody(String rule) {
-        System.out.println(rule);
         StringBuilder result = new StringBuilder();
         for (Map.Entry<String, String[]> entry : feedbacks.entrySet()) {
             if (entry.getKey().equals(rule)) {
