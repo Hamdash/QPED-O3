@@ -4,6 +4,7 @@ import eu.qped.framework.qf.QfObjectBase;
 
 import static eu.qped.java.checkers.design.ckjm.SaveMapResults.Metric.*;
 
+
 /**
  * Class modeling design settings for {@link eu.qped.java.checkers.design.DesignChecker}.
  * The fields are modeling the threshold for the corresponding metric.
@@ -16,537 +17,700 @@ public class QFDesignSettings extends QfObjectBase {
     /**
      * Line of codes per class (minimum and maximum thresholds)
      */
-    private double locMin;
-    private double locMax;
+    private String locMin;
+    private String locMax;
 
     /**
      * Weighted methods per class
      */
-    private double wmcMin;
-    private double wmcMax;
+    private String wmcMin;
+    private String wmcMax;
 
     /**
      * Number of children
      */
-    private double nocMin;
-    private double nocMax;
+    private String nocMin;
+    private String nocMax;
 
     /**
      * Response for a Class
      */
-    private double rfcMin;
-    private double rfcMax;
+    private String rfcMin;
+    private String rfcMax;
 
     /**
      * Coupled classes: classes being used by this class
      */
-    private double efferentCoupledClassesMin;
-    private double efferentCoupledClassesMax;
+    private String ceMin;
+    private String ceMax;
     /**
-     * Coupled classes: classes that use this class
+     * Afferendt coupled classes: classes that use this class
      */
-    private double afferentCoupledClassesMin;
-    private double afferentCoupledClassesMax;
+    private String caMin;
+    private String caMax;
 
     /**
      * Depth of inheritance tree
      */
-    private double ditMin;
-    private double ditMax;
+    private String ditMin;
+    private String ditMax;
 
     /**
      * Lack of cohesion in methods
      */
-    private double lcomMin;
-    private double lcomMax;
+    private String lcomMin;
+    private String lcomMax;
     /**
      * Lack of cohesion in methods - Henderson-Sellers definition
      */
-    private double lcom3Min;
-    private double lcom3Max;
+    private String lcom3Min;
+    private String lcom3Max;
 
     /**
      * Number of public methods
      */
-    private double npmMin;
-    private double npmMax;
+    private String npmMin;
+    private String npmMax;
 
     /**
      * Signatures of methods and values of McCabe Cyclomatic Complexity
      */
-    private double ccMin;
-    private double ccMax;
+    private String ccMin;
+    private String ccMax;
 
     /**
      * Data Access etric
      */
-    private double damMin;
-    private double damMax;
+    private String damMin;
+    private String damMax;
 
     /**
      * measure of Aggregation
      */
-    private double moaMin;
-    private double moaMax;
+    private String moaMin;
+    private String moaMax;
 
     /**
      * measure of Functional Abstraction
      */
-    private double mfaMin;
-    private double mfaMax;
+    private String mfaMin;
+    private String mfaMax;
 
     /**
      * Cohesion Among methods of Class
      */
-    private double camMin;
-    private double camMax;
+    private String camMin;
+    private String camMax;
 
     /**
      * Inheritance Coupling
      */
-    private double icMin;
-    private double icMax;
+    private String icMin;
+    private String icMax;
 
     /**
      * Coupling Between methods
      */
-    private double cbmMin;
-    private double cbmMax;
+    private String cbmMin;
+    private String cbmMax;
 
     /**
      * Average method Complexity
      */
-    private double amcMin;
-    private double amcMax;
+    private String amcMin;
+    private String amcMax;
 
     /**
      * Coupling between object classes
      */
-    private double cboMin;
-    private double cboMax;
+    private String cboMin;
+    private String cboMax;
 
     /**
      * Class interface size
      */
-    private double cisMin;
-    private double cisMax;
+    private String cisMin;
+    private String cisMax;
 
-    /*
-     * GETTER
-     */
 
-    public double getLocMin() {
+    public String getLocMin() {
         return locMin;
     }
 
-    public double getLocMax() {
+    public void setLocMin(String locMin) {
+        this.locMin = locMin;
+    }
+
+    public String getLocMax() {
         return locMax;
     }
 
-    public double getWmcMin() {
+    public void setLocMax(String locMax) {
+        this.locMax = locMax;
+    }
+
+    public String getWmcMin() {
         return wmcMin;
     }
 
-    public double getWmcMax() {
+    public void setWmcMin(String wmcMin) {
+        this.wmcMin = wmcMin;
+    }
+
+    public String getWmcMax() {
         return wmcMax;
     }
 
-    public double getNocMin() {
+    public void setWmcMax(String wmcMax) {
+        this.wmcMax = wmcMax;
+    }
+
+    public String getNocMin() {
         return nocMin;
     }
 
-    public double getNocMax() {
+    public void setNocMin(String nocMin) {
+        this.nocMin = nocMin;
+    }
+
+    public String getNocMax() {
         return nocMax;
     }
 
-    public double getRfcMin() {
+    public void setNocMax(String nocMax) {
+        this.nocMax = nocMax;
+    }
+
+    public String getRfcMin() {
         return rfcMin;
     }
 
-    public double getRfcMax() {
+    public void setRfcMin(String rfcMin) {
+        this.rfcMin = rfcMin;
+    }
+
+    public String getRfcMax() {
         return rfcMax;
     }
 
-    public double getEfferentCoupledClassesMin() {
-        return efferentCoupledClassesMin;
+    public void setRfcMax(String rfcMax) {
+        this.rfcMax = rfcMax;
     }
 
-    public double getEfferentCoupledClassesMax() {
-        return efferentCoupledClassesMax;
+    public String getCeMin() {
+        return ceMin;
     }
 
-    public double getAfferentCoupledClassesMin() {
-        return afferentCoupledClassesMin;
+    public void setCeMin(String ceMin) {
+        this.ceMin = ceMin;
     }
 
-    public double getAfferentCoupledClassesMax() {
-        return afferentCoupledClassesMax;
+    public String getCeMax() {
+        return ceMax;
     }
 
-    public double getDitMin() {
+    public void setCeMax(String ceMax) {
+        this.ceMax = ceMax;
+    }
+
+    public String getCaMin() {
+        return caMin;
+    }
+
+    public void setCaMin(String caMin) {
+        this.caMin = caMin;
+    }
+
+    public String getCaMax() {
+        return caMax;
+    }
+
+    public void setCaMax(String caMax) {
+        this.caMax = caMax;
+    }
+
+    public String getDitMin() {
         return ditMin;
     }
 
-    public double getDitMax() {
+    public void setDitMin(String ditMin) {
+        this.ditMin = ditMin;
+    }
+
+    public String getDitMax() {
         return ditMax;
     }
 
-    public double getLcomMin() {
+    public void setDitMax(String ditMax) {
+        this.ditMax = ditMax;
+    }
+
+    public String getLcomMin() {
         return lcomMin;
     }
 
-    public double getLcomMax() {
+    public void setLcomMin(String lcomMin) {
+        this.lcomMin = lcomMin;
+    }
+
+    public String getLcomMax() {
         return lcomMax;
     }
 
-    public double getLcom3Min() {
+    public void setLcomMax(String lcomMax) {
+        this.lcomMax = lcomMax;
+    }
+
+    public String getLcom3Min() {
         return lcom3Min;
     }
 
-    public double getLcom3Max() {
+    public void setLcom3Min(String lcom3Min) {
+        this.lcom3Min = lcom3Min;
+    }
+
+    public String getLcom3Max() {
         return lcom3Max;
     }
 
-    public double getNpmMin() {
+    public void setLcom3Max(String lcom3Max) {
+        this.lcom3Max = lcom3Max;
+    }
+
+    public String getNpmMin() {
         return npmMin;
     }
 
-    public double getNpmMax() {
+    public void setNpmMin(String npmMin) {
+        this.npmMin = npmMin;
+    }
+
+    public String getNpmMax() {
         return npmMax;
     }
 
-    public double getCcMin() {
+    public void setNpmMax(String npmMax) {
+        this.npmMax = npmMax;
+    }
+
+    public String getCcMin() {
         return ccMin;
     }
 
-    public double getCcMax() {
+    public void setCcMin(String ccMin) {
+        this.ccMin = ccMin;
+    }
+
+    public String getCcMax() {
         return ccMax;
     }
 
-    public double getDamMin() {
+    public void setCcMax(String ccMax) {
+        this.ccMax = ccMax;
+    }
+
+    public String getDamMin() {
         return damMin;
     }
 
-    public double getDamMax() {
+    public void setDamMin(String damMin) {
+        this.damMin = damMin;
+    }
+
+    public String getDamMax() {
         return damMax;
     }
 
-    public double getMoaMin() {
+    public void setDamMax(String damMax) {
+        this.damMax = damMax;
+    }
+
+    public String getMoaMin() {
         return moaMin;
     }
 
-    public double getMoaMax() {
+    public void setMoaMin(String moaMin) {
+        this.moaMin = moaMin;
+    }
+
+    public String getMoaMax() {
         return moaMax;
     }
 
-    public double getMfaMin() {
+    public void setMoaMax(String moaMax) {
+        this.moaMax = moaMax;
+    }
+
+    public String getMfaMin() {
         return mfaMin;
     }
 
-    public double getMfaMax() {
+    public void setMfaMin(String mfaMin) {
+        this.mfaMin = mfaMin;
+    }
+
+    public String getMfaMax() {
         return mfaMax;
     }
 
-    public double getCamMin() {
+    public void setMfaMax(String mfaMax) {
+        this.mfaMax = mfaMax;
+    }
+
+    public String getCamMin() {
         return camMin;
     }
 
-    public double getCamMax() {
+    public void setCamMin(String camMin) {
+        this.camMin = camMin;
+    }
+
+    public String getCamMax() {
         return camMax;
     }
 
-    public double getIcMin() {
+    public void setCamMax(String camMax) {
+        this.camMax = camMax;
+    }
+
+    public String getIcMin() {
         return icMin;
     }
 
-    public double getIcMax() {
+    public void setIcMin(String icMin) {
+        this.icMin = icMin;
+    }
+
+    public String getIcMax() {
         return icMax;
     }
 
-    public double getCbmMin() {
+    public void setIcMax(String icMax) {
+        this.icMax = icMax;
+    }
+
+    public String getCbmMin() {
         return cbmMin;
     }
 
-    public double getCbmMax() {
+    public void setCbmMin(String cbmMin) {
+        this.cbmMin = cbmMin;
+    }
+
+    public String getCbmMax() {
         return cbmMax;
     }
 
-    public double getAmcMin() {
+    public void setCbmMax(String cbmMax) {
+        this.cbmMax = cbmMax;
+    }
+
+    public String getAmcMin() {
         return amcMin;
     }
 
-    public double getAmcMax() {
+    public void setAmcMin(String amcMin) {
+        this.amcMin = amcMin;
+    }
+
+    public String getAmcMax() {
         return amcMax;
     }
 
-    public double getCboMin() {
+    public void setAmcMax(String amcMax) {
+        this.amcMax = amcMax;
+    }
+
+    public String getCboMin() {
         return cboMin;
     }
 
-    public double getCboMax() {
+    public void setCboMin(String cboMin) {
+        this.cboMin = cboMin;
+    }
+
+    public String getCboMax() {
         return cboMax;
     }
 
-    /*
-     * SETTER
-     */
+    public void setCboMax(String cboMax) {
+        this.cboMax = cboMax;
+    }
 
-    public void setLoc(double locMin, double locMax) {
-        if (locMin < 0) {
-            this.locMin = LOC.getDefaultThresholdMin();
+    public String getCisMin() {
+        return cisMin;
+    }
+
+    public void setCisMin(String cisMin) {
+        this.cisMin = cisMin;
+    }
+
+    public String getCisMax() {
+        return cisMax;
+    }
+
+    public void setCisMax(String cisMax) {
+        this.cisMax = cisMax;
+    }
+
+    public void setLoc(String locMin, String locMax) {
+        if (locMin == null) {
+            this.locMin = Double.toString(LOC.getDefaultThresholdMin());
         } else {
             this.locMin = locMin;
         }
-        if (locMax < 0) {
-            this.locMax = LOC.getDefaultThresholdMin();
+        if (locMax == null) {
+            this.locMax = Double.toString(LOC.getDefaultThresholdMin());
         } else {
             this.locMax = locMax;
         }
     }
 
-    public void setWmc(double wmcMin, double wmcMax) {
-        if (wmcMin < 0) {
-            this.wmcMin = WMC.getDefaultThresholdMin();
+    public void setWmc(String wmcMin, String wmcMax) {
+        if (wmcMin == null) {
+            this.wmcMin = Double.toString(WMC.getDefaultThresholdMin());
         } else {
             this.wmcMin = wmcMin;
         }
-        if (wmcMax < 0) {
-            this.wmcMax = WMC.getDefaultThresholdMax();
+        if (wmcMax == null) {
+            this.wmcMax = Double.toString(WMC.getDefaultThresholdMax());
         } else {
             this.wmcMax = wmcMax;
         }
     }
 
-    public void setNoc(double nocMin, double nocMax) {
-        if (nocMin < 0) {
-            this.nocMin = NOC.getDefaultThresholdMin();
+    public void setNoc(String nocMin, String nocMax) {
+        if (nocMin == null) {
+            this.nocMin = Double.toString(NOC.getDefaultThresholdMin());
         } else {
             this.nocMin = nocMin;
         }
-        if (nocMax < 0) {
-            this.nocMax = NOC.getDefaultThresholdMax();
+        if (nocMax == null) {
+            this.nocMax = Double.toString(NOC.getDefaultThresholdMax());
         } else {
             this.nocMax = nocMax;
         }
     }
 
-    public void setRfc(double rfcMin, double rfcMax) {
-        if (rfcMin < 0) {
-            this.rfcMin = RFC.getDefaultThresholdMin();
+    public void setRfc(String rfcMin, String rfcMax) {
+        if (rfcMin == null) {
+            this.rfcMin = Double.toString(RFC.getDefaultThresholdMin());
         } else {
             this.rfcMin = rfcMin;
         }
-        if (rfcMax < 0) {
-            this.rfcMax = RFC.getDefaultThresholdMax();
+        if (rfcMax == null) {
+            this.rfcMax = Double.toString(RFC.getDefaultThresholdMax());
         } else {
             this.rfcMax = rfcMax;
         }
     }
 
-    public void setCoupledEfferentClasses(double efferentCoupledClassesMin, double efferentCoupledClassesMax) {
-        if (efferentCoupledClassesMin < 0) {
-            this.efferentCoupledClassesMin = CE.getDefaultThresholdMin();
+    public void setCe(String ceMin, String ceMax) {
+        if (ceMin == null) {
+            this.ceMin = Double.toString(CE.getDefaultThresholdMin());
         } else {
-            this.efferentCoupledClassesMin = efferentCoupledClassesMin;
+            this.ceMin = ceMin;
         }
-        if (efferentCoupledClassesMax < 0) {
-            this.efferentCoupledClassesMax = CE.getDefaultThresholdMax();
+        if (ceMax == null) {
+            this.ceMax = Double.toString(CE.getDefaultThresholdMax());
         } else {
-            this.efferentCoupledClassesMax = efferentCoupledClassesMax;
-        }
-    }
-
-    public void setCoupledAfferentClasses(double afferentCoupledClassesMin, double afferentCoupledClassesMax) {
-        if (afferentCoupledClassesMin < 0) {
-            this.afferentCoupledClassesMin = CA.getDefaultThresholdMin();
-        } else {
-            this.afferentCoupledClassesMin = afferentCoupledClassesMin;
-        }
-        if (afferentCoupledClassesMax < 0) {
-            this.afferentCoupledClassesMax = CA.getDefaultThresholdMax();
-        } else {
-            this.afferentCoupledClassesMax = afferentCoupledClassesMax;
+            this.ceMax = ceMax;
         }
     }
 
-    public void setDit(double ditMin, double ditMax) {
-        if (ditMin < 0) {
-            this.ditMin = DIT.getDefaultThresholdMin();
+    public void setCa(String caMin, String caMax) {
+        if (caMin == null) {
+            this.caMin = Double.toString(CA.getDefaultThresholdMin());
+        } else {
+            this.caMin = caMin;
+        }
+        if (caMax == null) {
+            this.caMax = Double.toString(CA.getDefaultThresholdMax());
+        } else {
+            this.caMax = caMax;
+        }
+    }
+
+    public void setDit(String ditMin, String ditMax) {
+        if (ditMin == null) {
+            this.ditMin = Double.toString(DIT.getDefaultThresholdMin());
         } else {
             this.ditMin = ditMin;
         }
-        if (ditMax < 0) {
-            this.ditMax = DIT.getDefaultThresholdMax();
+        if (ditMax == null) {
+            this.ditMax = Double.toString(DIT.getDefaultThresholdMax());
         } else {
             this.ditMax = ditMax;
         }
     }
 
-    public void setLcom(double lcomMin, double lcomMax) {
-        if (lcomMin < 0) {
-            this.lcomMin = LCOM.getDefaultThresholdMin();
+    public void setLcom(String lcomMin, String lcomMax) {
+        if (lcomMin == null) {
+            this.lcomMin = Double.toString(LCOM.getDefaultThresholdMin());
         } else {
             this.lcomMin = lcomMin;
         }
-        if (lcomMax < 0) {
-            this.lcomMax = LCOM.getDefaultThresholdMax();
+        if (lcomMax == null) {
+            this.lcomMax = Double.toString(LCOM.getDefaultThresholdMax());
         } else {
             this.lcomMax = lcomMax;
         }
     }
 
-    public void setLcom3(double lcom3Min, double lcom3Max) {
-        if (lcom3Min < 0) {
-            this.lcom3Min = LCOM3.getDefaultThresholdMin();
+    public void setLcom3(String lcom3Min, String lcom3Max) {
+        if (lcom3Min == null) {
+            this.lcom3Min = Double.toString(LCOM3.getDefaultThresholdMin());
         } else {
             this.lcom3Min = lcom3Min;
         }
-        if (lcom3Max < 0) {
-            this.lcom3Max = LCOM3.getDefaultThresholdMax();
+        if (lcom3Max == null) {
+            this.lcom3Max = Double.toString(LCOM3.getDefaultThresholdMax());
         } else {
             this.lcom3Max = lcom3Max;
         }
     }
 
-    public void setNpm(double npmMin, double npmMax) {
-        if (npmMin < 0) {
-            this.npmMin = NPM.getDefaultThresholdMin();
+    public void setNpm(String npmMin, String npmMax) {
+        if (npmMin == null) {
+            this.npmMin = Double.toString(NPM.getDefaultThresholdMin());
         } else {
             this.npmMin = npmMin;
         }
-        if (npmMax < 0) {
-            this.npmMax = NPM.getDefaultThresholdMax();
+        if (npmMax == null) {
+            this.npmMax = Double.toString(NPM.getDefaultThresholdMax());
         } else {
             this.npmMax = npmMax;
         }
     }
 
-    public void setCc(double ccMin, double ccMax) {
-        if (ccMin < 0) {
-            this.ccMin = CC.getDefaultThresholdMin();
+    public void setCc(String ccMin, String ccMax) {
+        if (ccMin == null) {
+            this.ccMin = Double.toString(CC.getDefaultThresholdMin());
         } else {
             this.ccMin = ccMin;
         }
-        if (ccMax < 0) {
-            this.ccMax = CC.getDefaultThresholdMax();
+        if (ccMax == null) {
+            this.ccMax = Double.toString(CC.getDefaultThresholdMax());
         } else {
             this.ccMax = ccMax;
         }
     }
 
-    public void setDam(double damMin, double damMax) {
-        if (damMin < 0) {
-            this.damMin = DAM.getDefaultThresholdMin();
+    public void setDam(String damMin, String damMax) {
+        if (damMin == null) {
+            this.damMin = Double.toString(DAM.getDefaultThresholdMin());
         } else {
             this.damMin = damMin;
         }
-        if (damMax < 0) {
-            this.damMax = DAM.getDefaultThresholdMax();
+        if (damMax == null) {
+            this.damMax = Double.toString(DAM.getDefaultThresholdMax());
         } else {
             this.damMax = damMax;
         }
     }
 
-    public void setMoa(double moaMin, double moaMax) {
-        if (moaMin < 0) {
-            this.moaMin = MOA.getDefaultThresholdMin();
+    public void setMoa(String moaMin, String moaMax) {
+        if (moaMin == null) {
+            this.moaMin = Double.toString(MOA.getDefaultThresholdMin());
         } else {
             this.moaMin = moaMin;
         }
-        if (moaMax < 0) {
-            this.moaMax = MOA.getDefaultThresholdMax();
+        if (moaMax == null) {
+            this.moaMax = Double.toString(MOA.getDefaultThresholdMax());
         } else {
             this.moaMax = moaMax;
         }
     }
 
-    public void setMfa(double mfaMin, double mfaMax) {
-        if (mfaMin < 0) {
-            this.mfaMin = MFA.getDefaultThresholdMin();
+    public void setMfa(String mfaMin, String mfaMax) {
+        if (mfaMin == null) {
+            this.mfaMin = Double.toString(MFA.getDefaultThresholdMin());
         } else {
             this.mfaMin = mfaMin;
         }
-        if (mfaMax < 0) {
-            this.mfaMax = MFA.getDefaultThresholdMax();
+        if (mfaMax == null) {
+            this.mfaMax = Double.toString(MFA.getDefaultThresholdMax());
         } else {
             this.mfaMax = mfaMax;
         }
     }
 
-    public void setCam(double camMin, double camMax) {
-        if (camMin < 0) {
-            this.camMin = CAM.getDefaultThresholdMin();
+    public void setCam(String camMin, String camMax) {
+        if (camMin == null) {
+            this.camMin = Double.toString(CAM.getDefaultThresholdMin());
         } else {
             this.camMin = camMin;
         }
-        if (camMax < 0) {
-            this.camMax = CAM.getDefaultThresholdMax();
+        if (camMax == null) {
+            this.camMax = Double.toString(CAM.getDefaultThresholdMax());
         } else {
             this.camMax = camMax;
         }
     }
 
-    public void setIc(double icMin, double icMax) {
-        if (icMin < 0) {
-            this.icMin = IC.getDefaultThresholdMin();
+    public void setIc(String icMin, String icMax) {
+        if (icMin == null) {
+            this.icMin = Double.toString(IC.getDefaultThresholdMin());
         } else {
             this.icMin = icMin;
         }
-        if (icMax < 0) {
-            this.icMax = IC.getDefaultThresholdMax();
+        if (icMax == null) {
+            this.icMax = Double.toString(IC.getDefaultThresholdMax());
         } else {
             this.icMax = icMax;
         }
     }
 
-    public void setCbm(double cbmMin, double cbmMax) {
-        if (cbmMin < 0) {
-            this.cbmMin = CBM.getDefaultThresholdMin();
+    public void setCbm(String cbmMin, String cbmMax) {
+        if (cbmMin == null) {
+            this.cbmMin = Double.toString(CBM.getDefaultThresholdMin());
         } else {
             this.cbmMin = cbmMin;
         }
-        if (cbmMax < 0) {
-            this.cbmMax = CBM.getDefaultThresholdMax();
+        if (cbmMax == null) {
+            this.cbmMax = Double.toString(CBM.getDefaultThresholdMax());
         } else {
             this.cbmMax = cbmMax;
         }
     }
 
-    public void setAmc(double amcMin, double amcMax) {
-        if (amcMin < 0) {
-            this.amcMin = AMC.getDefaultThresholdMin();
+    public void setAmc(String amcMin, String amcMax) {
+        if (amcMin == null) {
+            this.amcMin = Double.toString(AMC.getDefaultThresholdMin());
         } else {
             this.amcMin = amcMin;
         }
-        if (amcMax < 0) {
-            this.amcMax = AMC.getDefaultThresholdMax();
+        if (amcMax == null) {
+            this.amcMax = Double.toString(AMC.getDefaultThresholdMax());
         } else {
             this.amcMax = amcMax;
         }
     }
 
-    public void setCbo(double cboMin, double cboMax) {
-        if (cboMin < 0) {
-            this.cboMin = CBO.getDefaultThresholdMin();
+    public void setCbo(String cboMin, String cboMax) {
+        if (cboMin == null) {
+            this.cboMin = Double.toString(CBO.getDefaultThresholdMin());
         } else {
             this.cboMin = cboMin;
         }
-        if (cboMax < 0) {
-            this.cboMax = CBO.getDefaultThresholdMax();
+        if (cboMax == null) {
+            this.cboMax = Double.toString(CBO.getDefaultThresholdMax());
         } else {
             this.cboMax = cboMax;
         }
+        boolean b = "sf" == null;
     }
 
-    public void setCis(double cisMin, double cisMax) {
-        if (cisMin < 0) {
-            this.cisMin = CIS.getDefaultThresholdMin();
+    public void setCis(String cisMin, String cisMax) {
+        if (cisMin == null) {
+            this.cisMin = Double.toString(CIS.getDefaultThresholdMin());
         } else {
             this.cisMin = cisMin;
         }
-        if (cisMax < 0) {
-            this.cisMax = CIS.getDefaultThresholdMax();
+        if (cisMax == null) {
+            this.cisMax = Double.toString(CIS.getDefaultThresholdMax());
         } else {
             this.cisMax = cisMax;
-        }    }
+        }
+    }
 }

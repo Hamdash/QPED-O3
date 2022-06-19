@@ -5,7 +5,7 @@ import eu.qped.framework.Feedback;
 import eu.qped.framework.Translator;
 import eu.qped.java.checkers.design.DesignCheckReport;
 import eu.qped.java.checkers.design.DesignChecker;
-import eu.qped.java.checkers.design.DesignConfigurator;
+import eu.qped.java.checkers.design.DesignSettingsReader;
 import eu.qped.java.checkers.semantics.SemanticChecker;
 import eu.qped.java.checkers.semantics.SemanticConfigurator;
 import eu.qped.java.checkers.semantics.SemanticFeedback;
@@ -191,32 +191,34 @@ public class MassExecutor {
         MainSettings mainSettingsConfiguratorConf = new MainSettings(qfMainSettings);
 
         QFDesignSettings qfDesignSettings = new QFDesignSettings();
-        qfDesignSettings.setAmc(0, 1);
-        qfDesignSettings.setCoupledAfferentClasses(0, 1);
-        qfDesignSettings.setCam(0, 1);
-        qfDesignSettings.setCbm(0, 1);
-        qfDesignSettings.setCbo(0, 1);
-        qfDesignSettings.setCc(0, 1);
-        qfDesignSettings.setCoupledEfferentClasses(0, 1);
-        qfDesignSettings.setCis(0, 1);
-        qfDesignSettings.setDam(0, 1);
-        qfDesignSettings.setDit(0, 1);
-        qfDesignSettings.setIc(0, 1);
-        qfDesignSettings.setLcom(0, 1);
-        qfDesignSettings.setLcom3(0, 1);
-        qfDesignSettings.setLoc(0, 1);
-        qfDesignSettings.setMoa(0, 1);
-        qfDesignSettings.setMfa(0, 1);
-        qfDesignSettings.setNoc(0, 1);
-        qfDesignSettings.setNpm(0, 1);
-        qfDesignSettings.setRfc(0, 1);
-        qfDesignSettings.setWmc(0, 1);
+        qfDesignSettings.setAmc("0.5", "1.0");
+        qfDesignSettings.setCa("0.5", "1.0");
+        qfDesignSettings.setCam("0.5", "1.0");
+        qfDesignSettings.setCbm("0.5", "1.0");
+        qfDesignSettings.setCbo("0.5", "1.0");
+        qfDesignSettings.setCc("0.5", "1.0");
+        qfDesignSettings.setCe("0.5", "1.0");
+        qfDesignSettings.setCis("0.5", "1.0");
+        qfDesignSettings.setDam("0.5", "1.0");
+        qfDesignSettings.setDit("0.5", "1.0");
+        qfDesignSettings.setIc("0.5", "1.0");
+        qfDesignSettings.setLcom("0.5", "1.0");
+        qfDesignSettings.setLcom3("0.5", "1.0");
+        qfDesignSettings.setLoc("0.5", "1.0");
+        qfDesignSettings.setMoa("0.5", "1.0");
+        qfDesignSettings.setMfa("0.5", "1.0");
+        qfDesignSettings.setNoc("0.5", "1.0");
+        qfDesignSettings.setNpm("0.5", "1.0");
+        qfDesignSettings.setRfc("0.5", "1.0");
+        qfDesignSettings.setWmc("0.5", "1.0");
+
+
 
         SyntaxChecker syntaxChecker = SyntaxChecker.builder().targetProject("src/main/resources/testProject").build();
-        DesignConfigurator designConfigurator = DesignConfigurator.createDesignConfigurator();
+        //DesignSettingsReader designSettingsReader = DesignSettingsReader.createDesignConfigurator();
         DesignChecker designChecker = DesignChecker.builder()
+                .qfDesignSettings(qfDesignSettings)
                 .targetProject("src/main/resources/testProject")
-                .designConfigurator(designConfigurator)
                 .build();
 
         MassExecutor massE = new MassExecutor(
@@ -229,12 +231,11 @@ public class MassExecutor {
          */
         List<DesignFeedback> feedbackList = massE.designFeedbacks;
         if (feedbackList != null) {
-            for (DesignFeedback s : feedbackList) {
-                System.out.println(s.getMetric());
-                System.out.println(s.getBody());
-                System.out.println(s.getErrorSource());
-                System.out.println(s.getErrorLine());
-                System.out.println(s.getSolutionExample());
+            for (DesignFeedback df : feedbackList) {
+                System.out.println("In class '" + df.getClassName() + ".java'");
+                System.out.println(df.getMetric() + " (" + df.getBody() + ")");
+                System.out.println("Measured at: " + df.getValue());
+                System.out.println(df.getSuggestion());
                 System.out.println("--------0T0----------");
             }
         }

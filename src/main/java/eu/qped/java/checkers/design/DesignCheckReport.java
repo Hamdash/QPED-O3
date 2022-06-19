@@ -1,14 +1,11 @@
 package eu.qped.java.checkers.design;
 
 import eu.qped.java.checkers.design.ckjm.SaveMapResults;
-import eu.qped.java.checkers.syntax.CompiledSourceType;
-import eu.qped.java.checkers.syntax.SyntaxError;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,7 +26,7 @@ public class DesignCheckReport {
     private Map<String, Map<SaveMapResults.Metric, Double>> metricsMap;
     private String codeAsString;
     private String path;
-    private DesignConfigurator designConfigurator;
+    private DesignSettingsReader designSettingsReader;
 
     public String toString() {
         StringBuilder reportString  = new StringBuilder("{ ");
