@@ -1,6 +1,5 @@
 package eu.qped.java.checkers.design;
 
-import eu.qped.framework.qf.QfObject;
 import eu.qped.java.checkers.design.ckjm.QPEDMetricsFilter;
 import eu.qped.java.checkers.design.ckjm.SaveMapResults;
 import eu.qped.java.checkers.mass.QFDesignSettings;
@@ -11,10 +10,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -34,7 +30,7 @@ public class DesignChecker {
     /**
      * answer as a multi-class project (given as path to package)
      */
-    private String targetProject;
+    private String targetProjectOrFile;
     private Compiler compiler;
 
     private ArrayList<DesignFeedback> feedbacks;
@@ -49,7 +45,6 @@ public class DesignChecker {
     /**
      * is able to check one or multiple .class files
      * for defined metrics ({@link SaveMapResults.Metric}).
-     * The output is saved in {@link DesignCheckReport#getMetricsMap()}).
      *
      * @return the built {@link DesignCheckReport}
      */
@@ -67,12 +62,10 @@ public class DesignChecker {
         boolean compileResult;
         if (answer != null && !answer.equals("")) {
             compileResult = compiler.compileFromString(answer);
-            resultBuilder.codeAsString(compiler.getFullSourceCode());
-            resultBuilder.designSettingsReader(this.designSettingsReader);
-            //TODO resultBuilder.path()
         } else {
-            compileResult = compiler.compileFromProject(targetProject);
+            compileResult = compiler.compileFromProject(targetProjectOrFile);
         }
+
         List<File> classFiles
                 = ExtractJavaFilesFromDirectory.builder().dirPath(PATH_TO_CLASSFILES).build().filesWithExtension("class");
         String[] classFileNames = new String[classFiles.size()];
@@ -81,13 +74,21 @@ public class DesignChecker {
         }
 
         runCkjmExtended(resultBuilder, metricsMap, classFileNames);
+        resultBuilder.files(List.of(classFileNames));
 
         DesignCheckReport builtReport = resultBuilder.build();
-        generateBaseFeedback(builtReport.getMetricsMap(), this.designSettings);
+        generateFeedback(builtReport.getMetricsMap(), this.designSettings);
 
         return builtReport;
     }
 
+    /**
+     * Dispatching method for program code considering CKJM-extended. Improves readability.
+     *
+     * @param resultBuilder the final result builder
+     * @param metricsMap the map containing, classnames, metrics and their corresponding values
+     * @param classFileNames the .class files' names (including relative path from src root)
+     */
     private void runCkjmExtended(DesignCheckReport.DesignCheckReportBuilder resultBuilder, Map<String, Map<SaveMapResults.Metric, Double>> metricsMap, String[] classFileNames) {
         QPEDMetricsFilter qmf = new QPEDMetricsFilter();
         CmdLineParser cmdParser = new CmdLineParser();
@@ -98,29 +99,43 @@ public class DesignChecker {
         resultBuilder.metricsMap(handler.getOutputMetrics());
     }
 
-    public void generateBaseFeedback(Map<String, Map<SaveMapResults.Metric, Double>> metricsMap, DesignSettings designSettings) {
+    /**
+     * Generates the DesignFeedback to the corresponding classes, metrics, and designSettings (min/max thresholds)
+     * and saves it to {@link #feedbacks}.
+     *
+     * @param metricsMap the map containing classnames, metrics and corresponding values
+     * @param designSettings the settings on which the feedback depends on //TODO wip
+     */
+    public void generateFeedback(Map<String, Map<SaveMapResults.Metric, Double>> metricsMap, DesignSettings designSettings) {
         this.feedbacks = new ArrayList<>();
 
-        for (Map.Entry entry : metricsMap.entrySet()) {
+        metricsMap.forEach((outerKey, outerValue) -> {
 
-            String className = (String) entry.getKey();
-            Map<SaveMapResults.Metric, Double> innerMap = (Map<SaveMapResults.Metric, Double>) entry.getValue();
+            String className = outerKey;
+            Map<SaveMapResults.Metric, Double> innerMap = outerValue;
 
             if (innerMap != null) {
-                for (Map.Entry innerEntry : innerMap.entrySet()) {
-                    SaveMapResults.Metric metric = (SaveMapResults.Metric) innerEntry.getKey();
-                    Double metricValue = (Double) innerEntry.getValue();
+                innerMap.forEach((innerKey, innerValue) -> {
+                    SaveMapResults.Metric metric =  innerKey;
+                    Double metricValue = innerValue;
 
                     boolean[] isThresholdReached = isThresholdReached(metric, metricValue);
                     boolean lowerThreshold = isThresholdReached[0];
                     boolean upperThreshold = isThresholdReached[1];
-                    String suggestion = generateSuggestion(metric, lowerThreshold, upperThreshold);
-                    this.feedbacks.add(new DesignFeedback(className, metric.getDescription(), metric, metricValue,lowerThreshold, upperThreshold, suggestion));
-                }
+                    String suggestion = DesignFeedback.generateSuggestion(metric, lowerThreshold, upperThreshold);
+
+                    this.feedbacks.add(new DesignFeedback(className, metric.getDescription(), metric, metricValue, lowerThreshold, upperThreshold, suggestion));
+                });
             }
-        }
+        });
     }
 
+    /**
+     * Checks whether the lower of upper threshold of a given metricwas exceeded.
+     * @param metric the given metric
+     * @param value the given metric's value
+     * @return an array of size 2 which contains whether the lower [0] and upper [1] threshold was reached-
+     */
     private boolean[] isThresholdReached(SaveMapResults.Metric metric, double value) {
         boolean lower = false;
         boolean upper = false;
@@ -208,44 +223,5 @@ public class DesignChecker {
                 break;
         }
         return new boolean[]{lower, upper};
-    }
-
-    private String generateSuggestion(SaveMapResults.Metric metric, boolean lowerThreshold, boolean upperThreshold) {
-        if (!lowerThreshold && !upperThreshold) {
-            return "You are within the " + metric.toString() + "'s threshold.";
-        } else if (lowerThreshold) {
-            return "The " + metric.toString() + "'s value is too low.";
-        } else if (upperThreshold) {
-            return "The " + metric.toString() + "'s value is too high.";
-        } else {
-            throw new IllegalArgumentException();
-        }
-    }
-    // for removal
-
-    public static void main(String[] args) {
-
-        String answer = "import java.util.List;\n" +
-                "    import java.util.ArrayList;\n" +
-                "    public class Mmm{\n" +
-                "        List<String> xx(){\n" +
-                "            List list = new ArrayList();\n" +
-                "            list.add(\"8888\");\n" +
-                "            return list;\n" +
-                "        }\n" +
-                "    }";
-
-        Compiler c = Compiler.builder().build();
-        c.compileFromString(answer);
-
-        String pathToClass = "/Users/jannik/ProgrammingProjects/IdeaProjects/uni/bachelorarbeit/fork/Mmm.class";
-
-        DesignChecker b = DesignChecker.builder()
-                .answer(new QfObject().getAnswer())
-                .feedbacks(new ArrayList<>())
-                .build();
-        b.setTargetProject(pathToClass);
-        b.setAnswer(answer);
-        b.check().getMetricsMap().forEach((k, v) -> System.out.println(k + " : " + v));
     }
 }

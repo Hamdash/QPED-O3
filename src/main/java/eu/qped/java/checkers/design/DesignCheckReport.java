@@ -1,11 +1,15 @@
 package eu.qped.java.checkers.design;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import eu.qped.java.checkers.design.ckjm.SaveMapResults;
+import eu.qped.java.checkers.style.reportModel.ReportFileEntry;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,36 +23,8 @@ import java.util.Map;
 @Builder
 public class DesignCheckReport {
 
-    /**
-     * the map where the calculated metrics are stored in.
-     * (k1: classname, v1: (k2: metric, v2: value) )
-     */
+    @JsonProperty("files")
+    private List<String> files;
+
     private Map<String, Map<SaveMapResults.Metric, Double>> metricsMap;
-    private String codeAsString;
-    private String path;
-    private DesignSettingsReader designSettingsReader;
-
-    public String toString() {
-        StringBuilder reportString  = new StringBuilder("{ ");
-        metricsMap.forEach((className, value) -> {
-            reportString
-                    .append("\n\t")
-                    .append(className)
-                    .append(": { ");
-
-            value.forEach((key, value1) -> {
-                String classMetric = key.toString();
-                String metricValue = value1.toString();
-                reportString
-                        .append(classMetric)
-                        .append(": ")
-                        .append(metricValue)
-                        .append(", ");
-            });
-            reportString
-                    .deleteCharAt(reportString.lastIndexOf(","))
-                    .append("}");
-        });
-        return reportString.append("\n}").toString();
-    }
 }

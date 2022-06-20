@@ -3,9 +3,7 @@ package eu.qped.java.checkers.mass;
 import eu.qped.framework.CheckLevel;
 import eu.qped.framework.Feedback;
 import eu.qped.framework.Translator;
-import eu.qped.java.checkers.design.DesignCheckReport;
 import eu.qped.java.checkers.design.DesignChecker;
-import eu.qped.java.checkers.design.DesignSettingsReader;
 import eu.qped.java.checkers.semantics.SemanticChecker;
 import eu.qped.java.checkers.semantics.SemanticConfigurator;
 import eu.qped.java.checkers.semantics.SemanticFeedback;
@@ -102,9 +100,8 @@ public class MassExecutor {
 
             }
             if (designNeeded) {
-                DesignCheckReport designCheckReport = designChecker.check();
-                final String source = designCheckReport.getCodeAsString();
-                designChecker.setTargetProject(source);
+                final String source = syntaxCheckReport.getCodeAsString();
+                designChecker.setTargetProjectOrFile(source);
                 designChecker.check();
                 designFeedbacks = designChecker.getFeedbacks();
             }
@@ -218,7 +215,7 @@ public class MassExecutor {
         //DesignSettingsReader designSettingsReader = DesignSettingsReader.createDesignConfigurator();
         DesignChecker designChecker = DesignChecker.builder()
                 .qfDesignSettings(qfDesignSettings)
-                .targetProject("src/main/resources/testProject")
+                .targetProjectOrFile("src/main/resources/testProject")
                 .build();
 
         MassExecutor massE = new MassExecutor(
@@ -315,7 +312,7 @@ public class MassExecutor {
         SyntaxChecker syntaxChecker = SyntaxChecker.builder().targetProject("src/main/resources/testProject").build();
 
 
-        DesignChecker designChecker = DesignChecker.builder().targetProject("src/main/resources/testProject").build();
+        DesignChecker designChecker = DesignChecker.builder().targetProjectOrFile("src/main/resources/testProject").build();
 
         MassExecutor massE = new MassExecutor(
                 styleChecker, semanticChecker, syntaxChecker, designChecker, mainSettingsConfiguratorConf);

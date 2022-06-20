@@ -4,13 +4,8 @@ import eu.qped.java.checkers.mass.QFDesignSettings;
 import lombok.*;
 import org.apache.logging.log4j.LogManager;
 
-import java.util.Map;
-
-import static eu.qped.java.checkers.design.ckjm.SaveMapResults.*;
-import static eu.qped.java.checkers.design.ckjm.SaveMapResults.Metric.*;
-
 /**
- * Class representing a configurator for the {@link DesignChecker}'s design guidelines.
+ * Class representing a reader for the {@link QFDesignSettings}'s input from the user.
  *
  * @author Jannik Seus
  */
@@ -22,7 +17,13 @@ import static eu.qped.java.checkers.design.ckjm.SaveMapResults.Metric.*;
 public class DesignSettingsReader {
     
     private QFDesignSettings qfDesignSettings;
-    
+
+    /**
+     * Method reads the input design settings from {@link #qfDesignSettings} and
+     * checks (implicitly) for possible invalid values through the getter and parser.
+     *
+     * @return the created {@link DesignSettings} object from an initial {@link QFDesignSettings} obbject.
+     */
     public DesignSettings readDesignSettings() {
         DesignSettings designSettings = DesignSettings.builder().build();
         
@@ -52,41 +53,4 @@ public class DesignSettingsReader {
         }
         return designSettings;
     }
-
-    /*//@Builder.Default If used, IDE keeps getting stuck on parsing when compiling
-    private Map<Metric, Double> metricsThresholds = Map.ofEntries(
-            Map.entry(AMC, AMC.getInitialValue()),
-            Map.entry(CA, CA.getInitialValue()),
-            Map.entry(CAM, CAM.getInitialValue()),
-            Map.entry(CBM, CBM.getInitialValue()),
-            Map.entry(CBO, CBO.getInitialValue()),
-            Map.entry(CC, CC.getInitialValue()),
-            Map.entry(CE, CE.getInitialValue()),
-            Map.entry(CIS, CIS.getInitialValue()),
-            Map.entry(DAM, DAM.getInitialValue()),
-            Map.entry(DIT, DIT.getInitialValue()),
-            Map.entry(IC, IC.getInitialValue()),
-            Map.entry(LCOM, LCOM.getInitialValue()),
-            Map.entry(LCOM3, LCOM3.getInitialValue()),
-            Map.entry(LOC, LOC.getInitialValue()),
-            Map.entry(MFA, MFA.getInitialValue()),
-            Map.entry(MOA, MOA.getInitialValue()),
-            Map.entry(NOC, NOC.getInitialValue()),
-            Map.entry(NPM, NPM.getInitialValue()),
-            Map.entry(RFC, RFC.getInitialValue()),
-            Map.entry(WMC, WMC.getInitialValue())
-    );
-    */
-
-    /**
-     * Method configuring a specific key-value-pair in the {@link #metricsThresholds}.
-     *
-     * @param metric the metric (key) whose value is to be set
-     * @param value  the given metric's value who is to bet set (value)
-     */
-    /*public void configure(Metric metric, double value) {
-        this.metricsThresholds.put(metric, value);
-    }
-
-     */
 }

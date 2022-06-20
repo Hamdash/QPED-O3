@@ -7,6 +7,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Map;
+
 /**
  * @author Jannik Seus
  */
@@ -21,6 +23,8 @@ public class DesignFeedback extends Feedback {
     private boolean upperThresholdReached;
     private String suggestion; //TODO is this even necessary?
 
+    private Map<String, Map<SaveMapResults.Metric, Double>> metricsMap;
+
 
     @Builder
     public DesignFeedback(String className, String body, SaveMapResults.Metric metric, Double value, boolean lowerThresholdReached, boolean upperThresholdReached, String suggestion) {
@@ -31,6 +35,26 @@ public class DesignFeedback extends Feedback {
         this.lowerThresholdReached = lowerThresholdReached;
         this.upperThresholdReached = upperThresholdReached;
         this.suggestion = suggestion;
+    }
+
+    /**
+     * Generates a suggestion for the student depending on the exceeding of a metric's already calculated value.
+     *
+     * @param metric the given metric
+     * @param lowerThreshold the metric's lower threshold not to be exceeded
+     * @param upperThreshold the metric's upper threshold not to be exceeded
+     * @return a nicely formatted suggestion as String.
+     */
+    public static String generateSuggestion(SaveMapResults.Metric metric, boolean lowerThreshold, boolean upperThreshold) {
+        if (!lowerThreshold && !upperThreshold) {
+            return "You are within the " + metric.toString() + "'s threshold.";
+        } else if (lowerThreshold) {
+            return "The " + metric.toString() + "'s value is too low.";
+        } else if (upperThreshold) {
+            return "The " + metric.toString() + "'s value is too high.";
+        } else {
+            throw new IllegalArgumentException();
+        }
     }
 
     @Override
@@ -64,17 +88,5 @@ public class DesignFeedback extends Feedback {
                 .append(",\t suggestion: ").append(this.metric.getDescription());
         return feedbackString.toString();
 
-    }
-
-    public static void main(String[] args) {
-        System.out.print(DesignFeedback.builder()
-                        .className("TestClass.java")
-                        .metric(SaveMapResults.Metric.CBM)
-                        .value(2.54d)
-                        .body(SaveMapResults.Metric.CBM.getDescription())
-                        .lowerThresholdReached(false)
-                        .upperThresholdReached(true)
-                        .suggestion("lower your coupling")
-                .build().toString());
     }
 }

@@ -39,7 +39,7 @@ class DesignCheckerTest {
                 "    }";
 
         b = DesignChecker.builder().answer(new QfObject().getAnswer()).build();
-        b.setTargetProject(pathToClass);
+        b.setTargetProjectOrFile(pathToClass);
         b.setAnswer(answer);
     }
 
@@ -59,9 +59,9 @@ class DesignCheckerTest {
 
     @Test
     void getAndSetTargetProject() {
-        assertEquals(DIRECTORY + "DCTest.class", b.getTargetProject());
-        b.setTargetProject("/this/is/a/random/path.jk");
-        assertEquals("/this/is/a/random/path.jk", b.getTargetProject());
+        assertEquals(DIRECTORY + "DCTest.class", b.getTargetProjectOrFile());
+        b.setTargetProjectOrFile("/this/is/a/random/path.jk");
+        assertEquals("/this/is/a/random/path.jk", b.getTargetProjectOrFile());
     }
 
     @Test

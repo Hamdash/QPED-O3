@@ -41,10 +41,8 @@ class DesignCheckReportTest {
         sampleMapThresholds = Map.of(Metric.LCOM, 1.0);
         designCheckReport1 = new DesignCheckReport();
         designCheckReport2 = new DesignCheckReport(
-                mock(Map.class),
-                "codeAsString",
-                "path",
-                mock(DesignSettingsReader.class));
+                mock(List.class),
+                mock(Map.class));
 
 
     }
@@ -77,95 +75,6 @@ class DesignCheckReportTest {
             assertEquals(sampleMapMetrics, retrievedMap2);
         }
     }
-
-/*    @Test
-    void setMetricsThresholds() throws IllegalAccessException {
-        Field metricsThresholdsField = getFieldByName("metricsThresholds");
-        if (metricsThresholdsField != null) {
-            metricsThresholdsField.setAccessible(true);
-            designCheckReport1.getDesignSettingsReader().setMetricsThresholds(sampleMapThresholds);
-            designCheckReport2.getDesignSettingsReader().setMetricsThresholds(sampleMapThresholds);
-
-            assertEquals(sampleMapThresholds, metricsThresholdsField.get(designCheckReport1));
-            assertEquals(sampleMapThresholds, metricsThresholdsField.get(designCheckReport2));
-        }
-    }
-
-    @Test
-    void getMetricsThresholds() {
-        Field metricsThresholdsField = getFieldByName("metricsThresholds");
-        if (metricsThresholdsField != null) {
-            metricsThresholdsField.setAccessible(true);
-            designCheckReport1.getDesignSettingsReader().setMetricsThresholds(sampleMapThresholds); //setter already tested
-            designCheckReport2.getDesignSettingsReader().setMetricsThresholds(sampleMapThresholds);
-            Map<Metric, Double> retrievedMap1 = designCheckReport1.getDesignSettingsReader().getMetricsThresholds();
-            Map<Metric, Double> retrievedMap2 = designCheckReport2.getDesignSettingsReader().getMetricsThresholds();
-
-            assertEquals(sampleMapThresholds, retrievedMap1);
-            assertEquals(sampleMapThresholds, retrievedMap2);
-        }
-    }*/
-
-    @Test
-    void setCodeAsString() throws IllegalAccessException {
-        Field codeAsStringField = getFieldByName("codeAsString");
-        if (codeAsStringField != null) {
-            codeAsStringField.setAccessible(true);
-            String sampleCode = "public class Test {}";
-            designCheckReport1.setCodeAsString(sampleCode);
-            designCheckReport2.setCodeAsString(sampleCode);
-
-            assertEquals(sampleCode, codeAsStringField.get(designCheckReport1));
-            assertEquals(sampleCode, codeAsStringField.get(designCheckReport2));
-        }
-    }
-
-    @Test
-    void getCodeAsString() {
-        Field codeAsStringField = getFieldByName("codeAsString");
-        if (codeAsStringField != null) {
-            codeAsStringField.setAccessible(true);
-            String sampleCode = "public class Test {}";
-            designCheckReport1.setCodeAsString(sampleCode); //setter already tested
-            designCheckReport2.setCodeAsString(sampleCode);
-            String retrievedCode1 = designCheckReport1.getCodeAsString();
-            String retrievedCode2 = designCheckReport2.getCodeAsString();
-
-            assertEquals(sampleCode, retrievedCode1);
-            assertEquals(sampleCode, retrievedCode2);
-        }
-    }
-
-    @Test
-    void setPath() throws IllegalAccessException {
-        Field pathField = getFieldByName("path");
-        if (pathField != null) {
-            pathField.setAccessible(true);
-            String samplePath = "/path/to/destination.jk";
-            designCheckReport1.setPath(samplePath);
-            designCheckReport2.setPath(samplePath);
-
-            assertEquals(samplePath, pathField.get(designCheckReport1));
-            assertEquals(samplePath, pathField.get(designCheckReport2));
-        }
-    }
-
-    @Test
-    void getPath() {
-        Field pathField = getFieldByName("path");
-        if (pathField != null) {
-            pathField.setAccessible(true);
-            String samplePath = "/path/to/destination.jk";
-            designCheckReport1.setPath(samplePath); //setter already tested
-            designCheckReport2.setPath(samplePath);
-            String retrievedPath1 = designCheckReport1.getPath();
-            String retrievedPath2 = designCheckReport2.getPath();
-
-            assertEquals(samplePath, retrievedPath1);
-            assertEquals(samplePath, retrievedPath2);
-        }
-    }
-
 
     @Test
     void builder() {
