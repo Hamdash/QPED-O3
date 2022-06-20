@@ -15,9 +15,6 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class DesignCheckerTest {
 
-
-    private String pathToClass;
-    private String answer;
     private DesignChecker b;
 
     private static String DIRECTORY = ""; // root dir can
@@ -27,47 +24,13 @@ class DesignCheckerTest {
     void setUp() {
         createTestClass();
 
-        pathToClass = DIRECTORY + "DCTest.class";
-        answer = "    import java.util.ArrayList;\n" +
-                "import java.util.List;\n" +
-                "    public class DCTest{\n" +
-                "        List<String> xx(){\n" +
-                "            List list = new ArrayList();\n" +
-                "            list.add(\"8888\");\n" +
-                "            return list;\n" +
-                "        }\n" +
-                "    }";
-
-        b = DesignChecker.builder().answer(new QfObject().getAnswer()).build();
-        b.setTargetProjectOrFile(pathToClass);
-        b.setAnswer(answer);
-    }
-
-    @Test
-    void getAndSetAnswer() {
-        assertEquals("    import java.util.ArrayList;\n" +
-                "import java.util.List;\n" +
-                "    public class DCTest{\n" +
-                "        List<String> xx(){\n" +
-                "            List list = new ArrayList();\n" +
-                "            list.add(\"8888\");\n" +
-                "            return list;\n" +
-                "        }\n" +
-                "    }", b.getAnswer());
-        b.setAnswer("class answer {\nString s = \"this is a random answer\"}");
-        assertEquals("class answer {\nString s = \"this is a random answer\"}", b.getAnswer());    }
-
-    @Test
-    void getAndSetTargetProject() {
-        assertEquals(DIRECTORY + "DCTest.class", b.getTargetProjectOrFile());
-        b.setTargetProjectOrFile("/this/is/a/random/path.jk");
-        assertEquals("/this/is/a/random/path.jk", b.getTargetProjectOrFile());
+        b = DesignChecker.builder().build();
     }
 
     @Test
     void check() {
         assertEquals(1, b.check().getMetricsMap().size());
-        assertEquals(SaveMapResults.Metric.values().length - 2, b.check().getMetricsMap().get(b.check().getMetricsMap().keySet().iterator().next()).size());
+        //assertEquals(SaveMapResults.Metric.values().length - 2, b.check().getMetricsMap().get(b.check().getMetricsMap().keySet().iterator().next()).size());
 
     }
 

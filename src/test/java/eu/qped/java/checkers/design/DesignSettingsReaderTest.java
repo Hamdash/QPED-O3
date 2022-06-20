@@ -1,5 +1,8 @@
 package eu.qped.java.checkers.design;
 
+import eu.qped.java.checkers.design.ckjm.SaveMapResults;
+import eu.qped.java.checkers.design.configuration.DesignSettings;
+import eu.qped.java.checkers.design.configuration.MetricThreshold;
 import eu.qped.java.checkers.mass.QFDesignSettings;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,13 +27,13 @@ class DesignSettingsReaderTest {
     void readDesignSettings() {
         QFDesignSettings qfDesignSettings = generateQfDesignSettings();
 
-        designSettings.setAmc(Double.parseDouble(qfDesignSettings.getAmcMin()), Double.parseDouble(qfDesignSettings.getAmcMax()));
-        assertEquals(designSettings.getAmcMin(), 0.5);
-        assertEquals(designSettings.getAmcMax(), 1.0);
+        designSettings.setAmc(new MetricThreshold(SaveMapResults.Metric.AMC, Double.parseDouble(qfDesignSettings.getAmcMin()), Double.parseDouble(qfDesignSettings.getAmcMax())));
+        assertEquals(designSettings.getAmc().getMinThreshold(), 0.5);
+        assertEquals(designSettings.getAmc().getMaxThreshold(), 1.0);
 
-        designSettings.setWmc(Double.parseDouble(qfDesignSettings.getWmcMin()), Double.parseDouble(qfDesignSettings.getWmcMax()));
-        assertEquals(designSettings.getWmcMin(), 0.5);
-        assertEquals(designSettings.getWmcMax(), 1.0);
+        designSettings.setWmc(new MetricThreshold(SaveMapResults.Metric.WMC, Double.parseDouble(qfDesignSettings.getWmcMin()), Double.parseDouble(qfDesignSettings.getWmcMax())));
+        assertEquals(designSettings.getWmc().getMinThreshold(), 0.5);
+        assertEquals(designSettings.getWmc().getMaxThreshold(), 1.0);
 
     }
 

@@ -75,7 +75,7 @@ public class MassExecutor {
         QFMainSettings qfMainSettings = new QFMainSettings();
         qfMainSettings.setSyntaxLevel(CheckLevel.ADVANCED.name());
         qfMainSettings.setSemanticNeeded("false");
-        qfMainSettings.setStyleNeeded("true");
+        qfMainSettings.setStyleNeeded("false");
         qfMainSettings.setDesignNeeded("true");
         qfMainSettings.setPreferredLanguage("en");
 
@@ -162,7 +162,6 @@ public class MassExecutor {
         //DesignSettingsReader designSettingsReader = DesignSettingsReader.createDesignConfigurator();
         DesignChecker designChecker = DesignChecker.builder()
                 .qfDesignSettings(qfDesignSettings)
-                .targetProjectOrFile("src/main/resources/testProject")
                 .build();
         MassExecutor massE = new MassExecutor(styleChecker, semanticChecker, syntaxChecker, designChecker, mainSettingsConfiguratorConf);
 
@@ -297,7 +296,6 @@ public class MassExecutor {
             }
             if (designNeeded) {
                 final String source = syntaxCheckReport.getCodeAsString();
-                designChecker.setTargetProjectOrFile(source);
                 designChecker.check();
                 designFeedbacks = designChecker.getFeedbacks();
             }

@@ -46,7 +46,7 @@ public class Mass implements Checker {
     SemanticChecker semanticChecker = SemanticChecker.createSemanticMassChecker(semanticConfigurator);
 
     // Design Checker
-    DesignChecker designChecker = DesignChecker.builder().answer(qfObject.getAnswer()).build(); //TODO is this correct?
+    DesignChecker designChecker = DesignChecker.builder().build(); //TODO is this correct?
 
     //Mass
     MassExecutor massExecutor = new MassExecutor(styleChecker, semanticChecker, syntaxChecker, designChecker, mainSettings);

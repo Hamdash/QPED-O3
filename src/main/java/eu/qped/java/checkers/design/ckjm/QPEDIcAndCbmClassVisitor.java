@@ -89,7 +89,7 @@ public class QPEDIcAndCbmClassVisitor extends AbstractClassVisitor {
             }
 
             countCase1();
-            countCase2(); // TODO: remove duplications
+            countCase2();
             countCase3();
             saveResults();
         } catch (ClassNotFoundException e) {
