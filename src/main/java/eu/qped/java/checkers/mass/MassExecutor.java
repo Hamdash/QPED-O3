@@ -178,6 +178,17 @@ public class MassExecutor {
             System.out.println(s.getBody());
         }
 
+        List<DesignFeedback> feedbackList = massE.designFeedbacks;
+        if (feedbackList != null) {
+            for (DesignFeedback df : feedbackList) {
+                System.out.println("In class '" + df.getClassName() + ".java'");
+                System.out.println(df.getMetric() + " (" + df.getBody() + ")");
+                System.out.println("Measured at: " + df.getValue());
+                System.out.println(df.getSuggestion());
+                System.out.println("--------0T0----------");
+            }
+        }
+
 
         /*
         for Style Errors
@@ -186,7 +197,7 @@ public class MassExecutor {
 
         for (StyleFeedback f : feedbacks) {
             System.out.println(f.getDesc());
-            System.out.println(f.getBody());//TODO getContent()
+            System.out.println(f.getContent());
             System.out.println(f.getLine());
             System.out.println(f.getExample());
             System.out.println("-----------------------------------------------------------------");
@@ -210,11 +221,12 @@ public class MassExecutor {
         syntaxFeedbacks = new ArrayList<>();
         styleFeedbacks = new ArrayList<>();
         semanticFeedbacks = new ArrayList<>();
+        designFeedbacks = new ArrayList<>();
         syntaxErrors = new ArrayList<>();
     }
 
 
-    private void translate(boolean styleNeeded, boolean semanticNeeded) {
+    private void translate(boolean styleNeeded, boolean semanticNeeded, boolean designNeeded) {
         String prefLanguage = mainSettingsConfigurator.getPreferredLanguage();
         Translator translator = new Translator();
 
@@ -230,6 +242,11 @@ public class MassExecutor {
         if (styleNeeded) {
             for (StyleFeedback feedback : styleFeedbacks) {
                 translator.translateStyleBody(prefLanguage, feedback);
+            }
+        }
+        if (designNeeded) {
+            for (DesignFeedback feedback : designFeedbacks) {
+                translator.translateDesignBody(prefLanguage, feedback);
             }
         }
     }
@@ -260,6 +277,7 @@ public class MassExecutor {
 
         boolean styleNeeded = mainSettingsConfigurator.isStyleNeeded();
         boolean semanticNeeded = mainSettingsConfigurator.isSemanticNeeded();
+        boolean designNeeded = mainSettingsConfigurator.isDesignNeeded();
 
 
         SyntaxCheckReport syntaxCheckReport = syntaxChecker.check();
@@ -277,6 +295,12 @@ public class MassExecutor {
                 semanticChecker.check();
                 semanticFeedbacks = semanticChecker.getFeedbacks();
             }
+            if (designNeeded) {
+                final String source = syntaxCheckReport.getCodeAsString();
+                designChecker.setTargetProjectOrFile(source);
+                designChecker.check();
+                designFeedbacks = designChecker.getFeedbacks();
+            }
         } else {
             syntaxChecker.setLevel(mainSettingsConfigurator.getSyntaxLevel());
             syntaxErrors = syntaxCheckReport.getSyntaxErrors();
@@ -286,7 +310,7 @@ public class MassExecutor {
 
         // translate Feedback body if needed
         if (!mainSettingsConfigurator.getPreferredLanguage().equals("en")) {
-            translate(styleNeeded, semanticNeeded);
+            translate(styleNeeded, semanticNeeded, designNeeded);
         }
     }
 }

@@ -1,5 +1,6 @@
 package eu.qped.framework;
 
+import eu.qped.java.checkers.design.DesignFeedback;
 import eu.qped.java.checkers.style.StyleFeedback;
 import org.apache.logging.log4j.LogManager;
 
@@ -78,6 +79,15 @@ public class Translator {
         } catch (Exception e) {
             e.printStackTrace();
 
+        }
+    }
+
+    public void translateDesignBody(String pref, DesignFeedback feedback) {
+
+        try {
+            //TODO translate feedback
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
