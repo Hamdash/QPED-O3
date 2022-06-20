@@ -70,18 +70,18 @@ public class Mass implements Checker {
     int i = 0;
 
         for (StyleFeedback styleFeedback : styleFeedbacks) {
-        result[i] = "style Feedback";
-        result[i + 1] = styleFeedback.getDesc()
-                + NEW_LINE
-                + styleFeedback.getBody()
-                + NEW_LINE
-                + styleFeedback.getLine()
-                + NEW_LINE
-                + styleFeedback.getExample()
-                + NEW_LINE
-                + "------------------------------------------------------------------------------";
-        i = i + 2;
-    }
+            result[i] = "style Feedback";
+            result[i + 1] = styleFeedback.getDesc()
+                    + NEW_LINE
+                    + styleFeedback.getBody()
+                    + NEW_LINE
+                    + styleFeedback.getLine()
+                    + NEW_LINE
+                    + styleFeedback.getExample()
+                    + NEW_LINE
+                    + "------------------------------------------------------------------------------";
+            i = i + 2;
+        }
 
         for (SemanticFeedback semanticFeedback : semanticFeedbacks) {
         result[i] = "semantic Feedback";

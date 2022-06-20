@@ -9,7 +9,6 @@ import eu.qped.java.checkers.semantics.SemanticConfigurator;
 import eu.qped.java.checkers.semantics.SemanticFeedback;
 import eu.qped.java.checkers.style.StyleChecker;
 import eu.qped.java.checkers.style.StyleFeedback;
-import eu.qped.java.checkers.style.StyleViolation;
 import eu.qped.java.checkers.syntax.SyntaxCheckReport;
 import eu.qped.java.checkers.syntax.SyntaxChecker;
 import eu.qped.java.checkers.syntax.SyntaxError;
@@ -39,7 +38,7 @@ public class MassExecutor {
     private List<SyntaxFeedback> syntaxFeedbacks;
     private List<DesignFeedback> designFeedbacks;
 
-    private List<StyleViolation> violations;
+
     private List<SyntaxError> syntaxErrors;
 
     private final StyleChecker styleChecker;
@@ -50,10 +49,11 @@ public class MassExecutor {
 
     /**
      * To create an Object use the factory Class @MassExecutorFactory
-     *  @param styleChecker             style checker component
+     *
+     * @param styleChecker             style checker component
      * @param semanticChecker          semantic checker component
      * @param syntaxChecker            syntax checker component
-     * @param designChecker             design checker component
+     * @param designChecker            design checker component
      * @param mainSettingsConfigurator settings
      */
 
@@ -69,187 +69,15 @@ public class MassExecutor {
         this.mainSettingsConfigurator = mainSettingsConfigurator;
     }
 
-
-    /**
-     * execute the Mass System
-     */
-    public void execute() {
-        init();
-
-        boolean styleNeeded = mainSettingsConfigurator.isStyleNeeded();
-        boolean semanticNeeded = mainSettingsConfigurator.isSemanticNeeded();
-        boolean designNeeded = mainSettingsConfigurator.isDesignNeeded();
-
-
-        SyntaxCheckReport syntaxCheckReport = syntaxChecker.check();
-
-        if (syntaxCheckReport.isCompilable()) {
-            if (styleNeeded) {
-                styleChecker.setTargetPath(syntaxCheckReport.getPath());
-                styleChecker.check();
-                styleFeedbacks = styleChecker.getStyleFeedbacks();
-
-                //auto checker
-                violations = styleChecker.getStyleViolationsList();
-            }
-            if (semanticNeeded) {
-                final String source = syntaxCheckReport.getCodeAsString();
-                semanticChecker.setSource(source);
-                semanticChecker.check();
-                semanticFeedbacks = semanticChecker.getFeedbacks();
-
-            }
-            if (designNeeded) {
-                final String source = syntaxCheckReport.getCodeAsString();
-                designChecker.setTargetProjectOrFile(source);
-                designChecker.check();
-                designFeedbacks = designChecker.getFeedbacks();
-            }
-
-        } else {
-            syntaxChecker.setLevel(mainSettingsConfigurator.getSyntaxLevel());
-            syntaxErrors = syntaxCheckReport.getSyntaxErrors();
-            AbstractSyntaxFeedbackGenerator syntaxFeedbackGenerator = SyntaxFeedbackGenerator.builder().build();
-            syntaxFeedbacks = syntaxFeedbackGenerator.generateFeedbacks(syntaxErrors);
-
-        }
-
-        // translate Feedback body if needed
-        if (!mainSettingsConfigurator.getPreferredLanguage().equals("en")) {
-            translate(styleNeeded, semanticNeeded);
-        }
-    }
-
-    private void init() {
-        syntaxFeedbacks = new ArrayList<>();
-        styleFeedbacks = new ArrayList<>();
-        semanticFeedbacks = new ArrayList<>();
-        violations = new ArrayList<>();
-        syntaxErrors = new ArrayList<>();
-    }
-
-
-    private void translate(boolean styleNeeded, boolean semanticNeeded) {
-        String prefLanguage = mainSettingsConfigurator.getPreferredLanguage();
-        Translator translator = new Translator();
-
-        //List is Empty when the syntax is correct
-        for (SyntaxFeedback feedback : syntaxFeedbacks) {
-            translator.translateBody(prefLanguage, feedback);
-        }
-        if (semanticNeeded) {
-            for (Feedback feedback : semanticFeedbacks) {
-                translator.translateBody(prefLanguage, feedback);
-            }
-        }
-        if (styleNeeded) {
-            for (StyleFeedback feedback : styleFeedbacks) {
-                translator.translateStyleBody(prefLanguage, feedback);
-            }
-        }
-    }
-
-
-    public List<StyleFeedback> getStyleFeedbacks() {
-        return styleFeedbacks;
-    }
-
-    public List<SemanticFeedback> getSemanticFeedbacks() {
-        return semanticFeedbacks;
-    }
-
-    public List<SyntaxFeedback> getSyntaxFeedbacks() {
-        return syntaxFeedbacks;
-    }
-
-    public List<StyleViolation> getViolations() {
-        return violations;
-    }
-
-    public List<SyntaxError> getSyntaxErrors() {
-        return syntaxErrors;
-    }
-
     public static void main(String[] args) {
-        designMassExecution();
-        //previousMassExecution();
-    }
-
-    private static void designMassExecution() {
-        long start = System.nanoTime();
-
-        QFMainSettings qfMainSettings = new QFMainSettings();
-        qfMainSettings.setSyntaxLevel(CheckLevel.ADVANCED.name());
-        qfMainSettings.setSemanticNeeded("false");
-        qfMainSettings.setStyleNeeded("false");
-        qfMainSettings.setDesignNeeded("true");
-        qfMainSettings.setPreferredLanguage("en");
-
-        MainSettings mainSettingsConfiguratorConf = new MainSettings(qfMainSettings);
-
-        QFDesignSettings qfDesignSettings = new QFDesignSettings();
-        qfDesignSettings.setAmc("0.5", "1.0");
-        qfDesignSettings.setCa("0.5", "1.0");
-        qfDesignSettings.setCam("0.5", "1.0");
-        qfDesignSettings.setCbm("0.5", "1.0");
-        qfDesignSettings.setCbo("0.5", "1.0");
-        qfDesignSettings.setCc("0.5", "1.0");
-        qfDesignSettings.setCe("0.5", "1.0");
-        qfDesignSettings.setCis("0.5", "1.0");
-        qfDesignSettings.setDam("0.5", "1.0");
-        qfDesignSettings.setDit("0.5", "1.0");
-        qfDesignSettings.setIc("0.5", "1.0");
-        qfDesignSettings.setLcom("0.5", "1.0");
-        qfDesignSettings.setLcom3("0.5", "1.0");
-        qfDesignSettings.setLoc("0.5", "1.0");
-        qfDesignSettings.setMoa("0.5", "1.0");
-        qfDesignSettings.setMfa("0.5", "1.0");
-        qfDesignSettings.setNoc("0.5", "1.0");
-        qfDesignSettings.setNpm("0.5", "1.0");
-        qfDesignSettings.setRfc("0.5", "1.0");
-        qfDesignSettings.setWmc("0.5", "1.0");
-
-
-
-        SyntaxChecker syntaxChecker = SyntaxChecker.builder().targetProject("src/main/resources/testProject").build();
-        //DesignSettingsReader designSettingsReader = DesignSettingsReader.createDesignConfigurator();
-        DesignChecker designChecker = DesignChecker.builder()
-                .qfDesignSettings(qfDesignSettings)
-                .targetProjectOrFile("src/main/resources/testProject")
-                .build();
-
-        MassExecutor massE = new MassExecutor(
-                null, null, syntaxChecker, designChecker, mainSettingsConfiguratorConf);
-
-        massE.execute();
-
-        /*
-        for Design Errors
-         */
-        List<DesignFeedback> feedbackList = massE.designFeedbacks;
-        if (feedbackList != null) {
-            for (DesignFeedback df : feedbackList) {
-                System.out.println("In class '" + df.getClassName() + ".java'");
-                System.out.println(df.getMetric() + " (" + df.getBody() + ")");
-                System.out.println("Measured at: " + df.getValue());
-                System.out.println(df.getSuggestion());
-                System.out.println("--------0T0----------");
-            }
-        }
-        long end = System.nanoTime() - start;
-        System.out.println("Feedback generated in: " + end * Math.pow(10.0, -9.0) + " sec");
-    }
-
-    public static void previousMassExecution() {
         long start = System.nanoTime();
 
         QFMainSettings qfMainSettings = new QFMainSettings();
         qfMainSettings.setSyntaxLevel(CheckLevel.ADVANCED.name());
         qfMainSettings.setSemanticNeeded("false");
         qfMainSettings.setStyleNeeded("true");
-        qfMainSettings.setDesignNeeded("false");
+        qfMainSettings.setDesignNeeded("true");
         qfMainSettings.setPreferredLanguage("en");
-
 
 
         MainSettings mainSettingsConfiguratorConf = new MainSettings(qfMainSettings);
@@ -308,14 +136,35 @@ public class MassExecutor {
 
         SemanticChecker semanticChecker = SemanticChecker.createSemanticMassChecker(semanticConfigurator);
 
+        QFDesignSettings qfDesignSettings = new QFDesignSettings();
+        qfDesignSettings.setAmc("0.5", "1.0");
+        qfDesignSettings.setCa("0.5", "1.0");
+        qfDesignSettings.setCam("0.5", "1.0");
+        qfDesignSettings.setCbm("0.5", "1.0");
+        qfDesignSettings.setCbo("0.5", "1.0");
+        qfDesignSettings.setCc("0.5", "1.0");
+        qfDesignSettings.setCe("0.5", "1.0");
+        qfDesignSettings.setCis("0.5", "1.0");
+        qfDesignSettings.setDam("0.5", "1.0");
+        qfDesignSettings.setDit("0.5", "1.0");
+        qfDesignSettings.setIc("0.5", "1.0");
+        qfDesignSettings.setLcom("0.5", "1.0");
+        qfDesignSettings.setLcom3("0.5", "1.0");
+        qfDesignSettings.setLoc("0.5", "1.0");
+        qfDesignSettings.setMoa("0.5", "1.0");
+        qfDesignSettings.setMfa("0.5", "1.0");
+        qfDesignSettings.setNoc("0.5", "1.0");
+        qfDesignSettings.setNpm("0.5", "1.0");
+        qfDesignSettings.setRfc("0.5", "1.0");
+        qfDesignSettings.setWmc("0.5", "1.0");
 
         SyntaxChecker syntaxChecker = SyntaxChecker.builder().targetProject("src/main/resources/testProject").build();
-
-
-        DesignChecker designChecker = DesignChecker.builder().targetProjectOrFile("src/main/resources/testProject").build();
-
-        MassExecutor massE = new MassExecutor(
-                styleChecker, semanticChecker, syntaxChecker, designChecker, mainSettingsConfiguratorConf);
+        //DesignSettingsReader designSettingsReader = DesignSettingsReader.createDesignConfigurator();
+        DesignChecker designChecker = DesignChecker.builder()
+                .qfDesignSettings(qfDesignSettings)
+                .targetProjectOrFile("src/main/resources/testProject")
+                .build();
+        MassExecutor massE = new MassExecutor(styleChecker, semanticChecker, syntaxChecker, designChecker, mainSettingsConfiguratorConf);
 
         massE.execute();
 
@@ -337,7 +186,7 @@ public class MassExecutor {
 
         for (StyleFeedback f : feedbacks) {
             System.out.println(f.getDesc());
-            System.out.println(f.getBody());
+            System.out.println(f.getBody());//TODO getContent()
             System.out.println(f.getLine());
             System.out.println(f.getExample());
             System.out.println("-----------------------------------------------------------------");
@@ -355,5 +204,89 @@ public class MassExecutor {
         }
         long end = System.nanoTime() - start;
         System.out.println("Feedback generated in: " + end * Math.pow(10.0, -9.0) + " sec");
+    }
+
+    private void init() {
+        syntaxFeedbacks = new ArrayList<>();
+        styleFeedbacks = new ArrayList<>();
+        semanticFeedbacks = new ArrayList<>();
+        syntaxErrors = new ArrayList<>();
+    }
+
+
+    private void translate(boolean styleNeeded, boolean semanticNeeded) {
+        String prefLanguage = mainSettingsConfigurator.getPreferredLanguage();
+        Translator translator = new Translator();
+
+        //List is Empty when the syntax is correct
+        for (SyntaxFeedback feedback : syntaxFeedbacks) {
+            translator.translateBody(prefLanguage, feedback);
+        }
+        if (semanticNeeded) {
+            for (Feedback feedback : semanticFeedbacks) {
+                translator.translateBody(prefLanguage, feedback);
+            }
+        }
+        if (styleNeeded) {
+            for (StyleFeedback feedback : styleFeedbacks) {
+                translator.translateStyleBody(prefLanguage, feedback);
+            }
+        }
+    }
+
+
+    public List<StyleFeedback> getStyleFeedbacks() {
+        return styleFeedbacks;
+    }
+
+    public List<SemanticFeedback> getSemanticFeedbacks() {
+        return semanticFeedbacks;
+    }
+
+    public List<SyntaxFeedback> getSyntaxFeedbacks() {
+        return syntaxFeedbacks;
+    }
+
+
+    public List<SyntaxError> getSyntaxErrors() {
+        return syntaxErrors;
+    }
+
+    /**
+     * execute the Mass System
+     */
+    public void execute() {
+        init();
+
+        boolean styleNeeded = mainSettingsConfigurator.isStyleNeeded();
+        boolean semanticNeeded = mainSettingsConfigurator.isSemanticNeeded();
+
+
+        SyntaxCheckReport syntaxCheckReport = syntaxChecker.check();
+
+        if (syntaxCheckReport.isCompilable()) {
+            if (styleNeeded) {
+                styleChecker.setTargetPath(syntaxCheckReport.getPath());
+                styleChecker.check();
+                styleFeedbacks = styleChecker.getStyleFeedbacks();
+
+            }
+            if (semanticNeeded) {
+                final String source = syntaxCheckReport.getCodeAsString();
+                semanticChecker.setSource(source);
+                semanticChecker.check();
+                semanticFeedbacks = semanticChecker.getFeedbacks();
+            }
+        } else {
+            syntaxChecker.setLevel(mainSettingsConfigurator.getSyntaxLevel());
+            syntaxErrors = syntaxCheckReport.getSyntaxErrors();
+            AbstractSyntaxFeedbackGenerator syntaxFeedbackGenerator = SyntaxFeedbackGenerator.builder().build();
+            syntaxFeedbacks = syntaxFeedbackGenerator.generateFeedbacks(syntaxErrors);
+        }
+
+        // translate Feedback body if needed
+        if (!mainSettingsConfigurator.getPreferredLanguage().equals("en")) {
+            translate(styleNeeded, semanticNeeded);
+        }
     }
 }
