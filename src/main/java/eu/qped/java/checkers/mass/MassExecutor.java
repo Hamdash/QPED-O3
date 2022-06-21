@@ -75,9 +75,9 @@ public class MassExecutor {
         QFMainSettings qfMainSettings = new QFMainSettings();
         qfMainSettings.setSyntaxLevel(CheckLevel.ADVANCED.name());
         qfMainSettings.setSemanticNeeded("false");
-        qfMainSettings.setStyleNeeded("false");
-        qfMainSettings.setDesignNeeded("true");
+        qfMainSettings.setStyleNeeded("true");
         qfMainSettings.setPreferredLanguage("en");
+
 
 
         MainSettings mainSettingsConfiguratorConf = new MainSettings(qfMainSettings);
@@ -99,9 +99,11 @@ public class MassExecutor {
                 "import java.util.List;\n" +
                 "\n" +
                 "public class GrayCode {\n" +
+                "    public GrayCode() {\n" +
+                "    }\n" +
                 "\n" +
                 "    public static List<String> grayCodeStrings(int n) {\n" +
-                "        List<String> list = new ArrayList<>();\n" +
+                "        List<String> list = new ArrayList();\n" +
                 "        if (n == 0) {\n" +
                 "            list.add(\"\");\n" +
                 "            return list;\n" +
@@ -112,15 +114,39 @@ public class MassExecutor {
                 "        } else {\n" +
                 "            List<String> prev = grayCodeStrings(n - 1);\n" +
                 "            list.addAll(prev);\n" +
-                "            for (int i = prev.size() - 1; i >= 0; i--) {\n" +
-                "                String bits = \"abc\" \n + \"ccc\"; \n" +
+                "\n" +
+                "            for(int i = prev.size() - 1; i >= 0; --i) {\n" +
+                "                String bits = \"abcccc\";\n" +
                 "                list.set(i, \"0\" + bits);\n" +
                 "                list.add(\"1\" + bits);\n" +
                 "            }\n" +
+                "\n" +
                 "            return list;\n" +
                 "        }\n" +
                 "    }\n" +
                 "}";
+
+        QFMainSettings qfMainSettings = new QFMainSettings();
+        qfMainSettings.setSyntaxLevel(CheckLevel.ADVANCED.name());
+        qfMainSettings.setSemanticNeeded("true");
+        qfMainSettings.setStyleNeeded("true");
+        qfMainSettings.setPreferredLanguage("en");
+
+
+        MainSettings mainSettingsConfiguratorConf = new MainSettings(qfMainSettings);
+
+        QFSemSettings qfSemSettings = new QFSemSettings();
+        qfSemSettings.setFilePath("src/main/resources/exam-results/src");
+        qfSemSettings.setMethodName("grayCodeStrings");
+        qfSemSettings.setRecursionAllowed("true");
+        qfSemSettings.setWhileLoop("-1");
+        qfSemSettings.setForLoop("2");
+        qfSemSettings.setForEachLoop("-1");
+        qfSemSettings.setIfElseStmt("0");
+        qfSemSettings.setDoWhileLoop("-1");
+        qfSemSettings.setReturnType("int");
+
+        SemanticConfigurator semanticConfigurator = SemanticConfigurator.createSemanticConfigurator(qfSemSettings);
 
 
         QFStyleSettings qfStyleSettings = new QFStyleSettings();
@@ -136,31 +162,9 @@ public class MassExecutor {
 
         SemanticChecker semanticChecker = SemanticChecker.createSemanticMassChecker(semanticConfigurator);
 
-        QFDesignSettings qfDesignSettings = new QFDesignSettings();
-        qfDesignSettings.setAmc("0.5", "1.0");
-        qfDesignSettings.setCa("0.5", "1.0");
-        qfDesignSettings.setCam("0.5", "1.0");
-        qfDesignSettings.setCbm("0.5", "1.0");
-        qfDesignSettings.setCbo("0.5", "1.0");
-        qfDesignSettings.setCc("0.5", "1.0");
-        qfDesignSettings.setCe("0.5", "1.0");
-        qfDesignSettings.setCis("0.5", "1.0");
-        qfDesignSettings.setDam("0.5", "1.0");
-        qfDesignSettings.setDit("0.5", "1.0");
-        qfDesignSettings.setIc("0.5", "1.0");
-        qfDesignSettings.setLcom("0.5", "1.0");
-        qfDesignSettings.setLcom3("0.5", "1.0");
-        qfDesignSettings.setLoc("0.5", "1.0");
-        qfDesignSettings.setMoa("0.5", "1.0");
-        qfDesignSettings.setMfa("0.5", "1.0");
-        qfDesignSettings.setNoc("0.5", "1.0");
-        qfDesignSettings.setNpm("0.5", "1.0");
-        qfDesignSettings.setRfc("0.5", "1.0");
-        qfDesignSettings.setWmc("0.5", "1.0");
 
-        DesignChecker designChecker = DesignChecker.builder().qfDesignSettings(qfDesignSettings).build();
-
-        SyntaxChecker syntaxChecker = SyntaxChecker.builder().targetProject("src/main/resources/testProject").build();
+        //targetProject("exam-results/src/compiledSources/GrayCode.java")
+        SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(code).build();
 
         MassExecutor massE = new MassExecutor(styleChecker, semanticChecker, syntaxChecker, designChecker, mainSettingsConfiguratorConf);
         massE.execute();
