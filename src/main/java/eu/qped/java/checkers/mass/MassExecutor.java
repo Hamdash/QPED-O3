@@ -1,14 +1,17 @@
 package eu.qped.java.checkers.mass;
 
+import eu.qped.framework.CheckLevel;
 import eu.qped.framework.Feedback;
 import eu.qped.framework.Translator;
 import eu.qped.java.checkers.design.DesignChecker;
 import eu.qped.java.checkers.design.DesignFeedback;
 import eu.qped.java.checkers.semantics.SemanticChecker;
+import eu.qped.java.checkers.semantics.SemanticConfigurator;
 import eu.qped.java.checkers.semantics.SemanticFeedback;
 import eu.qped.java.checkers.style.StyleChecker;
 import eu.qped.java.checkers.style.StyleFeedback;
 import eu.qped.java.checkers.syntax.SyntaxCheckReport;
+import eu.qped.java.checkers.syntax.SyntaxChecker;
 import eu.qped.java.checkers.syntax.SyntaxError;
 import eu.qped.java.feedback.syntax.AbstractSyntaxFeedbackGenerator;
 import eu.qped.java.feedback.syntax.SyntaxFeedback;
@@ -161,153 +164,122 @@ public class MassExecutor {
             translate(styleNeeded, semanticNeeded, designNeeded);
         }
     }
-    //    public static void main(String[] args) {
-//        long start = System.nanoTime();
-//
-//        QFMainSettings qfMainSettings = new QFMainSettings();
-//        qfMainSettings.setSyntaxLevel(CheckLevel.ADVANCED.name());
-//        qfMainSettings.setSemanticNeeded("false");
-//        qfMainSettings.setStyleNeeded("true");
-//        qfMainSettings.setPreferredLanguage("en");
-//
-//
-//
-//        MainSettings mainSettingsConfiguratorConf = new MainSettings(qfMainSettings);
-//
-//        QFSemSettings qfSemSettings = new QFSemSettings();
-//        qfSemSettings.setMethodName("grayCodeStrings");
-//        qfSemSettings.setRecursionAllowed("true");
-//        qfSemSettings.setWhileLoop("-1");
-//        qfSemSettings.setForLoop("2");
-//        qfSemSettings.setForEachLoop("-1");
-//        qfSemSettings.setIfElseStmt("0");
-//        qfSemSettings.setDoWhileLoop("-1");
-//        qfSemSettings.setReturnType("int");
-//
-//        SemanticConfigurator semanticConfigurator = SemanticConfigurator.createSemanticConfigurator(qfSemSettings);
-//
-//        String code = "import java.util.ArrayList;\n" +
-//                "import java.util.Arrays;\n" +
-//                "import java.util.List;\n" +
-//                "\n" +
-//                "public class GrayCode {\n" +
-//                "    public GrayCode() {\n" +
-//                "    }\n" +
-//                "\n" +
-//                "    public static List<String> grayCodeStrings(int n) {\n" +
-//                "        List<String> list = new ArrayList();\n" +
-//                "        if (n == 0) {\n" +
-//                "            list.add(\"\");\n" +
-//                "            return list;\n" +
-//                "        } else if (n == 1) {\n" +
-//                "            list.add(\"0\");\n" +
-//                "            list.add(\"1\");\n" +
-//                "            return list;\n" +
-//                "        } else {\n" +
-//                "            List<String> prev = grayCodeStrings(n - 1);\n" +
-//                "            list.addAll(prev);\n" +
-//                "\n" +
-//                "            for(int i = prev.size() - 1; i >= 0; --i) {\n" +
-//                "                String bits = \"abcccc\";\n" +
-//                "                list.set(i, \"0\" + bits);\n" +
-//                "                list.add(\"1\" + bits);\n" +
-//                "            }\n" +
-//                "\n" +
-//                "            return list;\n" +
-//                "        }\n" +
-//                "    }\n" +
-//                "}";
-//
-//        QFMainSettings qfMainSettings = new QFMainSettings();
-//        qfMainSettings.setSyntaxLevel(CheckLevel.ADVANCED.name());
-//        qfMainSettings.setSemanticNeeded("true");
-//        qfMainSettings.setStyleNeeded("true");
-//        qfMainSettings.setPreferredLanguage("en");
-//
-//
-//        MainSettings mainSettingsConfiguratorConf = new MainSettings(qfMainSettings);
-//
-//        QFSemSettings qfSemSettings = new QFSemSettings();
-//        qfSemSettings.setFilePath("src/main/resources/exam-results/src");
-//        qfSemSettings.setMethodName("grayCodeStrings");
-//        qfSemSettings.setRecursionAllowed("true");
-//        qfSemSettings.setWhileLoop("-1");
-//        qfSemSettings.setForLoop("2");
-//        qfSemSettings.setForEachLoop("-1");
-//        qfSemSettings.setIfElseStmt("0");
-//        qfSemSettings.setDoWhileLoop("-1");
-//        qfSemSettings.setReturnType("int");
-//
-//        SemanticConfigurator semanticConfigurator = SemanticConfigurator.createSemanticConfigurator(qfSemSettings);
-//
-//
-//        QFStyleSettings qfStyleSettings = new QFStyleSettings();
-//        qfStyleSettings.setNamesLevel("ADV");
-//        qfStyleSettings.setCompLevel("ADV");
-//        qfStyleSettings.setMainLevel("ADV");
-//        qfStyleSettings.setMethodName("[AA]");
-//        qfStyleSettings.setBasisLevel("ADVANCED");
-//        qfStyleSettings.setClassLength("10");
-//        qfStyleSettings.setMethodLength("10");
-//
-//        StyleChecker styleChecker = StyleChecker.builder().qfStyleSettings(qfStyleSettings).build();
-//
-//        SemanticChecker semanticChecker = SemanticChecker.createSemanticMassChecker(semanticConfigurator);
-//
-//
-//        //targetProject("exam-results/src/compiledSources/GrayCode.java")
-//        SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(code).build();
-//
-//        MassExecutor massE = new MassExecutor(styleChecker, semanticChecker, syntaxChecker, designChecker, mainSettingsConfiguratorConf);
-//        massE.execute();
-//
-//        //todo false Alarm: Here was Semicolon expected!
-//
-//        for (SyntaxFeedback syntaxFeedback : massE.getSyntaxFeedbacks()) {
-//            System.out.println(syntaxFeedback);
-//        }
-//
-//        for (Feedback s : massE.semanticFeedbacks) {
-//            System.out.println(s.getBody());
-//        }
-//
-//        List<DesignFeedback> feedbackList = massE.designFeedbacks;
-//        if (feedbackList != null) {
-//            for (DesignFeedback df : feedbackList) {
-//                System.out.println("In class '" + df.getClassName() + ".java'");
-//                System.out.println(df.getMetric() + " (" + df.getBody() + ")");
-//                System.out.println("Measured at: " + df.getValue());
-//                System.out.println(df.getSuggestion());
-//                System.out.println("--------0T0----------");
-//            }
-//        }
-//
-//
-//        /*
-//        for Style Errors
-//        */
-//        List<StyleFeedback> feedbacks = massE.styleFeedbacks;
-//
-//        for (StyleFeedback f : feedbacks) {
-//            System.out.println(f.getDesc());
-//            System.out.println(f.getContent());
-//            System.out.println(f.getLine());
-//            System.out.println(f.getExample());
-//            System.out.println("-----------------------------------------------------------------");
-//        }
-//
-//        /*
-//        for Syntax Errors
-//         */
-//        List<SyntaxFeedback> arrayList = massE.syntaxFeedbacks;
-//        for (SyntaxFeedback s : arrayList) {
-//            System.out.println(s.getBody());
-//            System.out.println(s.getBody());
-//            System.out.println(s.getSolutionExample());
-//            System.out.println("--------0T0----------");
-//        }
-//        long end = System.nanoTime() - start;
-//        System.out.println("Feedback generated in: " + end * Math.pow(10.0, -9.0) + " sec");
-//    }
+
+    public static void main(String[] args) {
+        long start = System.nanoTime();
+        String code = "import java.util.ArrayList;\n" +
+                "import java.util.List;\n" +
+                "\n" +
+                "public class GrayCode {\n" +
+                "    public GrayCode() {\n" +
+                "    }\n" +
+                "\n" +
+                "    public static List<String> grayCodeStrings(int n) {\n" +
+                "        List<String> list = new ArrayList();\n" +
+                "        if (n == 0) {\n" +
+                "            list.add(\"\");\n" +
+                "            return list;\n" +
+                "        } else if (n == 1) {\n" +
+                "            list.add(\"0\");\n" +
+                "            list.add(\"1\");\n" +
+                "            return list;\n" +
+                "        } else {\n" +
+                "            List<String> prev = grayCodeStrings(n - 1);\n" +
+                "            list.addAll(prev);\n" +
+                "\n" +
+                "            for(int i = prev.size() - 1; i >= 0; --i) {\n" +
+                "                String bits = \"abcccc\";\n" +
+                "                list.set(i, \"0\" + bits);\n" +
+                "                list.add(\"1\" + bits);\n" +
+                "            }\n" +
+                "\n" +
+                "            return list;\n" +
+                "        }\n" +
+                "    }\n" +
+                "}";
+
+        QFMainSettings qfMainSettings = new QFMainSettings();
+        qfMainSettings.setSyntaxLevel(CheckLevel.ADVANCED.name());
+        qfMainSettings.setSemanticNeeded("true");
+        qfMainSettings.setStyleNeeded("true");
+        qfMainSettings.setPreferredLanguage("en");
+
+
+        MainSettings mainSettingsConfiguratorConf = new MainSettings(qfMainSettings);
+
+        QFSemSettings qfSemSettings = new QFSemSettings();
+        qfSemSettings.setFilePath("src/main/resources/exam-results/src");
+        qfSemSettings.setMethodName("grayCodeStrings");
+        qfSemSettings.setRecursionAllowed("true");
+        qfSemSettings.setWhileLoop("-1");
+        qfSemSettings.setForLoop("2");
+        qfSemSettings.setForEachLoop("-1");
+        qfSemSettings.setIfElseStmt("0");
+        qfSemSettings.setDoWhileLoop("-1");
+        qfSemSettings.setReturnType("int");
+
+        SemanticConfigurator semanticConfigurator = SemanticConfigurator.createSemanticConfigurator(qfSemSettings);
+
+
+        QFStyleSettings qfStyleSettings = new QFStyleSettings();
+        qfStyleSettings.setNamesLevel("ADVANCED");
+        qfStyleSettings.setCompLevel("ADVANCED");
+        qfStyleSettings.setMainLevel("ADVANCED");
+        qfStyleSettings.setMethodName("[ADVANCED]");
+        qfStyleSettings.setBasisLevel("ADVANCED");
+        qfStyleSettings.setClassLength("10");
+        qfStyleSettings.setMethodLength("10");
+
+        StyleChecker styleChecker = StyleChecker.builder().qfStyleSettings(qfStyleSettings).build();
+
+        SemanticChecker semanticChecker = SemanticChecker.createSemanticMassChecker(semanticConfigurator);
+
+
+        //targetProject("exam-results/src/compiledSources/GrayCode.java")
+        SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(code).build();
+
+
+        MassExecutor massE = new MassExecutor(styleChecker, semanticChecker, syntaxChecker, null, mainSettingsConfiguratorConf);
+
+        massE.execute();
+
+        //todo false Alarm: Here was Semicolon expected!
+
+        for (SyntaxFeedback syntaxFeedback : massE.getSyntaxFeedbacks()) {
+            System.out.println(syntaxFeedback);
+        }
+
+        for (Feedback s : massE.semanticFeedbacks) {
+            System.out.println(s.getBody());
+        }
+
+
+        /*
+        for Style Errors
+         */
+
+        List<StyleFeedback> feedbacks = massE.styleFeedbacks;
+
+        for (StyleFeedback f : feedbacks) {
+            System.out.println(f.getDesc());
+            System.out.println(f.getContent());
+            System.out.println(f.getLine());
+            System.out.println(f.getExample());
+            System.out.println("-----------------------------------------------------------------");
+        }
+
+        /*
+        for Syntax Errors
+         */
+        List<SyntaxFeedback> arrayList = massE.syntaxFeedbacks;
+        for (SyntaxFeedback s : arrayList) {
+            System.out.println(s.getBody());
+            System.out.println(s.getBody());
+            System.out.println(s.getSolutionExample());
+            System.out.println("--------0T0----------");
+        }
+        long end = System.nanoTime() - start;
+        System.out.println("Feedback generated in: " + end * Math.pow(10.0, -9.0) + " sec");
+    }
 
 }
