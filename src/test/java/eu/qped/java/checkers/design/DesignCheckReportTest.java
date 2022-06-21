@@ -15,7 +15,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
-import static eu.qped.java.checkers.design.ckjm.SaveMapResults.*;
+import static eu.qped.java.checkers.design.ckjm.DesignCheckEntryHandler.*;
 
 /**
  * Test class for {@link DesignCheckReport}

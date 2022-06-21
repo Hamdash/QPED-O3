@@ -1,15 +1,14 @@
 package eu.qped.java.checkers.design;
 
 import eu.qped.java.checkers.design.ckjm.QPEDMetricsFilter;
-import eu.qped.java.checkers.design.ckjm.SaveMapResults;
+import eu.qped.java.checkers.design.ckjm.DesignCheckEntryHandler;
 import eu.qped.java.checkers.design.configuration.DesignSettings;
 import eu.qped.java.checkers.design.configuration.DesignSettingsReader;
 import eu.qped.java.checkers.design.data.DesignCheckReport;
 import eu.qped.java.checkers.mass.QFDesignSettings;
 import eu.qped.java.utils.ExtractJavaFilesFromDirectory;
 import gr.spinellis.ckjm.utils.CmdLineParser;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.io.File;
 import java.util.*;
@@ -21,21 +20,24 @@ import java.util.*;
  * @author Jannik Seus
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class DesignChecker {
 
-    private List<DesignFeedback> feedbacks;
+    @Getter(AccessLevel.PUBLIC)
+    @Setter(AccessLevel.PUBLIC)
+    private List<DesignFeedback> designFeedbacks;
 
-    private DesignSettingsReader designSettingsReader;
-
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     private QFDesignSettings qfDesignSettings;
-    private DesignSettings designSettings;
 
-    private final static String PATH_TO_CLASSFILES = "src/main/java/eu/qped/java/utils/compiler/compiledFiles";
+    private final static String CLASSFILES_PATH = "src/main/java/eu/qped/java/utils/compiler/compiledFiles";
 
     /**
-     * is able to check one or multiple .class files
-     * for defined metrics ({@link SaveMapResults.Metric}).
+     * Method is able to check one or multiple .class files
+     * for defined metrics ({@link DesignCheckEntryHandler.Metric}).
      *
      * @return the built {@link DesignCheckReport}
      */
@@ -43,22 +45,21 @@ public class DesignChecker {
 
         DesignCheckReport designCheckReport = DesignCheckReport.builder().build();
         DesignSettingsReader designSettingsReader = DesignSettingsReader.builder().qfDesignSettings(this.qfDesignSettings).build();
-        this.designSettings = designSettingsReader.readDesignSettings();
+        DesignSettings designSettings = designSettingsReader.readDesignSettings();
 
         List<File> classFiles
-                = ExtractJavaFilesFromDirectory.builder().dirPath(PATH_TO_CLASSFILES).build().filesWithExtension("class");
-        String[] classFileNames = classFiles.stream().map(File::getPath).toArray(String[]::new);
+                = ExtractJavaFilesFromDirectory.builder().dirPath(CLASSFILES_PATH).build().filesWithExtension("class");
+        String[] pathsToClassFiles = classFiles.stream().map(File::getPath).toArray(String[]::new);
 
-        runCkjmExtended(designCheckReport, classFileNames);
-        designCheckReport.setFiles(List.of(classFileNames));
-
-        this.feedbacks = DesignFeedback.generateDesignFeedback(designCheckReport.getMetricsMap(), this.designSettings);
+        runCkjmExtended(designCheckReport, pathsToClassFiles);
+        designCheckReport.setPathsToClassFiles(List.of(pathsToClassFiles));
+        this.designFeedbacks = DesignFeedback.generateDesignFeedback(designCheckReport.getMetricsMap(), designSettings);
 
         return designCheckReport;
     }
 
     /**
-     * Dispatching method for program code considering CKJM-extended. Improves readability.
+     * Dispatching method for program code to run CKJM-extended. Improves readability.
      *
      * @param designCheckReport the final report of the design checker
      * @param classFileNames    the .class files' names (including relative path from src root)
@@ -66,7 +67,7 @@ public class DesignChecker {
     private void runCkjmExtended(DesignCheckReport designCheckReport, String[] classFileNames) {
         QPEDMetricsFilter qmf = new QPEDMetricsFilter();
         CmdLineParser cmdParser = new CmdLineParser();
-        SaveMapResults handler = new SaveMapResults();
+        DesignCheckEntryHandler handler = new DesignCheckEntryHandler();
 
         cmdParser.parse(classFileNames);
         qmf.runMetricsInternal(cmdParser.getClassNames(), handler);
@@ -76,10 +77,8 @@ public class DesignChecker {
     @Override
     public String toString() {
         return "DesignChecker{" +
-                "feedbacks=" + feedbacks +
-                ", designSettingsReader=" + designSettingsReader +
+                "feedbacks=" + designFeedbacks +
                 ", qfDesignSettings=" + qfDesignSettings +
-                ", designSettings=" + designSettings +
                 '}';
     }
 }

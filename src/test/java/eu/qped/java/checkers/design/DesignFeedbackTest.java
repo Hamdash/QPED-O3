@@ -1,15 +1,10 @@
 package eu.qped.java.checkers.design;
 
-import eu.qped.java.checkers.design.ckjm.SaveMapResults;
+import eu.qped.java.checkers.design.ckjm.DesignCheckEntryHandler;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.EnumSource;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
-
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -26,17 +21,17 @@ class DesignFeedbackTest {
     void setUp() {
         designFeedback1 = DesignFeedback.builder()
                 .className("TestClass")
-                .metric(SaveMapResults.Metric.AMC)
+                .metric(DesignCheckEntryHandler.Metric.AMC)
                 .value(0d)
-                .body(SaveMapResults.Metric.AMC.getDescription())
+                .body(DesignCheckEntryHandler.Metric.AMC.getDescription())
                 .lowerThresholdReached(false)
                 .upperThresholdReached(false)
                 .suggestion("Change something!").build();
     }
 
     @ParameterizedTest
-    @EnumSource(SaveMapResults.Metric.class)
-    void generateSuggestionTestMetric(SaveMapResults.Metric metric) {
+    @EnumSource(DesignCheckEntryHandler.Metric.class)
+    void generateSuggestionTestMetric(DesignCheckEntryHandler.Metric metric) {
         designFeedback1.setMetric(metric);
         designFeedback1.setBody(metric.getDescription());
 
@@ -52,18 +47,18 @@ class DesignFeedbackTest {
         designFeedback1.setSuggestion(designFeedback1.getSuggestion());
 
         assertEquals
-                ("You are within the " + SaveMapResults.Metric.AMC + "'s threshold.",
+                ("You are within the " + DesignCheckEntryHandler.Metric.AMC + "'s threshold.",
                 DesignFeedback.generateSuggestion(
-                        SaveMapResults.Metric.AMC,
+                        DesignCheckEntryHandler.Metric.AMC,
                         designFeedback1.isLowerThresholdReached(),
                         designFeedback1.isUpperThresholdReached()));
 
         designFeedback1.setLowerThresholdReached(true);
 
         assertEquals
-                ("The " + SaveMapResults.Metric.AMC + "'s value is too low.",
+                ("The " + DesignCheckEntryHandler.Metric.AMC + "'s value is too low.",
                         DesignFeedback.generateSuggestion(
-                                SaveMapResults.Metric.AMC,
+                                DesignCheckEntryHandler.Metric.AMC,
                                 designFeedback1.isLowerThresholdReached(),
                                 designFeedback1.isUpperThresholdReached()));
 
@@ -71,9 +66,9 @@ class DesignFeedbackTest {
         designFeedback1.setUpperThresholdReached(true);
 
         assertEquals
-                ("The " + SaveMapResults.Metric.AMC + "'s value is too high.",
+                ("The " + DesignCheckEntryHandler.Metric.AMC + "'s value is too high.",
                         DesignFeedback.generateSuggestion(
-                                SaveMapResults.Metric.AMC,
+                                DesignCheckEntryHandler.Metric.AMC,
                                 designFeedback1.isLowerThresholdReached(),
                                 designFeedback1.isUpperThresholdReached()));
 

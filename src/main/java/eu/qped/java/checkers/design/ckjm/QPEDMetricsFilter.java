@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 
 /**
  * Convert a list of classes into their metrics.
- * Given metrics are defined in {@link SaveMapResults.Metric}.
+ * Given metrics are defined in {@link DesignCheckEntryHandler.Metric}.
  *
  * @author <a href="http://www.spinellis.gr">Diomidis Spinellis</a> (from CKJM-extended tool)
  * @author Jannik Seus (edited)

@@ -3,10 +3,7 @@ package eu.qped.java.checkers.design.data;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.Comparator;
-import java.util.HashMap;
-
-import static eu.qped.java.checkers.design.ckjm.SaveMapResults.*;
+import static eu.qped.java.checkers.design.ckjm.DesignCheckEntryHandler.*;
 
 /**
  * @author Jannik Seus

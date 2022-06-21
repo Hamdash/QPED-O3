@@ -1,8 +1,9 @@
 package eu.qped.java.checkers.design;
 
 import eu.qped.framework.Feedback;
-import eu.qped.java.checkers.design.ckjm.SaveMapResults;
+import eu.qped.java.checkers.design.ckjm.DesignCheckEntryHandler;
 import eu.qped.java.checkers.design.configuration.DesignSettings;
+import eu.qped.java.checkers.design.configuration.MetricThreshold;
 import eu.qped.java.checkers.design.data.DesignCheckEntry;
 import eu.qped.java.checkers.design.data.DesignCheckMessage;
 import lombok.Builder;
@@ -12,9 +13,12 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
+import static eu.qped.java.checkers.design.ckjm.DesignCheckEntryHandler.*;
 
 /**
+ * Data class representing the feedback for design presented to the user.
+ *
  * @author Jannik Seus
  */
 @EqualsAndHashCode(callSuper = true)
@@ -22,7 +26,7 @@ import java.util.Map;
 @Setter
 public class DesignFeedback extends Feedback {
     private String className;
-    private SaveMapResults.Metric metric;
+    private Metric metric;
     private Double value;
     private boolean lowerThresholdReached;
     private boolean upperThresholdReached;
@@ -30,7 +34,7 @@ public class DesignFeedback extends Feedback {
     //private String example; //TODO schwierig, sich hier bei Klassendesign kurz zu halten
 
     @Builder
-    public DesignFeedback(String className, String body, SaveMapResults.Metric metric, Double value, boolean lowerThresholdReached, boolean upperThresholdReached, String suggestion) {
+    public DesignFeedback(String className, String body, Metric metric, Double value, boolean lowerThresholdReached, boolean upperThresholdReached, String suggestion) {
         super(body);
         this.className = className;
         this.metric = metric;
@@ -48,7 +52,7 @@ public class DesignFeedback extends Feedback {
      * @param upperThreshold the metric's upper threshold not to be exceeded
      * @return a nicely formatted suggestion as String.
      */
-    public static String generateSuggestion(SaveMapResults.Metric metric, boolean lowerThreshold, boolean upperThreshold) {
+    public static String generateSuggestion(Metric metric, boolean lowerThreshold, boolean upperThreshold) {
         if (!lowerThreshold && !upperThreshold) {
             return "You are within the " + metric.toString() + "'s threshold.";
         } else if (lowerThreshold) {
@@ -59,6 +63,7 @@ public class DesignFeedback extends Feedback {
             throw new IllegalArgumentException();
         }
     }
+    //TODO methods: generateMetricSuggestionLowerThExceeded(); and generateMetricSuggeDesstionUpperThExceeded
 
     /**
      * Generates the DesignFeedback to the corresponding classes, metrics, and designSettings (min/max thresholds)
@@ -77,12 +82,11 @@ public class DesignFeedback extends Feedback {
 
             if (metricsForClass != null) {
                 metricsForClass.forEach(metricForClass -> {
-                    SaveMapResults.Metric metric = metricForClass.getMetric();
+                    Metric metric = metricForClass.getMetric();
                     double metricValue = metricForClass.getMetricValue();
 
-                    boolean[] isThresholdReached = isThresholdReached(metric, designSettings, metricValue);
-                    boolean lowerThreshold = isThresholdReached[0];
-                    boolean upperThreshold = isThresholdReached[1];
+                    boolean lowerThreshold = isThresholdReached(metric, designSettings, metricValue, true);
+                    boolean upperThreshold = isThresholdReached(metric, designSettings, metricValue, false);
                     String suggestion = generateSuggestion(metric, lowerThreshold, upperThreshold);
 
                     feedbacks.add(new DesignFeedback(className, metric.getDescription(), metric, metricValue, lowerThreshold, upperThreshold, suggestion));
@@ -93,100 +97,60 @@ public class DesignFeedback extends Feedback {
     }
 
     /**
-     * Checks whether the lower or upper threshold of a given metric was exceeded.
+     * Checks whether the lower or upper threshold of a given metricThreshold was exceeded.
      *
      * @param metric the given metric
-     * @param designSettings
-     * @param value the given metric's value
-     * @return an array of size 2 which contains whether the lower [0] and upper [1] threshold was reached-
+     * @param designSettings the settings for design guidelines
+     * @param value the given metricThreshold's value
+     * @param lower determines whether to check the lower or upper threshold
+     * @return whether the min(lower=true) or max(lower=false) threshold was exceeded.
      */
-    private static boolean[] isThresholdReached(SaveMapResults.Metric metric, DesignSettings designSettings, double value) {
-        boolean lower = false;
-        boolean upper = false;
+    private static boolean isThresholdReached(Metric metric, DesignSettings designSettings, double value, boolean lower) {
 
         switch (metric) {
             case AMC:
-                if(value > designSettings.getAmc().getMaxThreshold()) upper = true;
-                if(value < designSettings.getAmc().getMinThreshold()) lower = true;
-                break;
+                return lower ? value < designSettings.getAmc().getMinThreshold() : value > designSettings.getAmc().getMaxThreshold();
             case CAM:
-                if(value > designSettings.getCam().getMaxThreshold()) upper = true;
-                if(value < designSettings.getCam().getMinThreshold()) lower = true;
-                break;
+                return lower ? value < designSettings.getCam().getMinThreshold() : value > designSettings.getCam().getMaxThreshold();
             case CA:
-                if(value > designSettings.getCa().getMaxThreshold()) upper = true;
-                if(value < designSettings.getCa().getMinThreshold()) lower = true;
-                break;
+                return lower ? value < designSettings.getCa().getMinThreshold() : value > designSettings.getCa().getMaxThreshold();
             case CBM:
-                if(value > designSettings.getCbm().getMaxThreshold()) upper = true;
-                if(value < designSettings.getCbm().getMinThreshold()) lower = true;
-                break;
+                return lower ? value < designSettings.getCbm().getMinThreshold() : value > designSettings.getCbm().getMaxThreshold();
             case CBO:
-                if(value > designSettings.getCbo().getMaxThreshold()) upper = true;
-                if(value < designSettings.getCbo().getMinThreshold()) lower = true;
-                break;
+                return lower ? value < designSettings.getCbo().getMinThreshold() : value > designSettings.getCbo().getMaxThreshold();
             case CC:
-                if(value > designSettings.getCc().getMaxThreshold()) upper = true;
-                if(value < designSettings.getCc().getMinThreshold()) lower = true;
-                break;
+                return lower ? value < designSettings.getCc().getMinThreshold() : value > designSettings.getCc().getMaxThreshold();
             case CE:
-                if(value > designSettings.getCe().getMaxThreshold()) upper = true;
-                if(value < designSettings.getCe().getMinThreshold()) lower = true;
-                break;
+                return lower ? value < designSettings.getCe().getMinThreshold() : value > designSettings.getCe().getMaxThreshold();
             case CIS:
-                if(value > designSettings.getCis().getMaxThreshold()) upper = true;
-                if(value < designSettings.getCis().getMinThreshold()) lower = true;
-                break;
+                return lower ? value < designSettings.getCis().getMinThreshold() : value > designSettings.getCis().getMaxThreshold();
             case DAM:
-                if(value > designSettings.getDam().getMaxThreshold()) upper = true;
-                if(value < designSettings.getDam().getMinThreshold()) lower = true;
-                break;
+                return lower ? value < designSettings.getDam().getMinThreshold() : value > designSettings.getDam().getMaxThreshold();
             case DIT:
-                if(value > designSettings.getDit().getMaxThreshold()) upper = true;
-                if(value < designSettings.getDit().getMinThreshold()) lower = true;
-                break;
+                return lower ? value < designSettings.getDit().getMinThreshold() : value > designSettings.getDit().getMaxThreshold();
             case IC:
-                if(value > designSettings.getIc().getMaxThreshold()) upper = true;
-                if(value < designSettings.getIc().getMinThreshold()) lower = true;
-                break;
+                return lower ? value < designSettings.getIc().getMinThreshold() : value > designSettings.getIc().getMaxThreshold();
             case LCOM:
-                if(value > designSettings.getLcom().getMaxThreshold()) upper = true;
-                if(value < designSettings.getLcom().getMinThreshold()) lower = true;
-                break;
+                return lower ? value < designSettings.getLcom().getMinThreshold() : value > designSettings.getLcom().getMaxThreshold();
             case LCOM3:
-                if(value > designSettings.getLcom3().getMaxThreshold()) upper = true;
-                if(value < designSettings.getLcom3().getMinThreshold()) lower = true;
-                break;
+                return lower ? value < designSettings.getLcom3().getMinThreshold() : value > designSettings.getLcom3().getMaxThreshold();
             case LOC:
-                if(value > designSettings.getLoc().getMaxThreshold()) upper = true;
-                if(value < designSettings.getLoc().getMinThreshold()) lower = true;
-                break;
+                return lower ? value < designSettings.getLoc().getMinThreshold() : value > designSettings.getLoc().getMaxThreshold();
             case MOA:
-                if(value > designSettings.getMoa().getMaxThreshold()) upper = true;
-                if(value < designSettings.getMoa().getMinThreshold()) lower = true;
-                break;
+                return lower ? value < designSettings.getMoa().getMinThreshold() : value > designSettings.getMoa().getMaxThreshold();
             case MFA:
-                if(value > designSettings.getMfa().getMaxThreshold()) upper = true;
-                if(value < designSettings.getMfa().getMinThreshold()) lower = true;
-                break;
+                return lower ? value < designSettings.getMfa().getMinThreshold() : value > designSettings.getMfa().getMaxThreshold();
             case NOC:
-                if(value > designSettings.getNoc().getMaxThreshold()) upper = true;
-                if(value < designSettings.getNoc().getMinThreshold()) lower = true;
-                break;
+                return lower ? value < designSettings.getNoc().getMinThreshold() : value > designSettings.getNoc().getMaxThreshold();
             case NPM:
-                if(value > designSettings.getNpm().getMaxThreshold()) upper = true;
-                if(value < designSettings.getNpm().getMinThreshold()) lower = true;
-                break;
+                return lower ? value < designSettings.getNpm().getMinThreshold() : value > designSettings.getNpm().getMaxThreshold();
             case RFC:
-                if(value > designSettings.getRfc().getMaxThreshold()) upper = true;
-                if(value < designSettings.getRfc().getMinThreshold()) lower = true;
-                break;
+                return lower ? value < designSettings.getRfc().getMinThreshold() : value > designSettings.getRfc().getMaxThreshold();
             case WMC:
-                if(value > designSettings.getWmc().getMaxThreshold()) upper = true;
-                if(value < designSettings.getWmc().getMinThreshold()) lower = true;
-                break;
+                return lower ? value < designSettings.getWmc().getMinThreshold() : value > designSettings.getWmc().getMaxThreshold();
+            default:
+                throw new IllegalArgumentException("Illegal Metric given.");
         }
-        return new boolean[]{lower, upper};
     }
 
     @Override

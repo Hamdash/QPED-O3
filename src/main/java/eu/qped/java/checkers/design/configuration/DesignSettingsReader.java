@@ -4,8 +4,8 @@ import eu.qped.java.checkers.mass.QFDesignSettings;
 import lombok.*;
 import org.apache.logging.log4j.LogManager;
 
-import static eu.qped.java.checkers.design.ckjm.SaveMapResults.*;
-import static eu.qped.java.checkers.design.ckjm.SaveMapResults.Metric.*;
+import static eu.qped.java.checkers.design.ckjm.DesignCheckEntryHandler.*;
+import static eu.qped.java.checkers.design.ckjm.DesignCheckEntryHandler.Metric.*;
 
 /**
  * Class representing a reader for the {@link QFDesignSettings}'s input from the user.

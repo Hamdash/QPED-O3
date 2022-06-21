@@ -1,7 +1,5 @@
 package eu.qped.java.checkers.design;
 
-import eu.qped.framework.qf.QfObject;
-import eu.qped.java.checkers.design.ckjm.SaveMapResults;
 import eu.qped.java.utils.compiler.Compiler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

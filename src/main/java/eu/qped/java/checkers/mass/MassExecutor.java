@@ -158,13 +158,11 @@ public class MassExecutor {
         qfDesignSettings.setRfc("0.5", "1.0");
         qfDesignSettings.setWmc("0.5", "1.0");
 
-        SyntaxChecker syntaxChecker = SyntaxChecker.builder().targetProject("src/main/resources/testProject").build();
-        //DesignSettingsReader designSettingsReader = DesignSettingsReader.createDesignConfigurator();
-        DesignChecker designChecker = DesignChecker.builder()
-                .qfDesignSettings(qfDesignSettings)
-                .build();
-        MassExecutor massE = new MassExecutor(styleChecker, semanticChecker, syntaxChecker, designChecker, mainSettingsConfiguratorConf);
+        DesignChecker designChecker = DesignChecker.builder().qfDesignSettings(qfDesignSettings).build();
 
+        SyntaxChecker syntaxChecker = SyntaxChecker.builder().targetProject("src/main/resources/testProject").build();
+
+        MassExecutor massE = new MassExecutor(styleChecker, semanticChecker, syntaxChecker, designChecker, mainSettingsConfiguratorConf);
         massE.execute();
 
         //todo false Alarm: Here was Semicolon expected!
@@ -295,9 +293,8 @@ public class MassExecutor {
                 semanticFeedbacks = semanticChecker.getFeedbacks();
             }
             if (designNeeded) {
-                final String source = syntaxCheckReport.getCodeAsString();
                 designChecker.check();
-                designFeedbacks = designChecker.getFeedbacks();
+                designFeedbacks = designChecker.getDesignFeedbacks();
             }
         } else {
             syntaxChecker.setLevel(mainSettingsConfigurator.getSyntaxLevel());

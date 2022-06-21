@@ -15,8 +15,8 @@ import java.util.*;
 
 /**
  * Custom visitor class for the metrics:
- * IC {@link SaveMapResults.Metric#IC} and
- * CBM {@link SaveMapResults.Metric#CBM}.
+ * IC {@link DesignCheckEntryHandler.Metric#IC} and
+ * CBM {@link DesignCheckEntryHandler.Metric#CBM}.
  *
  * @author marian (from CKJM-extended tool)
  * @author Jannik Seus (edited)

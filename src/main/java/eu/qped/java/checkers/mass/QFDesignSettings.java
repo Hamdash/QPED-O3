@@ -2,7 +2,7 @@ package eu.qped.java.checkers.mass;
 
 import eu.qped.framework.qf.QfObjectBase;
 
-import static eu.qped.java.checkers.design.ckjm.SaveMapResults.Metric.*;
+import static eu.qped.java.checkers.design.ckjm.DesignCheckEntryHandler.Metric.*;
 
 
 /**
