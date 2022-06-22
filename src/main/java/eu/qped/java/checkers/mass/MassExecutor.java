@@ -113,6 +113,10 @@ public class MassExecutor {
         return semanticFeedbacks;
     }
 
+    public List<DesignFeedback> getDesignFeedbacks() {
+        return designFeedbacks;
+    }
+
     public List<SyntaxFeedback> getSyntaxFeedbacks() {
         return syntaxFeedbacks;
     }
@@ -200,8 +204,9 @@ public class MassExecutor {
 
         QFMainSettings qfMainSettings = new QFMainSettings();
         qfMainSettings.setSyntaxLevel(CheckLevel.ADVANCED.name());
-        qfMainSettings.setSemanticNeeded("true");
-        qfMainSettings.setStyleNeeded("true");
+        qfMainSettings.setSemanticNeeded("false");
+        qfMainSettings.setStyleNeeded("false");
+        qfMainSettings.setDesignNeeded("true");
         qfMainSettings.setPreferredLanguage("en");
 
 
@@ -234,12 +239,36 @@ public class MassExecutor {
 
         SemanticChecker semanticChecker = SemanticChecker.createSemanticMassChecker(semanticConfigurator);
 
+        QFDesignSettings qfDesignSettings = new QFDesignSettings();
+        qfDesignSettings.setAmc("0.5", "1.0");
+        qfDesignSettings.setCa("0.5", "1.0");
+        qfDesignSettings.setCam("0.5", "1.0");
+        qfDesignSettings.setCbm("0.5", "1.0");
+        qfDesignSettings.setCbo("0.5", "1.0");
+        qfDesignSettings.setCc("0.5", "1.0");
+        qfDesignSettings.setCe("0.5", "1.0");
+        qfDesignSettings.setCis("0.5", "1.0");
+        qfDesignSettings.setDam("0.5", "1.0");
+        qfDesignSettings.setDit("0.5", "1.0");
+        qfDesignSettings.setIc("0.5", "1.0");
+        qfDesignSettings.setLcom("0.5", "1.0");
+        qfDesignSettings.setLcom3("0.5", "1.0");
+        qfDesignSettings.setLoc("0.5", "1.0");
+        qfDesignSettings.setMoa("0.5", "1.0");
+        qfDesignSettings.setMfa("0.5", "1.0");
+        qfDesignSettings.setNoc("0.5", "1.0");
+        qfDesignSettings.setNpm("0.5", "1.0");
+        qfDesignSettings.setRfc("0.5", "1.0");
+        qfDesignSettings.setWmc("0.5", "1.0");
+
+        DesignChecker designChecker = DesignChecker.builder().qfDesignSettings(qfDesignSettings).build();
+
 
         //targetProject("exam-results/src/compiledSources/GrayCode.java")
         SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(code).build();
 
 
-        MassExecutor massE = new MassExecutor(styleChecker, semanticChecker, syntaxChecker, null, mainSettingsConfiguratorConf);
+        MassExecutor massE = new MassExecutor(styleChecker, semanticChecker, syntaxChecker, designChecker, mainSettingsConfiguratorConf);
 
         massE.execute();
 
@@ -253,7 +282,6 @@ public class MassExecutor {
             System.out.println(s.getBody());
         }
 
-
         /*
         for Style Errors
          */
@@ -266,6 +294,15 @@ public class MassExecutor {
             System.out.println(f.getLine());
             System.out.println(f.getExample());
             System.out.println("-----------------------------------------------------------------");
+        }
+
+        List<DesignFeedback> designFeedbacks = massE.designFeedbacks;
+        for (DesignFeedback df : designFeedbacks) {
+            System.out.println("In class '" + df.getClassName() + ".java'");
+            System.out.println(df.getMetric() + " (" + df.getBody() + ")");
+            System.out.println("Measured at: " + df.getValue());
+            System.out.println(df.getSuggestion());
+            System.out.println("--------0T0----------");
         }
 
         /*

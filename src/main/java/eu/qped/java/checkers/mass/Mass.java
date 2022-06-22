@@ -4,6 +4,7 @@ import eu.qped.framework.Checker;
 import eu.qped.framework.QfProperty;
 import eu.qped.framework.qf.QfObject;
 import eu.qped.java.checkers.design.DesignChecker;
+import eu.qped.java.checkers.design.DesignFeedback;
 import eu.qped.java.checkers.semantics.SemanticChecker;
 import eu.qped.java.checkers.semantics.SemanticConfigurator;
 import eu.qped.java.checkers.semantics.SemanticFeedback;
@@ -26,6 +27,9 @@ public class Mass implements Checker {
     @QfProperty
     private QFSemSettings semSettings;
 
+    @QfProperty
+    private QFDesignSettings designSettings;
+
     private final static String NEW_LINE = "\n" + "\n";
 
     @Override
@@ -46,7 +50,7 @@ public class Mass implements Checker {
     SemanticChecker semanticChecker = SemanticChecker.createSemanticMassChecker(semanticConfigurator);
 
     // Design Checker
-    DesignChecker designChecker = DesignChecker.builder().build(); //TODO is this correct?
+    DesignChecker designChecker = DesignChecker.builder().qfDesignSettings(designSettings).build(); //TODO is this correct?
 
     //Mass
     MassExecutor massExecutor = new MassExecutor(styleChecker, semanticChecker, syntaxChecker, designChecker, mainSettings);
@@ -64,8 +68,11 @@ public class Mass implements Checker {
     List<SemanticFeedback> semanticFeedbacks;
     semanticFeedbacks = massExecutor.getSemanticFeedbacks();
 
+    List<DesignFeedback> designFeedbacks;
+    designFeedbacks = massExecutor.getDesignFeedbacks();
 
-    String[] result = new String[styleFeedbacks.size() + semanticFeedbacks.size() + syntaxFeedbacks.size() + 100];
+
+    String[] result = new String[styleFeedbacks.size() + semanticFeedbacks.size() + designFeedbacks.size() + syntaxFeedbacks.size() + 100];
 
     int i = 0;
 
@@ -90,14 +97,29 @@ public class Mass implements Checker {
         i = i + 2;
     }
 
+        for (DesignFeedback df : designFeedbacks) {
+            result[i] = "design Feedback";
+            result[i + 1] =
+                    "In class '" + df.getClassName() + ".java'"
+                            + NEW_LINE
+                            + df.getMetric() + " (" + df.getBody() + ")"
+                            + NEW_LINE
+                            + df.getMetric() + " (" + df.getBody() + ")"
+                            + NEW_LINE
+                            + "Measured at: " + df.getValue()
+                            + NEW_LINE
+                            + df.getSuggestion()
+                    + "------------------------------------------------------------------------------";
+            i = i + 2;
+        }
+
         for (SyntaxFeedback syntax : syntaxFeedbacks) {
-        result[i + 1] = ""
+            result[i + 1] = ""
                 + syntax.toString()
                 + NEW_LINE
-                + "--------------------------------------------------"
-        ;
-        i = i + 2;
-    }
+                + "--------------------------------------------------";
+            i = i + 2;
+        }
 
 
         qfObject.setFeedback(result);
