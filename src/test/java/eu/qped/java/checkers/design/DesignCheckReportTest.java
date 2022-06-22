@@ -3,6 +3,7 @@ package eu.qped.java.checkers.design;
 import eu.qped.java.checkers.design.data.DesignCheckEntry;
 import eu.qped.java.checkers.design.data.DesignCheckMessage;
 import eu.qped.java.checkers.design.data.DesignCheckReport;
+import eu.qped.java.checkers.design.utils.TestUtility;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

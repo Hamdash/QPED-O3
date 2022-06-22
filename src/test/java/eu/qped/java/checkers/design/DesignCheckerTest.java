@@ -3,9 +3,9 @@ package eu.qped.java.checkers.design;
 import eu.qped.java.checkers.design.configuration.DesignSettings;
 import eu.qped.java.checkers.design.configuration.DesignSettingsReader;
 import eu.qped.java.checkers.design.data.DesignCheckReport;
+import eu.qped.java.checkers.design.utils.TestUtility;
 import eu.qped.java.checkers.mass.QFDesignSettings;
 import eu.qped.java.utils.ExtractJavaFilesFromDirectory;
-import eu.qped.java.utils.compiler.Compiler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -34,7 +34,7 @@ class DesignCheckerTest {
 
     @BeforeEach
     void setUp() {
-        generateTestClass();
+        TestUtility.generateTestClass();
 
         designCheckerEmpty = DesignChecker.builder().build();
         designCheckerFilled = DesignChecker.builder()
@@ -89,10 +89,10 @@ class DesignCheckerTest {
 
     @Test
     void testCheck() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        DesignChecker designCheckerCustom = DesignChecker.builder().qfDesignSettings(generateSampleQFDesignSettings()).build();
+        DesignChecker designCheckerCustom = DesignChecker.builder().qfDesignSettings(TestUtility.generateSampleQFDesignSettings()).build();
 
         DesignCheckReport designCheckReport = DesignCheckReport.builder().build();
-        DesignSettingsReader designSettingsReader = DesignSettingsReader.builder().qfDesignSettings(generateSampleQFDesignSettings()).build();
+        DesignSettingsReader designSettingsReader = DesignSettingsReader.builder().qfDesignSettings(TestUtility.generateSampleQFDesignSettings()).build();
         DesignSettings designSettings = designSettingsReader.readDesignSettings();
 
         List<File> classFiles
@@ -127,42 +127,4 @@ class DesignCheckerTest {
     }
 
 
-    private void generateTestClass() {
-        Compiler c = Compiler.builder().build();
-        String stringAnswer = "    import java.util.ArrayList;\n" +
-                "import java.util.List;\n" +
-                "    public class DCTest{\n" +
-                "        List<String> xx(){\n" +
-                "            List list = new ArrayList();\n" +
-                "            list.add(\"8888\");\n" +
-                "            return list;\n" +
-                "        }\n" +
-                "    }";
-        c.compileFromString(stringAnswer);
-    }
-
-    private QFDesignSettings generateSampleQFDesignSettings() {
-        QFDesignSettings qfDesignSettings = new QFDesignSettings();
-        qfDesignSettings.setAmc("0.5", "1.0");
-        qfDesignSettings.setCa("0.5", "1.0");
-        qfDesignSettings.setCam("0.5", "1.0");
-        qfDesignSettings.setCbm("0.5", "1.0");
-        qfDesignSettings.setCbo("0.5", "1.0");
-        qfDesignSettings.setCc("0.5", "1.0");
-        qfDesignSettings.setCe("0.5", "1.0");
-        qfDesignSettings.setCis("0.5", "1.0");
-        qfDesignSettings.setDam("0.5", "1.0");
-        qfDesignSettings.setDit("0.5", "1.0");
-        qfDesignSettings.setIc("0.5", "1.0");
-        qfDesignSettings.setLcom("0.5", "1.0");
-        qfDesignSettings.setLcom3("0.5", "1.0");
-        qfDesignSettings.setLoc("0.5", "1.0");
-        qfDesignSettings.setMoa("0.5", "1.0");
-        qfDesignSettings.setMfa("0.5", "1.0");
-        qfDesignSettings.setNoc("0.5", "1.0");
-        qfDesignSettings.setNpm("0.5", "1.0");
-        qfDesignSettings.setRfc("0.5", "1.0");
-        qfDesignSettings.setWmc("0.5", "1.0");
-        return qfDesignSettings;
-    }
 }
