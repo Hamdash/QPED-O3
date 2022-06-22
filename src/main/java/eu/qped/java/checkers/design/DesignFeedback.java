@@ -1,9 +1,7 @@
 package eu.qped.java.checkers.design;
 
 import eu.qped.framework.Feedback;
-import eu.qped.java.checkers.design.ckjm.DesignCheckEntryHandler;
 import eu.qped.java.checkers.design.configuration.DesignSettings;
-import eu.qped.java.checkers.design.configuration.MetricThreshold;
 import eu.qped.java.checkers.design.data.DesignCheckEntry;
 import eu.qped.java.checkers.design.data.DesignCheckMessage;
 import lombok.Builder;
@@ -55,15 +53,15 @@ public class DesignFeedback extends Feedback {
     public static String generateSuggestion(Metric metric, boolean lowerThreshold, boolean upperThreshold) {
         if (!lowerThreshold && !upperThreshold) {
             return "You are within the " + metric.toString() + "'s threshold.";
-        } else if (lowerThreshold) {
+        } else if (lowerThreshold && !upperThreshold) {
             return "The " + metric.toString() + "'s value is too low.";
-        } else if (upperThreshold) {
+        } else if (upperThreshold && ! lowerThreshold) {
             return "The " + metric.toString() + "'s value is too high.";
         } else {
             throw new IllegalArgumentException();
         }
     }
-    //TODO methods: generateMetricSuggestionLowerThExceeded(); and generateMetricSuggeDesstionUpperThExceeded
+    //TODO methods: generateMetricSuggestionLowerThExceeded(..); and generateMetricSuggestionUpperThExceeded(..);
 
     /**
      * Generates the DesignFeedback to the corresponding classes, metrics, and designSettings (min/max thresholds)
@@ -72,7 +70,7 @@ public class DesignFeedback extends Feedback {
      * @param designSettings the settings on which the feedback depends on //TODO wip
      * @return the generated Feedback as a List.
      */
-    public static List<DesignFeedback> generateDesignFeedback(List<DesignCheckEntry> metricsMap, DesignSettings designSettings) {
+    public static List<DesignFeedback> generateDesignFeedbacks(List<DesignCheckEntry> metricsMap, DesignSettings designSettings) {
         List<DesignFeedback> feedbacks = new ArrayList<>();
 
         metricsMap.forEach(designCheckEntry -> {

@@ -1,7 +1,8 @@
 package eu.qped.java.checkers.design;
 
+import eu.qped.java.checkers.design.data.DesignCheckEntry;
+import eu.qped.java.checkers.design.data.DesignCheckMessage;
 import eu.qped.java.checkers.design.data.DesignCheckReport;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,43 +28,39 @@ class DesignCheckReportTest {
 
     private DesignCheckReport designCheckReport1;
     private DesignCheckReport designCheckReport2;
-    private static Field[] fields;
-    private Map<String, Map<Metric, Double>> sampleMapMetrics;
+    private final Field[] fields = DesignCheckReport.class.getDeclaredFields();;
+    private List<DesignCheckEntry> sampleMapMetrics;
     private Map<Metric, Double> sampleMapThresholds;
 
-    @BeforeAll
-    static void beforeAll() {
-        fields = DesignCheckReport.class.getDeclaredFields();
-    }
 
     @BeforeEach
     void setUp() {
-        sampleMapMetrics = Map.of("Class A", Map.of(Metric.AMC, 1.0));
+        sampleMapMetrics = List.of(new DesignCheckEntry("Class A", List.of(new DesignCheckMessage(Metric.AMC, 1.0))));
         sampleMapThresholds = Map.of(Metric.LCOM, 1.0);
         designCheckReport1 = new DesignCheckReport();
         designCheckReport2 = new DesignCheckReport(
                 mock(List.class),
-                mock(List.class));
+                sampleMapMetrics);
 
 
     }
 
     @Test
     void setMetricsMap() throws IllegalAccessException {
-        Field metricsMapField = getFieldByName("metricsMap");
+        Field metricsMapField = TestUtility.getFieldByName("metricsMap", fields);
         if (metricsMapField != null) {
             metricsMapField.setAccessible(true);
-            sampleMapMetrics = Map.of("Class A", Map.of(Metric.AMC, 1.0));
+            sampleMapMetrics = List.of(new DesignCheckEntry("Class A", List.of(new DesignCheckMessage(Metric.AMC, 1.0))));
 
 
-            assertEquals(sampleMapMetrics, metricsMapField.get(designCheckReport1));
+            assertNull(metricsMapField.get(designCheckReport1));
             assertEquals(sampleMapMetrics, metricsMapField.get(designCheckReport2));
         }
     }
 
     @Test
     void getMetricsMap() {
-        Field metricsMapField = getFieldByName("metricsMap");
+        Field metricsMapField = TestUtility.getFieldByName("metricsMap", fields);
         if (metricsMapField != null) {
             metricsMapField.setAccessible(true);
         }
@@ -91,10 +88,4 @@ class DesignCheckReportTest {
     }
 
 
-    private static Field getFieldByName(String name) {
-        for (Field f : fields) {
-            if (f.getName().equals(name)) return f;
-        }
-        return null;
-    }
 }
