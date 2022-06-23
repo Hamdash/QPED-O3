@@ -26,7 +26,6 @@ public class SemanticConfigurator {
 
     private SemanticConfigurator(QFSemSettings qfSemSettings) {
         this.qfSemSettings = qfSemSettings;
-        setDefaults();
         applySettings();
     }
 
@@ -34,44 +33,15 @@ public class SemanticConfigurator {
         return new SemanticConfigurator(qfSemSettings);
     }
 
-    private void setDefaults(){
-        setMethodName("undefined");
-        setRecursionAllowed(false);
-        setReturnType("undefined");
-        setWhileLoop(-1);
-        setForLoop(-1);
-        setForEachLoop(-1);
-        setIfElseStmt(-1);
-        setDoWhileLoop(-1);
+    private void applySettings() {
+
+        setMethodName(qfSemSettings.getMethodName() != null ? qfSemSettings.getMethodName() : "undefined");
+        setRecursionAllowed(qfSemSettings.getRecursionAllowed() != null && Boolean.parseBoolean(qfSemSettings.getRecursionAllowed()));
+        setWhileLoop(qfSemSettings.getWhileLoop() != null ? Integer.parseInt(qfSemSettings.getWhileLoop()) : -1);
+        setForLoop(qfSemSettings.getForLoop() != null ? Integer.parseInt(qfSemSettings.getForLoop()) : -1);
+        setForEachLoop(qfSemSettings.getForEachLoop() != null ? Integer.parseInt(qfSemSettings.getForEachLoop()) : -1);
+        setIfElseStmt(qfSemSettings.getIfElseStmt() != null ? Integer.parseInt(qfSemSettings.getIfElseStmt()) : -1);
+        setDoWhileLoop(qfSemSettings.getDoWhileLoop() != null ? Integer.parseInt(qfSemSettings.getDoWhileLoop()) : -1);
+        setReturnType(qfSemSettings.getReturnType() != null ? qfSemSettings.getReturnType() : "undefined");
     }
-
-    private void applySettings(){
-
-        if(qfSemSettings.getMethodName()!=null){
-            setMethodName(qfSemSettings.getMethodName());
-        }
-        if(qfSemSettings.getRecursionAllowed()!=null){
-            setRecursionAllowed(Boolean.parseBoolean(qfSemSettings.getRecursionAllowed()));
-        }
-        if(qfSemSettings.getDoWhileLoop()!=null){
-            setWhileLoop(Integer.parseInt(qfSemSettings.getWhileLoop()));
-        }
-        if(qfSemSettings.getForLoop()!=null){
-            setForLoop(Integer.parseInt(qfSemSettings.getForLoop()));
-        }
-        if(qfSemSettings.getForEachLoop()!=null){
-            setForEachLoop(Integer.parseInt(qfSemSettings.getForEachLoop()));
-        }
-        if(qfSemSettings.getIfElseStmt()!=null){
-            setIfElseStmt(Integer.parseInt(qfSemSettings.getIfElseStmt()));
-        }
-        if(qfSemSettings.getDoWhileLoop()!=null){
-            setDoWhileLoop(Integer.parseInt(qfSemSettings.getDoWhileLoop()));
-        }
-        if(qfSemSettings.getReturnType()!=null){
-            setReturnType(qfSemSettings.getReturnType());
-        }
-
-    }
-
 }
