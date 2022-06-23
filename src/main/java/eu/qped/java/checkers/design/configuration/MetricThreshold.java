@@ -20,8 +20,14 @@ public class MetricThreshold {
 
 
     public MetricThreshold(double minThreshold, double maxThreshold) {
-        this.minThreshold = minThreshold;
-        this.maxThreshold = maxThreshold;
+        if (minThreshold <= maxThreshold) {
+            this.minThreshold = minThreshold;
+            this.maxThreshold = maxThreshold;
+        } else {
+            this.minThreshold = maxThreshold;
+            this.maxThreshold = minThreshold;
+        }
+
     }
 
     public void setDefaultThresholdMin() {

@@ -83,11 +83,14 @@ public class DesignFeedback extends Feedback {
                     Metric metric = metricForClass.getMetric();
                     double metricValue = metricForClass.getMetricValue();
 
-                    boolean lowerThreshold = isThresholdReached(metric, designSettings, metricValue, true);
-                    boolean upperThreshold = isThresholdReached(metric, designSettings, metricValue, false);
-                    String suggestion = generateSuggestion(metric, lowerThreshold, upperThreshold);
+                    boolean lowerThresholdReached = isThresholdReached(metric, designSettings, metricValue, true);
+                    boolean upperThresholdReached = isThresholdReached(metric, designSettings, metricValue, false);
+                    String suggestion = generateSuggestion(metric, lowerThresholdReached, upperThresholdReached);
 
-                    feedbacks.add(new DesignFeedback(className, metric.getDescription(), metric, metricValue, lowerThreshold, upperThreshold, suggestion));
+                    boolean addFeedback = (lowerThresholdReached || upperThresholdReached);
+                    if (addFeedback) {
+                        feedbacks.add(new DesignFeedback(className, metric.getDescription(), metric, metricValue, lowerThresholdReached, upperThresholdReached, suggestion));
+                    }
                 });
             }
         });
