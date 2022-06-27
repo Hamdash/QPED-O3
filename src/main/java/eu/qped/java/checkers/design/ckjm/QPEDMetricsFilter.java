@@ -50,20 +50,6 @@ public class QPEDMetricsFilter implements ICountingProperities {
     }
 
     /**
-     * The interface for other Java based applications.
-     * implement the output handler to catch the results
-     *
-     * @param files class files to be analyzed
-     * @param outputHandler an implementation of the CkjmOutputHandler interface
-     */
-    public static void runMetrics(List<String> files, CkjmOutputHandler outputHandler, boolean includeJDK) {
-        QPEDMetricsFilter qmf = new QPEDMetricsFilter();
-        qmf.includeJdk = includeJDK;
-
-        qmf.runMetricsInternal(files, outputHandler);
-    }
-
-    /**
      * Return true if the measurements should include calls to the Java JDK into account
      */
     public boolean isJdkIncluded() {
@@ -75,14 +61,6 @@ public class QPEDMetricsFilter implements ICountingProperities {
      */
     public boolean includeAll() {
         return !onlyPublic;
-    }
-
-    public void setIncludeJdk(boolean mIncludeJdk) {
-        this.includeJdk = mIncludeJdk;
-    }
-
-    public void setOnlyPublic(boolean mOnlyPublic) {
-        this.onlyPublic = mOnlyPublic;
     }
 
     /**
@@ -147,7 +125,7 @@ public class QPEDMetricsFilter implements ICountingProperities {
             AmcClassVisitor amcVisitor = new AmcClassVisitor(metricsContainer);
             amcVisitor.visitJavaClass(javaClass);
         } else {
-            LoggerHelper.printError("Given class ist null.");
+            LoggerHelper.printError("Given class is null.");
         }
     }
 

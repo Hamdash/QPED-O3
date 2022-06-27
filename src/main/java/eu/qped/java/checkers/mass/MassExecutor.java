@@ -175,6 +175,7 @@ public class MassExecutor {
                 "import java.util.List;\n" +
                 "\n" +
                 "public class GrayCode {\n" +
+                "\n" +
                 "    public GrayCode() {\n" +
                 "    }\n" +
                 "\n" +
@@ -191,7 +192,7 @@ public class MassExecutor {
                 "            List<String> prev = grayCodeStrings(n - 1);\n" +
                 "            list.addAll(prev);\n" +
                 "\n" +
-                "            for(int i = prev.size() - 1; i >= 0; --i) {\n" +
+                "            for (int i = prev.size() - 1; i >= 0; --i) {\n" +
                 "                String bits = \"abcccc\";\n" +
                 "                list.set(i, \"0\" + bits);\n" +
                 "                list.add(\"1\" + bits);\n" +
@@ -199,6 +200,18 @@ public class MassExecutor {
                 "\n" +
                 "            return list;\n" +
                 "        }\n" +
+                "    }\n" +
+                "\n" +
+                "    public int anotherMethod(boolean a, boolean b, double c) {\n" +
+                "        if (a) {\n" +
+                "            if (b) {\n" +
+                "                return (int) c;\n" +
+                "            } else {\n" +
+                "                if (((int) c) == 5)\n" +
+                "                    return (int) (4 * c);\n" +
+                "            }\n" +
+                "        }\n" +
+                "        return -1;\n" +
                 "    }\n" +
                 "}";
 
@@ -247,7 +260,6 @@ public class MassExecutor {
         qfDesignSettings.setCbo("0.5", "1.0");
         qfDesignSettings.setCc("0.5", "1.0");
         qfDesignSettings.setCe("0.5", "1.0");
-        qfDesignSettings.setCis("0.5", "1.0");
         qfDesignSettings.setDam("0.5", "1.0");
         qfDesignSettings.setDit("0.5", "1.0");
         qfDesignSettings.setIc("0.5", "1.0");

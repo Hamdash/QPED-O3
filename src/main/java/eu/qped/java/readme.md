@@ -98,6 +98,30 @@ Object: semSettings
 | doWhileLoop      | numeric [-1, 0, 1, *]  |
 | returnType       | String                 |
 
+### Design Checker Configuration WIP
+The design checker is able to check one or more given classes for well-known class design metrics.
+The used metrics are e.g. from the **Chidamber Kemerer**, **quality oriented extension to C&K**, **QMOOD** metrics suites, 
+
+| Option Name | Possible Values          |
+|-------------|--------------------------|
+| amc         | numeric array (min, max) |
+| ca          | numeric array (min, max) |
+| cbo         | numeric array (min, max) |
+| cc          | numeric array (min, max) |
+| ce          | numeric array (min, max) |
+| dam         | numeric array (min, max) |
+| dit         | numeric array (min, max) |
+| ic          | numeric array (min, max) |
+| lcom        | numeric array (min, max) |
+| lcom3       | numeric array (min, max) |
+| loc         | numeric array (min, max) |
+| mfa         | numeric array (min, max) |
+| moa         | numeric array (min, max) |
+| noc         | numeric array (min, max) |
+| npm         | numeric array (min, max) |
+| rfc         | numeric array (min, max) |
+| wmc         | numeric array (min, max) |
+
 ### Class Checker Configuration WIP
 The class checker provides ways for the teacher to specify on what to expect from a given class.
 The teacher can specify, for example, what the expected class type and name should be, which

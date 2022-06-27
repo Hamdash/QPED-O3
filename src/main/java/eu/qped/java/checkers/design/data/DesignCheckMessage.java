@@ -10,10 +10,11 @@ import static eu.qped.java.checkers.design.ckjm.DesignCheckEntryHandler.*;
  */
 @Data
 @AllArgsConstructor
-public class DesignCheckMessage implements Comparable<DesignCheckMessage>{
+public abstract class DesignCheckMessage implements Comparable<DesignCheckMessage>{
 
     private Metric metric;
-    private double metricValue;
+
+    public DesignCheckMessage() {}
 
     @Override
     public int compareTo(DesignCheckMessage o) {

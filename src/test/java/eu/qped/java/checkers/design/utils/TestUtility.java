@@ -40,7 +40,6 @@ public class TestUtility {
         qfDesignSettings.setCbo("0.5", "1.0");
         qfDesignSettings.setCc("0.5", "1.0");
         qfDesignSettings.setCe("0.5", "1.0");
-        qfDesignSettings.setCis("0.5", "1.0");
         qfDesignSettings.setDam("0.5", "1.0");
         qfDesignSettings.setDit("0.5", "1.0");
         qfDesignSettings.setIc("0.5", "1.0");

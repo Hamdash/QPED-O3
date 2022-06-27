@@ -2,6 +2,7 @@ package eu.qped.java.checkers.design;
 
 import eu.qped.java.checkers.design.data.DesignCheckEntry;
 import eu.qped.java.checkers.design.data.DesignCheckMessage;
+import eu.qped.java.checkers.design.data.DesignCheckMessageSingle;
 import eu.qped.java.checkers.design.data.DesignCheckReport;
 import eu.qped.java.checkers.design.utils.TestUtility;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,7 +37,7 @@ class DesignCheckReportTest {
 
     @BeforeEach
     void setUp() {
-        sampleMapMetrics = List.of(new DesignCheckEntry("Class A", List.of(new DesignCheckMessage(Metric.AMC, 1.0))));
+        sampleMapMetrics = List.of(new DesignCheckEntry("Class A", List.of(new DesignCheckMessageSingle(Metric.AMC, 1.0))));
         sampleMapThresholds = Map.of(Metric.LCOM, 1.0);
         designCheckReport1 = new DesignCheckReport();
         designCheckReport2 = new DesignCheckReport(
@@ -51,7 +52,7 @@ class DesignCheckReportTest {
         Field metricsMapField = TestUtility.getFieldByName("metricsMap", fields);
         if (metricsMapField != null) {
             metricsMapField.setAccessible(true);
-            sampleMapMetrics = List.of(new DesignCheckEntry("Class A", List.of(new DesignCheckMessage(Metric.AMC, 1.0))));
+            sampleMapMetrics = List.of(new DesignCheckEntry("Class A", List.of(new DesignCheckMessageSingle(Metric.AMC, 1.0))));
 
 
             assertNull(metricsMapField.get(designCheckReport1));

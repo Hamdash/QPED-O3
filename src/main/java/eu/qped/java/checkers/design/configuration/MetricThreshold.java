@@ -7,36 +7,40 @@ import lombok.Builder;
 import lombok.Data;
 
 /**
+ * Represents a class to define a {@link #lowerBound} and an {@link #upperBound} to a specific {@link #metric}.
+ * The boundaries are meant to be inclusive.
+ *
  * @author Jannik Seus
  */
 @Data
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 @Builder
-public class MetricThreshold {
+public class MetricThreshold implements Comparable<MetricThreshold>{
 
     private Metric metric;
-    private double minThreshold;
-    private double maxThreshold;
+    private double lowerBound;
+    private double upperBound;
 
-
-    public MetricThreshold(double minThreshold, double maxThreshold) {
-        if (minThreshold <= maxThreshold) {
-            this.minThreshold = minThreshold;
-            this.maxThreshold = maxThreshold;
+    public MetricThreshold(double lowerBound, double upperBound) {
+        if (lowerBound <= upperBound) {
+            this.lowerBound = lowerBound;
+            this.upperBound = upperBound;
         } else {
-            this.minThreshold = maxThreshold;
-            this.maxThreshold = minThreshold;
+            this.lowerBound = upperBound;
+            this.upperBound = lowerBound;
         }
-
     }
 
-    public void setDefaultThresholdMin() {
-        this.minThreshold = metric.getDefaultThresholdMin();
+    public void setDefaultLowerBound() {
+        this.lowerBound = metric.getDefaultLowerBound();
     }
 
-    public void setDefaultThresholdMax() {
-        this.maxThreshold = metric.getDefaultThresholdMax();
+    public void setDefaultUpperBound() {
+        this.upperBound = metric.getDefaultUpperBound();
     }
 
-
+    @Override
+    public int compareTo(MetricThreshold o) {
+        return this.metric.toString().compareTo(o.getMetric().toString());
+    }
 }

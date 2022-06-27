@@ -28,12 +28,12 @@ class DesignSettingsReaderTest {
         QFDesignSettings qfDesignSettings = generateQfDesignSettings();
 
         designSettings.setAmc(new MetricThreshold(DesignCheckEntryHandler.Metric.AMC, Double.parseDouble(qfDesignSettings.getAmcMin()), Double.parseDouble(qfDesignSettings.getAmcMax())));
-        assertEquals(designSettings.getAmc().getMinThreshold(), 0.5);
-        assertEquals(designSettings.getAmc().getMaxThreshold(), 1.0);
+        assertEquals(designSettings.getAmc().getLowerBound(), 0.5);
+        assertEquals(designSettings.getAmc().getUpperBound(), 1.0);
 
         designSettings.setWmc(new MetricThreshold(DesignCheckEntryHandler.Metric.WMC, Double.parseDouble(qfDesignSettings.getWmcMin()), Double.parseDouble(qfDesignSettings.getWmcMax())));
-        assertEquals(designSettings.getWmc().getMinThreshold(), 0.5);
-        assertEquals(designSettings.getWmc().getMaxThreshold(), 1.0);
+        assertEquals(designSettings.getWmc().getLowerBound(), 0.5);
+        assertEquals(designSettings.getWmc().getUpperBound(), 1.0);
 
     }
 
@@ -46,7 +46,6 @@ class DesignSettingsReaderTest {
         qfDesignSettings.setCbo("0.5", "1.0");
         qfDesignSettings.setCc("0.5", "1.0");
         qfDesignSettings.setCe("0.5", "1.0");
-        qfDesignSettings.setCis("0.5", "1.0");
         qfDesignSettings.setDam("0.5", "1.0");
         qfDesignSettings.setDit("0.5", "1.0");
         qfDesignSettings.setIc("0.5", "1.0");

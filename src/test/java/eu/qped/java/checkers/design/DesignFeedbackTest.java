@@ -57,7 +57,7 @@ class DesignFeedbackTest {
 
         assertEquals
                 ("You are within the " + Metric.AMC + "'s threshold.",
-                        DesignFeedback.generateSuggestion(
+                        DesignFeedback.generateSuggestionSingle(
                                 Metric.AMC,
                                 designFeedback1.isLowerThresholdReached(),
                                 designFeedback1.isUpperThresholdReached()));
@@ -66,7 +66,7 @@ class DesignFeedbackTest {
 
         assertEquals
                 ("The " + Metric.AMC + "'s value is too low.",
-                        DesignFeedback.generateSuggestion(
+                        DesignFeedback.generateSuggestionSingle(
                                 Metric.AMC,
                                 designFeedback1.isLowerThresholdReached(),
                                 designFeedback1.isUpperThresholdReached()));
@@ -76,7 +76,7 @@ class DesignFeedbackTest {
 
         assertEquals
                 ("The " + Metric.AMC + "'s value is too high.",
-                        DesignFeedback.generateSuggestion(
+                        DesignFeedback.generateSuggestionSingle(
                                 Metric.AMC,
                                 designFeedback1.isLowerThresholdReached(),
                                 designFeedback1.isUpperThresholdReached()));
@@ -85,7 +85,7 @@ class DesignFeedbackTest {
         designFeedback1.setUpperThresholdReached(true);
 
         assertThrows(IllegalArgumentException.class,
-                () -> DesignFeedback.generateSuggestion(
+                () -> DesignFeedback.generateSuggestionSingle(
                         Metric.AMC,
                         true,
                         true));
@@ -169,9 +169,6 @@ class DesignFeedbackTest {
                 break;
             case CE:
                 designSettings.setCe(new MetricThreshold(metric, 0, 1));
-                break;
-            case CIS:
-                designSettings.setCis(new MetricThreshold(metric, 0, 1));
                 break;
             case DAM:
                 designSettings.setDam(new MetricThreshold(metric, 0, 1));

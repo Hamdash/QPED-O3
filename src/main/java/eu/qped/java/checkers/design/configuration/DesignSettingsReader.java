@@ -4,6 +4,8 @@ import eu.qped.java.checkers.mass.QFDesignSettings;
 import lombok.*;
 import org.apache.logging.log4j.LogManager;
 
+import java.util.List;
+
 import static eu.qped.java.checkers.design.ckjm.DesignCheckEntryHandler.*;
 import static eu.qped.java.checkers.design.ckjm.DesignCheckEntryHandler.Metric.*;
 
@@ -38,7 +40,6 @@ public class DesignSettingsReader {
             designSettings.setCbo(new MetricThreshold(CBO , getMetricThreshold(CBO , true), getMetricThreshold(CBO , false)));
             designSettings.setCc(new MetricThreshold(CC , getMetricThreshold(CC , true), getMetricThreshold(CC , false)));
             designSettings.setCe(new MetricThreshold(CE , getMetricThreshold(CE , true), getMetricThreshold(CE , false)));
-            designSettings.setCis(new MetricThreshold(CIS , getMetricThreshold(CIS , true), getMetricThreshold(CIS , false)));
             designSettings.setDam(new MetricThreshold(DAM , getMetricThreshold(DAM , true), getMetricThreshold(DAM , false)));
             designSettings.setDit(new MetricThreshold(DIT , getMetricThreshold(DIT , true), getMetricThreshold(DIT , false)));
             designSettings.setIc(new MetricThreshold(IC , getMetricThreshold(IC , true), getMetricThreshold(IC , false)));
@@ -104,9 +105,6 @@ public class DesignSettingsReader {
                 break;
             case CE:
                 metricUpperThreshold = Double.parseDouble(qfDesignSettings.getCeMax());
-                break;
-            case CIS:
-                metricUpperThreshold = Double.parseDouble(qfDesignSettings.getCisMax());
                 break;
             case DAM:
                 metricUpperThreshold = Double.parseDouble(qfDesignSettings.getDamMax());
@@ -178,9 +176,6 @@ public class DesignSettingsReader {
                 break;
             case CE:
                 metricLowerThreshold = Double.parseDouble(qfDesignSettings.getCeMin());
-                break;
-            case CIS:
-                metricLowerThreshold = Double.parseDouble(qfDesignSettings.getCisMin());
                 break;
             case DAM:
                 metricLowerThreshold = Double.parseDouble(qfDesignSettings.getDamMin());
