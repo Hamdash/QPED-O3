@@ -33,8 +33,8 @@ class DesignFeedbackTest {
                 .metric(Metric.AMC)
                 .value(0d)
                 .body(Metric.AMC.getDescription())
-                .lowerThresholdReached(false)
-                .upperThresholdReached(false)
+                .lowerBoundReached(false)
+                .lowerBoundReached(false)
                 .suggestion("Change something!").build();
     }
 
@@ -51,41 +51,41 @@ class DesignFeedbackTest {
     @ValueSource(doubles = {-1d, 0d, 0.5d, 1.0d, 3.3d})
     void generateSuggestionTestValue(double value) {
         designFeedback1.setValue(value);
-        designFeedback1.setLowerThresholdReached(designFeedback1.isLowerThresholdReached());
-        designFeedback1.setUpperThresholdReached(designFeedback1.isUpperThresholdReached());
+        designFeedback1.setLowerBoundReached(designFeedback1.isLowerBoundReached());
+        designFeedback1.setUpperBoundReached(designFeedback1.isUpperBoundReached());
         designFeedback1.setSuggestion(designFeedback1.getSuggestion());
 
         assertEquals
                 ("You are within the " + Metric.AMC + "'s threshold.",
-                        DesignFeedback.generateSuggestionSingle(
+                        DesignFeedbackGenerator.generateSuggestion(
                                 Metric.AMC,
-                                designFeedback1.isLowerThresholdReached(),
-                                designFeedback1.isUpperThresholdReached()));
+                                designFeedback1.isLowerBoundReached(),
+                                designFeedback1.isUpperBoundReached()));
 
-        designFeedback1.setLowerThresholdReached(true);
+        designFeedback1.setLowerBoundReached(true);
 
         assertEquals
                 ("The " + Metric.AMC + "'s value is too low.",
-                        DesignFeedback.generateSuggestionSingle(
+                        DesignFeedbackGenerator.generateSuggestion(
                                 Metric.AMC,
-                                designFeedback1.isLowerThresholdReached(),
-                                designFeedback1.isUpperThresholdReached()));
+                                designFeedback1.isLowerBoundReached(),
+                                designFeedback1.isUpperBoundReached()));
 
-        designFeedback1.setLowerThresholdReached(false);
-        designFeedback1.setUpperThresholdReached(true);
+        designFeedback1.setLowerBoundReached(false);
+        designFeedback1.setUpperBoundReached(true);
 
         assertEquals
                 ("The " + Metric.AMC + "'s value is too high.",
-                        DesignFeedback.generateSuggestionSingle(
+                        DesignFeedbackGenerator.generateSuggestion(
                                 Metric.AMC,
-                                designFeedback1.isLowerThresholdReached(),
-                                designFeedback1.isUpperThresholdReached()));
+                                designFeedback1.isLowerBoundReached(),
+                                designFeedback1.isUpperBoundReached()));
 
-        designFeedback1.setLowerThresholdReached(true);
-        designFeedback1.setUpperThresholdReached(true);
+        designFeedback1.setLowerBoundReached(true);
+        designFeedback1.setUpperBoundReached(true);
 
         assertThrows(IllegalArgumentException.class,
-                () -> DesignFeedback.generateSuggestionSingle(
+                () -> DesignFeedbackGenerator.generateSuggestion(
                         Metric.AMC,
                         true,
                         true));
@@ -108,7 +108,7 @@ class DesignFeedbackTest {
                 List.of(mock(DesignCheckEntry.class), mock(DesignCheckEntry.class), mock(DesignCheckEntry.class),
                         mock(DesignCheckEntry.class), mock(DesignCheckEntry.class), mock(DesignCheckEntry.class));
 
-        assertEquals(DesignFeedback.generateDesignFeedbacks(designCheckEntries, designSettings), List.of());
+        assertEquals(DesignFeedbackGenerator.generateDesignFeedbacks(designCheckEntries, designSettings), List.of());
     }
 
     @ParameterizedTest
@@ -129,12 +129,12 @@ class DesignFeedbackTest {
         assertEquals(
                 "threshold of Metric 'AMC' in class 'TestClass' not exceeded\tValue=0.0,\t suggestion: Average Method Complexity",
                 designFeedback1.toString());
-        designFeedback1.setLowerThresholdReached(true);
+        designFeedback1.setLowerBoundReached(true);
         assertEquals(
                 "Lower threshold of metric 'AMC' in class 'TestClass' exceeded.\tThresholds: (0.0, 1.0)Value=0.0,\t suggestion: Average Method Complexity",
                 designFeedback1.toString());
-        designFeedback1.setLowerThresholdReached(false);
-        designFeedback1.setUpperThresholdReached(true);
+        designFeedback1.setLowerBoundReached(false);
+        designFeedback1.setUpperBoundReached(true);
 
         assertEquals(
                 "Upper threshold of metric 'AMC' in class 'TestClass' exceeded.\tThresholds: (0.0, 1.0)Value=0.0,\t suggestion: Average Method Complexity",

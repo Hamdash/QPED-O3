@@ -13,7 +13,6 @@ import lombok.Data;
  * @author Jannik Seus
  */
 @Data
-@AllArgsConstructor(access = AccessLevel.PUBLIC)
 @Builder
 public class MetricThreshold implements Comparable<MetricThreshold>{
 
@@ -21,7 +20,20 @@ public class MetricThreshold implements Comparable<MetricThreshold>{
     private double lowerBound;
     private double upperBound;
 
-    public MetricThreshold(double lowerBound, double upperBound) {
+    public MetricThreshold(Metric metric) {
+        this.metric = metric;
+        if (this.metric == null) {
+            throw new IllegalStateException("A metric must be specified.");
+        }
+        this.lowerBound = this.metric.getDefaultLowerBound();
+        this.upperBound = this.metric.getDefaultUpperBound();
+    }
+
+    public MetricThreshold(Metric metric, double lowerBound, double upperBound) {
+        this.metric = metric;
+        if (this.metric == null) {
+            throw new IllegalStateException("A metric must be specified.");
+        }
         if (lowerBound <= upperBound) {
             this.lowerBound = lowerBound;
             this.upperBound = upperBound;
@@ -29,14 +41,6 @@ public class MetricThreshold implements Comparable<MetricThreshold>{
             this.lowerBound = upperBound;
             this.upperBound = lowerBound;
         }
-    }
-
-    public void setDefaultLowerBound() {
-        this.lowerBound = metric.getDefaultLowerBound();
-    }
-
-    public void setDefaultUpperBound() {
-        this.upperBound = metric.getDefaultUpperBound();
     }
 
     @Override

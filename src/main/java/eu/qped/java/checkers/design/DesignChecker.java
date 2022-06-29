@@ -53,7 +53,7 @@ public class DesignChecker {
 
         runCkjmExtended(designCheckReport, pathsToClassFiles);
         designCheckReport.setPathsToClassFiles(List.of(pathsToClassFiles));
-        this.designFeedbacks = DesignFeedback.generateDesignFeedbacks(designCheckReport.getMetricsMap(), designSettings);
+        this.designFeedbacks = DesignFeedbackGenerator.generateDesignFeedbacks(designCheckReport.getMetricsMap(), designSettings);
 
         return designCheckReport;
     }

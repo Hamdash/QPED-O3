@@ -63,9 +63,9 @@ public class DesignCheckEntryHandler implements CkjmOutputHandler {
         outputMetrics.add(new DesignCheckEntry(className, metricsForClass));
     }
 
-    private Map<String,Integer> getCCMapInternal(ClassMetrics c) {
+    private Map<String, Integer> getCCMapInternal(ClassMetrics c) {
 
-        List<String> methodNames  = c.getMethodNames();
+        List<String> methodNames = c.getMethodNames();
         Map<String, Integer> metricValuesCC = new HashMap<>();
         for (String methodName : methodNames) {
             metricValuesCC.put(methodName, c.getCC(methodName));
@@ -75,8 +75,8 @@ public class DesignCheckEntryHandler implements CkjmOutputHandler {
 
     /**
      * Metrics enum representing all possible class metrics for the design checker.
-     *
-     * defaultValue contains an initializing value for a specific metric (before setting the value)
+     * <p>
+     * initialValue contains an initializing value for a specific metric (before setting the value)
      * defaultThreshold[0] contains the default minimum threshold
      * defaultThreshold[1] contains the default maximum threshold
      *
@@ -84,25 +84,25 @@ public class DesignCheckEntryHandler implements CkjmOutputHandler {
      */
     public enum Metric {
 
-        AMC("Average Method Complexity", 0d, new MetricThreshold(0,1)),
-        CA("Afferent coupling", 0d, new MetricThreshold(0,1)),
-        CAM("Cohesion Among Methods of Class", 0d, new MetricThreshold(0,1)),
-        CBM("Coupling Between Methods", 0d, new MetricThreshold(0,1)),
-        CBO("Coupling between object classes", 0d, new MetricThreshold(0,1)),
-        CC("McCabe's Cyclomatic Complexity", 1d, new MetricThreshold(0,1)),
-        CE("Efferent coupling", 0d, new MetricThreshold(0,1)),
-        DAM("Data Access Metric", 0d, new MetricThreshold(0,1)),
-        DIT("Depth of inheritance tree", 0d, new MetricThreshold(0,1)),
-        IC("Inheritance Coupling", 0d, new MetricThreshold(0,1)),
-        LCOM("Lack of cohesion in methods", 0d, new MetricThreshold(0,1)),
-        LCOM3("Lack of cohesion in methods Henderson-Sellers version", 0d, new MetricThreshold(0,1)),
-        LOC("Lines of Code", 0d, new MetricThreshold(0,1)),
-        MFA("Measure of Functional Abstraction", 0d, new MetricThreshold(0,1)),
-        MOA("Measure of Aggregation", 0d, new MetricThreshold(0,1)),
-        NOC("Number of Children", 0d, new MetricThreshold(0,1)),
-        NPM("Number of Public Methods for a class", 0d, new MetricThreshold(0,1)),
-        RFC("Response for a Class", 0d, new MetricThreshold(0,1)),
-        WMC("Weighted methods per class", 0d, new MetricThreshold(0,1));
+        AMC("Average Method Complexity", 0, Double.MAX_VALUE),
+        CA("Afferent coupling", 0, Double.MAX_VALUE),
+        CAM("Cohesion Among Methods of Class", 0, 1),
+        CBM("Coupling Between Methods", 0, Double.MAX_VALUE),
+        CBO("Coupling between object classes", 0, Double.MAX_VALUE),
+        CC("McCabe's Cyclomatic Complexity", 1, Double.MAX_VALUE),
+        CE("Efferent coupling", 0, Double.MAX_VALUE),
+        DAM("Data Access Metric", 0, 1),
+        DIT("Depth of inheritance tree", 0, Double.MAX_VALUE),
+        IC("Inheritance Coupling", 0, Double.MAX_VALUE),
+        LCOM("Lack of cohesion in methods", 0, Double.MAX_VALUE),
+        LCOM3("Lack of cohesion in methods Henderson-Sellers version", 0, 2),
+        LOC("Lines of Code", 0, Double.MAX_VALUE),
+        MFA("Measure of Functional Abstraction", 0, 1),
+        MOA("Measure of Aggregation", 0, Double.MAX_VALUE),
+        NOC("Number of Children", 0, Double.MAX_VALUE),
+        NPM("Number of Public Methods for a class", 0, Double.MAX_VALUE),
+        RFC("Response for a Class", 0, Double.MAX_VALUE),
+        WMC("Weighted methods per class", 0, Double.MAX_VALUE);
 
         /**
          * Represents the description of a metric.
@@ -110,40 +110,28 @@ public class DesignCheckEntryHandler implements CkjmOutputHandler {
         private final String description;
 
         /**
-         * A value of a metric to begin with. This is not representing a field to store the data.
-         */
-        private final double initialValue;
-
-        /**
          * TODO look up thresholds in paper "Thresholds for object-oriented measures"
          * Represents default thresholds (min, max) of given metrics.
          */
-        private final MetricThreshold defaultThresholds;
+        private final double defaultLowerBound;
+        private final double defaultUpperBound;
 
-        Metric(String description, double initialValue, MetricThreshold defaultThresholds) {
+        Metric(String description, double defaultLowerBound, double defaultUpperBound) {
             this.description = description;
-            this.initialValue = initialValue;
-            this.defaultThresholds = defaultThresholds;
+            this.defaultLowerBound = defaultLowerBound;
+            this.defaultUpperBound = defaultUpperBound;
         }
 
         public String getDescription() {
             return description;
         }
 
-        public double getInitialValue() {
-            return initialValue;
-        }
-
-        public MetricThreshold getDefaultThresholds() {
-            return defaultThresholds;
-        }
-
         public double getDefaultLowerBound() {
-            return defaultThresholds.getLowerBound();
+            return defaultLowerBound;
         }
 
         public double getDefaultUpperBound() {
-            return defaultThresholds.getUpperBound();
+            return defaultUpperBound;
         }
     }
 }

@@ -4,8 +4,6 @@ import eu.qped.java.checkers.mass.QFDesignSettings;
 import lombok.*;
 import org.apache.logging.log4j.LogManager;
 
-import java.util.List;
-
 import static eu.qped.java.checkers.design.ckjm.DesignCheckEntryHandler.*;
 import static eu.qped.java.checkers.design.ckjm.DesignCheckEntryHandler.Metric.*;
 
@@ -27,31 +25,31 @@ public class DesignSettingsReader {
      * Method reads the input design settings from {@link #qfDesignSettings} and
      * checks (implicitly) for possible invalid values through the getter and parser.
      *
-     * @return the created {@link DesignSettings} object from an initial {@link QFDesignSettings} obbject.
+     * @return the created {@link DesignSettings} object from an initial {@link QFDesignSettings} object.
      */
     public DesignSettings readDesignSettings() {
         DesignSettings designSettings = DesignSettings.builder().build();
 
         try {
-            designSettings.setAmc(new MetricThreshold(AMC, getMetricThreshold(AMC, true), getMetricThreshold(AMC, false)));
-            designSettings.setCa(new MetricThreshold(CA , getMetricThreshold(CA , true), getMetricThreshold(CA , false)));
-            designSettings.setCam(new MetricThreshold(CAM , getMetricThreshold(CAM , true), getMetricThreshold(CAM , false)));
-            designSettings.setCbm(new MetricThreshold(CBM , getMetricThreshold(CBM , true), getMetricThreshold(CBM , false)));
-            designSettings.setCbo(new MetricThreshold(CBO , getMetricThreshold(CBO , true), getMetricThreshold(CBO , false)));
-            designSettings.setCc(new MetricThreshold(CC , getMetricThreshold(CC , true), getMetricThreshold(CC , false)));
-            designSettings.setCe(new MetricThreshold(CE , getMetricThreshold(CE , true), getMetricThreshold(CE , false)));
-            designSettings.setDam(new MetricThreshold(DAM , getMetricThreshold(DAM , true), getMetricThreshold(DAM , false)));
-            designSettings.setDit(new MetricThreshold(DIT , getMetricThreshold(DIT , true), getMetricThreshold(DIT , false)));
-            designSettings.setIc(new MetricThreshold(IC , getMetricThreshold(IC , true), getMetricThreshold(IC , false)));
-            designSettings.setLcom(new MetricThreshold(LCOM , getMetricThreshold(LCOM , true), getMetricThreshold(LCOM , false)));
-            designSettings.setLcom3(new MetricThreshold(LCOM3 , getMetricThreshold(LCOM3 , true), getMetricThreshold(LCOM3 , false)));
-            designSettings.setLoc(new MetricThreshold(LOC , getMetricThreshold(LOC , true), getMetricThreshold(LOC , false)));
-            designSettings.setMfa(new MetricThreshold(MFA , getMetricThreshold(MFA , true), getMetricThreshold(MFA , false)));
-            designSettings.setMoa(new MetricThreshold(MOA , getMetricThreshold(MOA , true), getMetricThreshold(MOA , false)));
-            designSettings.setNoc(new MetricThreshold(NOC , getMetricThreshold(NOC , true), getMetricThreshold(NOC , false)));
-            designSettings.setNpm(new MetricThreshold(NPM , getMetricThreshold(NPM , true), getMetricThreshold(NPM , false)));
-            designSettings.setRfc(new MetricThreshold(RFC , getMetricThreshold(RFC , true), getMetricThreshold(RFC , false)));
-            designSettings.setWmc(new MetricThreshold(WMC , getMetricThreshold(WMC , true), getMetricThreshold(WMC , false)));
+            designSettings.setAmc(new MetricThreshold(AMC, getInputMetricThresholdValue(AMC, true), getInputMetricThresholdValue(AMC, false)));
+            designSettings.setCa(new MetricThreshold(CA, getInputMetricThresholdValue(CA, true), getInputMetricThresholdValue(CA, false)));
+            designSettings.setCam(new MetricThreshold(CAM, getInputMetricThresholdValue(CAM, true), getInputMetricThresholdValue(CAM, false)));
+            designSettings.setCbm(new MetricThreshold(CBM, getInputMetricThresholdValue(CBM, true), getInputMetricThresholdValue(CBM, false)));
+            designSettings.setCbo(new MetricThreshold(CBO, getInputMetricThresholdValue(CBO, true), getInputMetricThresholdValue(CBO, false)));
+            designSettings.setCc(new MetricThreshold(CC, getInputMetricThresholdValue(CC, true), getInputMetricThresholdValue(CC, false)));
+            designSettings.setCe(new MetricThreshold(CE, getInputMetricThresholdValue(CE, true), getInputMetricThresholdValue(CE, false)));
+            designSettings.setDam(new MetricThreshold(DAM, getInputMetricThresholdValue(DAM, true), getInputMetricThresholdValue(DAM, false)));
+            designSettings.setDit(new MetricThreshold(DIT, getInputMetricThresholdValue(DIT, true), getInputMetricThresholdValue(DIT, false)));
+            designSettings.setIc(new MetricThreshold(IC, getInputMetricThresholdValue(IC, true), getInputMetricThresholdValue(IC, false)));
+            designSettings.setLcom(new MetricThreshold(LCOM, getInputMetricThresholdValue(LCOM, true), getInputMetricThresholdValue(LCOM, false)));
+            designSettings.setLcom3(new MetricThreshold(LCOM3, getInputMetricThresholdValue(LCOM3, true), getInputMetricThresholdValue(LCOM3, false)));
+            designSettings.setLoc(new MetricThreshold(LOC, getInputMetricThresholdValue(LOC, true), getInputMetricThresholdValue(LOC, false)));
+            designSettings.setMfa(new MetricThreshold(MFA, getInputMetricThresholdValue(MFA, true), getInputMetricThresholdValue(MFA, false)));
+            designSettings.setMoa(new MetricThreshold(MOA, getInputMetricThresholdValue(MOA, true), getInputMetricThresholdValue(MOA, false)));
+            designSettings.setNoc(new MetricThreshold(NOC, getInputMetricThresholdValue(NOC, true), getInputMetricThresholdValue(NOC, false)));
+            designSettings.setNpm(new MetricThreshold(NPM, getInputMetricThresholdValue(NPM, true), getInputMetricThresholdValue(NPM, false)));
+            designSettings.setRfc(new MetricThreshold(RFC, getInputMetricThresholdValue(RFC, true), getInputMetricThresholdValue(RFC, false)));
+            designSettings.setWmc(new MetricThreshold(WMC, getInputMetricThresholdValue(WMC, true), getInputMetricThresholdValue(WMC, false)));
 
         } catch (IllegalArgumentException | NullPointerException e) {
             LogManager.getLogger(getClass()).warn(e.getMessage());
@@ -60,13 +58,13 @@ public class DesignSettingsReader {
     }
 
     /**
-     * Method to get a metric's threshold.
+     * Method to get the input threshold of a given threshold.
      *
      * @param metric the given metric
      * @param min decides whether to return a minimum (true) or maximum (false) threshold
      * @return the threshold, -1 as error code
      */
-    private double getMetricThreshold(Metric metric, boolean min) {
+    private double getInputMetricThresholdValue(Metric metric, boolean min) {
         double metricThreshold;
         if (min) {
             metricThreshold = getMetricThMin(metric);
@@ -80,7 +78,7 @@ public class DesignSettingsReader {
      * Helper to get the maximum threshold of a metric.
      *
      * @param metric given metric
-     * @return the metric's maximum threshold
+     * @return the maximum threshold of a given metric
      */
     private double getMetricThMax(Metric metric) {
         double metricUpperThreshold = -1;
@@ -150,7 +148,7 @@ public class DesignSettingsReader {
      * Helper to get the minimum threshold of a metric.
      *
      * @param metric given metric
-     * @return the metric's maximum threshold
+     * @return the maximum threshold of given metric
      */
     private double getMetricThMin(Metric metric) {
         double metricLowerThreshold = -1;

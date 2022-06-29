@@ -104,7 +104,7 @@ class DesignCheckerTest {
         runCkjmExtendedMethod.invoke(designCheckerCustom, designCheckReport, pathsToClassFiles);
         runCkjmExtendedMethod.setAccessible(false);
         designCheckReport.setPathsToClassFiles(List.of(pathsToClassFiles));
-        List<DesignFeedback> designFeedbacks = DesignFeedback.generateDesignFeedbacks(designCheckReport.getMetricsMap(), designSettings);
+        List<DesignFeedback> designFeedbacks = DesignFeedbackGenerator.generateDesignFeedbacks(designCheckReport.getMetricsMap(), designSettings);
         designCheckerCustom.setDesignFeedbacks(designFeedbacks);
 
         assertEquals(designCheckReport, designCheckerCustom.check());
