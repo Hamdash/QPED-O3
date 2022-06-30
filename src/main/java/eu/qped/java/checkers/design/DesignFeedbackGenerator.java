@@ -199,7 +199,7 @@ public class DesignFeedbackGenerator {
                             suggestion = "For method " + entry.getKey() + ":\t";
                             lowerThresholdReached = isThresholdReached(metric, designSettings, entry.getValue(), true);
                             upperThresholdReached = isThresholdReached(metric, designSettings, entry.getValue(), false);
-                            suggestion += generateSuggestion(metric, lowerThresholdReached, upperThresholdReached) + "\n";
+                            suggestion += generateSuggestion(metric, lowerThresholdReached, upperThresholdReached);
                             boolean addFeedback = (lowerThresholdReached || upperThresholdReached);
                             if (addFeedback) {
                                 feedbacks.add(new DesignFeedback(className, metric.getDescription(), metric, (double) entry.getValue(), lowerThresholdReached, upperThresholdReached, suggestion));
@@ -274,29 +274,38 @@ public class DesignFeedbackGenerator {
                 "This class is used by too many other classes. Can you outsource some functionalities into already existing or new classes?"),
         CAM("This class and their methods are or are close to being un-cohesive. Assimilate methods in your class in order to increase readability and decrease complexity at once.",
                 "This class and their methods are too cohesive. Your implemented methods are too close to being the same methods."),
-        CBM("The methods in this class are not or are hardly coupled, which means they have (close to) no interdependencies. Is this rational your your class?",
+        CBM("The methods in this class are not or are hardly coupled, which means they have (close to) no interdependencies. Is this reasonable for your class?",
                 "The methods in this class are coupled to high, which means too many interdependencies, coordination and information flow between them. Try to minimize these dependencies between your methods."),
-        CBO("The sum of all class couplings in this class is (close to) zero, which means they have (close to) no interdependencies to other classes. Is this rational your your class? Also, refer to afferent/efferent coupling metric.",
+        CBO("The sum of all class couplings in this class is (close to) zero, which means they have (close to) no interdependencies to other classes. Is this reasonable for your class? Also, refer to afferent/efferent coupling metric.",
                 "The sum of all class couplings in this class is too high, which means too many interdependencies, coordination and information flow between them. Try to minimize these dependencies from this class to other classes. Also, refer to afferent/efferent coupling metric."),
         CC("This method in the given class has very few different paths to take. It would be allowed to increase its complexity.",
                 "This method in the given class is too complex, too many paths are taken (ite-statements). Try to decrease the complexity by delegating functionalities into other methods or classes."),
         CE("This class is using too few other classes. Can some functionalities be implemented into other classes and be used?",
                 "This class is using too many other classes. Can some functionalities be joined by other classes or even be implemented in this specific class?"),
         DAM("This class contains very few private (protected) attributes compared to to the total number of attributes. Try to encapsulate your class (make fields private, only access them by methods contained in this specific class if possible).",
-                "This class contains many private (protected) attributes compared to to the total number of attributes. Encapsulation is important, but sometimes over-engineering. Is this rational?"),
+                "This class contains many private (protected) attributes compared to to the total number of attributes. Encapsulation is important, but sometimes over-engineering. Is this reasonable?"),
         DIT("This class has very few superclasses or only one superclass (Object.java). Is inheritance a valid option? ",
                 "This class has many superclasses. Is this much inheritance possible over-engineering? Do certain subclasses have too similar or too few functionalities?"),
         IC("This class is coupled to few or no parent classes. Overriding parent methods could be a suitable option here.",
                 "This class is coupled to many parent classes. Overriding parent methods makes sense, but is not always necessary."),
-        LCOM("", ""),
-        LCOM3("", ""),
-        LOC("", ""),
-        MFA("", ""),
-        MOA("", ""),
-        NOC("", ""),
-        NPM("", ""),
-        RFC("", ""),
-        WMC("", "");
+        LCOM("The modularisation of this class is too low. Too many methods operate on different attributes.",
+                "The modularisation of this class is quite high. You could think about the necessity if your class is very small."),
+        LCOM3("The modularisation of this class is too low. Too many methods operate on different attributes.",
+                "The modularisation of this class is quite high. You could think about the necessity if your class is very small."),
+        LOC("This class contains very few lines of code. Is it even necessary to put these functionalities into a separate class?",
+                "This class contains too many lines of code, it could be considered as a \"God Class\". Try to keep only the main functionality in this class, others should be implemented into other (new) classes."),
+        MFA("The functional abstraction of this class ist quite low. If possible, try to let his class inherit some methods.",
+                "The functional abstraction of this class is very high. Consider refactoring this class into an abstract class if this is not yet the case."),
+        MOA("This class contains too few class fields. In order to increase class aggregation, also increase the number of fields or merge this class into another.",
+                "This class contains too many class fields. Try to inline fields or extract functionalities into other classes"),
+        NOC("This class has very few or no immediate descendants. Would extending this class be reasonable?",
+                "This class has too much immediate descendants. Consider using multiple inheritance, i.e. creating subclasses of a subclass."),
+        NPM("This class uses few or no public methods. Is this intended?",
+                "This class uses mostly public methods. Try to decrease their visibility to force the information hiding principle"),
+        RFC("This class has too few or zero (in-)directly executable methods. Is this class even necessary then?",
+                "This class is able to (in-)directly execute too many methods. This is a typical smell for a god class. Does your class have one main functionality? Can some functionalities be extracted into other existing or new classes?"),
+        WMC("This class contains too few or zero methods. Is this class even necessary then?",
+                "This class contains too many methods. This is a typical smell for a god class. Does your class have one main functionality? Can some functionalities be extracted into other existing or new classes?");
 
         private final String lowerBoundReachedSuggestion;
         private final String upperBoundReachedSuggestion;
