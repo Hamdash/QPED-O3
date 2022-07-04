@@ -267,6 +267,11 @@ public class DesignFeedbackGenerator {
         }
     }
 
+    /**
+     * Enumeration that contains suggestions for every metric when the lower or upper boundary was exceeded.
+     *
+     * @author Jannik Seus
+     */
     private enum Suggestion {
         AMC("Increase your average method size, e.g. by joining multiple methods with mostly the same functionalities from over-engineering.",
                 "Decrease your average method size, e.g. by delegating functionalities to other newly created methods."),
@@ -297,11 +302,11 @@ public class DesignFeedbackGenerator {
         MFA("The functional abstraction of this class ist quite low. If possible, try to let his class inherit some methods.",
                 "The functional abstraction of this class is very high. Consider refactoring this class into an abstract class if this is not yet the case."),
         MOA("This class contains too few class fields. In order to increase class aggregation, also increase the number of fields or merge this class into another.",
-                "This class contains too many class fields. Try to inline fields or extract functionalities into other classes"),
+                "This class contains too many class fields. Try to inline fields or extract functionalities into other classes."),
         NOC("This class has very few or no immediate descendants. Would extending this class be reasonable?",
                 "This class has too much immediate descendants. Consider using multiple inheritance, i.e. creating subclasses of a subclass."),
         NPM("This class uses few or no public methods. Is this intended?",
-                "This class uses mostly public methods. Try to decrease their visibility to force the information hiding principle"),
+                "This class uses mostly public methods. Try to decrease their visibility to force the information hiding principle."),
         RFC("This class has too few or zero (in-)directly executable methods. Is this class even necessary then?",
                 "This class is able to (in-)directly execute too many methods. This is a typical smell for a god class. Does your class have one main functionality? Can some functionalities be extracted into other existing or new classes?"),
         WMC("This class contains too few or zero methods. Is this class even necessary then?",

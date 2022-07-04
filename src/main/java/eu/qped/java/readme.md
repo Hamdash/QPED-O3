@@ -19,6 +19,10 @@ It is also possible to base the report on one of the three knowledge levels spec
 Semantics Checker analyzes the meaning of the code and gives feedback on the methodology used within a given method.
 The checker can give feedback on whether a learner is supposed to use a certain type of loop or recursion, as well as the correct return type.
 
+### Design Checker
+Design Checker analyzes a given class or project for class design by using well-known class design metrics.
+This checker generates feedback when the given class or method violates one of these metrics' set boundaries.
+
 ### Class Checker
 Class Checker compares the given solution to the expected design decisions, such as correctly  setting field or method visibilities.
 This includes checking if the solution correctly uses the expected class type for either the current class, or the inherited classes. 

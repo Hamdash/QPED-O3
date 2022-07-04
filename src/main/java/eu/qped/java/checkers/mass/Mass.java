@@ -106,7 +106,7 @@ public class Mass implements Checker {
                             + NEW_LINE
                             + df.getMetric() + " (" + df.getBody() + ")"
                             + NEW_LINE
-                            + "Measured at: " + df.getValue()
+                            + "Measured with value: " + df.getValue()
                             + NEW_LINE
                             + df.getSuggestion()
                     + "------------------------------------------------------------------------------";

@@ -1,10 +1,8 @@
 package eu.qped.java.checkers.design.configuration;
 
 import eu.qped.java.checkers.design.ckjm.DesignCheckEntryHandler.Metric;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Represents a class to define a {@link #lowerBound} and an {@link #upperBound} to a specific {@link #metric}.
@@ -12,9 +10,9 @@ import lombok.Data;
  *
  * @author Jannik Seus
  */
-@Data
-@Builder
-public class MetricThreshold implements Comparable<MetricThreshold>{
+@Getter
+@Setter
+public class MetricThreshold implements Comparable<MetricThreshold> {
 
     private Metric metric;
     private double lowerBound;
@@ -25,9 +23,21 @@ public class MetricThreshold implements Comparable<MetricThreshold>{
         if (this.metric == null) {
             throw new IllegalStateException("A metric must be specified.");
         }
-        this.lowerBound = this.metric.getDefaultLowerBound();
-        this.upperBound = this.metric.getDefaultUpperBound();
+        this.lowerBound = this.metric.getMinimum();
+        this.upperBound = this.metric.getMaximum();
     }
+
+    public MetricThreshold(Metric metric, double bound, boolean lower) {
+        this.metric = metric;
+        if (lower) {
+            this.lowerBound = bound;
+            this.upperBound = this.metric.getMaximum();
+        } else {
+            this.lowerBound = this.metric.getMinimum();
+            this.upperBound = bound;
+        }
+    }
+
 
     public MetricThreshold(Metric metric, double lowerBound, double upperBound) {
         this.metric = metric;
@@ -45,6 +55,7 @@ public class MetricThreshold implements Comparable<MetricThreshold>{
 
     @Override
     public int compareTo(MetricThreshold o) {
+        if (o == null) return 1;
         return this.metric.toString().compareTo(o.getMetric().toString());
     }
 }

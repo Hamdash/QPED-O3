@@ -442,12 +442,12 @@ public class QFDesignSettings extends QfObjectBase {
 
     public void setLoc(String locMin, String locMax) {
         if (locMin == null) {
-            this.locMin = Double.toString(LOC.getDefaultLowerBound());
+            this.locMin = Double.toString(LOC.getMinimum());
         } else {
             this.locMin = locMin;
         }
         if (locMax == null) {
-            this.locMax = Double.toString(LOC.getDefaultLowerBound());
+            this.locMax = Double.toString(LOC.getMinimum());
         } else {
             this.locMax = locMax;
         }
@@ -455,12 +455,12 @@ public class QFDesignSettings extends QfObjectBase {
 
     public void setWmc(String wmcMin, String wmcMax) {
         if (wmcMin == null) {
-            this.wmcMin = Double.toString(WMC.getDefaultLowerBound());
+            this.wmcMin = Double.toString(WMC.getMinimum());
         } else {
             this.wmcMin = wmcMin;
         }
         if (wmcMax == null) {
-            this.wmcMax = Double.toString(WMC.getDefaultUpperBound());
+            this.wmcMax = Double.toString(WMC.getMaximum());
         } else {
             this.wmcMax = wmcMax;
         }
@@ -468,12 +468,12 @@ public class QFDesignSettings extends QfObjectBase {
 
     public void setNoc(String nocMin, String nocMax) {
         if (nocMin == null) {
-            this.nocMin = Double.toString(NOC.getDefaultLowerBound());
+            this.nocMin = Double.toString(NOC.getMinimum());
         } else {
             this.nocMin = nocMin;
         }
         if (nocMax == null) {
-            this.nocMax = Double.toString(NOC.getDefaultUpperBound());
+            this.nocMax = Double.toString(NOC.getMaximum());
         } else {
             this.nocMax = nocMax;
         }
@@ -481,12 +481,12 @@ public class QFDesignSettings extends QfObjectBase {
 
     public void setRfc(String rfcMin, String rfcMax) {
         if (rfcMin == null) {
-            this.rfcMin = Double.toString(RFC.getDefaultLowerBound());
+            this.rfcMin = Double.toString(RFC.getMinimum());
         } else {
             this.rfcMin = rfcMin;
         }
         if (rfcMax == null) {
-            this.rfcMax = Double.toString(RFC.getDefaultUpperBound());
+            this.rfcMax = Double.toString(RFC.getMaximum());
         } else {
             this.rfcMax = rfcMax;
         }
@@ -494,12 +494,12 @@ public class QFDesignSettings extends QfObjectBase {
 
     public void setCe(String ceMin, String ceMax) {
         if (ceMin == null) {
-            this.ceMin = Double.toString(CE.getDefaultLowerBound());
+            this.ceMin = Double.toString(CE.getMinimum());
         } else {
             this.ceMin = ceMin;
         }
         if (ceMax == null) {
-            this.ceMax = Double.toString(CE.getDefaultUpperBound());
+            this.ceMax = Double.toString(CE.getMaximum());
         } else {
             this.ceMax = ceMax;
         }
@@ -507,12 +507,12 @@ public class QFDesignSettings extends QfObjectBase {
 
     public void setCa(String caMin, String caMax) {
         if (caMin == null) {
-            this.caMin = Double.toString(CA.getDefaultLowerBound());
+            this.caMin = Double.toString(CA.getMinimum());
         } else {
             this.caMin = caMin;
         }
         if (caMax == null) {
-            this.caMax = Double.toString(CA.getDefaultUpperBound());
+            this.caMax = Double.toString(CA.getMaximum());
         } else {
             this.caMax = caMax;
         }
@@ -520,12 +520,12 @@ public class QFDesignSettings extends QfObjectBase {
 
     public void setDit(String ditMin, String ditMax) {
         if (ditMin == null) {
-            this.ditMin = Double.toString(DIT.getDefaultLowerBound());
+            this.ditMin = Double.toString(DIT.getMinimum());
         } else {
             this.ditMin = ditMin;
         }
         if (ditMax == null) {
-            this.ditMax = Double.toString(DIT.getDefaultUpperBound());
+            this.ditMax = Double.toString(DIT.getMaximum());
         } else {
             this.ditMax = ditMax;
         }
@@ -533,12 +533,12 @@ public class QFDesignSettings extends QfObjectBase {
 
     public void setLcom(String lcomMin, String lcomMax) {
         if (lcomMin == null) {
-            this.lcomMin = Double.toString(LCOM.getDefaultLowerBound());
+            this.lcomMin = Double.toString(LCOM.getMinimum());
         } else {
             this.lcomMin = lcomMin;
         }
         if (lcomMax == null) {
-            this.lcomMax = Double.toString(LCOM.getDefaultUpperBound());
+            this.lcomMax = Double.toString(LCOM.getMaximum());
         } else {
             this.lcomMax = lcomMax;
         }
@@ -546,12 +546,12 @@ public class QFDesignSettings extends QfObjectBase {
 
     public void setLcom3(String lcom3Min, String lcom3Max) {
         if (lcom3Min == null) {
-            this.lcom3Min = Double.toString(LCOM3.getDefaultLowerBound());
+            this.lcom3Min = Double.toString(LCOM3.getMinimum());
         } else {
             this.lcom3Min = lcom3Min;
         }
         if (lcom3Max == null) {
-            this.lcom3Max = Double.toString(LCOM3.getDefaultUpperBound());
+            this.lcom3Max = Double.toString(LCOM3.getMaximum());
         } else {
             this.lcom3Max = lcom3Max;
         }
@@ -559,12 +559,12 @@ public class QFDesignSettings extends QfObjectBase {
 
     public void setNpm(String npmMin, String npmMax) {
         if (npmMin == null) {
-            this.npmMin = Double.toString(NPM.getDefaultLowerBound());
+            this.npmMin = Double.toString(NPM.getMinimum());
         } else {
             this.npmMin = npmMin;
         }
         if (npmMax == null) {
-            this.npmMax = Double.toString(NPM.getDefaultUpperBound());
+            this.npmMax = Double.toString(NPM.getMaximum());
         } else {
             this.npmMax = npmMax;
         }
@@ -572,12 +572,12 @@ public class QFDesignSettings extends QfObjectBase {
 
     public void setCc(String ccMin, String ccMax) {
         if (ccMin == null) {
-            this.ccMin = Double.toString(CC.getDefaultLowerBound());
+            this.ccMin = Double.toString(CC.getMinimum());
         } else {
             this.ccMin = ccMin;
         }
         if (ccMax == null) {
-            this.ccMax = Double.toString(CC.getDefaultUpperBound());
+            this.ccMax = Double.toString(CC.getMaximum());
         } else {
             this.ccMax = ccMax;
         }
@@ -585,12 +585,12 @@ public class QFDesignSettings extends QfObjectBase {
 
     public void setDam(String damMin, String damMax) {
         if (damMin == null) {
-            this.damMin = Double.toString(DAM.getDefaultLowerBound());
+            this.damMin = Double.toString(DAM.getMinimum());
         } else {
             this.damMin = damMin;
         }
         if (damMax == null) {
-            this.damMax = Double.toString(DAM.getDefaultUpperBound());
+            this.damMax = Double.toString(DAM.getMaximum());
         } else {
             this.damMax = damMax;
         }
@@ -598,12 +598,12 @@ public class QFDesignSettings extends QfObjectBase {
 
     public void setMoa(String moaMin, String moaMax) {
         if (moaMin == null) {
-            this.moaMin = Double.toString(MOA.getDefaultLowerBound());
+            this.moaMin = Double.toString(MOA.getMinimum());
         } else {
             this.moaMin = moaMin;
         }
         if (moaMax == null) {
-            this.moaMax = Double.toString(MOA.getDefaultUpperBound());
+            this.moaMax = Double.toString(MOA.getMaximum());
         } else {
             this.moaMax = moaMax;
         }
@@ -611,12 +611,12 @@ public class QFDesignSettings extends QfObjectBase {
 
     public void setMfa(String mfaMin, String mfaMax) {
         if (mfaMin == null) {
-            this.mfaMin = Double.toString(MFA.getDefaultLowerBound());
+            this.mfaMin = Double.toString(MFA.getMinimum());
         } else {
             this.mfaMin = mfaMin;
         }
         if (mfaMax == null) {
-            this.mfaMax = Double.toString(MFA.getDefaultUpperBound());
+            this.mfaMax = Double.toString(MFA.getMaximum());
         } else {
             this.mfaMax = mfaMax;
         }
@@ -624,12 +624,12 @@ public class QFDesignSettings extends QfObjectBase {
 
     public void setCam(String camMin, String camMax) {
         if (camMin == null) {
-            this.camMin = Double.toString(CAM.getDefaultLowerBound());
+            this.camMin = Double.toString(CAM.getMinimum());
         } else {
             this.camMin = camMin;
         }
         if (camMax == null) {
-            this.camMax = Double.toString(CAM.getDefaultUpperBound());
+            this.camMax = Double.toString(CAM.getMaximum());
         } else {
             this.camMax = camMax;
         }
@@ -637,12 +637,12 @@ public class QFDesignSettings extends QfObjectBase {
 
     public void setIc(String icMin, String icMax) {
         if (icMin == null) {
-            this.icMin = Double.toString(IC.getDefaultLowerBound());
+            this.icMin = Double.toString(IC.getMinimum());
         } else {
             this.icMin = icMin;
         }
         if (icMax == null) {
-            this.icMax = Double.toString(IC.getDefaultUpperBound());
+            this.icMax = Double.toString(IC.getMaximum());
         } else {
             this.icMax = icMax;
         }
@@ -650,12 +650,12 @@ public class QFDesignSettings extends QfObjectBase {
 
     public void setCbm(String cbmMin, String cbmMax) {
         if (cbmMin == null) {
-            this.cbmMin = Double.toString(CBM.getDefaultLowerBound());
+            this.cbmMin = Double.toString(CBM.getMinimum());
         } else {
             this.cbmMin = cbmMin;
         }
         if (cbmMax == null) {
-            this.cbmMax = Double.toString(CBM.getDefaultUpperBound());
+            this.cbmMax = Double.toString(CBM.getMaximum());
         } else {
             this.cbmMax = cbmMax;
         }
@@ -663,12 +663,12 @@ public class QFDesignSettings extends QfObjectBase {
 
     public void setAmc(String amcMin, String amcMax) {
         if (amcMin == null) {
-            this.amcMin = Double.toString(AMC.getDefaultLowerBound());
+            this.amcMin = Double.toString(AMC.getMinimum());
         } else {
             this.amcMin = amcMin;
         }
         if (amcMax == null) {
-            this.amcMax = Double.toString(AMC.getDefaultUpperBound());
+            this.amcMax = Double.toString(AMC.getMaximum());
         } else {
             this.amcMax = amcMax;
         }
@@ -676,12 +676,12 @@ public class QFDesignSettings extends QfObjectBase {
 
     public void setCbo(String cboMin, String cboMax) {
         if (cboMin == null) {
-            this.cboMin = Double.toString(CBO.getDefaultLowerBound());
+            this.cboMin = Double.toString(CBO.getMinimum());
         } else {
             this.cboMin = cboMin;
         }
         if (cboMax == null) {
-            this.cboMax = Double.toString(CBO.getDefaultUpperBound());
+            this.cboMax = Double.toString(CBO.getMaximum());
         } else {
             this.cboMax = cboMax;
         }

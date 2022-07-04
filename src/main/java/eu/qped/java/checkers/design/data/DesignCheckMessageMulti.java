@@ -1,8 +1,7 @@
 package eu.qped.java.checkers.design.data;
 
-
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 
 import java.util.Map;
 
@@ -14,12 +13,18 @@ import static eu.qped.java.checkers.design.ckjm.DesignCheckEntryHandler.*;
  *
  * @author Jannik Seus
  */
-@Data
+@Getter
 @AllArgsConstructor
 public class DesignCheckMessageMulti extends DesignCheckMessage {
 
     private Map<String, Integer> metricValues;
 
+    /**
+     * Main constructor.
+     *
+     * @param metric       the given metric
+     * @param metricValues the calculated values of the given metric for a class
+     */
     public DesignCheckMessageMulti(Metric metric, Map<String, Integer> metricValues) {
         super(metric);
         this.metricValues = metricValues;

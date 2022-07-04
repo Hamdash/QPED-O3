@@ -146,7 +146,7 @@ class DesignFeedbackTest {
     }
 
     private static DesignSettings setMetric(Metric metric) {
-        DesignSettings designSettings = new DesignSettings();
+        DesignSettings designSettings = DesignSettings.builder().build();
 
         switch (metric) {
             case AMC:

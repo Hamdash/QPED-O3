@@ -4,8 +4,6 @@ import eu.qped.framework.qf.QfObjectBase;
 import eu.qped.java.checkers.design.DesignChecker;
 import lombok.*;
 
-import java.util.List;
-
 /**
  * Class modeling design settings for {@link DesignChecker}.
  * The fields are modeling the threshold for the corresponding metric.
@@ -14,12 +12,8 @@ import java.util.List;
  */
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class DesignSettings extends QfObjectBase {
-
-    private List<MetricThreshold> metricThresholds; //TODO refactor into single list instead of 19 fields??
 
     /**
      * Average method Complexity

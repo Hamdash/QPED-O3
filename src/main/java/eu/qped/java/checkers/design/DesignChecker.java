@@ -33,7 +33,7 @@ public class DesignChecker {
     @Setter(AccessLevel.NONE)
     private QFDesignSettings qfDesignSettings;
 
-    private final static String CLASSFILES_PATH = "src/main/java/eu/qped/java/utils/compiler/compiledFiles";
+    private final static String CLASS_FILES_PATH = "src/main/java/eu/qped/java/utils/compiler/compiledFiles";
 
     /**
      * Method is able to check one or multiple .class files
@@ -45,10 +45,10 @@ public class DesignChecker {
 
         DesignCheckReport designCheckReport = DesignCheckReport.builder().build();
         DesignSettingsReader designSettingsReader = DesignSettingsReader.builder().qfDesignSettings(this.qfDesignSettings).build();
-        DesignSettings designSettings = designSettingsReader.readDesignSettings();
+        DesignSettings designSettings = designSettingsReader.readDesignSettings(DesignSettings.builder().build());
 
         List<File> classFiles
-                = ExtractJavaFilesFromDirectory.builder().dirPath(CLASSFILES_PATH).build().filesWithExtension("class");
+                = ExtractJavaFilesFromDirectory.builder().dirPath(CLASS_FILES_PATH).build().filesWithExtension("class");
         String[] pathsToClassFiles = classFiles.stream().map(File::getPath).toArray(String[]::new);
 
         runCkjmExtended(designCheckReport, pathsToClassFiles);

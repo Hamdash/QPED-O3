@@ -258,17 +258,17 @@ public class MassExecutor {
         qfDesignSettings.setCam("0.5", "1.0");
         qfDesignSettings.setCbm("0.5", "1.0");
         qfDesignSettings.setCbo("0.5", "1.0");
-        qfDesignSettings.setCc("0.5", "1.0");
+        qfDesignSettings.setCc("0.5", "3");
         qfDesignSettings.setCe("0.5", "1.0");
         qfDesignSettings.setDam("0.5", "1.0");
         qfDesignSettings.setDit("0.5", "1.0");
         qfDesignSettings.setIc("0.5", "1.0");
         qfDesignSettings.setLcom("0.5", "1.0");
         qfDesignSettings.setLcom3("0.5", "1.0");
-        qfDesignSettings.setLoc("0.5", "1.0");
+        qfDesignSettings.setLoc("15.0", "60.0");
         qfDesignSettings.setMoa("0.5", "1.0");
         qfDesignSettings.setMfa("0.5", "1.0");
-        qfDesignSettings.setNoc("0.5", "1.0");
+        qfDesignSettings.setNoc("0.0", "5.0");
         qfDesignSettings.setNpm("0.5", "1.0");
         qfDesignSettings.setRfc("0.5", "1.0");
         qfDesignSettings.setWmc("0.5", "1.0");
@@ -277,7 +277,8 @@ public class MassExecutor {
 
 
         //targetProject("exam-results/src/compiledSources/GrayCode.java")
-        SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(code).build();
+        //SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(code).build();
+        SyntaxChecker syntaxChecker = SyntaxChecker.builder().targetProject("src/main/resources/testProject").build();
 
 
         MassExecutor massE = new MassExecutor(styleChecker, semanticChecker, syntaxChecker, designChecker, mainSettingsConfiguratorConf);

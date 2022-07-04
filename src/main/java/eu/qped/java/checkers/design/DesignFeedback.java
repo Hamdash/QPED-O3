@@ -37,8 +37,6 @@ public class DesignFeedback extends Feedback {
         this.suggestion = suggestion;
     }
 
-    //TODO methods: generateMetricSuggestionLowerThExceeded(..); and generateMetricSuggestionUpperThExceeded(..);
-
     @Override
     public String toString() {
         StringBuilder feedbackString = new StringBuilder();
@@ -54,9 +52,9 @@ public class DesignFeedback extends Feedback {
                     .append("' in class '").append(this.className)
                     .append("' exceeded.\t")
                     .append("Thresholds: ").append("(")
-                    .append(this.metric.getDefaultLowerBound())
+                    .append(this.metric.getMinimum())
                     .append(", ")
-                    .append(this.metric.getDefaultUpperBound())
+                    .append(this.metric.getMaximum())
                     .append(")");
         } else {
             feedbackString

@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author Jannik Seus
  */
-@Data
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

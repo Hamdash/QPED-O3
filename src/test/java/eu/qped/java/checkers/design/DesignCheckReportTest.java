@@ -1,10 +1,9 @@
 package eu.qped.java.checkers.design;
 
 import eu.qped.java.checkers.design.data.DesignCheckEntry;
-import eu.qped.java.checkers.design.data.DesignCheckMessage;
 import eu.qped.java.checkers.design.data.DesignCheckMessageSingle;
 import eu.qped.java.checkers.design.data.DesignCheckReport;
-import eu.qped.java.checkers.design.utils.TestUtility;
+import eu.qped.java.checkers.design.utils.DesignTestUtility;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -49,7 +48,7 @@ class DesignCheckReportTest {
 
     @Test
     void setMetricsMap() throws IllegalAccessException {
-        Field metricsMapField = TestUtility.getFieldByName("metricsMap", fields);
+        Field metricsMapField = DesignTestUtility.getFieldByName("metricsMap", fields);
         if (metricsMapField != null) {
             metricsMapField.setAccessible(true);
             sampleMapMetrics = List.of(new DesignCheckEntry("Class A", List.of(new DesignCheckMessageSingle(Metric.AMC, 1.0))));
@@ -62,7 +61,7 @@ class DesignCheckReportTest {
 
     @Test
     void getMetricsMap() {
-        Field metricsMapField = TestUtility.getFieldByName("metricsMap", fields);
+        Field metricsMapField = DesignTestUtility.getFieldByName("metricsMap", fields);
         if (metricsMapField != null) {
             metricsMapField.setAccessible(true);
         }

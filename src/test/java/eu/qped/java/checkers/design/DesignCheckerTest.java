@@ -3,7 +3,7 @@ package eu.qped.java.checkers.design;
 import eu.qped.java.checkers.design.configuration.DesignSettings;
 import eu.qped.java.checkers.design.configuration.DesignSettingsReader;
 import eu.qped.java.checkers.design.data.DesignCheckReport;
-import eu.qped.java.checkers.design.utils.TestUtility;
+import eu.qped.java.checkers.design.utils.DesignTestUtility;
 import eu.qped.java.checkers.mass.QFDesignSettings;
 import eu.qped.java.utils.ExtractJavaFilesFromDirectory;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,7 +34,7 @@ class DesignCheckerTest {
 
     @BeforeEach
     void setUp() {
-        TestUtility.generateTestClass();
+        DesignTestUtility.generateTestClass();
 
         designCheckerEmpty = DesignChecker.builder().build();
         designCheckerFilled = DesignChecker.builder()
@@ -46,7 +46,7 @@ class DesignCheckerTest {
 
     @Test
     void testClassFilesPath() throws IllegalAccessException {
-        Field classFilesPathField = TestUtility.getFieldByName("CLASSFILES_PATH", fields);
+        Field classFilesPathField = DesignTestUtility.getFieldByName("CLASSFILES_PATH", fields);
         assert classFilesPathField != null;
         classFilesPathField.setAccessible(true);
         String classFilesPath = (String) classFilesPathField.get(DesignChecker.class);
@@ -58,7 +58,7 @@ class DesignCheckerTest {
     void testEmptyDesignChecker() throws IllegalAccessException {
         assertNull(designCheckerEmpty.getDesignFeedbacks());
 
-        Field qfDesignSettingsField = TestUtility.getFieldByName("qfDesignSettings", fields);
+        Field qfDesignSettingsField = DesignTestUtility.getFieldByName("qfDesignSettings", fields);
         assert qfDesignSettingsField != null;
         qfDesignSettingsField.setAccessible(true);
         assertNull(qfDesignSettingsField.get(designCheckerEmpty));
@@ -69,7 +69,7 @@ class DesignCheckerTest {
     void testFilledDesignChecker() throws IllegalAccessException {
         assertNotNull(designCheckerFilled.getDesignFeedbacks());
 
-        Field qfDesignSettingsField = TestUtility.getFieldByName("qfDesignSettings", fields);
+        Field qfDesignSettingsField = DesignTestUtility.getFieldByName("qfDesignSettings", fields);
         assert qfDesignSettingsField != null;
         qfDesignSettingsField.setAccessible(true);
         assertNotNull(qfDesignSettingsField.get(designCheckerFilled));
@@ -79,7 +79,7 @@ class DesignCheckerTest {
     void testNoArgsDesignChecker() throws IllegalAccessException {
         assertNull(designCheckerNoArgs.getDesignFeedbacks());
 
-        Field qfDesignSettingsField = TestUtility.getFieldByName("qfDesignSettings", fields);
+        Field qfDesignSettingsField = DesignTestUtility.getFieldByName("qfDesignSettings", fields);
         assert qfDesignSettingsField != null;
         qfDesignSettingsField.setAccessible(true);
         assertNull(qfDesignSettingsField.get(designCheckerNoArgs));
@@ -89,11 +89,11 @@ class DesignCheckerTest {
 
     @Test
     void testCheck() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        DesignChecker designCheckerCustom = DesignChecker.builder().qfDesignSettings(TestUtility.generateSampleQFDesignSettings()).build();
+        DesignChecker designCheckerCustom = DesignChecker.builder().qfDesignSettings(DesignTestUtility.generateSampleQFDesignSettings()).build();
 
         DesignCheckReport designCheckReport = DesignCheckReport.builder().build();
-        DesignSettingsReader designSettingsReader = DesignSettingsReader.builder().qfDesignSettings(TestUtility.generateSampleQFDesignSettings()).build();
-        DesignSettings designSettings = designSettingsReader.readDesignSettings();
+        DesignSettingsReader designSettingsReader = DesignSettingsReader.builder().qfDesignSettings(DesignTestUtility.generateSampleQFDesignSettings()).build();
+        DesignSettings designSettings = designSettingsReader.readDesignSettings(DesignSettings.builder().build());
 
         List<File> classFiles
                 = ExtractJavaFilesFromDirectory.builder().dirPath("src/main/java/eu/qped/java/utils/compiler/compiledFiles").build().filesWithExtension("class");
@@ -112,7 +112,7 @@ class DesignCheckerTest {
     }
     @Test
     void testToString() throws IllegalAccessException {
-        Field qfDesignSettingsField = TestUtility.getFieldByName("qfDesignSettings", fields);
+        Field qfDesignSettingsField = DesignTestUtility.getFieldByName("qfDesignSettings", fields);
         assert qfDesignSettingsField != null;
         qfDesignSettingsField.setAccessible(true);
 
