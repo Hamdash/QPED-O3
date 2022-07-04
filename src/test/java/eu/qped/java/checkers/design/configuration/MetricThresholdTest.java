@@ -1,6 +1,5 @@
 package eu.qped.java.checkers.design.configuration;
 
-import eu.qped.java.checkers.design.ckjm.DesignCheckEntryHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class MetricThresholdTest {
 
-    private MetricThreshold metricThreshold0;
     private MetricThreshold metricThreshold1;
     private MetricThreshold metricThreshold2;
     private MetricThreshold metricThreshold3;
@@ -41,8 +39,8 @@ class MetricThresholdTest {
         thresholds.sort(Comparator.naturalOrder());
         ArrayList<MetricThreshold> sortedThresholds = new ArrayList<>(List.of(metricThreshold4, metricThreshold1, metricThreshold3, metricThreshold2, metricThreshold5));
         assertArrayEquals(sortedThresholds.toArray(), thresholds.toArray());
-        assertThrows(IllegalStateException.class, () -> metricThreshold0 = new MetricThreshold(null));
-        assertThrows(IllegalStateException.class, () -> metricThreshold0 = new MetricThreshold(null, 0d, 1d));
+        assertThrows(IllegalStateException.class, () -> new MetricThreshold(null));
+        assertThrows(IllegalStateException.class, () -> new MetricThreshold(null, 0d, 1d));
     }
 
     @Test

@@ -1,6 +1,5 @@
 package eu.qped.java.checkers.design.data;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import static eu.qped.java.checkers.design.ckjm.DesignCheckEntryHandler.*;
@@ -12,10 +11,9 @@ import static eu.qped.java.checkers.design.ckjm.DesignCheckEntryHandler.*;
  * @author Jannik Seus
  */
 @Getter
-@AllArgsConstructor
 public class DesignCheckMessageSingle extends DesignCheckMessage {
 
-    private double metricValue;
+    private final double metricValue;
 
     /**
      * Main constructor.

@@ -1,9 +1,7 @@
 package eu.qped.java.checkers.design.configuration;
 
-import eu.qped.java.checkers.design.ckjm.DesignCheckEntryHandler;
 import eu.qped.java.checkers.design.utils.DesignTestUtility;
 import eu.qped.java.checkers.mass.QFDesignSettings;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

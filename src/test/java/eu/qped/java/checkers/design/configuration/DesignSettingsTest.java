@@ -1,7 +1,5 @@
 package eu.qped.java.checkers.design.configuration;
 
-import eu.qped.java.checkers.design.configuration.DesignSettings;
-import eu.qped.java.checkers.design.configuration.MetricThreshold;
 import eu.qped.java.checkers.design.utils.DesignTestUtility;
 import eu.qped.java.checkers.mass.QFDesignSettings;
 import org.junit.jupiter.api.BeforeEach;
@@ -105,5 +103,4 @@ class DesignSettingsTest {
         assertThat(designSettings.getWmc().getLowerBound(), allOf(greaterThan(0.), lessThan(0.5)));
         assertThat(designSettings.getWmc().getUpperBound(), allOf(greaterThan(0.5), lessThan(1.)));
     }
-
 }

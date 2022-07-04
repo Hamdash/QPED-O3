@@ -2,7 +2,6 @@ package eu.qped.java.checkers.design.data;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
 import static eu.qped.java.checkers.design.ckjm.DesignCheckEntryHandler.*;
 
@@ -15,16 +14,10 @@ import static eu.qped.java.checkers.design.ckjm.DesignCheckEntryHandler.*;
  * @author Jannik Seus
  */
 @Getter
-@Setter
 @AllArgsConstructor
 public abstract class DesignCheckMessage implements Comparable<DesignCheckMessage>{
 
     private Metric metric;
-
-    /**
-     * Default constructor
-     */
-    public DesignCheckMessage() {}
 
     @Override
     public int compareTo(DesignCheckMessage otherDesignCheckMessage) {

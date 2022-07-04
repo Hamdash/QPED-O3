@@ -1,7 +1,7 @@
 package eu.qped.java.checkers.design.data;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author Jannik Seus
  */
-@Data
+@Getter
 @AllArgsConstructor
 public class DesignCheckEntry implements Comparable<DesignCheckEntry> {
 
