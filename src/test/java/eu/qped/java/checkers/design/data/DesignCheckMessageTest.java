@@ -10,7 +10,6 @@ import java.util.Comparator;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
-
 /**
  * Test class for {@link DesignCheckMessage}.
  *

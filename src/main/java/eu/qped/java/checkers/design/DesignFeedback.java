@@ -2,7 +2,6 @@ package eu.qped.java.checkers.design;
 
 import eu.qped.framework.Feedback;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +12,6 @@ import static eu.qped.java.checkers.design.ckjm.DesignCheckEntryHandler.*;
  *
  * @author Jannik Seus
  */
-@EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
 public class DesignFeedback extends Feedback {
@@ -24,7 +22,7 @@ public class DesignFeedback extends Feedback {
     private boolean lowerBoundReached;
     private boolean upperBoundReached;
     private String suggestion;
-    //private String example; //TODO schwierig, sich hier bei Klassendesign kurz zu halten
+    //private String example; //TODO difficult to give a short example for class design...
 
     @Builder
     public DesignFeedback(String className, String body, Metric metric, Double value, boolean lowerBoundReached, boolean upperBoundReached, String suggestion) {
@@ -67,6 +65,5 @@ public class DesignFeedback extends Feedback {
                 .append("Value=").append(this.value)
                 .append(",\t suggestion: ").append(this.metric.getDescription());
         return feedbackString.toString();
-
     }
 }

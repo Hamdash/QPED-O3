@@ -7,6 +7,7 @@ import java.lang.reflect.Field;
 import java.util.Random;
 
 /**
+ * Utility class for testing.
  * @author Jannik Seus
  */
 public class DesignTestUtility {

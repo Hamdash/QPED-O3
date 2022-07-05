@@ -19,7 +19,6 @@ import java.util.*;
  *
  * @author Jannik Seus
  */
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

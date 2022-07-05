@@ -20,7 +20,7 @@ import static eu.qped.java.checkers.design.ckjm.DesignCheckEntryHandler.*;
 public class DesignFeedbackGenerator {
 
     /**
-     * Generates a suggestion for the student depending on the exceeding of a metric's already calculated value.
+     * Generates a suggestion for the student depending on the exceeding of am already calculated value of a metric.
      *
      * @param metric     the given metric
      * @param lowerBound the lower threshold of the metric not to be exceeded
@@ -63,47 +63,50 @@ public class DesignFeedbackGenerator {
      * @return a metric and lower bound specific suggestion
      */
     private static String generateMetricSpecificSuggestionUpper(Metric metric) {
-        switch (metric) {
-            case AMC:
-                return Suggestion.AMC.getUpperBoundReachedSuggestion();
-            case CA:
-                return Suggestion.CA.getUpperBoundReachedSuggestion();
-            case CAM:
-                return Suggestion.CAM.getUpperBoundReachedSuggestion();
-            case CBM:
-                return Suggestion.CBM.getUpperBoundReachedSuggestion();
-            case CBO:
-                return Suggestion.CBO.getUpperBoundReachedSuggestion();
-            case CC:
-                return Suggestion.CC.getUpperBoundReachedSuggestion();
-            case CE:
-                return Suggestion.CE.getUpperBoundReachedSuggestion();
-            case DAM:
-                return Suggestion.DAM.getUpperBoundReachedSuggestion();
-            case DIT:
-                return Suggestion.DIT.getUpperBoundReachedSuggestion();
-            case IC:
-                return Suggestion.IC.getUpperBoundReachedSuggestion();
-            case LCOM:
-                return Suggestion.LCOM.getUpperBoundReachedSuggestion();
-            case LCOM3:
-                return Suggestion.LCOM3.getUpperBoundReachedSuggestion();
-            case LOC:
-                return Suggestion.LOC.getUpperBoundReachedSuggestion();
-            case MFA:
-                return Suggestion.MFA.getUpperBoundReachedSuggestion();
-            case MOA:
-                return Suggestion.MOA.getUpperBoundReachedSuggestion();
-            case NOC:
-                return Suggestion.NOC.getUpperBoundReachedSuggestion();
-            case NPM:
-                return Suggestion.NPM.getUpperBoundReachedSuggestion();
-            case RFC:
-                return Suggestion.RFC.getUpperBoundReachedSuggestion();
-            case WMC:
-                return Suggestion.WMC.getUpperBoundReachedSuggestion();
+
+        if (metric != null) {
+            switch (metric) {
+                case AMC:
+                    return Suggestion.AMC.getUpperBoundReachedSuggestion();
+                case CA:
+                    return Suggestion.CA.getUpperBoundReachedSuggestion();
+                case CAM:
+                    return Suggestion.CAM.getUpperBoundReachedSuggestion();
+                case CBM:
+                    return Suggestion.CBM.getUpperBoundReachedSuggestion();
+                case CBO:
+                    return Suggestion.CBO.getUpperBoundReachedSuggestion();
+                case CC:
+                    return Suggestion.CC.getUpperBoundReachedSuggestion();
+                case CE:
+                    return Suggestion.CE.getUpperBoundReachedSuggestion();
+                case DAM:
+                    return Suggestion.DAM.getUpperBoundReachedSuggestion();
+                case DIT:
+                    return Suggestion.DIT.getUpperBoundReachedSuggestion();
+                case IC:
+                    return Suggestion.IC.getUpperBoundReachedSuggestion();
+                case LCOM:
+                    return Suggestion.LCOM.getUpperBoundReachedSuggestion();
+                case LCOM3:
+                    return Suggestion.LCOM3.getUpperBoundReachedSuggestion();
+                case LOC:
+                    return Suggestion.LOC.getUpperBoundReachedSuggestion();
+                case MFA:
+                    return Suggestion.MFA.getUpperBoundReachedSuggestion();
+                case MOA:
+                    return Suggestion.MOA.getUpperBoundReachedSuggestion();
+                case NOC:
+                    return Suggestion.NOC.getUpperBoundReachedSuggestion();
+                case NPM:
+                    return Suggestion.NPM.getUpperBoundReachedSuggestion();
+                case RFC:
+                    return Suggestion.RFC.getUpperBoundReachedSuggestion();
+                case WMC:
+                    return Suggestion.WMC.getUpperBoundReachedSuggestion();
+            }
         }
-        throw new IllegalArgumentException("Illegal metric type/ illegal suggestion.");
+        throw new IllegalArgumentException("Invalid metric given.");
     }
 
     /**
@@ -114,48 +117,49 @@ public class DesignFeedbackGenerator {
      * @return a metric and lower bound specific suggestion
      */
     private static String generateMetricSpecificSuggestionLower(Metric metric) {
-        switch (metric) {
-
-            case AMC:
-                return Suggestion.AMC.getLowerBoundReachedSuggestion();
-            case CA:
-                return Suggestion.CA.getLowerBoundReachedSuggestion();
-            case CAM:
-                return Suggestion.CAM.getLowerBoundReachedSuggestion();
-            case CBM:
-                return Suggestion.CBM.getLowerBoundReachedSuggestion();
-            case CBO:
-                return Suggestion.CBO.getLowerBoundReachedSuggestion();
-            case CC:
-                return Suggestion.CC.getLowerBoundReachedSuggestion();
-            case CE:
-                return Suggestion.CE.getLowerBoundReachedSuggestion();
-            case DAM:
-                return Suggestion.DAM.getLowerBoundReachedSuggestion();
-            case DIT:
-                return Suggestion.DIT.getLowerBoundReachedSuggestion();
-            case IC:
-                return Suggestion.IC.getLowerBoundReachedSuggestion();
-            case LCOM:
-                return Suggestion.LCOM.getLowerBoundReachedSuggestion();
-            case LCOM3:
-                return Suggestion.LCOM3.getLowerBoundReachedSuggestion();
-            case LOC:
-                return Suggestion.LOC.getLowerBoundReachedSuggestion();
-            case MFA:
-                return Suggestion.MFA.getLowerBoundReachedSuggestion();
-            case MOA:
-                return Suggestion.MOA.getLowerBoundReachedSuggestion();
-            case NOC:
-                return Suggestion.NOC.getLowerBoundReachedSuggestion();
-            case NPM:
-                return Suggestion.NPM.getLowerBoundReachedSuggestion();
-            case RFC:
-                return Suggestion.RFC.getLowerBoundReachedSuggestion();
-            case WMC:
-                return Suggestion.WMC.getLowerBoundReachedSuggestion();
+        if (metric != null) {
+            switch (metric) {
+                case AMC:
+                    return Suggestion.AMC.getLowerBoundReachedSuggestion();
+                case CA:
+                    return Suggestion.CA.getLowerBoundReachedSuggestion();
+                case CAM:
+                    return Suggestion.CAM.getLowerBoundReachedSuggestion();
+                case CBM:
+                    return Suggestion.CBM.getLowerBoundReachedSuggestion();
+                case CBO:
+                    return Suggestion.CBO.getLowerBoundReachedSuggestion();
+                case CC:
+                    return Suggestion.CC.getLowerBoundReachedSuggestion();
+                case CE:
+                    return Suggestion.CE.getLowerBoundReachedSuggestion();
+                case DAM:
+                    return Suggestion.DAM.getLowerBoundReachedSuggestion();
+                case DIT:
+                    return Suggestion.DIT.getLowerBoundReachedSuggestion();
+                case IC:
+                    return Suggestion.IC.getLowerBoundReachedSuggestion();
+                case LCOM:
+                    return Suggestion.LCOM.getLowerBoundReachedSuggestion();
+                case LCOM3:
+                    return Suggestion.LCOM3.getLowerBoundReachedSuggestion();
+                case LOC:
+                    return Suggestion.LOC.getLowerBoundReachedSuggestion();
+                case MFA:
+                    return Suggestion.MFA.getLowerBoundReachedSuggestion();
+                case MOA:
+                    return Suggestion.MOA.getLowerBoundReachedSuggestion();
+                case NOC:
+                    return Suggestion.NOC.getLowerBoundReachedSuggestion();
+                case NPM:
+                    return Suggestion.NPM.getLowerBoundReachedSuggestion();
+                case RFC:
+                    return Suggestion.RFC.getLowerBoundReachedSuggestion();
+                case WMC:
+                    return Suggestion.WMC.getLowerBoundReachedSuggestion();
+            }
         }
-        throw new IllegalArgumentException("Illegal metric type/ illegal suggestion.");
+        throw new IllegalArgumentException("Invalid metric given.");
     }
 
     /**
@@ -165,7 +169,8 @@ public class DesignFeedbackGenerator {
      * @param designSettings the settings on which the feedback depends on //TODO wip configure design settings
      * @return the generated Feedback as a List.
      */
-    public static List<DesignFeedback> generateDesignFeedbacks(List<DesignCheckEntry> metricsMap, DesignSettings designSettings) {
+    public static List<DesignFeedback> generateDesignFeedbacks(List<DesignCheckEntry> metricsMap, DesignSettings
+            designSettings) {
         List<DesignFeedback> feedbacks = new ArrayList<>();
 
         metricsMap.forEach(designCheckEntry -> {
@@ -221,50 +226,52 @@ public class DesignFeedbackGenerator {
      * @param lower          determines whether to check the lower or upper threshold
      * @return whether the minimum (lower=true) or maximum (lower=false) threshold was exceeded.
      */
-    private static boolean isThresholdReached(Metric metric, DesignSettings designSettings, double value, boolean lower) {
+    private static boolean isThresholdReached(Metric metric, DesignSettings designSettings, double value,
+                                              boolean lower) {
+        if (metric != null) {
+            switch (metric) {
+                case AMC:
+                    return lower ? value < designSettings.getAmc().getLowerBound() : value > designSettings.getAmc().getUpperBound();
+                case CAM:
+                    return lower ? value < designSettings.getCam().getLowerBound() : value > designSettings.getCam().getUpperBound();
+                case CA:
+                    return lower ? value < designSettings.getCa().getLowerBound() : value > designSettings.getCa().getUpperBound();
+                case CBM:
+                    return lower ? value < designSettings.getCbm().getLowerBound() : value > designSettings.getCbm().getUpperBound();
+                case CBO:
+                    return lower ? value < designSettings.getCbo().getLowerBound() : value > designSettings.getCbo().getUpperBound();
+                case CC:
+                    return lower ? value < designSettings.getCc().getLowerBound() : value > designSettings.getCc().getUpperBound();
+                case CE:
+                    return lower ? value < designSettings.getCe().getLowerBound() : value > designSettings.getCe().getUpperBound();
+                case DAM:
+                    return lower ? value < designSettings.getDam().getLowerBound() : value > designSettings.getDam().getUpperBound();
+                case DIT:
+                    return lower ? value < designSettings.getDit().getLowerBound() : value > designSettings.getDit().getUpperBound();
+                case IC:
+                    return lower ? value < designSettings.getIc().getLowerBound() : value > designSettings.getIc().getUpperBound();
+                case LCOM:
+                    return lower ? value < designSettings.getLcom().getLowerBound() : value > designSettings.getLcom().getUpperBound();
+                case LCOM3:
+                    return lower ? value < designSettings.getLcom3().getLowerBound() : value > designSettings.getLcom3().getUpperBound();
+                case LOC:
+                    return lower ? value < designSettings.getLoc().getLowerBound() : value > designSettings.getLoc().getUpperBound();
+                case MOA:
+                    return lower ? value < designSettings.getMoa().getLowerBound() : value > designSettings.getMoa().getUpperBound();
+                case MFA:
+                    return lower ? value < designSettings.getMfa().getLowerBound() : value > designSettings.getMfa().getUpperBound();
+                case NOC:
+                    return lower ? value < designSettings.getNoc().getLowerBound() : value > designSettings.getNoc().getUpperBound();
+                case NPM:
+                    return lower ? value < designSettings.getNpm().getLowerBound() : value > designSettings.getNpm().getUpperBound();
+                case RFC:
+                    return lower ? value < designSettings.getRfc().getLowerBound() : value > designSettings.getRfc().getUpperBound();
+                case WMC:
+                    return lower ? value < designSettings.getWmc().getLowerBound() : value > designSettings.getWmc().getUpperBound();
+            }
 
-        switch (metric) {
-            case AMC:
-                return lower ? value < designSettings.getAmc().getLowerBound() : value > designSettings.getAmc().getUpperBound();
-            case CAM:
-                return lower ? value < designSettings.getCam().getLowerBound() : value > designSettings.getCam().getUpperBound();
-            case CA:
-                return lower ? value < designSettings.getCa().getLowerBound() : value > designSettings.getCa().getUpperBound();
-            case CBM:
-                return lower ? value < designSettings.getCbm().getLowerBound() : value > designSettings.getCbm().getUpperBound();
-            case CBO:
-                return lower ? value < designSettings.getCbo().getLowerBound() : value > designSettings.getCbo().getUpperBound();
-            case CC:
-                return lower ? value < designSettings.getCc().getLowerBound() : value > designSettings.getCc().getUpperBound();
-            case CE:
-                return lower ? value < designSettings.getCe().getLowerBound() : value > designSettings.getCe().getUpperBound();
-            case DAM:
-                return lower ? value < designSettings.getDam().getLowerBound() : value > designSettings.getDam().getUpperBound();
-            case DIT:
-                return lower ? value < designSettings.getDit().getLowerBound() : value > designSettings.getDit().getUpperBound();
-            case IC:
-                return lower ? value < designSettings.getIc().getLowerBound() : value > designSettings.getIc().getUpperBound();
-            case LCOM:
-                return lower ? value < designSettings.getLcom().getLowerBound() : value > designSettings.getLcom().getUpperBound();
-            case LCOM3:
-                return lower ? value < designSettings.getLcom3().getLowerBound() : value > designSettings.getLcom3().getUpperBound();
-            case LOC:
-                return lower ? value < designSettings.getLoc().getLowerBound() : value > designSettings.getLoc().getUpperBound();
-            case MOA:
-                return lower ? value < designSettings.getMoa().getLowerBound() : value > designSettings.getMoa().getUpperBound();
-            case MFA:
-                return lower ? value < designSettings.getMfa().getLowerBound() : value > designSettings.getMfa().getUpperBound();
-            case NOC:
-                return lower ? value < designSettings.getNoc().getLowerBound() : value > designSettings.getNoc().getUpperBound();
-            case NPM:
-                return lower ? value < designSettings.getNpm().getLowerBound() : value > designSettings.getNpm().getUpperBound();
-            case RFC:
-                return lower ? value < designSettings.getRfc().getLowerBound() : value > designSettings.getRfc().getUpperBound();
-            case WMC:
-                return lower ? value < designSettings.getWmc().getLowerBound() : value > designSettings.getWmc().getUpperBound();
-            default:
-                throw new IllegalArgumentException("Illegal Metric given.");
         }
+        throw new IllegalArgumentException("Illegal Metric given.");
     }
 
     /**
@@ -272,7 +279,7 @@ public class DesignFeedbackGenerator {
      *
      * @author Jannik Seus
      */
-    private enum Suggestion {
+    enum Suggestion {
         AMC("Increase your average method size, e.g. by joining multiple methods with mostly the same functionalities from over-engineering.",
                 "Decrease your average method size, e.g. by delegating functionalities to other newly created methods."),
         CA("This class is used by too few other classes. Is this class even necessary? Can you implement this class's functionalities into already existing classes?",

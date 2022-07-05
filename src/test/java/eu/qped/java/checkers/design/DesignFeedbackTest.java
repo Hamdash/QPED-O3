@@ -1,7 +1,6 @@
 package eu.qped.java.checkers.design;
 
 import eu.qped.java.checkers.design.configuration.DesignSettings;
-import eu.qped.java.checkers.design.configuration.MetricThreshold;
 import eu.qped.java.checkers.design.data.DesignCheckEntry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,8 +8,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.List;
 
 import static eu.qped.java.checkers.design.ckjm.DesignCheckEntryHandler.*;
@@ -18,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
 /**
- * Represents a test class for {@link DesignFeedback}.
+ * Test class for {@link DesignFeedback}.
  *
  * @author Jannik Seus
  */
@@ -65,7 +62,7 @@ class DesignFeedbackTest {
         designFeedback1.setLowerBoundReached(true);
 
         assertEquals
-                ("The " + Metric.AMC + "'s value is too low.",
+                ("The " + Metric.AMC + "'s value is too low: Increase your average method size, e.g. by joining multiple methods with mostly the same functionalities from over-engineering.",
                         DesignFeedbackGenerator.generateSuggestion(
                                 Metric.AMC,
                                 designFeedback1.isLowerBoundReached(),
@@ -75,7 +72,7 @@ class DesignFeedbackTest {
         designFeedback1.setUpperBoundReached(true);
 
         assertEquals
-                ("The " + Metric.AMC + "'s value is too high.",
+                ("The " + Metric.AMC + "'s value is too high: Decrease your average method size, e.g. by delegating functionalities to other newly created methods.",
                         DesignFeedbackGenerator.generateSuggestion(
                                 Metric.AMC,
                                 designFeedback1.isLowerBoundReached(),
@@ -90,10 +87,12 @@ class DesignFeedbackTest {
                         true,
                         true));
 
+        designFeedback1.setValue(99d);
+        assertEquals(99d, designFeedback1.getValue());
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"", "TestClass", "Testclass.java", "2143fwsqacy"})
+    @ValueSource(strings = {"", "TestClass", "AnotherTestClass.java", "RandomName"})
     void generateSuggestionTest(String className) {
         designFeedback1.setClassName(className);
         assertEquals(className, designFeedback1.getClassName());
@@ -111,19 +110,6 @@ class DesignFeedbackTest {
         assertEquals(DesignFeedbackGenerator.generateDesignFeedbacks(designCheckEntries, designSettings), List.of());
     }
 
-    @ParameterizedTest
-    @EnumSource(Metric.class)
-    void isThresholdReachedTest(Metric metric) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        DesignSettings designSettings = setMetric(metric);
-        Method isThresholdReachedMethod = DesignFeedback.class.getDeclaredMethod("isThresholdReached", Metric.class, DesignSettings.class, double.class, boolean.class);
-        isThresholdReachedMethod.setAccessible(true);
-        assertEquals(true, isThresholdReachedMethod.invoke(DesignFeedback.class, metric, designSettings, 2.0, false));
-        assertEquals(true, isThresholdReachedMethod.invoke(DesignFeedback.class, metric, designSettings, -1.0, true));
-        assertEquals(false, isThresholdReachedMethod.invoke(DesignFeedback.class, metric, designSettings, 0.5, true));
-        assertEquals(false, isThresholdReachedMethod.invoke(DesignFeedback.class, metric, designSettings, 0.5, false));
-        isThresholdReachedMethod.setAccessible(false);
-    }
-
     @Test
     void testToString() {
         assertEquals(
@@ -131,82 +117,17 @@ class DesignFeedbackTest {
                 designFeedback1.toString());
         designFeedback1.setLowerBoundReached(true);
         assertEquals(
-                "Lower threshold of metric 'AMC' in class 'TestClass' exceeded.\tThresholds: (0.0, 1.0)Value=0.0,\t suggestion: Average Method Complexity",
+                "Lower threshold of metric 'AMC' in class 'TestClass' exceeded.\tThresholds: (0.0, 1.7976931348623157E308)Value=0.0,\t suggestion: Average Method Complexity",
                 designFeedback1.toString());
         designFeedback1.setLowerBoundReached(false);
         designFeedback1.setUpperBoundReached(true);
 
         assertEquals(
-                "Upper threshold of metric 'AMC' in class 'TestClass' exceeded.\tThresholds: (0.0, 1.0)Value=0.0,\t suggestion: Average Method Complexity",
+                "Upper threshold of metric 'AMC' in class 'TestClass' exceeded.\tThresholds: (0.0, 1.7976931348623157E308)Value=0.0,	 suggestion: Average Method Complexity",
                 designFeedback1.toString());
 
         designFeedback1 = DesignFeedback.builder().build();
         assertNotNull(designFeedback1);
         assertThrows(NullPointerException.class, () -> designFeedback1.toString());
-    }
-
-    private static DesignSettings setMetric(Metric metric) {
-        DesignSettings designSettings = DesignSettings.builder().build();
-
-        switch (metric) {
-            case AMC:
-                designSettings.setAmc(new MetricThreshold(metric, 0, 1));
-                break;
-            case CAM:
-                designSettings.setCam(new MetricThreshold(metric, 0, 1));
-                break;
-            case CA:
-                designSettings.setCa(new MetricThreshold(metric, 0, 1));
-                break;
-            case CBM:
-                designSettings.setCbm(new MetricThreshold(metric, 0, 1));
-                break;
-            case CBO:
-                designSettings.setCbo(new MetricThreshold(metric, 0, 1));
-                break;
-            case CC:
-                designSettings.setCc(new MetricThreshold(metric, 0, 1));
-                break;
-            case CE:
-                designSettings.setCe(new MetricThreshold(metric, 0, 1));
-                break;
-            case DAM:
-                designSettings.setDam(new MetricThreshold(metric, 0, 1));
-                break;
-            case DIT:
-                designSettings.setDit(new MetricThreshold(metric, 0, 1));
-                break;
-            case IC:
-                designSettings.setIc(new MetricThreshold(metric, 0, 1));
-                break;
-            case LCOM:
-                designSettings.setLcom(new MetricThreshold(metric, 0, 1));
-                break;
-            case LCOM3:
-                designSettings.setLcom3(new MetricThreshold(metric, 0, 1));
-                break;
-            case LOC:
-                designSettings.setLoc(new MetricThreshold(metric, 0, 1));
-                break;
-            case MOA:
-                designSettings.setMoa(new MetricThreshold(metric, 0, 1));
-                break;
-            case MFA:
-                designSettings.setMfa(new MetricThreshold(metric, 0, 1));
-                break;
-            case NOC:
-                designSettings.setNoc(new MetricThreshold(metric, 0, 1));
-                break;
-            case NPM:
-                designSettings.setNpm(new MetricThreshold(metric, 0, 1));
-                break;
-            case RFC:
-                designSettings.setRfc(new MetricThreshold(metric, 0, 1));
-                break;
-            case WMC:
-                designSettings.setWmc(new MetricThreshold(metric, 0, 1));
-                break;
-        }
-        return designSettings;
     }
 }

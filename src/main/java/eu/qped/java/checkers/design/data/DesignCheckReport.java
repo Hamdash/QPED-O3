@@ -4,6 +4,7 @@ import eu.qped.java.checkers.design.DesignChecker;
 import lombok.*;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Represents a report for the {@link DesignChecker}.
@@ -11,7 +12,6 @@ import java.util.List;
  * @author Jannik Seus
  */
 
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Getter
@@ -20,4 +20,5 @@ public class DesignCheckReport {
 
     private List<String> pathsToClassFiles;
     private List<DesignCheckEntry> metricsMap;
+
 }

@@ -2,6 +2,8 @@ package eu.qped.java.checkers.design;
 
 import eu.qped.java.checkers.design.configuration.DesignSettings;
 import eu.qped.java.checkers.design.configuration.DesignSettingsReader;
+import eu.qped.java.checkers.design.data.DesignCheckEntry;
+import eu.qped.java.checkers.design.data.DesignCheckMessage;
 import eu.qped.java.checkers.design.data.DesignCheckReport;
 import eu.qped.java.checkers.design.utils.DesignTestUtility;
 import eu.qped.java.checkers.mass.QFDesignSettings;
@@ -29,7 +31,7 @@ class DesignCheckerTest {
     private DesignChecker designCheckerFilled;
     private DesignChecker designCheckerNoArgs;
 
-    private final Field[] fields = DesignChecker.class.getDeclaredFields();;
+    private final Field[] fields = DesignChecker.class.getDeclaredFields();
 
 
     @BeforeEach
@@ -38,7 +40,7 @@ class DesignCheckerTest {
 
         designCheckerEmpty = DesignChecker.builder().build();
         designCheckerFilled = DesignChecker.builder()
-                .designFeedbacks(mock(List.class))
+                .designFeedbacks(List.of())
                 .qfDesignSettings(mock(QFDesignSettings.class))
                 .build();
         designCheckerNoArgs = new DesignChecker();
@@ -46,7 +48,7 @@ class DesignCheckerTest {
 
     @Test
     void testClassFilesPath() throws IllegalAccessException {
-        Field classFilesPathField = DesignTestUtility.getFieldByName("CLASSFILES_PATH", fields);
+        Field classFilesPathField = DesignTestUtility.getFieldByName("CLASS_FILES_PATH", fields);
         assert classFilesPathField != null;
         classFilesPathField.setAccessible(true);
         String classFilesPath = (String) classFilesPathField.get(DesignChecker.class);
@@ -107,7 +109,24 @@ class DesignCheckerTest {
         List<DesignFeedback> designFeedbacks = DesignFeedbackGenerator.generateDesignFeedbacks(designCheckReport.getMetricsMap(), designSettings);
         designCheckerCustom.setDesignFeedbacks(designFeedbacks);
 
-        assertEquals(designCheckReport, designCheckerCustom.check());
+        assertArrayEquals(designCheckReport.getPathsToClassFiles().toArray(), designCheckerCustom.check().getPathsToClassFiles().toArray());
+
+        List<DesignCheckEntry> metricsMapExpected = designCheckReport.getMetricsMap();
+        List<DesignCheckEntry> metricsMapActual = designCheckerCustom.check().getMetricsMap();
+
+        for (int i = 0; i < metricsMapExpected.size(); i++) {
+            DesignCheckEntry designCheckEntryExpected = metricsMapExpected.get(i);
+            DesignCheckEntry designCheckEntryActual = metricsMapActual.get(i);
+            assertEquals(designCheckEntryExpected.getClassName(), designCheckEntryActual.getClassName());
+
+            List<DesignCheckMessage> metricsForClassExpected = designCheckEntryExpected.getMetricsForClass();
+            List<DesignCheckMessage> metricsForClassActual = designCheckEntryActual.getMetricsForClass();
+            for (int j = 0; j < metricsForClassExpected.size(); j++) {
+                DesignCheckMessage designCheckMessageExpected = metricsForClassExpected.get(j);
+                DesignCheckMessage designCheckMessageActual = metricsForClassActual.get(j);
+                assertEquals(designCheckMessageExpected.getMetric(), designCheckMessageActual.getMetric());
+            }
+        }
         assertEquals(designFeedbacks, designCheckerCustom.getDesignFeedbacks());
     }
     @Test
@@ -123,8 +142,5 @@ class DesignCheckerTest {
                 ", qfDesignSettings=" + qfDesignSettingsField.get(designCheckerFilled) +
                 '}');
         qfDesignSettingsField.setAccessible(false);
-
     }
-
-
 }
