@@ -21,12 +21,10 @@ import static eu.qped.java.checkers.design.ckjm.DesignCheckEntryHandler.Metric.*
  *
  * @author Jannik Seus
  */
-@Data
-@AllArgsConstructor(access = AccessLevel.PUBLIC)
+@Getter
 public class DesignCheckEntryHandler implements CkjmOutputHandler {
 
-    @Singular
-    private List<DesignCheckEntry> outputMetrics;
+    private final List<DesignCheckEntry> outputMetrics;
 
     public DesignCheckEntryHandler() {
         this.outputMetrics = new ArrayList<>();
@@ -59,7 +57,7 @@ public class DesignCheckEntryHandler implements CkjmOutputHandler {
         metricsForClass.add(new DesignCheckMessageSingle(RFC, c.getRfc()));
         metricsForClass.add(new DesignCheckMessageSingle(WMC, c.getWmc()));
 
-        outputMetrics.add(new DesignCheckEntry(className, metricsForClass));
+        this.outputMetrics.add(new DesignCheckEntry(className, metricsForClass));
     }
 
     /**

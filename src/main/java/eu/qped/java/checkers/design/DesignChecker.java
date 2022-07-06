@@ -67,7 +67,6 @@ public class DesignChecker {
         QPEDMetricsFilter qmf = new QPEDMetricsFilter();
         CmdLineParser cmdParser = new CmdLineParser();
         DesignCheckEntryHandler handler = new DesignCheckEntryHandler();
-
         cmdParser.parse(classFileNames);
         qmf.runMetricsInternal(cmdParser.getClassNames(), handler);
         designCheckReport.setMetricsMap(handler.getOutputMetrics());
