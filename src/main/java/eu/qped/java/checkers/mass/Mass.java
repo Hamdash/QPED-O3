@@ -35,9 +35,6 @@ public class Mass implements Checker {
     private QFSemSettings semSettings;
 
     @QfProperty
-    private QFDesignSettings designSettings;
-
-    @QfProperty
     private QFClassSettings classSettings;
 
     private final static String NEW_LINE = "\n" + "\n";
@@ -45,7 +42,7 @@ public class Mass implements Checker {
     @Override
     public void check(QfObject qfObject) throws Exception {
 
-            MainSettings mainSettings = new MainSettings(this.mainSettings);
+        MainSettings mainSettings = new MainSettings(this.mainSettings);
 
         // Syntax Checker
         SyntaxChecker syntaxChecker = SyntaxChecker.builder().build();
@@ -62,8 +59,8 @@ public class Mass implements Checker {
 
         SemanticChecker semanticChecker = SemanticChecker.builder().feedbacks(new ArrayList<>()).qfSemSettings(mass.getSemantic()).build();
 
-    // Design Checker
-    DesignChecker designChecker = DesignChecker.builder().qfDesignSettings(designSettings).build(); //TODO is this correct?
+        // Design Checker
+        DesignChecker designChecker = DesignChecker.builder().qfDesignSettings(mass.getMetrics()).build();
 
         //Class Checker
         ClassConfigurator classConfigurator = ClassConfigurator.createClassConfigurator(this.classSettings);
@@ -85,13 +82,13 @@ public class Mass implements Checker {
         List<SemanticFeedback> semanticFeedbacks;
         semanticFeedbacks = massExecutor.getSemanticFeedbacks();
 
-    List<DesignFeedback> designFeedbacks;
-    designFeedbacks = massExecutor.getDesignFeedbacks();
+        List<DesignFeedback> designFeedbacks;
+        designFeedbacks = massExecutor.getDesignFeedbacks();
 
         List<ClassFeedback> classFeedbacks;
         classFeedbacks = massExecutor.getClassFeedbacks();
 
-        String[] result = new String[styleFeedbacks.size() + semanticFeedbacks.size()  + designFeedbacks.size() + classFeedbacks.size() + syntaxFeedbacks.size() + 100];
+        String[] result = new String[styleFeedbacks.size() + semanticFeedbacks.size() + designFeedbacks.size() + classFeedbacks.size() + syntaxFeedbacks.size() + 100];
 
         int i = 0;
 
