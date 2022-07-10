@@ -12,9 +12,9 @@ import static eu.qped.java.checkers.design.ckjm.DesignCheckEntryHandler.Metric.*
  */
 public class QFDesignSettings extends QfObjectBase {
 
-    private String includeCallsToJdk;
+    private String includeCallsToJdk = "false";
 
-    private String includeNonPublicClasses;
+    private String includeOnlyPublicClasses = "true";
 
     /**
      * Average method Complexity
@@ -147,12 +147,12 @@ public class QFDesignSettings extends QfObjectBase {
         this.includeCallsToJdk = includeCallsToJdk;
     }
 
-    public String arePublicClassesIncluded() {
-        return includeNonPublicClasses;
+    public String areOnlyPublicClassesIncluded() {
+        return includeOnlyPublicClasses;
     }
 
-    public void includeNonPublicClasses(String includeNonPublicClasses) {
-        this.includeNonPublicClasses = includeNonPublicClasses;
+    public void includeOnlyPublicClasses(String includeOnlyPublicClasses) {
+        this.includeOnlyPublicClasses = includeOnlyPublicClasses;
     }
 
     public String getAmcMin() {

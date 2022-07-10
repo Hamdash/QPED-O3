@@ -33,34 +33,30 @@ public class QPEDMetricsFilter implements ICountingProperities {
      * container for available metrics
      */
     private final IClassMetricsContainer metricsContainer;
+    private final boolean includeJdk;
+    private final boolean onlyPublicClasses;
 
-    public QPEDMetricsFilter() {
-
+    public QPEDMetricsFilter(boolean includeJdk, boolean onlyPublicClasses) {
         metricsContainer = new ClassMetricsContainer(this);
         moaVisitor = new MoaClassVisitor(metricsContainer);
+        this.includeJdk = includeJdk;
+        this.onlyPublicClasses = onlyPublicClasses;
     }
 
     /**
      * @return true if the measurements should include calls to the Java JDK into account
      */
     public boolean isJdkIncluded() {
-        //TODO Possible feature for later, include into design settings
-        // True if the measurements should include calls to the Java JDK into account
-
-        boolean dontIncludeJdk = true;
-        return !dontIncludeJdk;
+        return includeJdk;
     }
 
     /**
      * @return true if the measurements should include all classes
      */
     public boolean includeAll() {
-        //TODO Possible feature for later, include into design settings
-        // True if the reports should only include public classes.
-
-        boolean onlyPublic = false;
-        return !onlyPublic;
+        return !onlyPublicClasses;
     }
+
 
     /**
      * Load and parse the specified class.

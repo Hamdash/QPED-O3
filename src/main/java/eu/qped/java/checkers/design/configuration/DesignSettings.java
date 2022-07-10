@@ -19,7 +19,7 @@ public class DesignSettings extends QfObjectBase {
     private boolean includeCallsToJdk;
 
     @Getter(AccessLevel.NONE)
-    private boolean includeNonPublicClasses;
+    private boolean includeOnlyPublicClasses ;
 
     /**
      * Average method Complexity
@@ -122,11 +122,11 @@ public class DesignSettings extends QfObjectBase {
         this.includeCallsToJdk = includeCallsToJdk;
     }
 
-    public boolean areNonPublicClassesIncluded() {
-        return includeNonPublicClasses;
+    public boolean areOnlyPublicClassesIncluded() {
+        return includeOnlyPublicClasses;
     }
 
-    public void includeNonPublicClasses(boolean includeNonPublicClasses) {
-        this.includeNonPublicClasses = includeNonPublicClasses;
+    public void includeOnlyPublicClasses(boolean includeNonPublicClasses) {
+        this.includeOnlyPublicClasses = includeNonPublicClasses;
     }
 }

@@ -50,7 +50,7 @@ public class DesignChecker {
                 = ExtractJavaFilesFromDirectory.builder().dirPath(CLASS_FILES_PATH).build().filesWithExtension("class");
         String[] pathsToClassFiles = classFiles.stream().map(File::getPath).toArray(String[]::new);
 
-        runCkjmExtended(designCheckReport, pathsToClassFiles);
+        runCkjmExtended(designCheckReport, pathsToClassFiles, designSettings.areCallsToToJdkIncluded(), designSettings.areOnlyPublicClassesIncluded());
         designCheckReport.setPathsToClassFiles(List.of(pathsToClassFiles));
         this.designFeedbacks = DesignFeedbackGenerator.generateDesignFeedbacks(designCheckReport.getMetricsMap(), designSettings);
 
@@ -60,11 +60,13 @@ public class DesignChecker {
     /**
      * Dispatching method for program code to run CKJM-extended. Improves readability.
      *
-     * @param designCheckReport the final report of the design checker
-     * @param classFileNames    the .class files' names (including relative path from src root)
+     * @param designCheckReport        the final report of the design checker
+     * @param classFileNames           the .class files' names (including relative path from src root)
+     * @param includeCallsToJdk        determines whether to include calls to JDK when running the checker
+     * @param includeOnlyPublicClasses determines whether to only include public classes when running the checker
      */
-    private void runCkjmExtended(DesignCheckReport designCheckReport, String[] classFileNames) {
-        QPEDMetricsFilter qmf = new QPEDMetricsFilter();
+    private void runCkjmExtended(DesignCheckReport designCheckReport, String[] classFileNames, boolean includeCallsToJdk, boolean includeOnlyPublicClasses) {
+        QPEDMetricsFilter qmf = new QPEDMetricsFilter(includeCallsToJdk, includeOnlyPublicClasses);
         CmdLineParser cmdParser = new CmdLineParser();
         DesignCheckEntryHandler handler = new DesignCheckEntryHandler();
         cmdParser.parse(classFileNames);
