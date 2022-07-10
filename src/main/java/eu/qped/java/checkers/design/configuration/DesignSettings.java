@@ -15,6 +15,12 @@ import lombok.*;
 @Builder
 public class DesignSettings extends QfObjectBase {
 
+    @Getter(AccessLevel.NONE)
+    private boolean includeCallsToJdk;
+
+    @Getter(AccessLevel.NONE)
+    private boolean includeNonPublicClasses;
+
     /**
      * Average method Complexity
      */
@@ -108,4 +114,19 @@ public class DesignSettings extends QfObjectBase {
      */
     private MetricThreshold wmc;
 
+    public boolean areCallsToToJdkIncluded() {
+        return includeCallsToJdk;
+    }
+
+    public void includeCallsToJdk(boolean includeCallsToJdk) {
+        this.includeCallsToJdk = includeCallsToJdk;
+    }
+
+    public boolean areNonPublicClassesIncluded() {
+        return includeNonPublicClasses;
+    }
+
+    public void includeNonPublicClasses(boolean includeNonPublicClasses) {
+        this.includeNonPublicClasses = includeNonPublicClasses;
+    }
 }

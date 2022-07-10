@@ -25,6 +25,8 @@ public class DesignSettingsReader {
      */
     public DesignSettings readDesignSettings(DesignSettings designSettings) {
 
+        designSettings.includeCallsToJdk(Boolean.parseBoolean(qfDesignSettings.areCallsToJdkIncluded()));
+        designSettings.includeNonPublicClasses(Boolean.parseBoolean(qfDesignSettings.arePublicClassesIncluded()));
         designSettings.setAmc(retrieveMetricThreshold(AMC));
         designSettings.setCa(retrieveMetricThreshold(CA));
         designSettings.setCam(retrieveMetricThreshold(CAM));
