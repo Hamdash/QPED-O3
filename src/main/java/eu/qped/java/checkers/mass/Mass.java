@@ -7,8 +7,8 @@ import eu.qped.framework.qf.QfObject;
 import eu.qped.java.checkers.classdesign.ClassChecker;
 import eu.qped.java.checkers.classdesign.ClassConfigurator;
 import eu.qped.java.checkers.classdesign.feedback.ClassFeedback;
-import eu.qped.java.checkers.design.DesignChecker;
-import eu.qped.java.checkers.design.DesignFeedback;
+import eu.qped.java.checkers.metrics.MetricsChecker;
+import eu.qped.java.checkers.metrics.MetricsCheckerFeedback;
 import eu.qped.java.checkers.semantics.SemanticChecker;
 import eu.qped.java.checkers.semantics.SemanticFeedback;
 import eu.qped.java.checkers.style.StyleChecker;
@@ -60,14 +60,14 @@ public class Mass implements Checker {
         SemanticChecker semanticChecker = SemanticChecker.builder().feedbacks(new ArrayList<>()).qfSemSettings(mass.getSemantic()).build();
 
         // Design Checker
-        DesignChecker designChecker = DesignChecker.builder().qfDesignSettings(mass.getMetrics()).build();
+        MetricsChecker metricsChecker = MetricsChecker.builder().qfMetricsSettings(mass.getMetrics()).build();
 
         //Class Checker
         ClassConfigurator classConfigurator = ClassConfigurator.createClassConfigurator(this.classSettings);
         ClassChecker classChecker = new ClassChecker(classConfigurator);
 
         //Mass
-        MassExecutor massExecutor = new MassExecutor(styleChecker, semanticChecker, syntaxChecker, designChecker, classChecker, mainSettings);
+        MassExecutor massExecutor = new MassExecutor(styleChecker, semanticChecker, syntaxChecker, metricsChecker, classChecker, mainSettings);
         massExecutor.execute();
 
         /*
@@ -82,13 +82,13 @@ public class Mass implements Checker {
         List<SemanticFeedback> semanticFeedbacks;
         semanticFeedbacks = massExecutor.getSemanticFeedbacks();
 
-        List<DesignFeedback> designFeedbacks;
-        designFeedbacks = massExecutor.getDesignFeedbacks();
+        List<MetricsCheckerFeedback> metricsCheckerFeedbacks;
+        metricsCheckerFeedbacks = massExecutor.getMetricsCheckerFeedbacks();
 
         List<ClassFeedback> classFeedbacks;
         classFeedbacks = massExecutor.getClassFeedbacks();
 
-        String[] result = new String[styleFeedbacks.size() + semanticFeedbacks.size() + designFeedbacks.size() + classFeedbacks.size() + syntaxFeedbacks.size() + 100];
+        String[] result = new String[styleFeedbacks.size() + semanticFeedbacks.size() + metricsCheckerFeedbacks.size() + classFeedbacks.size() + syntaxFeedbacks.size() + 100];
 
         int i = 0;
 
@@ -115,7 +115,7 @@ public class Mass implements Checker {
             i = i + 2;
         }
 
-        for (DesignFeedback df : designFeedbacks) {
+        for (MetricsCheckerFeedback df : metricsCheckerFeedbacks) {
             result[i] = "design Feedback";
             result[i + 1] =
                     "In class '" + df.getClassName() + ".java'"

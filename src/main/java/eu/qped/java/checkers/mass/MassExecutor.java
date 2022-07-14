@@ -5,8 +5,8 @@ import eu.qped.framework.Feedback;
 import eu.qped.framework.Translator;
 import eu.qped.java.checkers.classdesign.ClassChecker;
 import eu.qped.java.checkers.classdesign.feedback.ClassFeedback;
-import eu.qped.java.checkers.design.DesignChecker;
-import eu.qped.java.checkers.design.DesignFeedback;
+import eu.qped.java.checkers.metrics.MetricsChecker;
+import eu.qped.java.checkers.metrics.MetricsCheckerFeedback;
 import eu.qped.java.checkers.semantics.SemanticChecker;
 import eu.qped.java.checkers.semantics.SemanticFeedback;
 import eu.qped.java.checkers.style.StyleChecker;
@@ -41,7 +41,7 @@ public class MassExecutor {
     private List<SemanticFeedback> semanticFeedbacks;
     private List<SyntaxFeedback> syntaxFeedbacks;
     private List<ClassFeedback> classFeedbacks;
-    private List<DesignFeedback> designFeedbacks;
+    private List<MetricsCheckerFeedback> metricsCheckerFeedbacks;
 
     private List<SyntaxError> syntaxErrors;
 
@@ -49,7 +49,7 @@ public class MassExecutor {
     private final SemanticChecker semanticChecker;
     private final SyntaxChecker syntaxChecker;
     private final ClassChecker classChecker;
-    private DesignChecker designChecker;
+    private MetricsChecker metricsChecker;
 
     /**
      * To create an Object use the factory Class @MassExecutorFactory
@@ -57,19 +57,19 @@ public class MassExecutor {
      * @param styleChecker             style checker component
      * @param semanticChecker          semantic checker component
      * @param syntaxChecker            syntax checker component
-     * @param designChecker            design checker component
+     * @param metricsChecker            design checker component
      * @param mainSettingsConfigurator settings
      */
 
     public MassExecutor(final StyleChecker styleChecker, final SemanticChecker semanticChecker,
-                        final SyntaxChecker syntaxChecker, final DesignChecker designChecker,
+                        final SyntaxChecker syntaxChecker, final MetricsChecker metricsChecker,
                         final ClassChecker classChecker, final MainSettings mainSettingsConfigurator
                         ) {
 
         this.styleChecker = styleChecker;
         this.semanticChecker = semanticChecker;
         this.syntaxChecker = syntaxChecker;
-        this.designChecker = designChecker;
+        this.metricsChecker = metricsChecker;
         this.classChecker = classChecker;
         this.mainSettingsConfigurator = mainSettingsConfigurator;
     }
@@ -82,7 +82,7 @@ public class MassExecutor {
 
         boolean styleNeeded = mainSettingsConfigurator.isStyleNeeded();
         boolean semanticNeeded = mainSettingsConfigurator.isSemanticNeeded();
-        boolean designNeeded = mainSettingsConfigurator.isDesignNeeded();
+        boolean designNeeded = mainSettingsConfigurator.isMetricsNeeded();
         boolean classNeeded = mainSettingsConfigurator.isClassNeeded();
 
 
@@ -101,8 +101,8 @@ public class MassExecutor {
                 semanticFeedbacks = semanticChecker.getFeedbacks();
             }
             if (designNeeded) {
-                designChecker.check();
-                designFeedbacks = designChecker.getDesignFeedbacks();
+                metricsChecker.check();
+                metricsCheckerFeedbacks = metricsChecker.getMetricsCheckerFeedbacks();
             }
             if (classNeeded) {
                 try {
@@ -129,7 +129,7 @@ public class MassExecutor {
         syntaxFeedbacks = new ArrayList<>();
         styleFeedbacks = new ArrayList<>();
         semanticFeedbacks = new ArrayList<>();
-        designFeedbacks = new ArrayList<>();
+        metricsCheckerFeedbacks = new ArrayList<>();
         syntaxErrors = new ArrayList<>();
     }
 
@@ -153,8 +153,8 @@ public class MassExecutor {
             }
         }
         if (designNeeded) {
-            for (DesignFeedback feedback : designFeedbacks) {
-                translator.translateDesignBody(prefLanguage, feedback);
+            for (MetricsCheckerFeedback feedback : metricsCheckerFeedbacks) {
+                translator.translateMetricsBody(prefLanguage, feedback);
             }
         }
     }
@@ -210,7 +210,7 @@ public class MassExecutor {
         qfMainSettings.setSyntaxLevel(CheckLevel.ADVANCED.name());
         qfMainSettings.setSemanticNeeded("false");
         qfMainSettings.setStyleNeeded("false");
-        qfMainSettings.setDesignNeeded("true");
+        qfMainSettings.setMetricsNeeded("true");
         qfMainSettings.setPreferredLanguage("en");
 
 
@@ -243,36 +243,36 @@ public class MassExecutor {
 
         SemanticChecker semanticChecker = SemanticChecker.builder().qfSemSettings(qfSemSettings).build();
 
-        QFDesignSettings qfDesignSettings = new QFDesignSettings();
-        qfDesignSettings.setAmc("0.5", "1.0");
-        qfDesignSettings.setCa("0.5", "1.0");
-        qfDesignSettings.setCam("0.5", "1.0");
-        qfDesignSettings.setCbm("0.5", "1.0");
-        qfDesignSettings.setCbo("0.5", "1.0");
-        qfDesignSettings.setCc("0.5", "3");
-        qfDesignSettings.setCe("0.5", "1.0");
-        qfDesignSettings.setDam("0.5", "1.0");
-        qfDesignSettings.setDit("0.5", "1.0");
-        qfDesignSettings.setIc("0.5", "1.0");
-        qfDesignSettings.setLcom("0.5", "1.0");
-        qfDesignSettings.setLcom3("0.5", "1.0");
-        qfDesignSettings.setLoc("15.0", "60.0");
-        qfDesignSettings.setMoa("0.5", "1.0");
-        qfDesignSettings.setMfa("0.5", "1.0");
-        qfDesignSettings.setNoc("0.0", "5.0");
-        qfDesignSettings.setNpm("0.5", "1.0");
-        qfDesignSettings.setRfc("0.5", "1.0");
-        qfDesignSettings.setWmc("0.5", "1.0");
-        qfDesignSettings.setAmcCustomSuggestionUpper("WTF ARE YOU DOING!!?!?!!=!!?!?");
+        QFMetricsSettings qfMetricsSettings = new QFMetricsSettings();
+        qfMetricsSettings.setAmc("0.5", "1.0");
+        qfMetricsSettings.setCa("0.5", "1.0");
+        qfMetricsSettings.setCam("0.5", "1.0");
+        qfMetricsSettings.setCbm("0.5", "1.0");
+        qfMetricsSettings.setCbo("0.5", "1.0");
+        qfMetricsSettings.setCc("0.5", "3");
+        qfMetricsSettings.setCe("0.5", "1.0");
+        qfMetricsSettings.setDam("0.5", "1.0");
+        qfMetricsSettings.setDit("0.5", "1.0");
+        qfMetricsSettings.setIc("0.5", "1.0");
+        qfMetricsSettings.setLcom("0.5", "1.0");
+        qfMetricsSettings.setLcom3("0.5", "1.0");
+        qfMetricsSettings.setLoc("15.0", "60.0");
+        qfMetricsSettings.setMoa("0.5", "1.0");
+        qfMetricsSettings.setMfa("0.5", "1.0");
+        qfMetricsSettings.setNoc("0.0", "5.0");
+        qfMetricsSettings.setNpm("0.5", "1.0");
+        qfMetricsSettings.setRfc("0.5", "1.0");
+        qfMetricsSettings.setWmc("0.5", "1.0");
+        qfMetricsSettings.setAmcCustomSuggestionUpper("WHAT ARE YOU DOING?!?!");
 
-        DesignChecker designChecker = DesignChecker.builder().qfDesignSettings(qfDesignSettings).build();
+        MetricsChecker metricsChecker = MetricsChecker.builder().qfMetricsSettings(qfMetricsSettings).build();
 
 
         SyntaxChecker syntaxChecker = SyntaxChecker.builder().targetProject("src/main/resources/testProject/src/res").build();
         //SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(code).build();
 
 
-        MassExecutor massE = new MassExecutor(styleChecker, semanticChecker, syntaxChecker, designChecker, null, mainSettingsConfiguratorConf);
+        MassExecutor massE = new MassExecutor(styleChecker, semanticChecker, syntaxChecker, metricsChecker, null, mainSettingsConfiguratorConf);
 
         massE.execute();
 
@@ -300,8 +300,8 @@ public class MassExecutor {
             System.out.println("-----------------------------------------------------------------");
         }
 
-        List<DesignFeedback> designFeedbacks = massE.designFeedbacks;
-        for (DesignFeedback df : designFeedbacks) {
+        List<MetricsCheckerFeedback> metricsCheckerFeedbacks = massE.metricsCheckerFeedbacks;
+        for (MetricsCheckerFeedback df : metricsCheckerFeedbacks) {
             System.out.println(df);
             System.out.println("---------------------");
         }

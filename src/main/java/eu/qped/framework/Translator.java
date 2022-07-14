@@ -1,6 +1,6 @@
 package eu.qped.framework;
 
-import eu.qped.java.checkers.design.DesignFeedback;
+import eu.qped.java.checkers.metrics.MetricsCheckerFeedback;
 import eu.qped.java.checkers.style.StyleFeedback;
 import org.apache.logging.log4j.LogManager;
 
@@ -82,7 +82,7 @@ public class Translator {
         }
     }
 
-    public void translateDesignBody(String pref, DesignFeedback feedback) {
+    public void translateMetricsBody(String pref, MetricsCheckerFeedback feedback) {
 
         try {
             feedback.setBody(translate("en", pref, feedback.getBody()));
