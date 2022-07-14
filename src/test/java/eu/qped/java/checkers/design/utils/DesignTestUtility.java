@@ -35,12 +35,18 @@ public class DesignTestUtility {
 
     public static QFDesignSettings generateSampleQFDesignSettings() {
         QFDesignSettings qfDesignSettings = new QFDesignSettings();
+        qfDesignSettings.setAmcCustomSuggestionUpper("AMC CUSTOM SUGGESTION UPPER BOUND");
+        qfDesignSettings.setCcCustomSuggestionUpper("CC CUSTOM SUGGESTION UPPER BOUND");
+        qfDesignSettings.setLcom3CustomSuggestionLower("LCOM3 CUSTOM SUGGESTION LOWER BOUND");
+        qfDesignSettings.setWmcCustomSuggestionLower("WMC CUSTOM SUGGESTION LOWER BOUND");
+        qfDesignSettings.includeCallsToJdk("false");
+        qfDesignSettings.includeOnlyPublicClasses("true");
         qfDesignSettings.setAmc("0.5", "1.0");
         qfDesignSettings.setCa("0.5", "1.0");
         qfDesignSettings.setCam("0.5", "1.0");
         qfDesignSettings.setCbm("0.5", "1.0");
         qfDesignSettings.setCbo("0.5", "1.0");
-        qfDesignSettings.setCc("0.5", "1.0");
+        qfDesignSettings.setCc("1.5", "1.0");
         qfDesignSettings.setCe("0.5", "1.0");
         qfDesignSettings.setDam("0.5", "1.0");
         qfDesignSettings.setDit("0.5", "1.0");
@@ -62,9 +68,15 @@ public class DesignTestUtility {
         Random random = new Random();
         double[] doublesMin = random.doubles(18, 0,0.5).toArray();
         double[] doublesMax = random.doubles(18, 0.5,1).toArray();
-
         for (int i = 0; i < doublesMin.length; i++) {
 
+
+            qfDesignSettings.setAmcCustomSuggestionUpper("AMC CUSTOM SUGGESTION UPPER BOUND");
+            qfDesignSettings.setCcCustomSuggestionUpper("CC CUSTOM SUGGESTION UPPER BOUND");
+            qfDesignSettings.setLcom3CustomSuggestionLower("LCOM3 CUSTOM SUGGESTION LOWER BOUND");
+            qfDesignSettings.setWmcCustomSuggestionLower("WMC CUSTOM SUGGESTION LOWER BOUND");
+            qfDesignSettings.includeCallsToJdk("false");
+            qfDesignSettings.includeOnlyPublicClasses("true");
             qfDesignSettings.setAmc(String.valueOf(doublesMin[i]), String.valueOf(doublesMax[i]));
             qfDesignSettings.setCa(String.valueOf(doublesMin[i]), String.valueOf(doublesMax[i]));
             qfDesignSettings.setCam(String.valueOf(doublesMin[i]), String.valueOf(doublesMax[i]));

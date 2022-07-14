@@ -1,7 +1,10 @@
 package eu.qped.java.checkers.design.configuration;
 
+import eu.qped.java.checkers.design.DesignSuggestion;
 import eu.qped.java.checkers.mass.QFDesignSettings;
 import lombok.*;
+
+import java.util.HashMap;
 
 import static eu.qped.java.checkers.design.ckjm.DesignCheckEntryHandler.*;
 import static eu.qped.java.checkers.design.ckjm.DesignCheckEntryHandler.Metric.*;
@@ -27,27 +30,56 @@ public class DesignSettingsReader {
 
         designSettings.includeCallsToJdk(Boolean.parseBoolean(qfDesignSettings.areCallsToJdkIncluded()));
         designSettings.includeOnlyPublicClasses(Boolean.parseBoolean(qfDesignSettings.areOnlyPublicClassesIncluded()));
-        designSettings.setAmc(retrieveMetricThreshold(AMC));
-        designSettings.setCa(retrieveMetricThreshold(CA));
-        designSettings.setCam(retrieveMetricThreshold(CAM));
-        designSettings.setCbm(retrieveMetricThreshold(CBM));
-        designSettings.setCbo(retrieveMetricThreshold(CBO));
-        designSettings.setCc(retrieveMetricThreshold(CC));
-        designSettings.setCe(retrieveMetricThreshold(CE));
-        designSettings.setDam(retrieveMetricThreshold(DAM));
-        designSettings.setDit(retrieveMetricThreshold(DIT));
-        designSettings.setIc(retrieveMetricThreshold(IC));
-        designSettings.setLcom(retrieveMetricThreshold(LCOM));
-        designSettings.setLcom3(retrieveMetricThreshold(LCOM3));
-        designSettings.setLoc(retrieveMetricThreshold(LOC));
-        designSettings.setMfa(retrieveMetricThreshold(MFA));
-        designSettings.setMoa(retrieveMetricThreshold(MOA));
-        designSettings.setNoc(retrieveMetricThreshold(NOC));
-        designSettings.setNpm(retrieveMetricThreshold(NPM));
-        designSettings.setRfc(retrieveMetricThreshold(RFC));
-        designSettings.setWmc(retrieveMetricThreshold(WMC));
+        designSettings.setCustomSuggestions(readCustomSuggestions());
+        designSettings.setAmcThreshold(retrieveMetricThreshold(AMC));
+        designSettings.setCaThreshold(retrieveMetricThreshold(CA));
+        designSettings.setCamThreshold(retrieveMetricThreshold(CAM));
+        designSettings.setCbmThreshold(retrieveMetricThreshold(CBM));
+        designSettings.setCboThreshold(retrieveMetricThreshold(CBO));
+        designSettings.setCcThreshold(retrieveMetricThreshold(CC));
+        designSettings.setCeThreshold(retrieveMetricThreshold(CE));
+        designSettings.setDamThreshold(retrieveMetricThreshold(DAM));
+        designSettings.setDitThreshold(retrieveMetricThreshold(DIT));
+        designSettings.setIcThreshold(retrieveMetricThreshold(IC));
+        designSettings.setLcomThreshold(retrieveMetricThreshold(LCOM));
+        designSettings.setLcom3Threshold(retrieveMetricThreshold(LCOM3));
+        designSettings.setLocThreshold(retrieveMetricThreshold(LOC));
+        designSettings.setMfaThreshold(retrieveMetricThreshold(MFA));
+        designSettings.setMoaThreshold(retrieveMetricThreshold(MOA));
+        designSettings.setNocThreshold(retrieveMetricThreshold(NOC));
+        designSettings.setNpmThreshold(retrieveMetricThreshold(NPM));
+        designSettings.setRfcThreshold(retrieveMetricThreshold(RFC));
+        designSettings.setWmcThreshold(retrieveMetricThreshold(WMC));
 
         return designSettings;
+    }
+
+    /**
+     * Reads the custom suggestions for metrics (if set).
+     * @return the resulting map
+     */
+    private HashMap<Metric, DesignSuggestion> readCustomSuggestions() {
+        HashMap<Metric, DesignSuggestion> suggestions = new HashMap<>();
+        suggestions.put(AMC, new DesignSuggestion(qfDesignSettings.getAmcCustomSuggestionLower(), qfDesignSettings.getAmcCustomSuggestionUpper()));
+        suggestions.put(CA, new DesignSuggestion(qfDesignSettings.getCaCustomSuggestionLower(), qfDesignSettings.getCaCustomSuggestionUpper()));
+        suggestions.put(CAM, new DesignSuggestion(qfDesignSettings.getCamCustomSuggestionLower(), qfDesignSettings.getCamCustomSuggestionUpper()));
+        suggestions.put(CBM, new DesignSuggestion(qfDesignSettings.getCbmCustomSuggestionLower(), qfDesignSettings.getCbmCustomSuggestionUpper()));
+        suggestions.put(CBO, new DesignSuggestion(qfDesignSettings.getCboCustomSuggestionLower(), qfDesignSettings.getCboCustomSuggestionUpper()));
+        suggestions.put(CC, new DesignSuggestion(qfDesignSettings.getCcCustomSuggestionLower(), qfDesignSettings.getCcCustomSuggestionUpper()));
+        suggestions.put(CE, new DesignSuggestion(qfDesignSettings.getCeCustomSuggestionLower(), qfDesignSettings.getCeCustomSuggestionUpper()));
+        suggestions.put(DAM, new DesignSuggestion(qfDesignSettings.getDamCustomSuggestionLower(), qfDesignSettings.getDamCustomSuggestionUpper()));
+        suggestions.put(DIT, new DesignSuggestion(qfDesignSettings.getDitCustomSuggestionLower(), qfDesignSettings.getDitCustomSuggestionUpper()));
+        suggestions.put(IC, new DesignSuggestion(qfDesignSettings.getIcCustomSuggestionLower(), qfDesignSettings.getIcCustomSuggestionUpper()));
+        suggestions.put(LCOM, new DesignSuggestion(qfDesignSettings.getLcomCustomSuggestionLower(), qfDesignSettings.getLcomCustomSuggestionUpper()));
+        suggestions.put(LCOM3, new DesignSuggestion(qfDesignSettings.getLcom3CustomSuggestionLower(), qfDesignSettings.getLcom3CustomSuggestionUpper()));
+        suggestions.put(LOC, new DesignSuggestion(qfDesignSettings.getLocCustomSuggestionLower(), qfDesignSettings.getLocCustomSuggestionUpper()));
+        suggestions.put(MFA, new DesignSuggestion(qfDesignSettings.getMfaCustomSuggestionLower(), qfDesignSettings.getMfaCustomSuggestionUpper()));
+        suggestions.put(MOA, new DesignSuggestion(qfDesignSettings.getMoaCustomSuggestionLower(), qfDesignSettings.getMoaCustomSuggestionUpper()));
+        suggestions.put(NOC, new DesignSuggestion(qfDesignSettings.getNocCustomSuggestionLower(), qfDesignSettings.getNocCustomSuggestionUpper()));
+        suggestions.put(NPM, new DesignSuggestion(qfDesignSettings.getNpmCustomSuggestionLower(), qfDesignSettings.getNpmCustomSuggestionUpper()));
+        suggestions.put(RFC, new DesignSuggestion(qfDesignSettings.getRfcCustomSuggestionLower(), qfDesignSettings.getRfcCustomSuggestionUpper()));
+        suggestions.put(WMC, new DesignSuggestion(qfDesignSettings.getWmcCustomSuggestionLower(), qfDesignSettings.getWmcCustomSuggestionUpper()));
+        return suggestions;
     }
 
     /**

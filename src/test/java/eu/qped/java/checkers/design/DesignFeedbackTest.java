@@ -28,11 +28,10 @@ class DesignFeedbackTest {
         designFeedback1 = DesignFeedback.builder()
                 .className("TestClass")
                 .metric(Metric.AMC)
-                .value(0d)
+                .value(99d)
                 .body(Metric.AMC.getDescription())
-                .lowerBoundReached(false)
-                .lowerBoundReached(false)
-                .suggestion("Change something!").build();
+                .suggestion("Change something!")
+                .build();
     }
 
     @ParameterizedTest
@@ -48,45 +47,28 @@ class DesignFeedbackTest {
     @ValueSource(doubles = {-1d, 0d, 0.5d, 1.0d, 3.3d})
     void generateSuggestionTestValue(double value) {
         designFeedback1.setValue(value);
-        designFeedback1.setLowerBoundReached(designFeedback1.isLowerBoundReached());
-        designFeedback1.setUpperBoundReached(designFeedback1.isUpperBoundReached());
         designFeedback1.setSuggestion(designFeedback1.getSuggestion());
 
         assertEquals
                 ("You are within the " + Metric.AMC + "'s threshold.",
-                        DesignFeedbackGenerator.generateSuggestion(
-                                Metric.AMC,
-                                designFeedback1.isLowerBoundReached(),
-                                designFeedback1.isUpperBoundReached()));
-
-        designFeedback1.setLowerBoundReached(true);
+                        DesignFeedbackGenerator.generateDefaultSuggestions(
+                                Metric.AMC, false, false));
 
         assertEquals
                 ("The " + Metric.AMC + "'s value is too low: Increase your average method size, e.g. by joining multiple methods with mostly the same functionalities from over-engineering.",
-                        DesignFeedbackGenerator.generateSuggestion(
-                                Metric.AMC,
-                                designFeedback1.isLowerBoundReached(),
-                                designFeedback1.isUpperBoundReached()));
-
-        designFeedback1.setLowerBoundReached(false);
-        designFeedback1.setUpperBoundReached(true);
+                        DesignFeedbackGenerator.generateDefaultSuggestions(
+                                Metric.AMC, true, false));
 
         assertEquals
                 ("The " + Metric.AMC + "'s value is too high: Decrease your average method size, e.g. by delegating functionalities to other newly created methods.",
-                        DesignFeedbackGenerator.generateSuggestion(
-                                Metric.AMC,
-                                designFeedback1.isLowerBoundReached(),
-                                designFeedback1.isUpperBoundReached()));
-
-        designFeedback1.setLowerBoundReached(true);
-        designFeedback1.setUpperBoundReached(true);
+                        DesignFeedbackGenerator.generateDefaultSuggestions(
+                                Metric.AMC, false, true));
 
         assertThrows(IllegalArgumentException.class,
-                () -> DesignFeedbackGenerator.generateSuggestion(
+                () -> DesignFeedbackGenerator.generateDefaultSuggestions(
                         Metric.AMC,
                         true,
                         true));
-
         designFeedback1.setValue(99d);
         assertEquals(99d, designFeedback1.getValue());
     }
@@ -113,21 +95,26 @@ class DesignFeedbackTest {
     @Test
     void testToString() {
         assertEquals(
-                "threshold of Metric 'AMC' in class 'TestClass' not exceeded\tValue=0.0,\t suggestion: Average Method Complexity",
+                "In class 'TestClass.java'\n" +
+                        "AMC (Average Method Complexity)\n" +
+                        "Measured at: 99.0\n" +
+                        "Change something!",
                 designFeedback1.toString());
-        designFeedback1.setLowerBoundReached(true);
         assertEquals(
-                "Lower threshold of metric 'AMC' in class 'TestClass' exceeded.\tThresholds: (0.0, 1.7976931348623157E308)Value=0.0,\t suggestion: Average Method Complexity",
+                "In class 'TestClass.java'\n" +
+                        "AMC (Average Method Complexity)\n" +
+                        "Measured at: 99.0\n" +
+                        "Change something!",
                 designFeedback1.toString());
-        designFeedback1.setLowerBoundReached(false);
-        designFeedback1.setUpperBoundReached(true);
 
         assertEquals(
-                "Upper threshold of metric 'AMC' in class 'TestClass' exceeded.\tThresholds: (0.0, 1.7976931348623157E308)Value=0.0,	 suggestion: Average Method Complexity",
+                "In class 'TestClass.java'\n" +
+                        "AMC (Average Method Complexity)\n" +
+                        "Measured at: 99.0\n" +
+                        "Change something!",
                 designFeedback1.toString());
 
         designFeedback1 = DesignFeedback.builder().build();
         assertNotNull(designFeedback1);
-        assertThrows(NullPointerException.class, () -> designFeedback1.toString());
     }
 }

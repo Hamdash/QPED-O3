@@ -263,12 +263,13 @@ public class MassExecutor {
         qfDesignSettings.setNpm("0.5", "1.0");
         qfDesignSettings.setRfc("0.5", "1.0");
         qfDesignSettings.setWmc("0.5", "1.0");
+        qfDesignSettings.setAmcCustomSuggestionUpper("WTF ARE YOU DOING!!?!?!!=!!?!?");
 
         DesignChecker designChecker = DesignChecker.builder().qfDesignSettings(qfDesignSettings).build();
 
 
-        //SyntaxChecker syntaxChecker = SyntaxChecker.builder().targetProject("src/main/resources/testProject").build();
-        SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(code).build();
+        SyntaxChecker syntaxChecker = SyntaxChecker.builder().targetProject("src/main/resources/testProject/src/res").build();
+        //SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(code).build();
 
 
         MassExecutor massE = new MassExecutor(styleChecker, semanticChecker, syntaxChecker, designChecker, null, mainSettingsConfiguratorConf);
@@ -301,11 +302,8 @@ public class MassExecutor {
 
         List<DesignFeedback> designFeedbacks = massE.designFeedbacks;
         for (DesignFeedback df : designFeedbacks) {
-            System.out.println("In class '" + df.getClassName() + ".java'");
-            System.out.println(df.getMetric() + " (" + df.getBody() + ")");
-            System.out.println("Measured at: " + df.getValue());
-            System.out.println(df.getSuggestion());
-            System.out.println("--------0T0----------");
+            System.out.println(df);
+            System.out.println("---------------------");
         }
 
         /*

@@ -38,7 +38,6 @@ public class MetricThreshold implements Comparable<MetricThreshold> {
         }
     }
 
-
     public MetricThreshold(Metric metric, double lowerBound, double upperBound) {
         this.metric = metric;
         if (this.metric == null) {

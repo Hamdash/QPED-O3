@@ -101,9 +101,9 @@ class DesignCheckerTest {
                 = ExtractJavaFilesFromDirectory.builder().dirPath("src/main/java/eu/qped/java/utils/compiler/compiledFiles").build().filesWithExtension("class");
         String[] pathsToClassFiles = classFiles.stream().map(File::getPath).toArray(String[]::new);
 
-        Method runCkjmExtendedMethod = designCheckerCustom.getClass().getDeclaredMethod("runCkjmExtended", DesignCheckReport.class, String[].class);
+        Method runCkjmExtendedMethod = designCheckerCustom.getClass().getDeclaredMethod("runCkjmExtended", DesignCheckReport.class, String[].class, boolean.class, boolean.class);
         runCkjmExtendedMethod.setAccessible(true);
-        runCkjmExtendedMethod.invoke(designCheckerCustom, designCheckReport, pathsToClassFiles);
+        runCkjmExtendedMethod.invoke(designCheckerCustom, designCheckReport, pathsToClassFiles, false, true);
         runCkjmExtendedMethod.setAccessible(false);
         designCheckReport.setPathsToClassFiles(List.of(pathsToClassFiles));
         List<DesignFeedback> designFeedbacks = DesignFeedbackGenerator.generateDesignFeedbacks(designCheckReport.getMetricsMap(), designSettings);
