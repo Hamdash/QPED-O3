@@ -93,7 +93,6 @@ public class MassExecutor {
                 styleChecker.setTargetPath(syntaxCheckReport.getPath());
                 styleChecker.check();
                 styleFeedbacks = styleChecker.getStyleFeedbacks();
-
             }
             if (semanticNeeded) {
                 semanticChecker.setTargetProjectPath(syntaxCheckReport.getPath());
@@ -209,8 +208,8 @@ public class MassExecutor {
         QFMainSettings qfMainSettings = new QFMainSettings();
         qfMainSettings.setSyntaxLevel(CheckLevel.ADVANCED.name());
         qfMainSettings.setSemanticNeeded("false");
-        qfMainSettings.setStyleNeeded("false");
-        qfMainSettings.setMetricsNeeded("true");
+        qfMainSettings.setStyleNeeded("true");
+        qfMainSettings.setMetricsNeeded("false");
         qfMainSettings.setPreferredLanguage("en");
 
 
@@ -232,12 +231,11 @@ public class MassExecutor {
 
         QFStyleSettings qfStyleSettings = new QFStyleSettings();
         qfStyleSettings.setNamesLevel("ADV");
-        qfStyleSettings.setCompLevel("ADV");
-        qfStyleSettings.setMainLevel("ADV");
-        qfStyleSettings.setMethodName("[AA]");
+        qfStyleSettings.setComplexityLevel("ADV");
         qfStyleSettings.setBasisLevel("ADVANCED");
         qfStyleSettings.setClassLength("10");
         qfStyleSettings.setMethodLength("10");
+
 
         StyleChecker styleChecker = StyleChecker.builder().qfStyleSettings(qfStyleSettings).build();
 
@@ -268,8 +266,8 @@ public class MassExecutor {
         MetricsChecker metricsChecker = MetricsChecker.builder().qfMetricsSettings(qfMetricsSettings).build();
 
 
-        SyntaxChecker syntaxChecker = SyntaxChecker.builder().targetProject("src/main/resources/testProject/src/res").build();
-        //SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(code).build();
+        //SyntaxChecker syntaxChecker = SyntaxChecker.builder().targetProject("src/main/resources/testProject").build();
+        SyntaxChecker syntaxChecker = SyntaxChecker.builder().stringAnswer(code).build();
 
 
         MassExecutor massE = new MassExecutor(styleChecker, semanticChecker, syntaxChecker, metricsChecker, null, mainSettingsConfiguratorConf);
