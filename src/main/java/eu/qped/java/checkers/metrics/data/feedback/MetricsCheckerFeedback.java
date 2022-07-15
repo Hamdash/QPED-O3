@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import static eu.qped.java.checkers.metrics.ckjm.MetricCheckerEntryHandler.*;
+import static eu.qped.java.checkers.metrics.ckjm.MetricCheckerEntryHandler.Metric;
 
 /**
  * Data class representing the feedback for design presented to the user.
@@ -32,20 +32,9 @@ public class MetricsCheckerFeedback extends Feedback {
 
     @Override
     public String toString() {
-        return new StringBuilder()
-                .append("In class '")
-                .append(getClassName())
-                .append(".java'")
-                .append("\n")
-                .append(getMetric())
-                .append(" (")
-                .append(super.getBody())
-                .append(")")
-                .append("\n")
-                .append("Measured at: ")
-                .append(getValue())
-                .append("\n")
-                .append(suggestion)
-                .toString();
+        return "In class '" + getClassName() + ".java'" + "\n" +
+                getMetric() + " (" + super.getBody() + ")" + "\n" +
+                "Measured at: " + getValue() + "\n" +
+                suggestion;
     }
 }

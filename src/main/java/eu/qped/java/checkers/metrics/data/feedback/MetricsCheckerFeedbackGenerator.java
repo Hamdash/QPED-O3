@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static eu.qped.java.checkers.metrics.ckjm.MetricCheckerEntryHandler.*;
+import static eu.qped.java.checkers.metrics.ckjm.MetricCheckerEntryHandler.Metric;
 
 /**
  * Represents helper class to generate design feedback suggestions as strings.

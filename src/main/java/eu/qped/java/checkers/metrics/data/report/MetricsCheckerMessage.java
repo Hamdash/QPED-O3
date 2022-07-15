@@ -3,7 +3,7 @@ package eu.qped.java.checkers.metrics.data.report;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import static eu.qped.java.checkers.metrics.ckjm.MetricCheckerEntryHandler.*;
+import static eu.qped.java.checkers.metrics.ckjm.MetricCheckerEntryHandler.Metric;
 
 /**
  * Abstract class for metric messages.

@@ -2,9 +2,12 @@ package eu.qped.java.checkers.metrics.settings;
 
 import eu.qped.framework.qf.QfObjectBase;
 import eu.qped.java.checkers.metrics.MetricsChecker;
-import eu.qped.java.checkers.metrics.data.feedback.MetricsCheckerSuggestion;
 import eu.qped.java.checkers.metrics.ckjm.MetricCheckerEntryHandler.Metric;
-import lombok.*;
+import eu.qped.java.checkers.metrics.data.feedback.MetricsCheckerSuggestion;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashMap;
 

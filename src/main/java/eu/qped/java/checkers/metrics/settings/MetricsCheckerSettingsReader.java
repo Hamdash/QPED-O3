@@ -1,12 +1,12 @@
 package eu.qped.java.checkers.metrics.settings;
 
-import eu.qped.java.checkers.metrics.data.feedback.MetricsCheckerSuggestion;
 import eu.qped.java.checkers.mass.QFMetricsSettings;
-import lombok.*;
+import eu.qped.java.checkers.metrics.data.feedback.MetricsCheckerSuggestion;
+import lombok.Builder;
 
 import java.util.HashMap;
 
-import static eu.qped.java.checkers.metrics.ckjm.MetricCheckerEntryHandler.*;
+import static eu.qped.java.checkers.metrics.ckjm.MetricCheckerEntryHandler.Metric;
 import static eu.qped.java.checkers.metrics.ckjm.MetricCheckerEntryHandler.Metric.*;
 
 /**

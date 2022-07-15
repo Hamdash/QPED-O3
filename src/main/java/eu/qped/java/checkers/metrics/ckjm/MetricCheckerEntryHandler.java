@@ -6,7 +6,7 @@ import eu.qped.java.checkers.metrics.data.report.MetricsCheckerMessageMulti;
 import eu.qped.java.checkers.metrics.data.report.MetricsCheckerMessageSingle;
 import gr.spinellis.ckjm.CkjmOutputHandler;
 import gr.spinellis.ckjm.ClassMetrics;
-import lombok.*;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.HashMap;

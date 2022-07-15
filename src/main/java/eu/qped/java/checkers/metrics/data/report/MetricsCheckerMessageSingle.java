@@ -2,7 +2,7 @@ package eu.qped.java.checkers.metrics.data.report;
 
 import lombok.Getter;
 
-import static eu.qped.java.checkers.metrics.ckjm.MetricCheckerEntryHandler.*;
+import static eu.qped.java.checkers.metrics.ckjm.MetricCheckerEntryHandler.Metric;
 
 /**
  * Subclass for metric messages when only a single value single calculated for one class

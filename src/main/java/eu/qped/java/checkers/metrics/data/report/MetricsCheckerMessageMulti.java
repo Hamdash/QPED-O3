@@ -4,7 +4,7 @@ import lombok.Getter;
 
 import java.util.Map;
 
-import static eu.qped.java.checkers.metrics.ckjm.MetricCheckerEntryHandler.*;
+import static eu.qped.java.checkers.metrics.ckjm.MetricCheckerEntryHandler.Metric;
 
 /**
  * Subclass for metric messages when multiple values are calculated for one class,

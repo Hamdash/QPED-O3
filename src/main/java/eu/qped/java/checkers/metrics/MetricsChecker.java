@@ -1,19 +1,19 @@
 package eu.qped.java.checkers.metrics;
 
-import eu.qped.java.checkers.metrics.ckjm.QPEDMetricsFilter;
+import eu.qped.java.checkers.mass.QFMetricsSettings;
 import eu.qped.java.checkers.metrics.ckjm.MetricCheckerEntryHandler;
+import eu.qped.java.checkers.metrics.ckjm.QPEDMetricsFilter;
 import eu.qped.java.checkers.metrics.data.feedback.MetricsCheckerFeedback;
 import eu.qped.java.checkers.metrics.data.feedback.MetricsCheckerFeedbackGenerator;
+import eu.qped.java.checkers.metrics.data.report.MetricsCheckerReport;
 import eu.qped.java.checkers.metrics.settings.MetricsCheckerSettings;
 import eu.qped.java.checkers.metrics.settings.MetricsCheckerSettingsReader;
-import eu.qped.java.checkers.metrics.data.report.MetricsCheckerReport;
-import eu.qped.java.checkers.mass.QFMetricsSettings;
 import eu.qped.java.utils.ExtractJavaFilesFromDirectory;
 import gr.spinellis.ckjm.utils.CmdLineParser;
 import lombok.*;
 
 import java.io.File;
-import java.util.*;
+import java.util.List;
 
 
 /**
