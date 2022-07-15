@@ -1,5 +1,6 @@
 package eu.qped.java.checkers.metrics.data;
 
+import eu.qped.java.checkers.metrics.data.report.MetricCheckerEntry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

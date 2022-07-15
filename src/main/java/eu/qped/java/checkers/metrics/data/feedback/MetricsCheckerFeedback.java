@@ -1,4 +1,4 @@
-package eu.qped.java.checkers.metrics;
+package eu.qped.java.checkers.metrics.data.feedback;
 
 import eu.qped.framework.Feedback;
 import lombok.Builder;

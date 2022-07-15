@@ -1,4 +1,4 @@
-package eu.qped.java.checkers.metrics.data;
+package eu.qped.java.checkers.metrics.data.report;
 
 import eu.qped.java.checkers.metrics.MetricsChecker;
 import lombok.AllArgsConstructor;

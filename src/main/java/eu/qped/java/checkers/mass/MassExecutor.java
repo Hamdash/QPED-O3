@@ -6,7 +6,7 @@ import eu.qped.framework.Translator;
 import eu.qped.java.checkers.classdesign.ClassChecker;
 import eu.qped.java.checkers.classdesign.feedback.ClassFeedback;
 import eu.qped.java.checkers.metrics.MetricsChecker;
-import eu.qped.java.checkers.metrics.MetricsCheckerFeedback;
+import eu.qped.java.checkers.metrics.data.feedback.MetricsCheckerFeedback;
 import eu.qped.java.checkers.semantics.SemanticChecker;
 import eu.qped.java.checkers.semantics.SemanticFeedback;
 import eu.qped.java.checkers.style.StyleChecker;

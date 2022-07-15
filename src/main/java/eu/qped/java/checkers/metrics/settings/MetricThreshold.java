@@ -1,4 +1,4 @@
-package eu.qped.java.checkers.metrics.configuration;
+package eu.qped.java.checkers.metrics.settings;
 
 import eu.qped.java.checkers.metrics.ckjm.MetricCheckerEntryHandler.Metric;
 import lombok.Getter;

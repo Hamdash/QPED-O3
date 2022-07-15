@@ -1,4 +1,4 @@
-package eu.qped.java.checkers.metrics.configuration;
+package eu.qped.java.checkers.metrics.settings;
 
 import eu.qped.java.checkers.metrics.utils.MetricsCheckerTestUtility;
 import eu.qped.java.checkers.mass.QFMetricsSettings;
@@ -34,45 +34,45 @@ class MetricsCheckerSettingsReaderTest {
     void readMetricsSettingsTest() {
         MetricsCheckerSettings metricsCheckerSettings = metricsCheckerSettingsReader.readMetricsCheckerSettings(MetricsCheckerSettings.builder().build());
 
-        assertEquals(Double.parseDouble(qfMetricsSettings.getAmcMin()), metricsCheckerSettings.getAmcThreshold().getLowerBound());
-        assertEquals(Double.parseDouble(qfMetricsSettings.getCaMin()), metricsCheckerSettings.getCaThreshold().getLowerBound());
-        assertEquals(Double.parseDouble(qfMetricsSettings.getCamMin()), metricsCheckerSettings.getCamThreshold().getLowerBound());
-        assertEquals(Double.parseDouble(qfMetricsSettings.getCbmMin()), metricsCheckerSettings.getCbmThreshold().getLowerBound());
-        assertEquals(Double.parseDouble(qfMetricsSettings.getCboMin()), metricsCheckerSettings.getCboThreshold().getLowerBound());
-        assertEquals(Double.parseDouble(qfMetricsSettings.getCcMin()), metricsCheckerSettings.getCcThreshold().getLowerBound());
-        assertEquals(Double.parseDouble(qfMetricsSettings.getCeMin()), metricsCheckerSettings.getCeThreshold().getLowerBound());
-        assertEquals(Double.parseDouble(qfMetricsSettings.getDamMin()), metricsCheckerSettings.getDamThreshold().getLowerBound());
-        assertEquals(Double.parseDouble(qfMetricsSettings.getDitMin()), metricsCheckerSettings.getDitThreshold().getLowerBound());
-        assertEquals(Double.parseDouble(qfMetricsSettings.getIcMin()), metricsCheckerSettings.getIcThreshold().getLowerBound());
-        assertEquals(Double.parseDouble(qfMetricsSettings.getLcomMin()), metricsCheckerSettings.getLcomThreshold().getLowerBound());
-        assertEquals(Double.parseDouble(qfMetricsSettings.getLcom3Min()), metricsCheckerSettings.getLcom3Threshold().getLowerBound());
-        assertEquals(Double.parseDouble(qfMetricsSettings.getLocMin()), metricsCheckerSettings.getLocThreshold().getLowerBound());
-        assertEquals(Double.parseDouble(qfMetricsSettings.getMfaMin()), metricsCheckerSettings.getMfaThreshold().getLowerBound());
-        assertEquals(Double.parseDouble(qfMetricsSettings.getMoaMin()), metricsCheckerSettings.getMoaThreshold().getLowerBound());
-        assertEquals(Double.parseDouble(qfMetricsSettings.getNocMin()), metricsCheckerSettings.getNocThreshold().getLowerBound());
-        assertEquals(Double.parseDouble(qfMetricsSettings.getNpmMin()), metricsCheckerSettings.getNpmThreshold().getLowerBound());
-        assertEquals(Double.parseDouble(qfMetricsSettings.getRfcMin()), metricsCheckerSettings.getRfcThreshold().getLowerBound());
-        assertEquals(Double.parseDouble(qfMetricsSettings.getWmcMin()), metricsCheckerSettings.getWmcThreshold().getLowerBound());
+        assertEquals(Double.parseDouble(qfMetricsSettings.getAmcMin()), metricsCheckerSettings.getAmcConfig().getMetricThreshold().getLowerBound());
+        assertEquals(Double.parseDouble(qfMetricsSettings.getCaMin()), metricsCheckerSettings.getCaConfig().getMetricThreshold().getLowerBound());
+        assertEquals(Double.parseDouble(qfMetricsSettings.getCamMin()), metricsCheckerSettings.getCamConfig().getMetricThreshold().getLowerBound());
+        assertEquals(Double.parseDouble(qfMetricsSettings.getCbmMin()), metricsCheckerSettings.getCbmConfig().getMetricThreshold().getLowerBound());
+        assertEquals(Double.parseDouble(qfMetricsSettings.getCboMin()), metricsCheckerSettings.getCboConfig().getMetricThreshold().getLowerBound());
+        assertEquals(Double.parseDouble(qfMetricsSettings.getCcMin()), metricsCheckerSettings.getCcConfig().getMetricThreshold().getLowerBound());
+        assertEquals(Double.parseDouble(qfMetricsSettings.getCeMin()), metricsCheckerSettings.getCeConfig().getMetricThreshold().getLowerBound());
+        assertEquals(Double.parseDouble(qfMetricsSettings.getDamMin()), metricsCheckerSettings.getDamConfig().getMetricThreshold().getLowerBound());
+        assertEquals(Double.parseDouble(qfMetricsSettings.getDitMin()), metricsCheckerSettings.getDitConfig().getMetricThreshold().getLowerBound());
+        assertEquals(Double.parseDouble(qfMetricsSettings.getIcMin()), metricsCheckerSettings.getIcConfig().getMetricThreshold().getLowerBound());
+        assertEquals(Double.parseDouble(qfMetricsSettings.getLcomMin()), metricsCheckerSettings.getLcomConfig().getMetricThreshold().getLowerBound());
+        assertEquals(Double.parseDouble(qfMetricsSettings.getLcom3Min()), metricsCheckerSettings.getLcom3Config().getMetricThreshold().getLowerBound());
+        assertEquals(Double.parseDouble(qfMetricsSettings.getLocMin()), metricsCheckerSettings.getLocConfig().getMetricThreshold().getLowerBound());
+        assertEquals(Double.parseDouble(qfMetricsSettings.getMfaMin()), metricsCheckerSettings.getMfaConfig().getMetricThreshold().getLowerBound());
+        assertEquals(Double.parseDouble(qfMetricsSettings.getMoaMin()), metricsCheckerSettings.getMoaConfig().getMetricThreshold().getLowerBound());
+        assertEquals(Double.parseDouble(qfMetricsSettings.getNocMin()), metricsCheckerSettings.getNocConfig().getMetricThreshold().getLowerBound());
+        assertEquals(Double.parseDouble(qfMetricsSettings.getNpmMin()), metricsCheckerSettings.getNpmConfig().getMetricThreshold().getLowerBound());
+        assertEquals(Double.parseDouble(qfMetricsSettings.getRfcMin()), metricsCheckerSettings.getRfcConfig().getMetricThreshold().getLowerBound());
+        assertEquals(Double.parseDouble(qfMetricsSettings.getWmcMin()), metricsCheckerSettings.getWmcConfig().getMetricThreshold().getLowerBound());
 
-        assertEquals(Double.parseDouble(qfMetricsSettings.getAmcMax()), metricsCheckerSettings.getAmcThreshold().getUpperBound());
-        assertEquals(Double.parseDouble(qfMetricsSettings.getCaMax()), metricsCheckerSettings.getCaThreshold().getUpperBound());
-        assertEquals(Double.parseDouble(qfMetricsSettings.getCamMax()), metricsCheckerSettings.getCamThreshold().getUpperBound());
-        assertEquals(Double.parseDouble(qfMetricsSettings.getCbmMax()), metricsCheckerSettings.getCbmThreshold().getUpperBound());
-        assertEquals(Double.parseDouble(qfMetricsSettings.getCboMax()), metricsCheckerSettings.getCboThreshold().getUpperBound());
-        assertEquals(Double.parseDouble(qfMetricsSettings.getCcMax()), metricsCheckerSettings.getCcThreshold().getUpperBound());
-        assertEquals(Double.parseDouble(qfMetricsSettings.getCeMax()), metricsCheckerSettings.getCeThreshold().getUpperBound());
-        assertEquals(Double.parseDouble(qfMetricsSettings.getDamMax()), metricsCheckerSettings.getDamThreshold().getUpperBound());
-        assertEquals(Double.parseDouble(qfMetricsSettings.getDitMax()), metricsCheckerSettings.getDitThreshold().getUpperBound());
-        assertEquals(Double.parseDouble(qfMetricsSettings.getIcMax()), metricsCheckerSettings.getIcThreshold().getUpperBound());
-        assertEquals(Double.parseDouble(qfMetricsSettings.getLcomMax()), metricsCheckerSettings.getLcomThreshold().getUpperBound());
-        assertEquals(Double.parseDouble(qfMetricsSettings.getLcom3Max()), metricsCheckerSettings.getLcom3Threshold().getUpperBound());
-        assertEquals(Double.parseDouble(qfMetricsSettings.getLocMax()), metricsCheckerSettings.getLocThreshold().getUpperBound());
-        assertEquals(Double.parseDouble(qfMetricsSettings.getMfaMax()), metricsCheckerSettings.getMfaThreshold().getUpperBound());
-        assertEquals(Double.parseDouble(qfMetricsSettings.getMoaMax()), metricsCheckerSettings.getMoaThreshold().getUpperBound());
-        assertEquals(Double.parseDouble(qfMetricsSettings.getNocMax()), metricsCheckerSettings.getNocThreshold().getUpperBound());
-        assertEquals(Double.parseDouble(qfMetricsSettings.getNpmMax()), metricsCheckerSettings.getNpmThreshold().getUpperBound());
-        assertEquals(Double.parseDouble(qfMetricsSettings.getRfcMax()), metricsCheckerSettings.getRfcThreshold().getUpperBound());
-        assertEquals(Double.parseDouble(qfMetricsSettings.getWmcMax()), metricsCheckerSettings.getWmcThreshold().getUpperBound());
+        assertEquals(Double.parseDouble(qfMetricsSettings.getAmcMax()), metricsCheckerSettings.getAmcConfig().getMetricThreshold().getUpperBound());
+        assertEquals(Double.parseDouble(qfMetricsSettings.getCaMax()), metricsCheckerSettings.getCaConfig().getMetricThreshold().getUpperBound());
+        assertEquals(Double.parseDouble(qfMetricsSettings.getCamMax()), metricsCheckerSettings.getCamConfig().getMetricThreshold().getUpperBound());
+        assertEquals(Double.parseDouble(qfMetricsSettings.getCbmMax()), metricsCheckerSettings.getCbmConfig().getMetricThreshold().getUpperBound());
+        assertEquals(Double.parseDouble(qfMetricsSettings.getCboMax()), metricsCheckerSettings.getCboConfig().getMetricThreshold().getUpperBound());
+        assertEquals(Double.parseDouble(qfMetricsSettings.getCcMax()), metricsCheckerSettings.getCcConfig().getMetricThreshold().getUpperBound());
+        assertEquals(Double.parseDouble(qfMetricsSettings.getCeMax()), metricsCheckerSettings.getCeConfig().getMetricThreshold().getUpperBound());
+        assertEquals(Double.parseDouble(qfMetricsSettings.getDamMax()), metricsCheckerSettings.getDamConfig().getMetricThreshold().getUpperBound());
+        assertEquals(Double.parseDouble(qfMetricsSettings.getDitMax()), metricsCheckerSettings.getDitConfig().getMetricThreshold().getUpperBound());
+        assertEquals(Double.parseDouble(qfMetricsSettings.getIcMax()), metricsCheckerSettings.getIcConfig().getMetricThreshold().getUpperBound());
+        assertEquals(Double.parseDouble(qfMetricsSettings.getLcomMax()), metricsCheckerSettings.getLcomConfig().getMetricThreshold().getUpperBound());
+        assertEquals(Double.parseDouble(qfMetricsSettings.getLcom3Max()), metricsCheckerSettings.getLcom3Config().getMetricThreshold().getUpperBound());
+        assertEquals(Double.parseDouble(qfMetricsSettings.getLocMax()), metricsCheckerSettings.getLocConfig().getMetricThreshold().getUpperBound());
+        assertEquals(Double.parseDouble(qfMetricsSettings.getMfaMax()), metricsCheckerSettings.getMfaConfig().getMetricThreshold().getUpperBound());
+        assertEquals(Double.parseDouble(qfMetricsSettings.getMoaMax()), metricsCheckerSettings.getMoaConfig().getMetricThreshold().getUpperBound());
+        assertEquals(Double.parseDouble(qfMetricsSettings.getNocMax()), metricsCheckerSettings.getNocConfig().getMetricThreshold().getUpperBound());
+        assertEquals(Double.parseDouble(qfMetricsSettings.getNpmMax()), metricsCheckerSettings.getNpmConfig().getMetricThreshold().getUpperBound());
+        assertEquals(Double.parseDouble(qfMetricsSettings.getRfcMax()), metricsCheckerSettings.getRfcConfig().getMetricThreshold().getUpperBound());
+        assertEquals(Double.parseDouble(qfMetricsSettings.getWmcMax()), metricsCheckerSettings.getWmcConfig().getMetricThreshold().getUpperBound());
 
 
     }

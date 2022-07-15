@@ -6,7 +6,7 @@ import eu.qped.java.checkers.metrics.MetricsChecker;
 import static eu.qped.java.checkers.metrics.ckjm.MetricCheckerEntryHandler.Metric.*;
 
 /**
- * Class modeling design settings for {@link MetricsChecker}.
+ * Data class modeling metrics settings for {@link MetricsChecker}.
  * The fields are used to hold the string values from an input json file.
  * They are modeling the thresholds for the corresponding metric, custom suggestions and other settings for the checker.
  *

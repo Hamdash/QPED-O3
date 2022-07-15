@@ -1,7 +1,9 @@
 package eu.qped.java.checkers.metrics;
 
-import eu.qped.java.checkers.metrics.configuration.MetricsCheckerSettings;
-import eu.qped.java.checkers.metrics.data.MetricCheckerEntry;
+import eu.qped.java.checkers.metrics.data.feedback.MetricsCheckerFeedback;
+import eu.qped.java.checkers.metrics.data.feedback.MetricsCheckerFeedbackGenerator;
+import eu.qped.java.checkers.metrics.settings.MetricsCheckerSettings;
+import eu.qped.java.checkers.metrics.data.report.MetricCheckerEntry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

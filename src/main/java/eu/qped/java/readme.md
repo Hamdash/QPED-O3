@@ -21,8 +21,8 @@ The checker can give feedback on whether a learner is supposed to use a certain 
 
 ### Metrics Checker
 Metrics Checker analyzes a given class or project for class design by using well-known object-oriented metrics.
-This checker generates feedback when the given classes or methods violate one of these metrics' set boundaries.
-This feedback can be customized as well.
+This checker generates feedback when the given classes or methods violate previously set boundaries (lower/upper thresholds) of these metrics.
+The feedback can be customized as well.
 
 ### Class Checker
 Class Checker compares the given solution to the expected design decisions, such as correctly  setting field or method visibilities.

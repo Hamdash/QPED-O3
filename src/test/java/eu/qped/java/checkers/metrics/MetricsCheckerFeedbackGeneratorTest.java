@@ -1,8 +1,9 @@
 package eu.qped.java.checkers.metrics;
 
-import eu.qped.java.checkers.metrics.MetricsCheckerFeedbackGenerator.DefaultMetricSuggestion;
+import eu.qped.java.checkers.metrics.data.feedback.MetricsCheckerFeedbackGenerator;
+import eu.qped.java.checkers.metrics.data.feedback.MetricsCheckerFeedbackGenerator.DefaultMetricSuggestion;
 import eu.qped.java.checkers.metrics.ckjm.MetricCheckerEntryHandler.Metric;
-import eu.qped.java.checkers.metrics.configuration.MetricsCheckerSettings;
+import eu.qped.java.checkers.metrics.settings.MetricsCheckerSettings;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;

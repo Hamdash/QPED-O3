@@ -1,4 +1,4 @@
-package eu.qped.java.checkers.metrics.configuration;
+package eu.qped.java.checkers.metrics.settings;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

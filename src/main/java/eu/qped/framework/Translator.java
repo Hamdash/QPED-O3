@@ -1,6 +1,6 @@
 package eu.qped.framework;
 
-import eu.qped.java.checkers.metrics.MetricsCheckerFeedback;
+import eu.qped.java.checkers.metrics.data.feedback.MetricsCheckerFeedback;
 import eu.qped.java.checkers.style.StyleFeedback;
 import org.apache.logging.log4j.LogManager;
 

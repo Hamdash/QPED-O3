@@ -1,9 +1,9 @@
 package eu.qped.java.checkers.metrics.ckjm;
 
-import eu.qped.java.checkers.metrics.data.MetricCheckerEntry;
-import eu.qped.java.checkers.metrics.data.MetricsCheckerMessage;
-import eu.qped.java.checkers.metrics.data.MetricsCheckerMessageMulti;
-import eu.qped.java.checkers.metrics.data.MetricsCheckerMessageSingle;
+import eu.qped.java.checkers.metrics.data.report.MetricCheckerEntry;
+import eu.qped.java.checkers.metrics.data.report.MetricsCheckerMessage;
+import eu.qped.java.checkers.metrics.data.report.MetricsCheckerMessageMulti;
+import eu.qped.java.checkers.metrics.data.report.MetricsCheckerMessageSingle;
 import gr.spinellis.ckjm.CkjmOutputHandler;
 import gr.spinellis.ckjm.ClassMetrics;
 import lombok.*;

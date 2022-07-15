@@ -1,10 +1,10 @@
-package eu.qped.java.checkers.metrics;
+package eu.qped.java.checkers.metrics.data.feedback;
 
-import eu.qped.java.checkers.metrics.configuration.MetricsCheckerSettings;
-import eu.qped.java.checkers.metrics.data.MetricCheckerEntry;
-import eu.qped.java.checkers.metrics.data.MetricsCheckerMessage;
-import eu.qped.java.checkers.metrics.data.MetricsCheckerMessageMulti;
-import eu.qped.java.checkers.metrics.data.MetricsCheckerMessageSingle;
+import eu.qped.java.checkers.metrics.data.report.MetricCheckerEntry;
+import eu.qped.java.checkers.metrics.data.report.MetricsCheckerMessage;
+import eu.qped.java.checkers.metrics.data.report.MetricsCheckerMessageMulti;
+import eu.qped.java.checkers.metrics.data.report.MetricsCheckerMessageSingle;
+import eu.qped.java.checkers.metrics.settings.MetricsCheckerSettings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -253,43 +253,81 @@ public class MetricsCheckerFeedbackGenerator {
         if (metric != null) {
             switch (metric) {
                 case AMC:
-                    return lower ? value < metricsCheckerSettings.getAmcThreshold().getLowerBound() : value > metricsCheckerSettings.getAmcThreshold().getUpperBound();
+                    return lower
+                            ? value < metricsCheckerSettings.getAmcConfig().getMetricThreshold().getLowerBound()
+                            : value > metricsCheckerSettings.getAmcConfig().getMetricThreshold().getUpperBound();
                 case CAM:
-                    return lower ? value < metricsCheckerSettings.getCamThreshold().getLowerBound() : value > metricsCheckerSettings.getCamThreshold().getUpperBound();
+                    return lower
+                            ? value < metricsCheckerSettings.getCamConfig().getMetricThreshold().getLowerBound()
+                            : value > metricsCheckerSettings.getCamConfig().getMetricThreshold().getUpperBound();
                 case CA:
-                    return lower ? value < metricsCheckerSettings.getCaThreshold().getLowerBound() : value > metricsCheckerSettings.getCaThreshold().getUpperBound();
+                    return lower
+                            ? value < metricsCheckerSettings.getCaConfig().getMetricThreshold().getLowerBound()
+                            : value > metricsCheckerSettings.getCaConfig().getMetricThreshold().getUpperBound();
                 case CBM:
-                    return lower ? value < metricsCheckerSettings.getCbmThreshold().getLowerBound() : value > metricsCheckerSettings.getCbmThreshold().getUpperBound();
+                    return lower
+                            ? value < metricsCheckerSettings.getCbmConfig().getMetricThreshold().getLowerBound()
+                            : value > metricsCheckerSettings.getCbmConfig().getMetricThreshold().getUpperBound();
                 case CBO:
-                    return lower ? value < metricsCheckerSettings.getCboThreshold().getLowerBound() : value > metricsCheckerSettings.getCboThreshold().getUpperBound();
+                    return lower
+                            ? value < metricsCheckerSettings.getCboConfig().getMetricThreshold().getLowerBound()
+                            : value > metricsCheckerSettings.getCboConfig().getMetricThreshold().getUpperBound();
                 case CC:
-                    return lower ? value < metricsCheckerSettings.getCcThreshold().getLowerBound() : value > metricsCheckerSettings.getCcThreshold().getUpperBound();
+                    return lower
+                            ? value < metricsCheckerSettings.getCcConfig().getMetricThreshold().getLowerBound()
+                            : value > metricsCheckerSettings.getCcConfig().getMetricThreshold().getUpperBound();
                 case CE:
-                    return lower ? value < metricsCheckerSettings.getCeThreshold().getLowerBound() : value > metricsCheckerSettings.getCeThreshold().getUpperBound();
+                    return lower
+                            ? value < metricsCheckerSettings.getCeConfig().getMetricThreshold().getLowerBound()
+                            : value > metricsCheckerSettings.getCeConfig().getMetricThreshold().getUpperBound();
                 case DAM:
-                    return lower ? value < metricsCheckerSettings.getDamThreshold().getLowerBound() : value > metricsCheckerSettings.getDamThreshold().getUpperBound();
+                    return lower
+                            ? value < metricsCheckerSettings.getDamConfig().getMetricThreshold().getLowerBound()
+                            : value > metricsCheckerSettings.getDamConfig().getMetricThreshold().getUpperBound();
                 case DIT:
-                    return lower ? value < metricsCheckerSettings.getDitThreshold().getLowerBound() : value > metricsCheckerSettings.getDitThreshold().getUpperBound();
+                    return lower
+                            ? value < metricsCheckerSettings.getDitConfig().getMetricThreshold().getLowerBound()
+                            : value > metricsCheckerSettings.getDitConfig().getMetricThreshold().getUpperBound();
                 case IC:
-                    return lower ? value < metricsCheckerSettings.getIcThreshold().getLowerBound() : value > metricsCheckerSettings.getIcThreshold().getUpperBound();
+                    return lower
+                            ? value < metricsCheckerSettings.getIcConfig().getMetricThreshold().getLowerBound()
+                            : value > metricsCheckerSettings.getIcConfig().getMetricThreshold().getUpperBound();
                 case LCOM:
-                    return lower ? value < metricsCheckerSettings.getLcomThreshold().getLowerBound() : value > metricsCheckerSettings.getLcomThreshold().getUpperBound();
+                    return lower
+                            ? value < metricsCheckerSettings.getLcomConfig().getMetricThreshold().getLowerBound()
+                            : value > metricsCheckerSettings.getLcomConfig().getMetricThreshold().getUpperBound();
                 case LCOM3:
-                    return lower ? value < metricsCheckerSettings.getLcom3Threshold().getLowerBound() : value > metricsCheckerSettings.getLcom3Threshold().getUpperBound();
+                    return lower
+                            ? value < metricsCheckerSettings.getLcom3Config().getMetricThreshold().getLowerBound()
+                            : value > metricsCheckerSettings.getLcom3Config().getMetricThreshold().getUpperBound();
                 case LOC:
-                    return lower ? value < metricsCheckerSettings.getLocThreshold().getLowerBound() : value > metricsCheckerSettings.getLocThreshold().getUpperBound();
+                    return lower
+                            ? value < metricsCheckerSettings.getLocConfig().getMetricThreshold().getLowerBound()
+                            : value > metricsCheckerSettings.getLocConfig().getMetricThreshold().getUpperBound();
                 case MOA:
-                    return lower ? value < metricsCheckerSettings.getMoaThreshold().getLowerBound() : value > metricsCheckerSettings.getMoaThreshold().getUpperBound();
+                    return lower
+                            ? value < metricsCheckerSettings.getMoaConfig().getMetricThreshold().getLowerBound()
+                            : value > metricsCheckerSettings.getMoaConfig().getMetricThreshold().getUpperBound();
                 case MFA:
-                    return lower ? value < metricsCheckerSettings.getMfaThreshold().getLowerBound() : value > metricsCheckerSettings.getMfaThreshold().getUpperBound();
+                    return lower
+                            ? value < metricsCheckerSettings.getMfaConfig().getMetricThreshold().getLowerBound()
+                            : value > metricsCheckerSettings.getMfaConfig().getMetricThreshold().getUpperBound();
                 case NOC:
-                    return lower ? value < metricsCheckerSettings.getNocThreshold().getLowerBound() : value > metricsCheckerSettings.getNocThreshold().getUpperBound();
+                    return lower
+                            ? value < metricsCheckerSettings.getNocConfig().getMetricThreshold().getLowerBound()
+                            : value > metricsCheckerSettings.getNocConfig().getMetricThreshold().getUpperBound();
                 case NPM:
-                    return lower ? value < metricsCheckerSettings.getNpmThreshold().getLowerBound() : value > metricsCheckerSettings.getNpmThreshold().getUpperBound();
+                    return lower
+                            ? value < metricsCheckerSettings.getNpmConfig().getMetricThreshold().getLowerBound()
+                            : value > metricsCheckerSettings.getNpmConfig().getMetricThreshold().getUpperBound();
                 case RFC:
-                    return lower ? value < metricsCheckerSettings.getRfcThreshold().getLowerBound() : value > metricsCheckerSettings.getRfcThreshold().getUpperBound();
+                    return lower
+                            ? value < metricsCheckerSettings.getRfcConfig().getMetricThreshold().getLowerBound()
+                            : value > metricsCheckerSettings.getRfcConfig().getMetricThreshold().getUpperBound();
                 case WMC:
-                    return lower ? value < metricsCheckerSettings.getWmcThreshold().getLowerBound() : value > metricsCheckerSettings.getWmcThreshold().getUpperBound();
+                    return lower
+                            ? value < metricsCheckerSettings.getWmcConfig().getMetricThreshold().getLowerBound()
+                            : value > metricsCheckerSettings.getWmcConfig().getMetricThreshold().getUpperBound();
             }
         }
         throw new IllegalArgumentException("Illegal Metric given.");

@@ -1,10 +1,12 @@
 package eu.qped.java.checkers.metrics;
 
-import eu.qped.java.checkers.metrics.configuration.MetricsCheckerSettings;
-import eu.qped.java.checkers.metrics.configuration.MetricsCheckerSettingsReader;
-import eu.qped.java.checkers.metrics.data.MetricCheckerEntry;
-import eu.qped.java.checkers.metrics.data.MetricsCheckerMessage;
-import eu.qped.java.checkers.metrics.data.MetricsCheckerReport;
+import eu.qped.java.checkers.metrics.data.feedback.MetricsCheckerFeedback;
+import eu.qped.java.checkers.metrics.data.feedback.MetricsCheckerFeedbackGenerator;
+import eu.qped.java.checkers.metrics.data.report.MetricCheckerEntry;
+import eu.qped.java.checkers.metrics.data.report.MetricsCheckerMessage;
+import eu.qped.java.checkers.metrics.data.report.MetricsCheckerReport;
+import eu.qped.java.checkers.metrics.settings.MetricsCheckerSettings;
+import eu.qped.java.checkers.metrics.settings.MetricsCheckerSettingsReader;
 import eu.qped.java.checkers.metrics.utils.MetricsCheckerTestUtility;
 import eu.qped.java.checkers.mass.QFMetricsSettings;
 import eu.qped.java.utils.ExtractJavaFilesFromDirectory;
@@ -60,7 +62,7 @@ class MetricsCheckerTest {
     void testEmptyMetricsChecker() throws IllegalAccessException {
         assertNull(metricsCheckerEmpty.getMetricsCheckerFeedbacks());
 
-        Field qfDesignSettingsField = MetricsCheckerTestUtility.getFieldByName("qfDesignSettings", fields);
+        Field qfDesignSettingsField = MetricsCheckerTestUtility.getFieldByName("qfMetricsSettings", fields);
         assert qfDesignSettingsField != null;
         qfDesignSettingsField.setAccessible(true);
         assertNull(qfDesignSettingsField.get(metricsCheckerEmpty));
@@ -71,7 +73,7 @@ class MetricsCheckerTest {
     void testFilledMetricsChecker() throws IllegalAccessException {
         assertNotNull(metricsCheckerFilled.getMetricsCheckerFeedbacks());
 
-        Field qfDesignSettingsField = MetricsCheckerTestUtility.getFieldByName("qfDesignSettings", fields);
+        Field qfDesignSettingsField = MetricsCheckerTestUtility.getFieldByName("qfMetricsSettings", fields);
         assert qfDesignSettingsField != null;
         qfDesignSettingsField.setAccessible(true);
         assertNotNull(qfDesignSettingsField.get(metricsCheckerFilled));
@@ -81,7 +83,7 @@ class MetricsCheckerTest {
     void testNoArgsMetricsChecker() throws IllegalAccessException {
         assertNull(metricsCheckerNoArgs.getMetricsCheckerFeedbacks());
 
-        Field qfDesignSettingsField = MetricsCheckerTestUtility.getFieldByName("qfDesignSettings", fields);
+        Field qfDesignSettingsField = MetricsCheckerTestUtility.getFieldByName("qfMetricsSettings", fields);
         assert qfDesignSettingsField != null;
         qfDesignSettingsField.setAccessible(true);
         assertNull(qfDesignSettingsField.get(metricsCheckerNoArgs));
@@ -131,7 +133,7 @@ class MetricsCheckerTest {
     }
     @Test
     void testToString() throws IllegalAccessException {
-        Field qfDesignSettingsField = MetricsCheckerTestUtility.getFieldByName("qfDesignSettings", fields);
+        Field qfDesignSettingsField = MetricsCheckerTestUtility.getFieldByName("qfMetricsSettings", fields);
         assert qfDesignSettingsField != null;
         qfDesignSettingsField.setAccessible(true);
 
