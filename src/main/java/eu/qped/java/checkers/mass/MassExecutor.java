@@ -57,7 +57,7 @@ public class MassExecutor {
      * @param styleChecker             style checker component
      * @param semanticChecker          semantic checker component
      * @param syntaxChecker            syntax checker component
-     * @param metricsChecker            design checker component
+     * @param metricsChecker           metrics checker component
      * @param mainSettingsConfigurator settings
      */
 
@@ -82,7 +82,7 @@ public class MassExecutor {
 
         boolean styleNeeded = mainSettingsConfigurator.isStyleNeeded();
         boolean semanticNeeded = mainSettingsConfigurator.isSemanticNeeded();
-        boolean designNeeded = mainSettingsConfigurator.isMetricsNeeded();
+        boolean metricsNeeded = mainSettingsConfigurator.isMetricsNeeded();
         boolean classNeeded = mainSettingsConfigurator.isClassNeeded();
 
 
@@ -100,7 +100,7 @@ public class MassExecutor {
                 semanticChecker.check();
                 semanticFeedbacks = semanticChecker.getFeedbacks();
             }
-            if (designNeeded) {
+            if (metricsNeeded) {
                 metricsChecker.check();
                 metricsCheckerFeedbacks = metricsChecker.getMetricsCheckerFeedbacks();
             }
@@ -121,7 +121,7 @@ public class MassExecutor {
 
         // translate Feedback body if needed
         if (!mainSettingsConfigurator.getPreferredLanguage().equals("en")) {
-            translate(styleNeeded, semanticNeeded, designNeeded);
+            translate(styleNeeded, semanticNeeded, metricsNeeded);
         }
     }
 
@@ -134,7 +134,7 @@ public class MassExecutor {
     }
 
 
-    private void translate(boolean styleNeeded, boolean semanticNeeded, boolean designNeeded) {
+    private void translate(boolean styleNeeded, boolean semanticNeeded, boolean metricsNeeded) {
         String prefLanguage = mainSettingsConfigurator.getPreferredLanguage();
         Translator translator = new Translator();
 
@@ -152,7 +152,7 @@ public class MassExecutor {
                 translator.translateStyleBody(prefLanguage, feedback);
             }
         }
-        if (designNeeded) {
+        if (metricsNeeded) {
             for (MetricsCheckerFeedback feedback : metricsCheckerFeedbacks) {
                 translator.translateMetricsBody(prefLanguage, feedback);
             }

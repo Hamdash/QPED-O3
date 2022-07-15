@@ -104,7 +104,7 @@ Object: semSettings
 | returnType       | String                 |
 
 ### Metrics Checker Configuration WIP
-The design checker is able to check one or more given classes for well-known class design metrics.
+The metrics checker is able to check one or more given classes for well-known object-oriented design metrics.
 The used metrics are e.g. from the **Chidamber Kemerer**, **quality oriented extension to C&K**, **QMOOD** metrics suites, 
 
 | Option Name      | Possible Values          |

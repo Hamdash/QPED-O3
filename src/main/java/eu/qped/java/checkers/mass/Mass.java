@@ -59,7 +59,7 @@ public class Mass implements Checker {
 
         SemanticChecker semanticChecker = SemanticChecker.builder().feedbacks(new ArrayList<>()).qfSemSettings(mass.getSemantic()).build();
 
-        // Design Checker
+        // Metrics Checker
         MetricsChecker metricsChecker = MetricsChecker.builder().qfMetricsSettings(mass.getMetrics()).build();
 
         //Class Checker
@@ -116,7 +116,7 @@ public class Mass implements Checker {
         }
 
         for (MetricsCheckerFeedback df : metricsCheckerFeedbacks) {
-            result[i] = "design Feedback";
+            result[i] = "metrics Feedback";
             result[i + 1] =
                     "In class '" + df.getClassName() + ".java'"
                             + NEW_LINE

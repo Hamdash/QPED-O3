@@ -62,32 +62,32 @@ class MetricsCheckerTest {
     void testEmptyMetricsChecker() throws IllegalAccessException {
         assertNull(metricsCheckerEmpty.getMetricsCheckerFeedbacks());
 
-        Field qfDesignSettingsField = MetricsCheckerTestUtility.getFieldByName("qfMetricsSettings", fields);
-        assert qfDesignSettingsField != null;
-        qfDesignSettingsField.setAccessible(true);
-        assertNull(qfDesignSettingsField.get(metricsCheckerEmpty));
-        qfDesignSettingsField.setAccessible(false);
+        Field qfMetricsSettings = MetricsCheckerTestUtility.getFieldByName("qfMetricsSettings", fields);
+        assert qfMetricsSettings != null;
+        qfMetricsSettings.setAccessible(true);
+        assertNull(qfMetricsSettings.get(metricsCheckerEmpty));
+        qfMetricsSettings.setAccessible(false);
     }
 
     @Test
     void testFilledMetricsChecker() throws IllegalAccessException {
         assertNotNull(metricsCheckerFilled.getMetricsCheckerFeedbacks());
 
-        Field qfDesignSettingsField = MetricsCheckerTestUtility.getFieldByName("qfMetricsSettings", fields);
-        assert qfDesignSettingsField != null;
-        qfDesignSettingsField.setAccessible(true);
-        assertNotNull(qfDesignSettingsField.get(metricsCheckerFilled));
-        qfDesignSettingsField.setAccessible(false);
+        Field qfMetricsSettings = MetricsCheckerTestUtility.getFieldByName("qfMetricsSettings", fields);
+        assert qfMetricsSettings != null;
+        qfMetricsSettings.setAccessible(true);
+        assertNotNull(qfMetricsSettings.get(metricsCheckerFilled));
+        qfMetricsSettings.setAccessible(false);
     }
     @Test
     void testNoArgsMetricsChecker() throws IllegalAccessException {
         assertNull(metricsCheckerNoArgs.getMetricsCheckerFeedbacks());
 
-        Field qfDesignSettingsField = MetricsCheckerTestUtility.getFieldByName("qfMetricsSettings", fields);
-        assert qfDesignSettingsField != null;
-        qfDesignSettingsField.setAccessible(true);
-        assertNull(qfDesignSettingsField.get(metricsCheckerNoArgs));
-        qfDesignSettingsField.setAccessible(false);
+        Field qfMetricsSettingsField = MetricsCheckerTestUtility.getFieldByName("qfMetricsSettings", fields);
+        assert qfMetricsSettingsField != null;
+        qfMetricsSettingsField.setAccessible(true);
+        assertNull(qfMetricsSettingsField.get(metricsCheckerNoArgs));
+        qfMetricsSettingsField.setAccessible(false);
     }
 
 
@@ -133,16 +133,16 @@ class MetricsCheckerTest {
     }
     @Test
     void testToString() throws IllegalAccessException {
-        Field qfDesignSettingsField = MetricsCheckerTestUtility.getFieldByName("qfMetricsSettings", fields);
-        assert qfDesignSettingsField != null;
-        qfDesignSettingsField.setAccessible(true);
+        Field qfMetricsSettings = MetricsCheckerTestUtility.getFieldByName("qfMetricsSettings", fields);
+        assert qfMetricsSettings != null;
+        qfMetricsSettings.setAccessible(true);
 
         assertEquals(
                 metricsCheckerFilled.toString(),
-                "DesignChecker{" +
+                "MetricsChecker{" +
                 "feedbacks=" + metricsCheckerFilled.getMetricsCheckerFeedbacks() +
-                ", qfDesignSettings=" + qfDesignSettingsField.get(metricsCheckerFilled) +
+                ", qfMetricsSettings=" + qfMetricsSettings.get(metricsCheckerFilled) +
                 '}');
-        qfDesignSettingsField.setAccessible(false);
+        qfMetricsSettings.setAccessible(false);
     }
 }

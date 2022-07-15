@@ -87,11 +87,11 @@ class MetricsCheckerFeedbackTest {
     @EnumSource(Metric.class)
     void generateMetricsCheckerFeedbackTest() {
         MetricsCheckerSettings metricsCheckerSettings = MetricsCheckerSettings.builder().build();
-        List<MetricCheckerEntry> designCheckEntries =
+        List<MetricCheckerEntry> metricCheckerEntries =
                 List.of(mock(MetricCheckerEntry.class), mock(MetricCheckerEntry.class), mock(MetricCheckerEntry.class),
                         mock(MetricCheckerEntry.class), mock(MetricCheckerEntry.class), mock(MetricCheckerEntry.class));
 
-        assertEquals(MetricsCheckerFeedbackGenerator.generateMetricsCheckerFeedbacks(designCheckEntries, metricsCheckerSettings), List.of());
+        assertEquals(MetricsCheckerFeedbackGenerator.generateMetricsCheckerFeedbacks(metricCheckerEntries, metricsCheckerSettings), List.of());
     }
 
     @Test

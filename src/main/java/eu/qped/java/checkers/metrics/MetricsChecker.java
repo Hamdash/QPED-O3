@@ -17,7 +17,7 @@ import java.util.*;
 
 
 /**
- * Class represents a checker for class design.
+ * Class represents a checker for object-oriented metrics.
  *
  * @author Jannik Seus
  */
@@ -78,9 +78,9 @@ public class MetricsChecker {
 
     @Override
     public String toString() {
-        return "DesignChecker{" +
+        return "MetricsChecker{" +
                 "feedbacks=" + metricsCheckerFeedbacks +
-                ", qfDesignSettings=" + qfMetricsSettings +
+                ", qfMetricsSettings=" + qfMetricsSettings +
                 '}';
     }
 }
