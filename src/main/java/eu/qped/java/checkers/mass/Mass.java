@@ -37,7 +37,7 @@ public class Mass implements Checker {
     public void check(QfObject qfObject) throws Exception {
 
         MainSettings mainSettings = new MainSettings();
-        mainSettings.setDesignNeeded(mass.isMetricsSelected());
+        mainSettings.setMetricsNeeded(mass.isMetricsSelected());
         mainSettings.setStyleNeeded(mass.isStyleSelected());
         mainSettings.setSemanticNeeded(mass.isSemanticSelected());
         mainSettings.setClassNeeded(mass.isClassSelected());
