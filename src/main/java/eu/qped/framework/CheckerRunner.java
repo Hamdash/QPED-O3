@@ -73,10 +73,7 @@ public class CheckerRunner {
 
 		String checkerClassName = (String) qfObjectMap.get("checkerClass");
 		if (checkerClassName == null) {
-			//throw new IllegalArgumentException("No checker class specified");
-			String checkerPath = "eu.qped.java.checkers.mass.Mass";
-			qfObjectMap.put("checkerClass", checkerPath);
-			checkerClassName = checkerPath;
+			throw new IllegalArgumentException("No checker class specified");
 		}
 
 		try {
