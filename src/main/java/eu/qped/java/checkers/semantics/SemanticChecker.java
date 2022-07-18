@@ -58,23 +58,26 @@ public class SemanticChecker {
 
         SemanticSettingReader reader = SemanticSettingReader.builder().qfSemSettings(qfSemSettings).build();
         var settings = reader.groupByFileName();
+
         // per File
         settings.forEach(
                 fileSettingEntry -> {
+                    System.out.println("in for each");
                     if (targetProjectPath == null) {
                         targetProjectPath = "";
                     }
                     var path = "";
-                    if (fileSettingEntry.getFilePath().charAt(0) == '/') {
-                        path = targetProjectPath + fileSettingEntry.getFilePath();
-                    } else {
-                        if (!Objects.equals(targetProjectPath, "")) {
-                            path = targetProjectPath + "/" + fileSettingEntry.getFilePath();
-                            System.out.println(path);
+                    if (fileSettingEntry.getFilePath() != null && !"".equals(fileSettingEntry.getFilePath())) {
+                        if ('/' == fileSettingEntry.getFilePath().charAt(0)) {
+                            path = targetProjectPath + fileSettingEntry.getFilePath();
                         } else {
-                            path = fileSettingEntry.getFilePath();
+                            if (!Objects.equals(targetProjectPath, "")) {
+                                path = targetProjectPath + "/" + fileSettingEntry.getFilePath();
+                            } else {
+                                path = fileSettingEntry.getFilePath();
+                            }
                         }
-                    }
+                    } else path = targetProjectPath;  // answer is string
 
                     var compilationUnit = parse(path); // AST per File
 
