@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class MetricsCheckerSuggestion {
+public class MetricsFeedbackSuggestion {
 
     private String suggestionLowerBoundExceeded;
     private String suggestionUpperBoundExceeded;

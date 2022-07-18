@@ -21,6 +21,6 @@ import java.util.List;
 public class MetricsCheckerReport {
 
     private List<String> pathsToClassFiles;
-    private List<MetricCheckerEntry> metricsMap;
+    private List<ClassMetricsEntry> metricsMap;
 
 }

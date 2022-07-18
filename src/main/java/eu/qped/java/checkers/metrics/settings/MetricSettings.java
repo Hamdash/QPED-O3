@@ -3,7 +3,7 @@ package eu.qped.java.checkers.metrics.settings;
 import eu.qped.framework.qf.QfObjectBase;
 import eu.qped.java.checkers.metrics.MetricsChecker;
 import eu.qped.java.checkers.metrics.ckjm.MetricCheckerEntryHandler.Metric;
-import eu.qped.java.checkers.metrics.data.feedback.MetricsCheckerSuggestion;
+import eu.qped.java.checkers.metrics.data.feedback.MetricsFeedbackSuggestion;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,7 +20,7 @@ import java.util.HashMap;
 @Getter
 @Setter
 @Builder
-public class MetricsCheckerSettings extends QfObjectBase {
+public class MetricSettings extends QfObjectBase {
 
     @Getter(AccessLevel.NONE)
     private boolean includeCallsToJdk;
@@ -28,7 +28,7 @@ public class MetricsCheckerSettings extends QfObjectBase {
     @Getter(AccessLevel.NONE)
     private boolean includeOnlyPublicClasses;
 
-    private HashMap<Metric, MetricsCheckerSuggestion> customSuggestions;
+    private HashMap<Metric, MetricsFeedbackSuggestion> customSuggestions;
 
     /**
      * Configuration for metric: Average method Complexity

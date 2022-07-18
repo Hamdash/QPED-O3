@@ -132,7 +132,7 @@ The class checker provides ways for the teacher to specify on what to expect fro
 The teacher can specify, for example, what the expected class type and name should be, which
 classes the current class should inherit and what each field or method in the class should look like.
 
-Object: metricsCheckerSettings
+Object: metricSettings
 
 | Option Name    | Possible Values  |
 |----------------|------------------|
@@ -270,7 +270,7 @@ qf.semSettings = {
     "returnType":"float"
 };
 
-qf.metricsCheckerSettings = {
+qf.metricSettings = {
     "classInfos": [
         {
             "classTypeName":"class Card",

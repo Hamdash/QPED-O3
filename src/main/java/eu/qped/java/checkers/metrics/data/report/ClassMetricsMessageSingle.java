@@ -11,7 +11,7 @@ import static eu.qped.java.checkers.metrics.ckjm.MetricCheckerEntryHandler.Metri
  * @author Jannik Seus
  */
 @Getter
-public class MetricsCheckerMessageSingle extends MetricsCheckerMessage {
+public class ClassMetricsMessageSingle extends ClassMetricsMessage {
 
     private final double metricValue;
 
@@ -21,7 +21,7 @@ public class MetricsCheckerMessageSingle extends MetricsCheckerMessage {
      * @param metric      the given metric
      * @param metricValue the calculated value of the given metric for a class
      */
-    public MetricsCheckerMessageSingle(Metric metric, double metricValue) {
+    public ClassMetricsMessageSingle(Metric metric, double metricValue) {
         super(metric);
         this.metricValue = metricValue;
     }

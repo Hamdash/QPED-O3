@@ -14,7 +14,7 @@ import static eu.qped.java.checkers.metrics.ckjm.MetricCheckerEntryHandler.Metri
  */
 @Getter
 @Setter
-public class MetricsCheckerFeedback extends Feedback {
+public class MetricsFeedback extends Feedback {
 
     private String className;
     private Metric metric;
@@ -22,7 +22,7 @@ public class MetricsCheckerFeedback extends Feedback {
     private String suggestion;
 
     @Builder
-    public MetricsCheckerFeedback(String className, String body, Metric metric, Double value, String suggestion) {
+    public MetricsFeedback(String className, String body, Metric metric, Double value, String suggestion) {
         super(body);
         this.className = className;
         this.metric = metric;

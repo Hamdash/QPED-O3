@@ -1,7 +1,7 @@
 package eu.qped.java.checkers.metrics.data;
 
-import eu.qped.java.checkers.metrics.data.report.MetricsCheckerMessage;
-import eu.qped.java.checkers.metrics.data.report.MetricsCheckerMessageMulti;
+import eu.qped.java.checkers.metrics.data.report.ClassMetricsMessage;
+import eu.qped.java.checkers.metrics.data.report.ClassMetricsMessageMulti;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,22 +14,22 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * Test class for {@link MetricsCheckerMessageMulti}.
+ * Test class for {@link ClassMetricsMessageMulti}.
  *
  * @author Jannik Seus
  */
-public class MetricsCheckerMessageMultiTest extends MetricsCheckerMessageTest {
+public class ClassMetricsMessageMultiTest extends ClassMetricsMessageTest {
 
 
-    protected MetricsCheckerMessage metricsCheckerMessage1;
+    protected ClassMetricsMessage classMetricsMessage1;
 
     @Override
     @BeforeEach
     void setUp() {
         Map<String, Integer> metricValues = Map.of("void method2()", 2, "void method3()", 4);
-        metricsCheckerMessage1 = new MetricsCheckerMessageMulti(CC, metricValues);
-        randomMetricsCheckerMessages = new ArrayList<>(List.of(metricsCheckerMessage1));
-        sortedMetricsCheckerMessages = new ArrayList<>(List.of(metricsCheckerMessage1));
+        classMetricsMessage1 = new ClassMetricsMessageMulti(CC, metricValues);
+        randomClassMetricsMessages = new ArrayList<>(List.of(classMetricsMessage1));
+        sortedClassMetricsMessages = new ArrayList<>(List.of(classMetricsMessage1));
     }
 
     // compareTo does not make sense here (yet) because CC is the only possible metric type of
@@ -41,7 +41,7 @@ public class MetricsCheckerMessageMultiTest extends MetricsCheckerMessageTest {
         String key1 = "void method2()";
         String key2 = "void method3()";
 
-        Map<String, Integer> metricValues = ((MetricsCheckerMessageMulti) metricsCheckerMessage1).getMetricValues();
+        Map<String, Integer> metricValues = ((ClassMetricsMessageMulti) classMetricsMessage1).getMetricValues();
 
         assertTrue(metricValues.containsKey(key1));
         assertTrue(metricValues.containsKey(key2));
@@ -51,12 +51,12 @@ public class MetricsCheckerMessageMultiTest extends MetricsCheckerMessageTest {
     }
 
     @Override
-    protected ArrayList<MetricsCheckerMessage> createRandomMetricsCheckerMessages() {
-        return new ArrayList<>(List.of(metricsCheckerMessage1));
+    protected ArrayList<ClassMetricsMessage> createRandomMetricsCheckerMessages() {
+        return new ArrayList<>(List.of(classMetricsMessage1));
     }
 
     @Override
-    protected ArrayList<MetricsCheckerMessage> createSortedMetricsCheckerMessages() {
-        return new ArrayList<>(List.of(metricsCheckerMessage1));
+    protected ArrayList<ClassMetricsMessage> createSortedMetricsCheckerMessages() {
+        return new ArrayList<>(List.of(classMetricsMessage1));
     }
 }

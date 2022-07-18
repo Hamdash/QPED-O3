@@ -1,6 +1,6 @@
 package eu.qped.java.checkers.metrics.data;
 
-import eu.qped.java.checkers.metrics.data.report.MetricCheckerEntry;
+import eu.qped.java.checkers.metrics.data.report.ClassMetricsEntry;
 import eu.qped.java.checkers.metrics.data.report.MetricsCheckerReport;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,14 +17,14 @@ import static org.mockito.Mockito.mock;
  */
 class MetricsCheckerReportTest {
 
-    private final MetricCheckerEntry mockedMetricCheckerEntry = mock(MetricCheckerEntry.class);
+    private final ClassMetricsEntry mockedClassMetricsEntry = mock(ClassMetricsEntry.class);
     private final String samplePath = "path";
     private MetricsCheckerReport metricsCheckerReport;
 
     @BeforeEach
     void setUp() {
         metricsCheckerReport = MetricsCheckerReport.builder()
-                .metricsMap(List.of(mockedMetricCheckerEntry))
+                .metricsMap(List.of(mockedClassMetricsEntry))
                 .pathsToClassFiles(List.of(samplePath))
                 .build();
     }
@@ -39,7 +39,7 @@ class MetricsCheckerReportTest {
     @Test
     void getMetricsMap() {
         assertEquals(1, metricsCheckerReport.getMetricsMap().size());
-        assertTrue(metricsCheckerReport.getMetricsMap().contains(mockedMetricCheckerEntry));
+        assertTrue(metricsCheckerReport.getMetricsMap().contains(mockedClassMetricsEntry));
 
     }
 
@@ -53,7 +53,7 @@ class MetricsCheckerReportTest {
 
     @Test
     void setMetricsMap() {
-        MetricCheckerEntry mocked = mock(MetricCheckerEntry.class);
+        ClassMetricsEntry mocked = mock(ClassMetricsEntry.class);
         metricsCheckerReport.setMetricsMap(List.of(mocked));
         assertEquals(1, metricsCheckerReport.getMetricsMap().size());
         assertTrue(metricsCheckerReport.getMetricsMap().contains(mocked));

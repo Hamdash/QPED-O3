@@ -1,10 +1,10 @@
 package eu.qped.java.checkers.metrics.data.feedback;
 
-import eu.qped.java.checkers.metrics.data.report.MetricCheckerEntry;
-import eu.qped.java.checkers.metrics.data.report.MetricsCheckerMessage;
-import eu.qped.java.checkers.metrics.data.report.MetricsCheckerMessageMulti;
-import eu.qped.java.checkers.metrics.data.report.MetricsCheckerMessageSingle;
-import eu.qped.java.checkers.metrics.settings.MetricsCheckerSettings;
+import eu.qped.java.checkers.metrics.data.report.ClassMetricsEntry;
+import eu.qped.java.checkers.metrics.data.report.ClassMetricsMessage;
+import eu.qped.java.checkers.metrics.data.report.ClassMetricsMessageMulti;
+import eu.qped.java.checkers.metrics.data.report.ClassMetricsMessageSingle;
+import eu.qped.java.checkers.metrics.settings.MetricSettings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ import static eu.qped.java.checkers.metrics.ckjm.MetricCheckerEntryHandler.Metri
  *
  * @author Jannik Seus
  */
-public class MetricsCheckerFeedbackGenerator {
+public class MetricsFeedbackGenerator {
 
     /**
      * Generates a suggestion for the student depending on the exceeding of am already calculated value of a metric.
@@ -166,17 +166,17 @@ public class MetricsCheckerFeedbackGenerator {
      * Generates the DesignFeedback to the corresponding classes, metrics, and designSettings (min/max thresholds)
      *
      * @param metricsMap     the map containing classnames, metrics and corresponding values
-     * @param metricsCheckerSettings the settings on which the feedback depends on //TODO wip configure design settings
+     * @param metricSettings the settings on which the feedback depends on //TODO wip configure design settings
      * @return the generated Feedback as a List.
      */
-    public static List<MetricsCheckerFeedback> generateMetricsCheckerFeedbacks(List<MetricCheckerEntry> metricsMap, MetricsCheckerSettings
-            metricsCheckerSettings) {
-        List<MetricsCheckerFeedback> feedbacks = new ArrayList<>();
+    public static List<MetricsFeedback> generateMetricsCheckerFeedbacks(List<ClassMetricsEntry> metricsMap, MetricSettings
+            metricSettings) {
+        List<MetricsFeedback> feedbacks = new ArrayList<>();
 
         metricsMap.forEach(designCheckEntry -> {
 
             String className = designCheckEntry.getClassName();
-            List<MetricsCheckerMessage> metricsForClass = designCheckEntry.getMetricsForClass();
+            List<ClassMetricsMessage> metricsForClass = designCheckEntry.getMetricsForClass();
 
             if (metricsForClass != null) {
                 metricsForClass.forEach(metricForClass -> {
@@ -187,12 +187,12 @@ public class MetricsCheckerFeedbackGenerator {
                     double metricValue;
                     Map<String, Integer> metricValues;
 
-                    if (metricForClass instanceof MetricsCheckerMessageSingle) {
-                        metricValue = ((MetricsCheckerMessageSingle) metricForClass).getMetricValue();
+                    if (metricForClass instanceof ClassMetricsMessageSingle) {
+                        metricValue = ((ClassMetricsMessageSingle) metricForClass).getMetricValue();
 
-                        lowerThresholdReached = isThresholdReached(metric, metricsCheckerSettings, metricValue, true);
-                        upperThresholdReached = isThresholdReached(metric, metricsCheckerSettings, metricValue, false);
-                        MetricsCheckerSuggestion customSuggestion = metricsCheckerSettings.getCustomSuggestions().get(metric);
+                        lowerThresholdReached = isThresholdReached(metric, metricSettings, metricValue, true);
+                        upperThresholdReached = isThresholdReached(metric, metricSettings, metricValue, false);
+                        MetricsFeedbackSuggestion customSuggestion = metricSettings.getCustomSuggestions().get(metric);
 
                         if (lowerThresholdReached) {
                             if (customSuggestion == null || customSuggestion.getSuggestionLowerBoundExceeded() == null || customSuggestion.getSuggestionLowerBoundExceeded().isBlank()) {
@@ -210,18 +210,18 @@ public class MetricsCheckerFeedbackGenerator {
 
                         boolean addFeedback = (lowerThresholdReached || upperThresholdReached);
                         if (addFeedback) {
-                            feedbacks.add(new MetricsCheckerFeedback(className, metric.getDescription(), metric, metricValue, suggestion));
+                            feedbacks.add(new MetricsFeedback(className, metric.getDescription(), metric, metricValue, suggestion));
                         }
 
 
                     } else {
-                        metricValues = ((MetricsCheckerMessageMulti) metricForClass).getMetricValues();
+                        metricValues = ((ClassMetricsMessageMulti) metricForClass).getMetricValues();
                         for (Map.Entry<String, Integer> entry : metricValues.entrySet()) {
                             suggestion = "For method " + entry.getKey() + ":\t";
-                            lowerThresholdReached = isThresholdReached(metric, metricsCheckerSettings, entry.getValue(), true);
-                            upperThresholdReached = isThresholdReached(metric, metricsCheckerSettings, entry.getValue(), false);
+                            lowerThresholdReached = isThresholdReached(metric, metricSettings, entry.getValue(), true);
+                            upperThresholdReached = isThresholdReached(metric, metricSettings, entry.getValue(), false);
 
-                            MetricsCheckerSuggestion customSuggestion = metricsCheckerSettings.getCustomSuggestions().get(metric);
+                            MetricsFeedbackSuggestion customSuggestion = metricSettings.getCustomSuggestions().get(metric);
                             if (customSuggestion == null || customSuggestion.getSuggestionLowerBoundExceeded() == null || customSuggestion.getSuggestionLowerBoundExceeded().isBlank()) {
                                 suggestion += generateDefaultSuggestions(metric, lowerThresholdReached, upperThresholdReached);
                             } else {
@@ -230,7 +230,7 @@ public class MetricsCheckerFeedbackGenerator {
 
                             boolean addFeedback = (lowerThresholdReached || upperThresholdReached);
                             if (addFeedback) {
-                                feedbacks.add(new MetricsCheckerFeedback(className, metric.getDescription(), metric, (double) entry.getValue(), suggestion));
+                                feedbacks.add(new MetricsFeedback(className, metric.getDescription(), metric, (double) entry.getValue(), suggestion));
                             }
                         }
                     }
@@ -244,90 +244,90 @@ public class MetricsCheckerFeedbackGenerator {
      * Checks whether the lower or upper threshold of a given metricThreshold was exceeded.
      *
      * @param metric         the given metric
-     * @param metricsCheckerSettings the settings for design guidelines
+     * @param metricSettings the settings for design guidelines
      * @param value          the given metricThreshold's value
      * @param lower          determines whether to check the lower or upper threshold
      * @return whether the minimum (lower=true) or maximum (lower=false) threshold was exceeded.
      */
-    private static boolean isThresholdReached(Metric metric, MetricsCheckerSettings metricsCheckerSettings, double value, boolean lower) {
+    private static boolean isThresholdReached(Metric metric, MetricSettings metricSettings, double value, boolean lower) {
         if (metric != null) {
             switch (metric) {
                 case AMC:
                     return lower
-                            ? value < metricsCheckerSettings.getAmcConfig().getMetricThreshold().getLowerBound()
-                            : value > metricsCheckerSettings.getAmcConfig().getMetricThreshold().getUpperBound();
+                            ? value < metricSettings.getAmcConfig().getMetricThreshold().getLowerBound()
+                            : value > metricSettings.getAmcConfig().getMetricThreshold().getUpperBound();
                 case CAM:
                     return lower
-                            ? value < metricsCheckerSettings.getCamConfig().getMetricThreshold().getLowerBound()
-                            : value > metricsCheckerSettings.getCamConfig().getMetricThreshold().getUpperBound();
+                            ? value < metricSettings.getCamConfig().getMetricThreshold().getLowerBound()
+                            : value > metricSettings.getCamConfig().getMetricThreshold().getUpperBound();
                 case CA:
                     return lower
-                            ? value < metricsCheckerSettings.getCaConfig().getMetricThreshold().getLowerBound()
-                            : value > metricsCheckerSettings.getCaConfig().getMetricThreshold().getUpperBound();
+                            ? value < metricSettings.getCaConfig().getMetricThreshold().getLowerBound()
+                            : value > metricSettings.getCaConfig().getMetricThreshold().getUpperBound();
                 case CBM:
                     return lower
-                            ? value < metricsCheckerSettings.getCbmConfig().getMetricThreshold().getLowerBound()
-                            : value > metricsCheckerSettings.getCbmConfig().getMetricThreshold().getUpperBound();
+                            ? value < metricSettings.getCbmConfig().getMetricThreshold().getLowerBound()
+                            : value > metricSettings.getCbmConfig().getMetricThreshold().getUpperBound();
                 case CBO:
                     return lower
-                            ? value < metricsCheckerSettings.getCboConfig().getMetricThreshold().getLowerBound()
-                            : value > metricsCheckerSettings.getCboConfig().getMetricThreshold().getUpperBound();
+                            ? value < metricSettings.getCboConfig().getMetricThreshold().getLowerBound()
+                            : value > metricSettings.getCboConfig().getMetricThreshold().getUpperBound();
                 case CC:
                     return lower
-                            ? value < metricsCheckerSettings.getCcConfig().getMetricThreshold().getLowerBound()
-                            : value > metricsCheckerSettings.getCcConfig().getMetricThreshold().getUpperBound();
+                            ? value < metricSettings.getCcConfig().getMetricThreshold().getLowerBound()
+                            : value > metricSettings.getCcConfig().getMetricThreshold().getUpperBound();
                 case CE:
                     return lower
-                            ? value < metricsCheckerSettings.getCeConfig().getMetricThreshold().getLowerBound()
-                            : value > metricsCheckerSettings.getCeConfig().getMetricThreshold().getUpperBound();
+                            ? value < metricSettings.getCeConfig().getMetricThreshold().getLowerBound()
+                            : value > metricSettings.getCeConfig().getMetricThreshold().getUpperBound();
                 case DAM:
                     return lower
-                            ? value < metricsCheckerSettings.getDamConfig().getMetricThreshold().getLowerBound()
-                            : value > metricsCheckerSettings.getDamConfig().getMetricThreshold().getUpperBound();
+                            ? value < metricSettings.getDamConfig().getMetricThreshold().getLowerBound()
+                            : value > metricSettings.getDamConfig().getMetricThreshold().getUpperBound();
                 case DIT:
                     return lower
-                            ? value < metricsCheckerSettings.getDitConfig().getMetricThreshold().getLowerBound()
-                            : value > metricsCheckerSettings.getDitConfig().getMetricThreshold().getUpperBound();
+                            ? value < metricSettings.getDitConfig().getMetricThreshold().getLowerBound()
+                            : value > metricSettings.getDitConfig().getMetricThreshold().getUpperBound();
                 case IC:
                     return lower
-                            ? value < metricsCheckerSettings.getIcConfig().getMetricThreshold().getLowerBound()
-                            : value > metricsCheckerSettings.getIcConfig().getMetricThreshold().getUpperBound();
+                            ? value < metricSettings.getIcConfig().getMetricThreshold().getLowerBound()
+                            : value > metricSettings.getIcConfig().getMetricThreshold().getUpperBound();
                 case LCOM:
                     return lower
-                            ? value < metricsCheckerSettings.getLcomConfig().getMetricThreshold().getLowerBound()
-                            : value > metricsCheckerSettings.getLcomConfig().getMetricThreshold().getUpperBound();
+                            ? value < metricSettings.getLcomConfig().getMetricThreshold().getLowerBound()
+                            : value > metricSettings.getLcomConfig().getMetricThreshold().getUpperBound();
                 case LCOM3:
                     return lower
-                            ? value < metricsCheckerSettings.getLcom3Config().getMetricThreshold().getLowerBound()
-                            : value > metricsCheckerSettings.getLcom3Config().getMetricThreshold().getUpperBound();
+                            ? value < metricSettings.getLcom3Config().getMetricThreshold().getLowerBound()
+                            : value > metricSettings.getLcom3Config().getMetricThreshold().getUpperBound();
                 case LOC:
                     return lower
-                            ? value < metricsCheckerSettings.getLocConfig().getMetricThreshold().getLowerBound()
-                            : value > metricsCheckerSettings.getLocConfig().getMetricThreshold().getUpperBound();
+                            ? value < metricSettings.getLocConfig().getMetricThreshold().getLowerBound()
+                            : value > metricSettings.getLocConfig().getMetricThreshold().getUpperBound();
                 case MOA:
                     return lower
-                            ? value < metricsCheckerSettings.getMoaConfig().getMetricThreshold().getLowerBound()
-                            : value > metricsCheckerSettings.getMoaConfig().getMetricThreshold().getUpperBound();
+                            ? value < metricSettings.getMoaConfig().getMetricThreshold().getLowerBound()
+                            : value > metricSettings.getMoaConfig().getMetricThreshold().getUpperBound();
                 case MFA:
                     return lower
-                            ? value < metricsCheckerSettings.getMfaConfig().getMetricThreshold().getLowerBound()
-                            : value > metricsCheckerSettings.getMfaConfig().getMetricThreshold().getUpperBound();
+                            ? value < metricSettings.getMfaConfig().getMetricThreshold().getLowerBound()
+                            : value > metricSettings.getMfaConfig().getMetricThreshold().getUpperBound();
                 case NOC:
                     return lower
-                            ? value < metricsCheckerSettings.getNocConfig().getMetricThreshold().getLowerBound()
-                            : value > metricsCheckerSettings.getNocConfig().getMetricThreshold().getUpperBound();
+                            ? value < metricSettings.getNocConfig().getMetricThreshold().getLowerBound()
+                            : value > metricSettings.getNocConfig().getMetricThreshold().getUpperBound();
                 case NPM:
                     return lower
-                            ? value < metricsCheckerSettings.getNpmConfig().getMetricThreshold().getLowerBound()
-                            : value > metricsCheckerSettings.getNpmConfig().getMetricThreshold().getUpperBound();
+                            ? value < metricSettings.getNpmConfig().getMetricThreshold().getLowerBound()
+                            : value > metricSettings.getNpmConfig().getMetricThreshold().getUpperBound();
                 case RFC:
                     return lower
-                            ? value < metricsCheckerSettings.getRfcConfig().getMetricThreshold().getLowerBound()
-                            : value > metricsCheckerSettings.getRfcConfig().getMetricThreshold().getUpperBound();
+                            ? value < metricSettings.getRfcConfig().getMetricThreshold().getLowerBound()
+                            : value > metricSettings.getRfcConfig().getMetricThreshold().getUpperBound();
                 case WMC:
                     return lower
-                            ? value < metricsCheckerSettings.getWmcConfig().getMetricThreshold().getLowerBound()
-                            : value > metricsCheckerSettings.getWmcConfig().getMetricThreshold().getUpperBound();
+                            ? value < metricSettings.getWmcConfig().getMetricThreshold().getLowerBound()
+                            : value > metricSettings.getWmcConfig().getMetricThreshold().getUpperBound();
             }
         }
         throw new IllegalArgumentException("Illegal Metric given.");

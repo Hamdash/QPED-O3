@@ -3,11 +3,11 @@ package eu.qped.java.checkers.metrics;
 import eu.qped.java.checkers.mass.QFMetricsSettings;
 import eu.qped.java.checkers.metrics.ckjm.MetricCheckerEntryHandler;
 import eu.qped.java.checkers.metrics.ckjm.QPEDMetricsFilter;
-import eu.qped.java.checkers.metrics.data.feedback.MetricsCheckerFeedback;
-import eu.qped.java.checkers.metrics.data.feedback.MetricsCheckerFeedbackGenerator;
+import eu.qped.java.checkers.metrics.data.feedback.MetricsFeedback;
+import eu.qped.java.checkers.metrics.data.feedback.MetricsFeedbackGenerator;
 import eu.qped.java.checkers.metrics.data.report.MetricsCheckerReport;
-import eu.qped.java.checkers.metrics.settings.MetricsCheckerSettings;
-import eu.qped.java.checkers.metrics.settings.MetricsCheckerSettingsReader;
+import eu.qped.java.checkers.metrics.settings.MetricSettings;
+import eu.qped.java.checkers.metrics.settings.MetricSettingsReader;
 import eu.qped.java.utils.ExtractJavaFilesFromDirectory;
 import gr.spinellis.ckjm.utils.CmdLineParser;
 import lombok.*;
@@ -28,7 +28,7 @@ public class MetricsChecker {
 
     @Getter(AccessLevel.PUBLIC)
     @Setter(AccessLevel.PUBLIC)
-    private List<MetricsCheckerFeedback> metricsCheckerFeedbacks;
+    private List<MetricsFeedback> metricsFeedbacks;
 
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
@@ -45,16 +45,16 @@ public class MetricsChecker {
     public MetricsCheckerReport check() {
 
         MetricsCheckerReport metricsCheckerReport = MetricsCheckerReport.builder().build();
-        MetricsCheckerSettingsReader metricsCheckerSettingsReader = MetricsCheckerSettingsReader.builder().qfMetricsSettings(this.qfMetricsSettings).build();
-        MetricsCheckerSettings metricsCheckerSettings = metricsCheckerSettingsReader.readMetricsCheckerSettings(MetricsCheckerSettings.builder().build());
+        MetricSettingsReader metricSettingsReader = MetricSettingsReader.builder().qfMetricsSettings(this.qfMetricsSettings).build();
+        MetricSettings metricSettings = metricSettingsReader.readMetricsCheckerSettings(MetricSettings.builder().build());
 
         List<File> classFiles
                 = ExtractJavaFilesFromDirectory.builder().dirPath(CLASS_FILES_PATH).build().filesWithExtension("class");
         String[] pathsToClassFiles = classFiles.stream().map(File::getPath).toArray(String[]::new);
 
-        runCkjmExtended(metricsCheckerReport, pathsToClassFiles, metricsCheckerSettings.areCallsToToJdkIncluded(), metricsCheckerSettings.areOnlyPublicClassesIncluded());
+        runCkjmExtended(metricsCheckerReport, pathsToClassFiles, metricSettings.areCallsToToJdkIncluded(), metricSettings.areOnlyPublicClassesIncluded());
         metricsCheckerReport.setPathsToClassFiles(List.of(pathsToClassFiles));
-        this.metricsCheckerFeedbacks = MetricsCheckerFeedbackGenerator.generateMetricsCheckerFeedbacks(metricsCheckerReport.getMetricsMap(), metricsCheckerSettings);
+        this.metricsFeedbacks = MetricsFeedbackGenerator.generateMetricsCheckerFeedbacks(metricsCheckerReport.getMetricsMap(), metricSettings);
 
         return metricsCheckerReport;
     }
@@ -79,7 +79,7 @@ public class MetricsChecker {
     @Override
     public String toString() {
         return "MetricsChecker{" +
-                "feedbacks=" + metricsCheckerFeedbacks +
+                "feedbacks=" + metricsFeedbacks +
                 ", qfMetricsSettings=" + qfMetricsSettings +
                 '}';
     }

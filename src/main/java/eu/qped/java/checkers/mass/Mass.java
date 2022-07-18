@@ -6,9 +6,8 @@ import eu.qped.framework.QfProperty;
 import eu.qped.framework.qf.QfObject;
 import eu.qped.java.checkers.classdesign.ClassChecker;
 import eu.qped.java.checkers.classdesign.ClassConfigurator;
-import eu.qped.java.checkers.classdesign.feedback.ClassFeedback;
 import eu.qped.java.checkers.metrics.MetricsChecker;
-import eu.qped.java.checkers.metrics.data.feedback.MetricsCheckerFeedback;
+import eu.qped.java.checkers.metrics.data.feedback.MetricsFeedback;
 import eu.qped.java.checkers.semantics.SemanticChecker;
 import eu.qped.java.checkers.semantics.SemanticFeedback;
 import eu.qped.java.checkers.style.StyleChecker;
@@ -76,7 +75,7 @@ public class Mass implements Checker {
         List<SemanticFeedback> semanticFeedbacks;
         semanticFeedbacks = massExecutor.getSemanticFeedbacks();
 
-        List<MetricsCheckerFeedback> metricsCheckerFeedbacks = massExecutor.getMetricsCheckerFeedbacks();
+        List<MetricsFeedback> metricsFeedbacks = massExecutor.getMetricsFeedbacks();
 
         //List<ClassFeedback> classFeedbacks;
         //classFeedbacks = massExecutor.getClassFeedbacks();
@@ -115,7 +114,7 @@ public class Mass implements Checker {
         }
 
 
-        for (MetricsCheckerFeedback df : metricsCheckerFeedbacks) {
+        for (MetricsFeedback df : metricsFeedbacks) {
             result[resultIndex] = "design Feedback";
             result[resultIndex + 1] =
                     "In class '" + df.getClassName() + ".java'"

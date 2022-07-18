@@ -6,7 +6,7 @@ import eu.qped.framework.Translator;
 import eu.qped.java.checkers.classdesign.ClassChecker;
 import eu.qped.java.checkers.classdesign.feedback.ClassFeedback;
 import eu.qped.java.checkers.metrics.MetricsChecker;
-import eu.qped.java.checkers.metrics.data.feedback.MetricsCheckerFeedback;
+import eu.qped.java.checkers.metrics.data.feedback.MetricsFeedback;
 import eu.qped.java.checkers.semantics.SemanticChecker;
 import eu.qped.java.checkers.semantics.SemanticFeedback;
 import eu.qped.java.checkers.style.StyleChecker;
@@ -41,7 +41,7 @@ public class MassExecutor {
     private List<SemanticFeedback> semanticFeedbacks;
     private List<SyntaxFeedback> syntaxFeedbacks;
     private List<ClassFeedback> classFeedbacks;
-    private List<MetricsCheckerFeedback> metricsCheckerFeedbacks;
+    private List<MetricsFeedback> metricsFeedbacks;
 
     private List<SyntaxError> syntaxErrors;
 
@@ -101,7 +101,7 @@ public class MassExecutor {
             }
             if (metricsNeeded) {
                 metricsChecker.check();
-                metricsCheckerFeedbacks = metricsChecker.getMetricsCheckerFeedbacks();
+                metricsFeedbacks = metricsChecker.getMetricsFeedbacks();
             }
             if (classNeeded) {
                 try {
@@ -128,7 +128,7 @@ public class MassExecutor {
         syntaxFeedbacks = new ArrayList<>();
         styleFeedbacks = new ArrayList<>();
         semanticFeedbacks = new ArrayList<>();
-        metricsCheckerFeedbacks = new ArrayList<>();
+        metricsFeedbacks = new ArrayList<>();
         syntaxErrors = new ArrayList<>();
     }
 
@@ -152,7 +152,7 @@ public class MassExecutor {
             }
         }
         if (metricsNeeded) {
-            for (MetricsCheckerFeedback feedback : metricsCheckerFeedbacks) {
+            for (MetricsFeedback feedback : metricsFeedbacks) {
                 translator.translateMetricsBody(prefLanguage, feedback);
             }
         }
@@ -208,8 +208,8 @@ public class MassExecutor {
         QFMainSettings qfMainSettings = new QFMainSettings();
         qfMainSettings.setSyntaxLevel(CheckLevel.ADVANCED.name());
         qfMainSettings.setSemanticNeeded("false");
-        qfMainSettings.setStyleNeeded("true");
-        qfMainSettings.setMetricsNeeded("false");
+        qfMainSettings.setStyleNeeded("false");
+        qfMainSettings.setMetricsNeeded("true");
         qfMainSettings.setPreferredLanguage("en");
 
 
@@ -298,8 +298,8 @@ public class MassExecutor {
             System.out.println("-----------------------------------------------------------------");
         }
 
-        List<MetricsCheckerFeedback> metricsCheckerFeedbacks = massE.metricsCheckerFeedbacks;
-        for (MetricsCheckerFeedback df : metricsCheckerFeedbacks) {
+        List<MetricsFeedback> metricsFeedbacks = massE.metricsFeedbacks;
+        for (MetricsFeedback df : metricsFeedbacks) {
             System.out.println(df);
             System.out.println("---------------------");
         }

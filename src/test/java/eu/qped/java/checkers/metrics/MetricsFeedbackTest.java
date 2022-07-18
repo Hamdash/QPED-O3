@@ -1,9 +1,9 @@
 package eu.qped.java.checkers.metrics;
 
-import eu.qped.java.checkers.metrics.data.feedback.MetricsCheckerFeedback;
-import eu.qped.java.checkers.metrics.data.feedback.MetricsCheckerFeedbackGenerator;
-import eu.qped.java.checkers.metrics.settings.MetricsCheckerSettings;
-import eu.qped.java.checkers.metrics.data.report.MetricCheckerEntry;
+import eu.qped.java.checkers.metrics.data.feedback.MetricsFeedback;
+import eu.qped.java.checkers.metrics.data.feedback.MetricsFeedbackGenerator;
+import eu.qped.java.checkers.metrics.settings.MetricSettings;
+import eu.qped.java.checkers.metrics.data.report.ClassMetricsEntry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,17 +17,17 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
 /**
- * Test class for {@link MetricsCheckerFeedback}.
+ * Test class for {@link MetricsFeedback}.
  *
  * @author Jannik Seus
  */
-class MetricsCheckerFeedbackTest {
+class MetricsFeedbackTest {
 
-    private MetricsCheckerFeedback metricsCheckerFeedback1;
+    private MetricsFeedback metricsFeedback1;
 
     @BeforeEach
     void setUp() {
-        metricsCheckerFeedback1 = MetricsCheckerFeedback.builder()
+        metricsFeedback1 = MetricsFeedback.builder()
                 .className("TestClass")
                 .metric(Metric.AMC)
                 .value(99d)
@@ -39,59 +39,59 @@ class MetricsCheckerFeedbackTest {
     @ParameterizedTest
     @EnumSource(Metric.class)
     void generateSuggestionTestMetric(Metric metric) {
-        metricsCheckerFeedback1.setMetric(metric);
-        metricsCheckerFeedback1.setBody(metric.getDescription());
+        metricsFeedback1.setMetric(metric);
+        metricsFeedback1.setBody(metric.getDescription());
 
-        assertEquals(metric, metricsCheckerFeedback1.getMetric());
+        assertEquals(metric, metricsFeedback1.getMetric());
     }
 
     @ParameterizedTest
     @ValueSource(doubles = {-1d, 0d, 0.5d, 1.0d, 3.3d})
     void generateSuggestionTestValue(double value) {
-        metricsCheckerFeedback1.setValue(value);
-        metricsCheckerFeedback1.setSuggestion(metricsCheckerFeedback1.getSuggestion());
+        metricsFeedback1.setValue(value);
+        metricsFeedback1.setSuggestion(metricsFeedback1.getSuggestion());
 
         assertEquals
                 ("You are within the " + Metric.AMC + "'s threshold.",
-                        MetricsCheckerFeedbackGenerator.generateDefaultSuggestions(
+                        MetricsFeedbackGenerator.generateDefaultSuggestions(
                                 Metric.AMC, false, false));
 
         assertEquals
                 ("The " + Metric.AMC + "'s value is too low: Increase your average method size, e.g. by joining multiple methods with mostly the same functionalities from over-engineering.",
-                        MetricsCheckerFeedbackGenerator.generateDefaultSuggestions(
+                        MetricsFeedbackGenerator.generateDefaultSuggestions(
                                 Metric.AMC, true, false));
 
         assertEquals
                 ("The " + Metric.AMC + "'s value is too high: Decrease your average method size, e.g. by delegating functionalities to other newly created methods.",
-                        MetricsCheckerFeedbackGenerator.generateDefaultSuggestions(
+                        MetricsFeedbackGenerator.generateDefaultSuggestions(
                                 Metric.AMC, false, true));
 
         assertThrows(IllegalArgumentException.class,
-                () -> MetricsCheckerFeedbackGenerator.generateDefaultSuggestions(
+                () -> MetricsFeedbackGenerator.generateDefaultSuggestions(
                         Metric.AMC,
                         true,
                         true));
-        metricsCheckerFeedback1.setValue(99d);
-        assertEquals(99d, metricsCheckerFeedback1.getValue());
+        metricsFeedback1.setValue(99d);
+        assertEquals(99d, metricsFeedback1.getValue());
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"", "TestClass", "AnotherTestClass.java", "RandomName"})
     void generateSuggestionTest(String className) {
-        metricsCheckerFeedback1.setClassName(className);
-        assertEquals(className, metricsCheckerFeedback1.getClassName());
+        metricsFeedback1.setClassName(className);
+        assertEquals(className, metricsFeedback1.getClassName());
 
     }
 
     @ParameterizedTest
     @EnumSource(Metric.class)
     void generateMetricsCheckerFeedbackTest() {
-        MetricsCheckerSettings metricsCheckerSettings = MetricsCheckerSettings.builder().build();
-        List<MetricCheckerEntry> metricCheckerEntries =
-                List.of(mock(MetricCheckerEntry.class), mock(MetricCheckerEntry.class), mock(MetricCheckerEntry.class),
-                        mock(MetricCheckerEntry.class), mock(MetricCheckerEntry.class), mock(MetricCheckerEntry.class));
+        MetricSettings metricSettings = MetricSettings.builder().build();
+        List<ClassMetricsEntry> metricCheckerEntries =
+                List.of(mock(ClassMetricsEntry.class), mock(ClassMetricsEntry.class), mock(ClassMetricsEntry.class),
+                        mock(ClassMetricsEntry.class), mock(ClassMetricsEntry.class), mock(ClassMetricsEntry.class));
 
-        assertEquals(MetricsCheckerFeedbackGenerator.generateMetricsCheckerFeedbacks(metricCheckerEntries, metricsCheckerSettings), List.of());
+        assertEquals(MetricsFeedbackGenerator.generateMetricsCheckerFeedbacks(metricCheckerEntries, metricSettings), List.of());
     }
 
     @Test
@@ -101,22 +101,22 @@ class MetricsCheckerFeedbackTest {
                         "AMC (Average Method Complexity)\n" +
                         "Measured at: 99.0\n" +
                         "Change something!",
-                metricsCheckerFeedback1.toString());
+                metricsFeedback1.toString());
         assertEquals(
                 "In class 'TestClass.java'\n" +
                         "AMC (Average Method Complexity)\n" +
                         "Measured at: 99.0\n" +
                         "Change something!",
-                metricsCheckerFeedback1.toString());
+                metricsFeedback1.toString());
 
         assertEquals(
                 "In class 'TestClass.java'\n" +
                         "AMC (Average Method Complexity)\n" +
                         "Measured at: 99.0\n" +
                         "Change something!",
-                metricsCheckerFeedback1.toString());
+                metricsFeedback1.toString());
 
-        metricsCheckerFeedback1 = MetricsCheckerFeedback.builder().build();
-        assertNotNull(metricsCheckerFeedback1);
+        metricsFeedback1 = MetricsFeedback.builder().build();
+        assertNotNull(metricsFeedback1);
     }
 }

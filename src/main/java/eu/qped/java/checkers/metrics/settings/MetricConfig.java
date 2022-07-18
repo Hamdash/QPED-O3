@@ -1,6 +1,6 @@
 package eu.qped.java.checkers.metrics.settings;
 
-import eu.qped.java.checkers.metrics.data.feedback.MetricsCheckerSuggestion;
+import eu.qped.java.checkers.metrics.data.feedback.MetricsFeedbackSuggestion;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,6 +11,6 @@ import lombok.Setter;
 public class MetricConfig {
 
     private MetricThreshold metricThreshold;
-    private MetricsCheckerSuggestion metricsCheckerSuggestion;
+    private MetricsFeedbackSuggestion metricsFeedbackSuggestion;
 
 }
