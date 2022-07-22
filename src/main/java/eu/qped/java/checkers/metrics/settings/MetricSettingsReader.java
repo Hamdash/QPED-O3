@@ -143,20 +143,83 @@ public class MetricSettingsReader {
      * @return the created MetricThreshold
      */
     private MetricThreshold retrieveMetricThreshold(Metric metric) {
-        MetricThreshold metricThreshold;
         double metricMinimum = retrieveMetricMinimum(metric);
         double metricMaximum = retrieveMetricMaximum(metric);
+        boolean noMax = retrieveMetricNoMax(metric);
 
-        if (metricMinimum == -1 && metricMaximum == -1) {
-            metricThreshold = new MetricThreshold(metric);
-        } else if (metricMinimum == -1) {
-            metricThreshold = new MetricThreshold(metric, metricMaximum, false);
-        } else if (metricMaximum == -1) {
-            metricThreshold = new MetricThreshold(metric, metricMinimum, true);
-        } else {
-            metricThreshold = new MetricThreshold(metric, metricMinimum, metricMaximum);
+        return new MetricThreshold(metric, metricMinimum, metricMaximum, noMax);
+    }
+
+    /**
+     * Retrieves the noMax Parameter of a given metric and parses it to a boolean value.
+     *
+     * @param metric the given metric
+     * @return whether or no maximum is set for a given metric.
+     */
+    private boolean retrieveMetricNoMax(Metric metric) {
+        String noMax = "false";
+
+        switch (metric) {
+
+            case AMC:
+                noMax = qfMetricsSettings.getAmcNoMax();
+                break;
+            case CA:
+                noMax = qfMetricsSettings.getCaNoMax();
+                break;
+            case CAM:
+                noMax = qfMetricsSettings.getCamNoMax();
+                break;
+            case CBM:
+                noMax = qfMetricsSettings.getCbmNoMax();
+                break;
+            case CBO:
+                noMax = qfMetricsSettings.getCboNoMax();
+                break;
+            case CC:
+                noMax = qfMetricsSettings.getCcNoMax();
+                break;
+            case CE:
+                noMax = qfMetricsSettings.getCeNoMax();
+                break;
+            case DAM:
+                noMax = qfMetricsSettings.getDamNoMax();
+                break;
+            case DIT:
+                noMax = qfMetricsSettings.getDitNoMax();
+                break;
+            case IC:
+                noMax = qfMetricsSettings.getIcNoMax();
+                break;
+            case LCOM:
+                noMax = qfMetricsSettings.getLcomNoMax();
+                break;
+            case LCOM3:
+                noMax = qfMetricsSettings.getLcom3NoMax();
+                break;
+            case LOC:
+                noMax = qfMetricsSettings.getLocMax();
+                break;
+            case MFA:
+                noMax = qfMetricsSettings.getMfaNoMax();
+                break;
+            case MOA:
+                noMax = qfMetricsSettings.getMoaNoMax();
+                break;
+            case NOC:
+                noMax = qfMetricsSettings.getNocNoMax();
+                break;
+            case NPM:
+                noMax = qfMetricsSettings.getNpmNoMax();
+                break;
+            case RFC:
+                noMax = qfMetricsSettings.getRfcNoMax();
+                break;
+            case WMC:
+                noMax = qfMetricsSettings.getWmcNoMax();
+                break;
         }
-        return metricThreshold;
+        return Boolean.parseBoolean(noMax);
     }
 
     /**

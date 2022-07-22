@@ -26,11 +26,11 @@ class MetricThresholdTest {
 
     @BeforeEach
     void setUp() {
-        metricThreshold1 = new MetricThreshold(CC);
-        metricThreshold2 = new MetricThreshold(LCOM3, 0.2, true);
-        metricThreshold3 = new MetricThreshold(LCOM, 4.7, false);
-        metricThreshold4 = new MetricThreshold(AMC, 1.0, 5.4);
-        metricThreshold5 = new MetricThreshold(RFC, 5.3, 1.73);
+        metricThreshold1 = new MetricThreshold(CC, 1, 10, false);
+        metricThreshold3 = new MetricThreshold(LCOM, 4.7, -1, true);
+        metricThreshold2 = new MetricThreshold(LCOM3, 0.2, 2, false);
+        metricThreshold4 = new MetricThreshold(AMC, 1.0, 5.4, false);
+        metricThreshold5 = new MetricThreshold(RFC, 5.3, 1.73, false);
     }
 
     @Test
@@ -39,8 +39,8 @@ class MetricThresholdTest {
         thresholds.sort(Comparator.naturalOrder());
         ArrayList<MetricThreshold> sortedThresholds = new ArrayList<>(List.of(metricThreshold4, metricThreshold1, metricThreshold3, metricThreshold2, metricThreshold5));
         assertArrayEquals(sortedThresholds.toArray(), thresholds.toArray());
-        assertThrows(IllegalStateException.class, () -> new MetricThreshold(null));
-        assertThrows(IllegalStateException.class, () -> new MetricThreshold(null, 0d, 1d));
+        assertThrows(IllegalStateException.class, () -> new MetricThreshold(null, 0d, 1d, false));
+        assertThrows(IllegalStateException.class, () -> new MetricThreshold(null, 0d, 1d, true));
     }
 
     @Test

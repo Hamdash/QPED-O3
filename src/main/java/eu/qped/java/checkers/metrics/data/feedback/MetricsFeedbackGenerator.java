@@ -338,7 +338,7 @@ public class MetricsFeedbackGenerator {
      *
      * @author Jannik Seus
      */
-    public enum DefaultMetricSuggestion {
+    public enum DefaultMetricSuggestion { //TODO will be replaced by field 'default' in settings json file
         AMC("Increase your average method size, e.g. by joining multiple methods with mostly the same functionalities from over-engineering.",
                 "Decrease your average method size, e.g. by delegating functionalities to other newly created methods."),
         CA("This class is used by too few other classes. Is this class even necessary? Can you implement this class's functionalities into already existing classes?",

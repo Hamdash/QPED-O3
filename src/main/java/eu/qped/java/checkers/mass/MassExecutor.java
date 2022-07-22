@@ -161,12 +161,16 @@ public class MassExecutor {
 
     public static void main(String[] args) {
         long start = System.nanoTime();
-        String code = "import java.util.ArrayList;\n" +
+        String code = "//\n" +
+                "// Source code recreated from a .class file by IntelliJ IDEA\n" +
+                "// (powered by FernFlower decompiler)\n" +
+                "//\n" +
+                "\n" +
+                "import java.util.ArrayList;\n" +
                 "import java.util.List;\n" +
                 "\n" +
-                "public class GrayCode {\n" +
-                "\n" +
-                "    public GrayCode() {\n" +
+                "class GrayCode {\n" +
+                "    GrayCode() {\n" +
                 "    }\n" +
                 "\n" +
                 "    public static List<String> grayCodeStrings(int n) {\n" +
@@ -192,18 +196,32 @@ public class MassExecutor {
                 "        }\n" +
                 "    }\n" +
                 "\n" +
-                "    public int anotherMethod(boolean a, boolean b, double c) {\n" +
+                "    private int anotherMethod(boolean a, boolean b, double c) {\n" +
                 "        if (a) {\n" +
                 "            if (b) {\n" +
-                "                return (int) c;\n" +
+                "                return (int)c;\n" +
+                "            } else if (c >= 43) {\n" +
+                "                return 0;\n" +
                 "            } else {\n" +
-                "                if (((int) c) == 5)\n" +
-                "                    return (int) (4 * c);\n" +
+                "                if (a && !b && c < 231){\n" +
+                "                    if (doSomething()) {\n" +
+                "                        return Integer.MAX_VALUE;\n" +
+                "                    }\n" +
+                "                }\n" +
+                "            }\n" +
+                "\n" +
+                "            if ((int)c == 5) {\n" +
+                "                return (int)(4.0D * c);\n" +
                 "            }\n" +
                 "        }\n" +
-                "        return -1;\n" +
+                "\n" +
+                "        return 0;\n" +
                 "    }\n" +
-                "}";
+                "\n" +
+                "    private boolean doSomething() {\n" +
+                "        return false;\n" +
+                "    }\n" +
+                "}\n";
 
         QFMainSettings qfMainSettings = new QFMainSettings();
         qfMainSettings.setSyntaxLevel(CheckLevel.ADVANCED.name());
@@ -243,25 +261,47 @@ public class MassExecutor {
 
         QFMetricsSettings qfMetricsSettings = new QFMetricsSettings();
         qfMetricsSettings.setAmc("0.5", "1.0");
+        qfMetricsSettings.setAmcNoMax("false");
         qfMetricsSettings.setCa("0.5", "1.0");
+        qfMetricsSettings.setCaNoMax("false");
         qfMetricsSettings.setCam("0.5", "1.0");
+        qfMetricsSettings.setCamNoMax("false");
+        qfMetricsSettings.setCam("0.5", "1.0");
+        qfMetricsSettings.setCamNoMax("false");
         qfMetricsSettings.setCbm("0.5", "1.0");
+        qfMetricsSettings.setCbmNoMax("false");
         qfMetricsSettings.setCbo("0.5", "1.0");
-        qfMetricsSettings.setCc("0.5", "3");
+        qfMetricsSettings.setCboNoMax("false");
+        qfMetricsSettings.setCc("0.5", "3.0");
+        qfMetricsSettings.setCcNoMax("false");
         qfMetricsSettings.setCe("0.5", "1.0");
+        qfMetricsSettings.setCeNoMax("false");
         qfMetricsSettings.setDam("0.5", "1.0");
+        qfMetricsSettings.setDamNoMax("false");
         qfMetricsSettings.setDit("0.5", "1.0");
+        qfMetricsSettings.setDitNoMax("false");
         qfMetricsSettings.setIc("0.5", "1.0");
+        qfMetricsSettings.setIcNoMax("false");
         qfMetricsSettings.setLcom("0.5", "1.0");
+        qfMetricsSettings.setLcomNoMax("false");
         qfMetricsSettings.setLcom3("0.5", "1.0");
+        qfMetricsSettings.setLcom3NoMax("false");
         qfMetricsSettings.setLoc("15.0", "60.0");
+        qfMetricsSettings.setLocNoMax("false");
         qfMetricsSettings.setMoa("0.5", "1.0");
+        qfMetricsSettings.setMoaNoMax("false");
         qfMetricsSettings.setMfa("0.5", "1.0");
+        qfMetricsSettings.setMfaNoMax("false");
         qfMetricsSettings.setNoc("0.0", "5.0");
+        qfMetricsSettings.setNocNoMax("false");
         qfMetricsSettings.setNpm("0.5", "1.0");
+        qfMetricsSettings.setNpmNoMax("false");
         qfMetricsSettings.setRfc("0.5", "1.0");
+        qfMetricsSettings.setRfcNoMax("false");
         qfMetricsSettings.setWmc("0.5", "1.0");
+        qfMetricsSettings.setWmcNoMax("false");
         qfMetricsSettings.setAmcCustomSuggestionUpper("WHAT ARE YOU DOING?!?!");
+        qfMetricsSettings.includeOnlyPublicClasses("false");
 
         MetricsChecker metricsChecker = MetricsChecker.builder().qfMetricsSettings(qfMetricsSettings).build();
 
