@@ -301,7 +301,7 @@ public class MassExecutor {
         qfMetricsSettings.setRfcNoMax("false");
         qfMetricsSettings.setWmc("0.5", "1.0");
         qfMetricsSettings.setWmcNoMax("false");
-        qfMetricsSettings.setAmcCustomSuggestionUpper("WHAT ARE YOU DOING?!?!");
+        qfMetricsSettings.setAmcSuggestionMax("WHAT ARE YOU DOING?!?!");
         qfMetricsSettings.includeOnlyPublicClasses("false");
 
         MetricsChecker metricsChecker = MetricsChecker.builder().qfMetricsSettings(qfMetricsSettings).build();
