@@ -20,7 +20,6 @@ import static eu.qped.java.checkers.metrics.ckjm.MetricCheckerEntryHandler.Metri
  */
 @Getter
 @Setter
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class QFMetricsSettings extends QfObjectBase {
 
     private String includeCallsToJdk = "false";
@@ -43,7 +42,6 @@ public class QFMetricsSettings extends QfObjectBase {
         this.amcSuggestionMin = (String) amc.get("suggestionMin");
         this.amcSuggestionMax = (String) amc.get("suggestionMax");
     }
-
 
     /**
      * Afferent coupled classes: classes that use this class
@@ -171,7 +169,6 @@ public class QFMetricsSettings extends QfObjectBase {
         this.damSuggestionMax = (String) dam.get("suggestionMax");
     }
 
-
     /**
      * Depth of inheritance tree
      */
@@ -258,8 +255,10 @@ public class QFMetricsSettings extends QfObjectBase {
         this.locMin = (String) loc.get("min");
         this.locMax = (String) loc.get("max");
         this.locNoMax = (String) loc.get("noMax");
-        this.locSuggestionMin = (String) loc.get("suggestionMin");
-        this.locSuggestionMax = (String) loc.get("suggestionMax");
+        System.out.println("ALERT!: "+loc.get("suggestionMin"));
+        System.out.println("ALERT!: "+loc.get("suggestionMax"));
+        //this.locSuggestionMin = (String) loc.get("suggestionMin");
+        //this.locSuggestionMax = (String) loc.get("suggestionMax");
     }
 
     /**
