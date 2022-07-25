@@ -27,7 +27,7 @@ public class MetricsFeedbackGenerator {
      * @param upperBound the upper threshold of the metric not to be exceeded
      * @return a nicely formatted suggestion as String.
      */
-    public static String generateDefaultSuggestions(Metric metric, boolean lowerBound, boolean upperBound) {
+    public static String generateDefaultSuggestion(Metric metric, boolean lowerBound, boolean upperBound) {
         if (!lowerBound && !upperBound) {
             return "You are within the " + metric.toString() + "'s threshold.";
         } else if (lowerBound && !upperBound) {
@@ -183,7 +183,7 @@ public class MetricsFeedbackGenerator {
                     boolean lowerThresholdReached;
                     boolean upperThresholdReached;
                     Metric metric = metricForClass.getMetric();
-                    String suggestion = "";
+                    String suggestionString = "";
                     double metricValue;
                     Map<String, Integer> metricValues;
 
@@ -196,41 +196,41 @@ public class MetricsFeedbackGenerator {
 
                         if (lowerThresholdReached) {
                             if (customSuggestion == null || customSuggestion.getSuggestionLowerBoundExceeded() == null || customSuggestion.getSuggestionLowerBoundExceeded().isBlank()) {
-                                suggestion = generateMetricSpecificSuggestionLower(metric);
+                                suggestionString = generateMetricSpecificSuggestionLower(metric);
                             } else {
-                                suggestion = customSuggestion.getSuggestionLowerBoundExceeded();
+                                suggestionString = customSuggestion.getSuggestionLowerBoundExceeded();
                             }
                         } else if (upperThresholdReached) {
                             if (customSuggestion == null || customSuggestion.getSuggestionUpperBoundExceeded() == null || customSuggestion.getSuggestionUpperBoundExceeded().isBlank()) {
-                                suggestion = generateMetricSpecificSuggestionUpper(metric);
+                                suggestionString = generateMetricSpecificSuggestionUpper(metric);
                             } else {
-                                suggestion = customSuggestion.getSuggestionUpperBoundExceeded();
+                                suggestionString = customSuggestion.getSuggestionUpperBoundExceeded();
                             }
                         }
 
                         boolean addFeedback = (lowerThresholdReached || upperThresholdReached);
                         if (addFeedback) {
-                            feedbacks.add(new MetricsFeedback(className, metric.getDescription(), metric, metricValue, suggestion));
+                            feedbacks.add(new MetricsFeedback(className, metric.getDescription(), metric, metricValue, suggestionString));
                         }
 
 
                     } else {
                         metricValues = ((ClassMetricsMessageMulti) metricForClass).getMetricValues();
                         for (Map.Entry<String, Integer> entry : metricValues.entrySet()) {
-                            suggestion = "For method " + entry.getKey() + ":\t";
+                            suggestionString = "For method " + entry.getKey() + ":\t";
                             lowerThresholdReached = isThresholdReached(metric, metricSettings, entry.getValue(), true);
                             upperThresholdReached = isThresholdReached(metric, metricSettings, entry.getValue(), false);
 
                             MetricsFeedbackSuggestion customSuggestion = metricSettings.getCustomSuggestions().get(metric);
                             if (customSuggestion == null || customSuggestion.getSuggestionLowerBoundExceeded() == null || customSuggestion.getSuggestionLowerBoundExceeded().isBlank()) {
-                                suggestion += generateDefaultSuggestions(metric, lowerThresholdReached, upperThresholdReached);
+                                suggestionString += generateDefaultSuggestion(metric, lowerThresholdReached, upperThresholdReached);
                             } else {
-                                suggestion += customSuggestion;
+                                suggestionString += generateCustomSuggestion(customSuggestion, lowerThresholdReached, upperThresholdReached);
                             }
 
                             boolean addFeedback = (lowerThresholdReached || upperThresholdReached);
                             if (addFeedback) {
-                                feedbacks.add(new MetricsFeedback(className, metric.getDescription(), metric, (double) entry.getValue(), suggestion));
+                                feedbacks.add(new MetricsFeedback(className, metric.getDescription(), metric, (double) entry.getValue(), suggestionString));
                             }
                         }
                     }
@@ -238,6 +238,18 @@ public class MetricsFeedbackGenerator {
             }
         });
         return feedbacks;
+    }
+
+    private static String generateCustomSuggestion(MetricsFeedbackSuggestion customSuggestion, boolean lowerThresholdReached, boolean upperThresholdReached) {
+        if (lowerThresholdReached && !upperThresholdReached) {
+            return customSuggestion.getSuggestionLowerBoundExceeded();
+        } else if (upperThresholdReached && !lowerThresholdReached) {
+            return customSuggestion.getSuggestionUpperBoundExceeded();
+        } else if (!upperThresholdReached && !lowerThresholdReached) {
+            return "";
+        } else {
+            throw new IllegalStateException("Both thresholds cannot be exceeded at the same time.");
+        }
     }
 
     /**
