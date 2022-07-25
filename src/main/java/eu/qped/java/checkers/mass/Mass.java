@@ -15,6 +15,7 @@ import eu.qped.java.checkers.style.StyleChecker;
 import eu.qped.java.checkers.style.StyleFeedback;
 import eu.qped.java.checkers.syntax.SyntaxChecker;
 import eu.qped.java.feedback.syntax.SyntaxFeedback;
+import eu.qped.java.utils.markdown.MarkdownFormatterUtility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,16 +123,13 @@ public class Mass implements Checker {
 
 
         for (MetricsFeedback metricsFeedback : metricsFeedbacks) {
-            result[resultIndex] = "design Feedback";
+            result[resultIndex] = MarkdownFormatterUtility.asHeading2("Metrics Feedback");
             result[resultIndex + 1] =
-                    "In class '" + metricsFeedback.getClassName() + ".java'"
-                            + NEW_LINE
-                            + metricsFeedback.getMetric() + " (" + metricsFeedback.getBody() + ")"
-                            + NEW_LINE
-                            + "Measured with value: " + metricsFeedback.getValue()
+                    "In class " + MarkdownFormatterUtility.asMonospace(metricsFeedback.getClassName() + ".java", false, null)
+                            + MarkdownFormatterUtility.asBold(metricsFeedback.getMetric() + " (" + metricsFeedback.getBody() + ")")
+                            + " measured with value: " + MarkdownFormatterUtility.asMonospace(Double.toString(metricsFeedback.getValue()), false, null)
                             + NEW_LINE
                             + metricsFeedback.getSuggestion()
-                            + NEW_LINE
                             + "------------------------------------------------------------------------------";
             resultIndex = resultIndex + 2;
         }
