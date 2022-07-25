@@ -9,6 +9,10 @@ public final class MarkdownFormatterUtility {
         return NEW_Double_LINE + "## " + toFormat;
     }
 
+    public static String asHeading3(String toFormat) {
+        return NEW_Double_LINE + "### " + toFormat;
+    }
+
     public static String asBold(String toFormat) {
         return NEW_Double_LINE + "**" + toFormat.trim() + "**";
     }
