@@ -128,11 +128,10 @@ public class Mass implements Checker {
                             + NEW_LINE
                             + metricsFeedback.getMetric() + " (" + metricsFeedback.getBody() + ")"
                             + NEW_LINE
-                            + metricsFeedback.getMetric() + " (" + metricsFeedback.getBody() + ")"
-                            + NEW_LINE
                             + "Measured with value: " + metricsFeedback.getValue()
                             + NEW_LINE
                             + metricsFeedback.getSuggestion()
+                            + NEW_LINE
                             + "------------------------------------------------------------------------------";
             resultIndex = resultIndex + 2;
         }
