@@ -91,7 +91,7 @@ public class Mass implements Checker {
         int resultLength = 100
                 + ((styleFeedbacks != null) ? styleFeedbacks.size() : 0)
                 + ((semanticFeedbacks != null) ? semanticFeedbacks.size() : 0)
-//                + ((metricsCheckerFeedbacks != null) ? metricsCheckerFeedbacks.size() : 0)
+                + ((metricsFeedbacks != null) ? metricsFeedbacks.size() : 0)
 //                + ((classFeedbacks != null) ? classFeedbacks.size() : 0)
                 + ((syntaxFeedbacks != null) ? syntaxFeedbacks.size() : 0);
         String[] result = new String[resultLength];
@@ -121,18 +121,18 @@ public class Mass implements Checker {
         }
 
 
-        for (MetricsFeedback df : metricsFeedbacks) {
+        for (MetricsFeedback metricsFeedback : metricsFeedbacks) {
             result[resultIndex] = "design Feedback";
             result[resultIndex + 1] =
-                    "In class '" + df.getClassName() + ".java'"
+                    "In class '" + metricsFeedback.getClassName() + ".java'"
                             + NEW_LINE
-                            + df.getMetric() + " (" + df.getBody() + ")"
+                            + metricsFeedback.getMetric() + " (" + metricsFeedback.getBody() + ")"
                             + NEW_LINE
-                            + df.getMetric() + " (" + df.getBody() + ")"
+                            + metricsFeedback.getMetric() + " (" + metricsFeedback.getBody() + ")"
                             + NEW_LINE
-                            + "Measured with value: " + df.getValue()
+                            + "Measured with value: " + metricsFeedback.getValue()
                             + NEW_LINE
-                            + df.getSuggestion()
+                            + metricsFeedback.getSuggestion()
                             + "------------------------------------------------------------------------------";
             resultIndex = resultIndex + 2;
         }

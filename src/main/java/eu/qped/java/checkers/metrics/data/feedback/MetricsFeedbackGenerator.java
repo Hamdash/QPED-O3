@@ -173,10 +173,10 @@ public class MetricsFeedbackGenerator {
             metricSettings) {
         List<MetricsFeedback> feedbacks = new ArrayList<>();
 
-        metricsMap.forEach(designCheckEntry -> {
+        metricsMap.forEach(classMetricsEntry -> {
 
-            String className = designCheckEntry.getClassName();
-            List<ClassMetricsMessage> metricsForClass = designCheckEntry.getMetricsForClass();
+            String className = classMetricsEntry.getClassName();
+            List<ClassMetricsMessage> metricsForClass = classMetricsEntry.getMetricsForClass();
 
             if (metricsForClass != null) {
                 metricsForClass.forEach(metricForClass -> {
