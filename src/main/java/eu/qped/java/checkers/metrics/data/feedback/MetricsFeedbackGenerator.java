@@ -5,6 +5,7 @@ import eu.qped.java.checkers.metrics.data.report.ClassMetricsMessage;
 import eu.qped.java.checkers.metrics.data.report.ClassMetricsMessageMulti;
 import eu.qped.java.checkers.metrics.data.report.ClassMetricsMessageSingle;
 import eu.qped.java.checkers.metrics.settings.MetricSettings;
+import eu.qped.java.utils.markdown.MarkdownFormatterUtility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -217,7 +218,7 @@ public class MetricsFeedbackGenerator {
                     } else {
                         metricValues = ((ClassMetricsMessageMulti) metricForClass).getMetricValues();
                         for (Map.Entry<String, Integer> entry : metricValues.entrySet()) {
-                            suggestionString = "For method " + entry.getKey() + ":\t";
+                            suggestionString = "For method " + MarkdownFormatterUtility.asMonospace(entry.getKey(), false, null) + ":\n";
                             lowerThresholdReached = isThresholdReached(metric, metricSettings, entry.getValue(), true);
                             upperThresholdReached = isThresholdReached(metric, metricSettings, entry.getValue(), false);
 
