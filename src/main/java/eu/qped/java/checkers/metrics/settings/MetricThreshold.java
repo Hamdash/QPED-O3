@@ -15,7 +15,7 @@ import lombok.Setter;
 public class MetricThreshold implements Comparable<MetricThreshold> {
 
     private Metric metric;
-    private double lowerBound;
+    private double lowerBound;//TODO rename to min max
     private double upperBound;
     private boolean noMax;
 

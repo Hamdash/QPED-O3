@@ -12,5 +12,4 @@ public class MetricConfig {
 
     private MetricThreshold metricThreshold;
     private MetricsFeedbackSuggestion metricsFeedbackSuggestion;
-
 }

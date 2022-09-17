@@ -50,7 +50,7 @@ class MetricsCheckerTest {
 
     @Test
     void testClassFilesPath() throws IllegalAccessException {
-        Field classFilesPathField = MetricsCheckerTestUtility.getFieldByName("CLASS_FILES_PATH", fields);
+        Field classFilesPathField = MetricsCheckerTestUtility.getFieldByName("DEFAULT_CLASS_FILES_PATH", fields);
         assert classFilesPathField != null;
         classFilesPathField.setAccessible(true);
         String classFilesPath = (String) classFilesPathField.get(MetricsChecker.class);

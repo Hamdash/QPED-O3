@@ -109,7 +109,7 @@ public class QPEDIcAndCbmClassVisitor extends AbstractClassVisitor {
                 Instruction i = ih.getInstruction();
                 if (instructionNotVisited(i)) {
 
-                    i.accept(new org.apache.bcel.generic.EmptyVisitor() {
+                    i.accept(new EmptyVisitor() {
 
                         @Override
                         public void visitInvokeInstruction(InvokeInstruction ii) {
@@ -279,7 +279,7 @@ public class QPEDIcAndCbmClassVisitor extends AbstractClassVisitor {
             for (InstructionHandle ih = mg.getInstructionList().getStart(); ih != null; ih = ih.getNext()) {
                 Instruction i = ih.getInstruction();
                 if (instructionNotVisited(i)) {
-                    i.accept(new org.apache.bcel.generic.EmptyVisitor() {
+                    i.accept(new EmptyVisitor() {
 
                         @Override
                         public void visitInvokeInstruction(InvokeInstruction ii) {
@@ -311,7 +311,7 @@ public class QPEDIcAndCbmClassVisitor extends AbstractClassVisitor {
             for (InstructionHandle ih = mg.getInstructionList().getStart(); ih != null; ih = ih.getNext()) {
                 Instruction i = ih.getInstruction();
                 if (instructionNotVisited(i)) {
-                    i.accept(new org.apache.bcel.generic.EmptyVisitor() {
+                    i.accept(new EmptyVisitor() {
 
                         @Override
                         public void visitFieldInstruction(FieldInstruction fi) {

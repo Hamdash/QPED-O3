@@ -96,10 +96,8 @@ class MetricSettingsReaderTest {
 
         Method retrieveMetricThresholdMethod = metricSettingsReader.getClass().getDeclaredMethod("retrieveMetricThreshold", Metric.class);
         retrieveMetricThresholdMethod.setAccessible(true);
-        MetricThreshold retrievedThreshold = (MetricThreshold) retrieveMetricThresholdMethod.invoke(metricSettingsReader, Metric.AMC);
-        assertEquals(0, retrievedThreshold.getLowerBound());
-        assertEquals(4.0, retrievedThreshold.getUpperBound());
-        assertEquals(Metric.AMC, retrievedThreshold.getMetric());
+        InvocationTargetException invocationTargetException = assertThrows(InvocationTargetException.class, () ->retrieveMetricThresholdMethod.invoke(metricSettingsReader, Metric.AMC));
+        assertEquals(IllegalStateException.class.getName(), invocationTargetException.getTargetException().getClass().getName());
         retrieveMetricThresholdMethod.setAccessible(false);
     }
 
@@ -111,25 +109,22 @@ class MetricSettingsReaderTest {
 
         Method retrieveMetricThresholdMethod = metricSettingsReader.getClass().getDeclaredMethod("retrieveMetricThreshold", Metric.class);
         retrieveMetricThresholdMethod.setAccessible(true);
-        MetricThreshold retrievedThreshold = (MetricThreshold) retrieveMetricThresholdMethod.invoke(metricSettingsReader, Metric.AMC);
-        assertEquals(2.0, retrievedThreshold.getLowerBound());
-        assertEquals(Double.MAX_VALUE, retrievedThreshold.getUpperBound());
-        assertEquals(Metric.AMC, retrievedThreshold.getMetric());
+        InvocationTargetException invocationTargetException = assertThrows(InvocationTargetException.class, () -> retrieveMetricThresholdMethod.invoke(metricSettingsReader, Metric.AMC));
+        assertEquals(IllegalStateException.class.getName(), invocationTargetException.getTargetException().getClass().getName());
+
         retrieveMetricThresholdMethod.setAccessible(false);
     }
 
     @Test
-    void retrieveMetricNoBoundGivenTest() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    void retrieveMetricNoBoundGivenTest() throws NoSuchMethodException {
         QFMetricsSettings qfMetricsSettings = new QFMetricsSettings();
         qfMetricsSettings.setAmc("", "");
         this.metricSettingsReader = MetricSettingsReader.builder().qfMetricsSettings(qfMetricsSettings).build();
 
         Method retrieveMetricThresholdMethod = metricSettingsReader.getClass().getDeclaredMethod("retrieveMetricThreshold", Metric.class);
         retrieveMetricThresholdMethod.setAccessible(true);
-        MetricThreshold retrievedThreshold = (MetricThreshold) retrieveMetricThresholdMethod.invoke(metricSettingsReader, Metric.AMC);
-        assertEquals(0, retrievedThreshold.getLowerBound());
-        assertEquals(Double.MAX_VALUE, retrievedThreshold.getUpperBound());
-        assertEquals(Metric.AMC, retrievedThreshold.getMetric());
+        InvocationTargetException invocationTargetException = assertThrows(InvocationTargetException.class, () ->retrieveMetricThresholdMethod.invoke(metricSettingsReader, Metric.AMC));
+        assertEquals(IllegalStateException.class.getName(), invocationTargetException.getTargetException().getClass().getName());
         retrieveMetricThresholdMethod.setAccessible(false);
     }
 
@@ -141,9 +136,9 @@ class MetricSettingsReaderTest {
         Method retrieveMetricMaximumMethod = metricSettingsReader.getClass().getDeclaredMethod("retrieveMetricMaximum", Metric.class);
         retrieveMetricMaximumMethod.setAccessible(true);
 
-        assertEquals(-1, (Double) retrieveMetricMaximumMethod.invoke(metricSettingsReader, Metric.AMC));
+        assertEquals(-1d, retrieveMetricMaximumMethod.invoke(metricSettingsReader, Metric.AMC));
         qfMetricsSettings.setWmc(null, null);
-        assertEquals(Double.MAX_VALUE, retrieveMetricMaximumMethod.invoke(metricSettingsReader, Metric.WMC));
+        assertEquals(-1d, retrieveMetricMaximumMethod.invoke(metricSettingsReader, Metric.WMC));
 
         retrieveMetricMaximumMethod.setAccessible(false);
     }
@@ -157,7 +152,7 @@ class MetricSettingsReaderTest {
 
         assertEquals(-1.0, retrieveMetricMinimumMethod.invoke(metricSettingsReader, Metric.AMC));
         qfMetricsSettings.setWmc(null, null);
-        assertEquals(0d, retrieveMetricMinimumMethod.invoke(metricSettingsReader, Metric.WMC));
+        assertEquals(-1d, retrieveMetricMinimumMethod.invoke(metricSettingsReader, Metric.WMC));
 
         retrieveMetricMinimumMethod.setAccessible(false);
     }

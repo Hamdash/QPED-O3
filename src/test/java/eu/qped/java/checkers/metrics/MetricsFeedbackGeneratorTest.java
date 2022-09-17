@@ -22,25 +22,37 @@ class MetricsFeedbackGeneratorTest {
 
     @ParameterizedTest
     @EnumSource(Metric.class)
-    void generateSuggestion(Metric metric) {
-        assertEquals("You are within the " + metric.toString() + "'s threshold.", MetricsFeedbackGenerator.generateDefaultSuggestion(metric, false, false));
-        assertEquals("The " + metric + "'s value is too low: " + MetricsFeedbackGenerator.generateMetricSpecificSuggestion(metric, true), MetricsFeedbackGenerator.generateDefaultSuggestion(metric, true, false));
-        assertEquals("The " + metric + "'s value is too high: " + MetricsFeedbackGenerator.generateMetricSpecificSuggestion(metric, false), MetricsFeedbackGenerator.generateDefaultSuggestion(metric, false, true));
-        assertThrows(IllegalArgumentException.class, () -> MetricsFeedbackGenerator.generateDefaultSuggestion(metric, true, true));
+    void generateSuggestion(Metric metric) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Method generateMetricSuggestionMethod = MetricsFeedbackGenerator.class.getDeclaredMethod("generateMetricSuggestion", Metric.class, boolean.class, boolean.class);
+        generateMetricSuggestionMethod.setAccessible(true);
+        assertEquals("You are within the " + metric.toString() + "'s threshold.", generateMetricSuggestionMethod.invoke(false, metric, false, false));
+        Method generateMetricSpecificSuggestionMethod = MetricsFeedbackGenerator.class.getDeclaredMethod("generateMetricSpecificSuggestion", Metric.class, boolean.class);
+        generateMetricSpecificSuggestionMethod.setAccessible(true);
+        assertEquals("The " + metric + "'s value is too low: " + generateMetricSpecificSuggestionMethod.invoke(null, metric, true), generateMetricSuggestionMethod.invoke(false, metric, true, false));
+        assertEquals("The " + metric + "'s value is too high: " +  generateMetricSpecificSuggestionMethod.invoke(null, metric, false), generateMetricSuggestionMethod.invoke(false, metric, false, true));
+        InvocationTargetException illegalArgumentException = assertThrows(InvocationTargetException.class, () -> generateMetricSuggestionMethod.invoke(false, metric, true, true));
+        assertEquals(IllegalArgumentException.class.getName(), illegalArgumentException.getTargetException().getClass().getName());
+        generateMetricSpecificSuggestionMethod.setAccessible(false);
+        generateMetricSuggestionMethod.setAccessible(false);
     }
 
     @ParameterizedTest
     @EnumSource(Metric.class)
     void generateMetricSpecificSuggestion(Metric metric) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        Method generateMetricSpecificSuggestionMethod = MetricsFeedbackGenerator.class.getDeclaredMethod("generateMetricSpecificSuggestion", Metric.class, boolean.class);
+        generateMetricSpecificSuggestionMethod.setAccessible(true);
+
         Method generateMetricSpecificSuggestionLowerMethod = MetricsFeedbackGenerator.class.getDeclaredMethod("generateMetricSpecificSuggestionLower", Metric.class);
         generateMetricSpecificSuggestionLowerMethod.setAccessible(true);
-        assertEquals(MetricsFeedbackGenerator.generateMetricSpecificSuggestion(metric, true), generateMetricSpecificSuggestionLowerMethod.invoke(null, metric));
+        assertEquals( generateMetricSpecificSuggestionMethod.invoke(null, metric, true), generateMetricSpecificSuggestionLowerMethod.invoke(null, metric));
         generateMetricSpecificSuggestionLowerMethod.setAccessible(false);
 
         Method generateMetricSpecificSuggestionUpperMethod = MetricsFeedbackGenerator.class.getDeclaredMethod("generateMetricSpecificSuggestionUpper", Metric.class);
         generateMetricSpecificSuggestionUpperMethod.setAccessible(true);
-        assertEquals(MetricsFeedbackGenerator.generateMetricSpecificSuggestion(metric, false), generateMetricSpecificSuggestionUpperMethod.invoke(null, metric));
+        assertEquals(generateMetricSpecificSuggestionMethod.invoke(null, metric, false), generateMetricSpecificSuggestionUpperMethod.invoke(null, metric));
         generateMetricSpecificSuggestionUpperMethod.setAccessible(false);
+
+        generateMetricSpecificSuggestionMethod.setAccessible(false);
     }
 
     @ParameterizedTest

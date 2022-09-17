@@ -19,8 +19,14 @@ import java.util.Map;
 @Setter
 public class QFMetricsSettings extends QfObjectBase {
 
-    private String includeCallsToJdk = "false";
     private String includeOnlyPublicClasses = "false";
+    private String includeCallsToJdk = "false";
+
+    private static final String MIN = "min";
+    private static final String MAX = "max";
+    private static final String NO_MAX = "noMax";
+    private static final String SUGGESTION_MIN = "suggestionMin";
+    private static final String SUGGESTION_MAX = "suggestionMax";
 
     /**
      * Average method Complexity
@@ -33,11 +39,11 @@ public class QFMetricsSettings extends QfObjectBase {
 
     @JsonProperty("amcThreshold")
     private void amcDeserializer(Map<String, Object> amc) {
-        this.amcMin = String.valueOf(String.valueOf(amc.get("min")));
-        this.amcMax = String.valueOf(String.valueOf(amc.get("max")));
-        this.amcNoMax = String.valueOf(amc.get("noMax"));
-        this.amcSuggestionMin = String.valueOf(amc.get("suggestionMin"));
-        this.amcSuggestionMax = String.valueOf(amc.get("suggestionMax"));
+        this.amcMin = String.valueOf(String.valueOf(amc.get(MIN)));
+        this.amcMax = String.valueOf(String.valueOf(amc.get(MAX)));
+        this.amcNoMax = String.valueOf(amc.get(NO_MAX));
+        this.amcSuggestionMin = String.valueOf(amc.get(SUGGESTION_MIN));
+        this.amcSuggestionMax = String.valueOf(amc.get(SUGGESTION_MAX));
     }
 
     /**
@@ -51,11 +57,11 @@ public class QFMetricsSettings extends QfObjectBase {
 
     @JsonProperty("caThreshold")
     private void caDeserializer(Map<String, Object> ca) {
-        this.caMin = String.valueOf(ca.get("min"));
-        this.caMax = String.valueOf(ca.get("max"));
-        this.caNoMax = String.valueOf(ca.get("noMax"));
-        this.caSuggestionMin = String.valueOf(ca.get("suggestionMin"));
-        this.caSuggestionMax = String.valueOf(ca.get("suggestionMax"));
+        this.caMin = String.valueOf(ca.get(MIN));
+        this.caMax = String.valueOf(ca.get(MAX));
+        this.caNoMax = String.valueOf(ca.get(NO_MAX));
+        this.caSuggestionMin = String.valueOf(ca.get(SUGGESTION_MIN));
+        this.caSuggestionMax = String.valueOf(ca.get(SUGGESTION_MAX));
     }
 
     /**
@@ -69,11 +75,11 @@ public class QFMetricsSettings extends QfObjectBase {
 
     @JsonProperty("camThreshold")
     private void camDeserializer(Map<String, Object> cam) {
-        this.camMin = String.valueOf(cam.get("min"));
-        this.camMax = String.valueOf(cam.get("max"));
-        this.camNoMax = String.valueOf(cam.get("noMax"));
-        this.camSuggestionMin = String.valueOf(cam.get("suggestionMin"));
-        this.camSuggestionMax = String.valueOf(cam.get("suggestionMax"));
+        this.camMin = String.valueOf(cam.get(MIN));
+        this.camMax = String.valueOf(cam.get(MAX));
+        this.camNoMax = String.valueOf(cam.get(NO_MAX));
+        this.camSuggestionMin = String.valueOf(cam.get(SUGGESTION_MIN));
+        this.camSuggestionMax = String.valueOf(cam.get(SUGGESTION_MAX));
     }
 
     /**
@@ -87,11 +93,11 @@ public class QFMetricsSettings extends QfObjectBase {
 
     @JsonProperty("cbmThreshold")
     private void cbmDeserializer(Map<String, Object> cbm) {
-        this.cbmMin = String.valueOf(cbm.get("min"));
-        this.cbmMax = String.valueOf(cbm.get("max"));
-        this.cbmNoMax = String.valueOf(cbm.get("noMax"));
-        this.cbmSuggestionMin = String.valueOf(cbm.get("suggestionMin"));
-        this.cbmSuggestionMax = String.valueOf(cbm.get("suggestionMax"));
+        this.cbmMin = String.valueOf(cbm.get(MIN));
+        this.cbmMax = String.valueOf(cbm.get(MAX));
+        this.cbmNoMax = String.valueOf(cbm.get(NO_MAX));
+        this.cbmSuggestionMin = String.valueOf(cbm.get(SUGGESTION_MIN));
+        this.cbmSuggestionMax = String.valueOf(cbm.get(SUGGESTION_MAX));
     }
 
     /**
@@ -105,11 +111,11 @@ public class QFMetricsSettings extends QfObjectBase {
 
     @JsonProperty("cboThreshold")
     private void cboDeserializer(Map<String, Object> cbo) {
-        this.cboMin = String.valueOf(cbo.get("min"));
-        this.cboMax = String.valueOf(cbo.get("max"));
-        this.cboNoMax = String.valueOf(cbo.get("noMax"));
-        this.cboSuggestionMin = String.valueOf(cbo.get("suggestionMin"));
-        this.cboSuggestionMax = String.valueOf(cbo.get("suggestionMax"));
+        this.cboMin = String.valueOf(cbo.get(MIN));
+        this.cboMax = String.valueOf(cbo.get(MAX));
+        this.cboNoMax = String.valueOf(cbo.get(NO_MAX));
+        this.cboSuggestionMin = String.valueOf(cbo.get(SUGGESTION_MIN));
+        this.cboSuggestionMax = String.valueOf(cbo.get(SUGGESTION_MAX));
     }
 
     /**
@@ -123,11 +129,11 @@ public class QFMetricsSettings extends QfObjectBase {
 
     @JsonProperty("ccThreshold")
     private void ccDeserializer(Map<String, Object> cc) {
-        this.ccMin = String.valueOf(cc.get("min"));
-        this.ccMax = String.valueOf(cc.get("max"));
-        this.ccNoMax = String.valueOf(cc.get("noMax"));
-        this.ccSuggestionMin = String.valueOf(cc.get("suggestionMin"));
-        this.ccSuggestionMax = String.valueOf(cc.get("suggestionMax"));
+        this.ccMin = String.valueOf(cc.get(MIN));
+        this.ccMax = String.valueOf(cc.get(MAX));
+        this.ccNoMax = String.valueOf(cc.get(NO_MAX));
+        this.ccSuggestionMin = String.valueOf(cc.get(SUGGESTION_MIN));
+        this.ccSuggestionMax = String.valueOf(cc.get(SUGGESTION_MAX));
     }
 
     /**
@@ -141,11 +147,11 @@ public class QFMetricsSettings extends QfObjectBase {
 
     @JsonProperty("ceThreshold")
     private void ceDeserializer(Map<String, Object> ce) {
-        this.ceMin = String.valueOf(ce.get("min"));
-        this.ceMax = String.valueOf(ce.get("max"));
-        this.ceNoMax = String.valueOf(ce.get("noMax"));
-        this.ceSuggestionMin = String.valueOf(ce.get("suggestionMin"));
-        this.ceSuggestionMax = String.valueOf(ce.get("suggestionMax"));
+        this.ceMin = String.valueOf(ce.get(MIN));
+        this.ceMax = String.valueOf(ce.get(MAX));
+        this.ceNoMax = String.valueOf(ce.get(NO_MAX));
+        this.ceSuggestionMin = String.valueOf(ce.get(SUGGESTION_MIN));
+        this.ceSuggestionMax = String.valueOf(ce.get(SUGGESTION_MAX));
     }
 
     /**
@@ -159,11 +165,11 @@ public class QFMetricsSettings extends QfObjectBase {
 
     @JsonProperty("damThreshold")
     private void damDeserializer(Map<String, Object> dam) {
-        this.damMin = String.valueOf(dam.get("min"));
-        this.damMax = String.valueOf(dam.get("max"));
-        this.damNoMax = String.valueOf(dam.get("noMax"));
-        this.damSuggestionMin = String.valueOf(dam.get("suggestionMin"));
-        this.damSuggestionMax = String.valueOf(dam.get("suggestionMax"));
+        this.damMin = String.valueOf(dam.get(MIN));
+        this.damMax = String.valueOf(dam.get(MAX));
+        this.damNoMax = String.valueOf(dam.get(NO_MAX));
+        this.damSuggestionMin = String.valueOf(dam.get(SUGGESTION_MIN));
+        this.damSuggestionMax = String.valueOf(dam.get(SUGGESTION_MAX));
     }
 
     /**
@@ -177,11 +183,11 @@ public class QFMetricsSettings extends QfObjectBase {
 
     @JsonProperty("ditThreshold")
     private void ditDeserializer(Map<String, Object> dit) {
-        this.ditMin = String.valueOf(dit.get("min"));
-        this.ditMax = String.valueOf(dit.get("max"));
-        this.ditNoMax = String.valueOf(dit.get("noMax"));
-        this.ditSuggestionMin = String.valueOf(dit.get("suggestionMin"));
-        this.ditSuggestionMax = String.valueOf(dit.get("suggestionMax"));
+        this.ditMin = String.valueOf(dit.get(MIN));
+        this.ditMax = String.valueOf(dit.get(MAX));
+        this.ditNoMax = String.valueOf(dit.get(NO_MAX));
+        this.ditSuggestionMin = String.valueOf(dit.get(SUGGESTION_MIN));
+        this.ditSuggestionMax = String.valueOf(dit.get(SUGGESTION_MAX));
     }
 
     /**
@@ -195,11 +201,11 @@ public class QFMetricsSettings extends QfObjectBase {
 
     @JsonProperty("icThreshold")
     private void icDeserializer(Map<String, Object> ic) {
-        this.icMin = String.valueOf(ic.get("min"));
-        this.icMax = String.valueOf(ic.get("max"));
-        this.icNoMax = String.valueOf(ic.get("noMax"));
-        this.icSuggestionMin = String.valueOf(ic.get("suggestionMin"));
-        this.icSuggestionMax = String.valueOf(ic.get("suggestionMax"));
+        this.icMin = String.valueOf(ic.get(MIN));
+        this.icMax = String.valueOf(ic.get(MAX));
+        this.icNoMax = String.valueOf(ic.get(NO_MAX));
+        this.icSuggestionMin = String.valueOf(ic.get(SUGGESTION_MIN));
+        this.icSuggestionMax = String.valueOf(ic.get(SUGGESTION_MAX));
     }
 
     /**
@@ -213,11 +219,11 @@ public class QFMetricsSettings extends QfObjectBase {
 
     @JsonProperty("lcomThreshold")
     private void lcomDeserializer(Map<String, Object> lcom) {
-        this.lcomMin = String.valueOf(lcom.get("min"));
-        this.lcomMax = String.valueOf(lcom.get("max"));
-        this.lcomNoMax = String.valueOf(lcom.get("noMax"));
-        this.lcomSuggestionMin = String.valueOf(lcom.get("suggestionMin"));
-        this.lcomSuggestionMax = String.valueOf(lcom.get("suggestionMax"));
+        this.lcomMin = String.valueOf(lcom.get(MIN));
+        this.lcomMax = String.valueOf(lcom.get(MAX));
+        this.lcomNoMax = String.valueOf(lcom.get(NO_MAX));
+        this.lcomSuggestionMin = String.valueOf(lcom.get(SUGGESTION_MIN));
+        this.lcomSuggestionMax = String.valueOf(lcom.get(SUGGESTION_MAX));
     }
 
     /**
@@ -231,11 +237,11 @@ public class QFMetricsSettings extends QfObjectBase {
 
     @JsonProperty("lcom3Threshold")
     private void lcom3Deserializer(Map<String, Object> lcom3) {
-        this.lcom3Min = String.valueOf(lcom3.get("min"));
-        this.lcom3Max = String.valueOf(lcom3.get("max"));
-        this.lcom3NoMax = String.valueOf(lcom3.get("noMax"));
-        this.lcom3SuggestionMin = String.valueOf(lcom3.get("suggestionMin"));
-        this.lcom3SuggestionMax = String.valueOf(lcom3.get("suggestionMax"));
+        this.lcom3Min = String.valueOf(lcom3.get(MIN));
+        this.lcom3Max = String.valueOf(lcom3.get(MAX));
+        this.lcom3NoMax = String.valueOf(lcom3.get(NO_MAX));
+        this.lcom3SuggestionMin = String.valueOf(lcom3.get(SUGGESTION_MIN));
+        this.lcom3SuggestionMax = String.valueOf(lcom3.get(SUGGESTION_MAX));
     }
 
     /**
@@ -249,11 +255,11 @@ public class QFMetricsSettings extends QfObjectBase {
 
     @JsonProperty("locThreshold")
     private void locDeserializer(Map<String, Object> loc) {
-        this.locMin = String.valueOf(loc.get("min"));
-        this.locMax = String.valueOf(loc.get("max"));
-        this.locNoMax = String.valueOf(loc.get("noMax"));
-        this.locSuggestionMin= String.valueOf(loc.get("suggestionMin"));
-        this.locSuggestionMax= String.valueOf(loc.get("suggestionMax"));
+        this.locMin = String.valueOf(loc.get(MIN));
+        this.locMax = String.valueOf(loc.get(MAX));
+        this.locNoMax = String.valueOf(loc.get(NO_MAX));
+        this.locSuggestionMin = String.valueOf(loc.get(SUGGESTION_MIN));
+        this.locSuggestionMax = String.valueOf(loc.get(SUGGESTION_MAX));
     }
 
     /**
@@ -267,11 +273,11 @@ public class QFMetricsSettings extends QfObjectBase {
 
     @JsonProperty("moaThreshold")
     private void moaDeserializer(Map<String, Object> moa) {
-        this.moaMin = String.valueOf(moa.get("min"));
-        this.moaMax = String.valueOf(moa.get("max"));
-        this.moaNoMax = String.valueOf(moa.get("noMax"));
-        this.moaSuggestionMin = String.valueOf(moa.get("suggestionMin"));
-        this.moaSuggestionMax = String.valueOf(moa.get("suggestionMax"));
+        this.moaMin = String.valueOf(moa.get(MIN));
+        this.moaMax = String.valueOf(moa.get(MAX));
+        this.moaNoMax = String.valueOf(moa.get(NO_MAX));
+        this.moaSuggestionMin = String.valueOf(moa.get(SUGGESTION_MIN));
+        this.moaSuggestionMax = String.valueOf(moa.get(SUGGESTION_MAX));
     }
 
     /**
@@ -285,11 +291,11 @@ public class QFMetricsSettings extends QfObjectBase {
 
     @JsonProperty("mfaThreshold")
     private void mfaDeserializer(Map<String, Object> mfa) {
-        this.mfaMin = String.valueOf(mfa.get("min"));
-        this.mfaMax = String.valueOf(mfa.get("max"));
-        this.mfaNoMax = String.valueOf(mfa.get("noMax"));
-        this.mfaSuggestionMin = String.valueOf(mfa.get("suggestionMin"));
-        this.mfaSuggestionMax = String.valueOf(mfa.get("suggestionMax"));
+        this.mfaMin = String.valueOf(mfa.get(MIN));
+        this.mfaMax = String.valueOf(mfa.get(MAX));
+        this.mfaNoMax = String.valueOf(mfa.get(NO_MAX));
+        this.mfaSuggestionMin = String.valueOf(mfa.get(SUGGESTION_MIN));
+        this.mfaSuggestionMax = String.valueOf(mfa.get(SUGGESTION_MAX));
     }
 
     /**
@@ -303,11 +309,11 @@ public class QFMetricsSettings extends QfObjectBase {
 
     @JsonProperty("nocThreshold")
     private void nocDeserializer(Map<String, Object> noc) {
-        this.nocMin = String.valueOf(noc.get("min"));
-        this.nocMax = String.valueOf(noc.get("max"));
-        this.nocNoMax = String.valueOf(noc.get("noMax"));
-        this.nocSuggestionMin = String.valueOf(noc.get("suggestionMin"));
-        this.nocSuggestionMax = String.valueOf(noc.get("suggestionMax"));
+        this.nocMin = String.valueOf(noc.get(MIN));
+        this.nocMax = String.valueOf(noc.get(MAX));
+        this.nocNoMax = String.valueOf(noc.get(NO_MAX));
+        this.nocSuggestionMin = String.valueOf(noc.get(SUGGESTION_MIN));
+        this.nocSuggestionMax = String.valueOf(noc.get(SUGGESTION_MAX));
     }
 
     /**
@@ -321,11 +327,11 @@ public class QFMetricsSettings extends QfObjectBase {
 
     @JsonProperty("npmThreshold")
     private void npmDeserializer(Map<String, Object> npm) {
-        this.npmMin = String.valueOf(npm.get("min"));
-        this.npmMax = String.valueOf(npm.get("max"));
-        this.npmNoMax = String.valueOf(npm.get("noMax"));
-        this.npmSuggestionMin = String.valueOf(npm.get("suggestionMin"));
-        this.npmSuggestionMax = String.valueOf(npm.get("suggestionMax"));
+        this.npmMin = String.valueOf(npm.get(MIN));
+        this.npmMax = String.valueOf(npm.get(MAX));
+        this.npmNoMax = String.valueOf(npm.get(NO_MAX));
+        this.npmSuggestionMin = String.valueOf(npm.get(SUGGESTION_MIN));
+        this.npmSuggestionMax = String.valueOf(npm.get(SUGGESTION_MAX));
     }
 
     /**
@@ -339,11 +345,11 @@ public class QFMetricsSettings extends QfObjectBase {
 
     @JsonProperty("rfcThreshold")
     private void rfcDeserializer(Map<String, Object> rfc) {
-        this.rfcMin = String.valueOf(rfc.get("min"));
-        this.rfcMax = String.valueOf(rfc.get("max"));
-        this.rfcNoMax = String.valueOf(rfc.get("noMax"));
-        this.rfcSuggestionMin = String.valueOf(rfc.get("suggestionMin"));
-        this.rfcSuggestionMax = String.valueOf(rfc.get("suggestionMax"));
+        this.rfcMin = String.valueOf(rfc.get(MIN));
+        this.rfcMax = String.valueOf(rfc.get(MAX));
+        this.rfcNoMax = String.valueOf(rfc.get(NO_MAX));
+        this.rfcSuggestionMin = String.valueOf(rfc.get(SUGGESTION_MIN));
+        this.rfcSuggestionMax = String.valueOf(rfc.get(SUGGESTION_MAX));
     }
 
     /**
@@ -357,11 +363,11 @@ public class QFMetricsSettings extends QfObjectBase {
 
     @JsonProperty("wmcThreshold")
     private void wmcDeserializer(Map<String, Object> wmc) {
-        this.wmcMin = String.valueOf(wmc.get("min"));
-        this.wmcMax = String.valueOf(wmc.get("max"));
-        this.wmcNoMax = String.valueOf(wmc.get("noMax"));
-        this.wmcSuggestionMin = String.valueOf(wmc.get("suggestionMin"));
-        this.wmcSuggestionMax = String.valueOf(wmc.get("suggestionMax"));
+        this.wmcMin = String.valueOf(wmc.get(MIN));
+        this.wmcMax = String.valueOf(wmc.get(MAX));
+        this.wmcNoMax = String.valueOf(wmc.get(NO_MAX));
+        this.wmcSuggestionMin = String.valueOf(wmc.get(SUGGESTION_MIN));
+        this.wmcSuggestionMax = String.valueOf(wmc.get(SUGGESTION_MAX));
     }
 
 

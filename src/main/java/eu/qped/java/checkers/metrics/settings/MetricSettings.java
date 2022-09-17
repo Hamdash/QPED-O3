@@ -1,6 +1,5 @@
 package eu.qped.java.checkers.metrics.settings;
 
-import eu.qped.framework.qf.QfObjectBase;
 import eu.qped.java.checkers.metrics.MetricsChecker;
 import eu.qped.java.checkers.metrics.ckjm.MetricCheckerEntryHandler.Metric;
 import eu.qped.java.checkers.metrics.data.feedback.MetricsFeedbackSuggestion;
@@ -9,7 +8,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Configuration for metric: Class modeling design settings for {@link MetricsChecker}.
@@ -20,7 +19,7 @@ import java.util.HashMap;
 @Getter
 @Setter
 @Builder
-public class MetricSettings extends QfObjectBase {
+public class MetricSettings {
 
     @Getter(AccessLevel.NONE)
     private boolean includeCallsToJdk;
@@ -28,7 +27,7 @@ public class MetricSettings extends QfObjectBase {
     @Getter(AccessLevel.NONE)
     private boolean includeOnlyPublicClasses;
 
-    private HashMap<Metric, MetricsFeedbackSuggestion> customSuggestions;
+    private Map<Metric, MetricsFeedbackSuggestion> customSuggestions;
 
     /**
      * Configuration for metric: Average method Complexity

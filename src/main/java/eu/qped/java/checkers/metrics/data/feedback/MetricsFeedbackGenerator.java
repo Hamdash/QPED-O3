@@ -21,6 +21,85 @@ import static eu.qped.java.checkers.metrics.ckjm.MetricCheckerEntryHandler.Metri
 public class MetricsFeedbackGenerator {
 
     /**
+     * Generates the DesignFeedback to the corresponding classes, metrics, and designSettings (min/max thresholds)
+     *
+     * @param classMetricsEntries     the map containing classnames, metrics and corresponding values
+     * @param metricSettings the settings on which the feedback depends on //TODO wip configure design settings
+     * @return the generated Feedback as a List.
+     */
+    public static List<MetricsFeedback> generateMetricsCheckerFeedbacks(List<ClassMetricsEntry> classMetricsEntries, MetricSettings
+            metricSettings) {
+        List<MetricsFeedback> feedbacks = new ArrayList<>();
+
+        classMetricsEntries.forEach(classMetricsEntry -> {
+
+            String className = classMetricsEntry.getClassName();
+            List<ClassMetricsMessage> metricsForClass = classMetricsEntry.getMetricsForClass();
+
+            if (metricsForClass != null) {
+                metricsForClass.forEach(metricForClass -> {
+                    boolean lowerThresholdReached;
+                    boolean upperThresholdReached;
+                    Metric metric = metricForClass.getMetric();
+                    String suggestionString = "";
+                    double metricValue;
+                    Map<String, Integer> metricValues;
+
+                    if (metricForClass instanceof ClassMetricsMessageSingle) {
+                        metricValue = ((ClassMetricsMessageSingle) metricForClass).getMetricValue();
+
+                        lowerThresholdReached = isThresholdReached(metric, metricSettings, metricValue, true);
+                        upperThresholdReached = isThresholdReached(metric, metricSettings, metricValue, false);
+                        MetricsFeedbackSuggestion customSuggestion = metricSettings.getCustomSuggestions().get(metric);
+
+                        if (lowerThresholdReached) {
+                            if (customSuggestion == null || customSuggestion.getSuggestionLowerBoundExceeded() == null || customSuggestion.getSuggestionLowerBoundExceeded().isBlank()) {
+                                suggestionString = generateMetricSpecificSuggestionLower(metric);
+                            } else {
+                                suggestionString = customSuggestion.getSuggestionLowerBoundExceeded();
+                            }
+                        } else if (upperThresholdReached) {
+                            if (customSuggestion == null || customSuggestion.getSuggestionUpperBoundExceeded() == null || customSuggestion.getSuggestionUpperBoundExceeded().isBlank()) {
+                                suggestionString = generateMetricSpecificSuggestionUpper(metric);
+                            } else {
+                                suggestionString = customSuggestion.getSuggestionUpperBoundExceeded();
+                            }
+                        }
+
+                        boolean addFeedback = (lowerThresholdReached || upperThresholdReached);
+                        if (addFeedback) {
+                            feedbacks.add(new MetricsFeedback(className, metric.getDescription(), metric, metricValue, suggestionString));
+                        }
+
+
+                    } else {
+                        metricValues = ((ClassMetricsMessageMulti) metricForClass).getMetricValues();
+                        for (Map.Entry<String, Integer> entry : metricValues.entrySet()) {
+                            suggestionString = "For method " + MarkdownFormatterUtility.asMonospace(entry.getKey(), false, null) + ":\n";
+                            lowerThresholdReached = isThresholdReached(metric, metricSettings, entry.getValue(), true);
+                            upperThresholdReached = isThresholdReached(metric, metricSettings, entry.getValue(), false);
+
+                            MetricsFeedbackSuggestion customSuggestion = metricSettings.getCustomSuggestions().get(metric);
+                            if (customSuggestion == null || customSuggestion.getSuggestionLowerBoundExceeded() == null || customSuggestion.getSuggestionLowerBoundExceeded().isBlank()) {
+                                suggestionString += generateMetricSuggestion(metric, lowerThresholdReached, upperThresholdReached);
+                            } else {
+                                suggestionString += generateCustomSuggestion(customSuggestion, lowerThresholdReached, upperThresholdReached);
+                            }
+
+                            boolean addFeedback = (lowerThresholdReached || upperThresholdReached);
+                            if (addFeedback) {
+                                feedbacks.add(new MetricsFeedback(className, metric.getDescription(), metric, (double) entry.getValue(), suggestionString));
+                            }
+                        }
+                    }
+                });
+            }
+        });
+        return feedbacks;
+    }
+
+
+    /**
      * Generates a suggestion for the student depending on the exceeding of am already calculated value of a metric.
      *
      * @param metric     the given metric
@@ -28,7 +107,7 @@ public class MetricsFeedbackGenerator {
      * @param upperBound the upper threshold of the metric not to be exceeded
      * @return a nicely formatted suggestion as String.
      */
-    public static String generateDefaultSuggestion(Metric metric, boolean lowerBound, boolean upperBound) {
+    private static String generateMetricSuggestion(Metric metric, boolean lowerBound, boolean upperBound) {
         if (!lowerBound && !upperBound) {
             return "You are within the " + metric.toString() + "'s threshold.";
         } else if (lowerBound && !upperBound) {
@@ -48,7 +127,7 @@ public class MetricsFeedbackGenerator {
      * @param exceededLower true if lower bound was exceeded, false if upper bound was exceeded
      * @return a metric and boundary specific suggestion
      */
-    public static String generateMetricSpecificSuggestion(Metric metric, boolean exceededLower) {
+    private static String generateMetricSpecificSuggestion(Metric metric, boolean exceededLower) {
         if (exceededLower) {
             return generateMetricSpecificSuggestionLower(metric);
         } else {
@@ -163,90 +242,12 @@ public class MetricsFeedbackGenerator {
         throw new IllegalArgumentException("Invalid metric given.");
     }
 
-    /**
-     * Generates the DesignFeedback to the corresponding classes, metrics, and designSettings (min/max thresholds)
-     *
-     * @param metricsMap     the map containing classnames, metrics and corresponding values
-     * @param metricSettings the settings on which the feedback depends on //TODO wip configure design settings
-     * @return the generated Feedback as a List.
-     */
-    public static List<MetricsFeedback> generateMetricsCheckerFeedbacks(List<ClassMetricsEntry> metricsMap, MetricSettings
-            metricSettings) {
-        List<MetricsFeedback> feedbacks = new ArrayList<>();
-
-        metricsMap.forEach(classMetricsEntry -> {
-
-            String className = classMetricsEntry.getClassName();
-            List<ClassMetricsMessage> metricsForClass = classMetricsEntry.getMetricsForClass();
-
-            if (metricsForClass != null) {
-                metricsForClass.forEach(metricForClass -> {
-                    boolean lowerThresholdReached;
-                    boolean upperThresholdReached;
-                    Metric metric = metricForClass.getMetric();
-                    String suggestionString = "";
-                    double metricValue;
-                    Map<String, Integer> metricValues;
-
-                    if (metricForClass instanceof ClassMetricsMessageSingle) {
-                        metricValue = ((ClassMetricsMessageSingle) metricForClass).getMetricValue();
-
-                        lowerThresholdReached = isThresholdReached(metric, metricSettings, metricValue, true);
-                        upperThresholdReached = isThresholdReached(metric, metricSettings, metricValue, false);
-                        MetricsFeedbackSuggestion customSuggestion = metricSettings.getCustomSuggestions().get(metric);
-
-                        if (lowerThresholdReached) {
-                            if (customSuggestion == null || customSuggestion.getSuggestionLowerBoundExceeded() == null || customSuggestion.getSuggestionLowerBoundExceeded().isBlank()) {
-                                suggestionString = generateMetricSpecificSuggestionLower(metric);
-                            } else {
-                                suggestionString = customSuggestion.getSuggestionLowerBoundExceeded();
-                            }
-                        } else if (upperThresholdReached) {
-                            if (customSuggestion == null || customSuggestion.getSuggestionUpperBoundExceeded() == null || customSuggestion.getSuggestionUpperBoundExceeded().isBlank()) {
-                                suggestionString = generateMetricSpecificSuggestionUpper(metric);
-                            } else {
-                                suggestionString = customSuggestion.getSuggestionUpperBoundExceeded();
-                            }
-                        }
-
-                        boolean addFeedback = (lowerThresholdReached || upperThresholdReached);
-                        if (addFeedback) {
-                            feedbacks.add(new MetricsFeedback(className, metric.getDescription(), metric, metricValue, suggestionString));
-                        }
-
-
-                    } else {
-                        metricValues = ((ClassMetricsMessageMulti) metricForClass).getMetricValues();
-                        for (Map.Entry<String, Integer> entry : metricValues.entrySet()) {
-                            suggestionString = "For method " + MarkdownFormatterUtility.asMonospace(entry.getKey(), false, null) + ":\n";
-                            lowerThresholdReached = isThresholdReached(metric, metricSettings, entry.getValue(), true);
-                            upperThresholdReached = isThresholdReached(metric, metricSettings, entry.getValue(), false);
-
-                            MetricsFeedbackSuggestion customSuggestion = metricSettings.getCustomSuggestions().get(metric);
-                            if (customSuggestion == null || customSuggestion.getSuggestionLowerBoundExceeded() == null || customSuggestion.getSuggestionLowerBoundExceeded().isBlank()) {
-                                suggestionString += generateDefaultSuggestion(metric, lowerThresholdReached, upperThresholdReached);
-                            } else {
-                                suggestionString += generateCustomSuggestion(customSuggestion, lowerThresholdReached, upperThresholdReached);
-                            }
-
-                            boolean addFeedback = (lowerThresholdReached || upperThresholdReached);
-                            if (addFeedback) {
-                                feedbacks.add(new MetricsFeedback(className, metric.getDescription(), metric, (double) entry.getValue(), suggestionString));
-                            }
-                        }
-                    }
-                });
-            }
-        });
-        return feedbacks;
-    }
-
     private static String generateCustomSuggestion(MetricsFeedbackSuggestion customSuggestion, boolean lowerThresholdReached, boolean upperThresholdReached) {
         if (lowerThresholdReached && !upperThresholdReached) {
             return customSuggestion.getSuggestionLowerBoundExceeded();
         } else if (upperThresholdReached && !lowerThresholdReached) {
             return customSuggestion.getSuggestionUpperBoundExceeded();
-        } else if (!upperThresholdReached && !lowerThresholdReached) {
+        } else if (!upperThresholdReached) { // .. && !lowerThresholdReached == true
             return "";
         } else {
             throw new IllegalStateException("Both thresholds cannot be exceeded at the same time.");

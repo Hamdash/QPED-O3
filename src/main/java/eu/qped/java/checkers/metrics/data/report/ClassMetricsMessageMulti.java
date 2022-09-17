@@ -16,6 +16,7 @@ import static eu.qped.java.checkers.metrics.ckjm.MetricCheckerEntryHandler.Metri
 public class ClassMetricsMessageMulti extends ClassMetricsMessage {
 
     private final Map<String, Integer> metricValues;
+    //TODO possibly better use double here -> more method-wise metrics in future implementations
 
     /**
      * Main constructor.

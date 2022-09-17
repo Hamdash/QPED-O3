@@ -49,7 +49,7 @@ public class MassExecutor {
     private final SemanticChecker semanticChecker;
     private final SyntaxChecker syntaxChecker;
     private final ClassChecker classChecker;
-    private MetricsChecker metricsChecker;
+    private final MetricsChecker metricsChecker;
 
     /**
      * To create an Object use the factory Class @MassExecutorFactory

@@ -90,7 +90,8 @@ public class QPEDMetricsFilter implements ICountingProperities {
             }
         } else {
             try {
-                jc = new ClassParser(classSpecification).parse();
+                ClassParser classParser = new ClassParser(classSpecification);
+                jc = classParser.parse();
                 processClass(jc);
             } catch (IOException e) {
                 LoggerHelper.printError("Error loading " + classSpecification + ": " + e);
@@ -106,6 +107,7 @@ public class QPEDMetricsFilter implements ICountingProperities {
     private void processClass(JavaClass javaClass) {
 
         if (javaClass != null) {
+            System.out.println("CLASSNAME: "+javaClass.getClassName());
             ClassVisitor visitor = new ClassVisitor(javaClass, metricsContainer, this);
             visitor.start();
             visitor.end();

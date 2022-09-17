@@ -122,17 +122,23 @@ public class Mass implements Checker {
         }
 
 
-        result[resultIndex] = MarkdownFormatterUtility.asHeading2("Metrics Feedback");
-        for (MetricsFeedback metricsFeedback : metricsFeedbacks) {
-            result[resultIndex + 1] =
-                    MarkdownFormatterUtility.asHeading3("In class " + MarkdownFormatterUtility.asMonospace(metricsFeedback.getClassName() + ".java", false, null))
-                            + MarkdownFormatterUtility.asBold(metricsFeedback.getMetric() + " (" + metricsFeedback.getBody() + ")")
-                            + " measured with value: " + MarkdownFormatterUtility.asMonospace(Double.toString(metricsFeedback.getValue()), false, null)
-                            + NEW_LINE
-                            + metricsFeedback.getSuggestion()
-                            + NEW_LINE
-                            + "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -";
-            resultIndex = resultIndex + 2;
+        if (metricsFeedbacks == null || metricsFeedbacks.isEmpty()) {
+            result[resultIndex + 1]
+                    = MarkdownFormatterUtility.asHeading3("Congratulations!")
+                    + MarkdownFormatterUtility.asBold("No metric violations occurred.");
+            resultIndex += 2;
+        } else {
+            for (MetricsFeedback metricsFeedback : metricsFeedbacks) {
+                result[resultIndex + 1]
+                        = MarkdownFormatterUtility.asHeading3("In class " + MarkdownFormatterUtility.asMonospace(metricsFeedback.getClassName() + ".java", false, null))
+                        + MarkdownFormatterUtility.asBold(metricsFeedback.getMetric() + " (" + metricsFeedback.getBody() + ")")
+                        + " measured with value: " + MarkdownFormatterUtility.asMonospace(Double.toString(metricsFeedback.getValue()), false, null)
+                        + NEW_LINE
+                        + metricsFeedback.getSuggestion()
+                        + NEW_LINE
+                        + "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -";
+                resultIndex = resultIndex + 2;
+            }
         }
 
 
@@ -153,5 +159,4 @@ public class Mass implements Checker {
 
         qfObject.setFeedback(result);
     }
-
 }

@@ -10,6 +10,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 
 import static eu.qped.java.checkers.metrics.ckjm.MetricCheckerEntryHandler.*;
@@ -47,32 +49,32 @@ class MetricsFeedbackTest {
 
     @ParameterizedTest
     @ValueSource(doubles = {-1d, 0d, 0.5d, 1.0d, 3.3d})
-    void generateSuggestionTestValue(double value) {
+    void generateSuggestionTestValue(double value) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         metricsFeedback1.setValue(value);
         metricsFeedback1.setSuggestion(metricsFeedback1.getSuggestion());
 
+        Method generateMetricSuggestionMethod = MetricsFeedbackGenerator.class.getDeclaredMethod("generateMetricSuggestion", Metric.class, boolean.class, boolean.class);
+        generateMetricSuggestionMethod.setAccessible(true);
         assertEquals
                 ("You are within the " + Metric.AMC + "'s threshold.",
-                        MetricsFeedbackGenerator.generateDefaultSuggestion(
-                                Metric.AMC, false, false));
+                        generateMetricSuggestionMethod.invoke(null, Metric.AMC, false, false));
 
         assertEquals
                 ("The " + Metric.AMC + "'s value is too low: Increase your average method size, e.g. by joining multiple methods with mostly the same functionalities from over-engineering.",
-                        MetricsFeedbackGenerator.generateDefaultSuggestion(
-                                Metric.AMC, true, false));
+                        generateMetricSuggestionMethod.invoke(null, Metric.AMC, true, false));
+
 
         assertEquals
                 ("The " + Metric.AMC + "'s value is too high: Decrease your average method size, e.g. by delegating functionalities to other newly created methods.",
-                        MetricsFeedbackGenerator.generateDefaultSuggestion(
-                                Metric.AMC, false, true));
+                        generateMetricSuggestionMethod.invoke(null, Metric.AMC, false, true));
 
-        assertThrows(IllegalArgumentException.class,
-                () -> MetricsFeedbackGenerator.generateDefaultSuggestion(
-                        Metric.AMC,
-                        true,
-                        true));
+
+        InvocationTargetException illegalArgumentException = assertThrows(InvocationTargetException.class,
+                () -> generateMetricSuggestionMethod.invoke(null, Metric.AMC, true, true));
+        assertEquals(IllegalArgumentException.class.getName(), illegalArgumentException.getTargetException().getClass().getName());
         metricsFeedback1.setValue(99d);
         assertEquals(99d, metricsFeedback1.getValue());
+        generateMetricSuggestionMethod.setAccessible(false);
     }
 
     @ParameterizedTest
