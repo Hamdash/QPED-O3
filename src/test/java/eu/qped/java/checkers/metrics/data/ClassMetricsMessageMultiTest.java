@@ -26,7 +26,7 @@ public class ClassMetricsMessageMultiTest extends ClassMetricsMessageTest {
     @Override
     @BeforeEach
     void setUp() {
-        Map<String, Integer> metricValues = Map.of("void method2()", 2, "void method3()", 4);
+        Map<String, Double> metricValues = Map.of("void method2()", 2d, "void method3()", 4d);
         classMetricsMessage1 = new ClassMetricsMessageMulti(CC, metricValues);
         randomClassMetricsMessages = new ArrayList<>(List.of(classMetricsMessage1));
         sortedClassMetricsMessages = new ArrayList<>(List.of(classMetricsMessage1));
@@ -41,7 +41,7 @@ public class ClassMetricsMessageMultiTest extends ClassMetricsMessageTest {
         String key1 = "void method2()";
         String key2 = "void method3()";
 
-        Map<String, Integer> metricValues = ((ClassMetricsMessageMulti) classMetricsMessage1).getMetricValues();
+        Map<String, Double> metricValues = ((ClassMetricsMessageMulti) classMetricsMessage1).getMetricValues();
 
         assertTrue(metricValues.containsKey(key1));
         assertTrue(metricValues.containsKey(key2));

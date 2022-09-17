@@ -8,7 +8,7 @@ import lombok.Setter;
 import static eu.qped.java.checkers.metrics.ckjm.MetricCheckerEntryHandler.Metric;
 
 /**
- * Data class representing the feedback for classdesign presented to the user.
+ * Data class representing the feedback for class design generated from object-oriented metrics.
  *
  * @author Jannik Seus
  */

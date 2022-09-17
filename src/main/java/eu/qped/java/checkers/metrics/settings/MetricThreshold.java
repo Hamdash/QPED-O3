@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Represents a class to define a {@link #lowerBound} and an {@link #upperBound} to a specific {@link #metric}.
+ * Represents a class to define a {@link #min} and an {@link #max} to a specific {@link #metric}.
  * The boundaries are meant to be inclusive.
  *
  * @author Jannik Seus
@@ -15,40 +15,40 @@ import lombok.Setter;
 public class MetricThreshold implements Comparable<MetricThreshold> {
 
     private Metric metric;
-    private double lowerBound;//TODO rename to min max
-    private double upperBound;
+    private double min;
+    private double max;
     private boolean noMax;
 
     /**
      * Constructor that sets a lower or upper threshold to a specific value.
      *
      * @param metric the given metric
-     * @param upperBound the value of the threshold
-     * @param lowerBound determines whether bound represents the lower or upper threshold
+     * @param max the value of the threshold
+     * @param min determines whether bound represents the lower or upper threshold
      * @param noMax determines whether this specific metric does not need an upper threshold
      */
-    public MetricThreshold(Metric metric, double lowerBound, double upperBound, boolean noMax) {
+    public MetricThreshold(Metric metric, double min, double max, boolean noMax) {
         this.metric = metric;
         if (this.metric == null) {
             throw new IllegalStateException("A metric must be specified.");
         }
-        if (lowerBound == -1d || upperBound == -1d) {
+        if (min == -1d || max == -1d) {
             throw new IllegalStateException("Illegal bound specified");
         }
 
-        if (lowerBound <= upperBound) {
-            this.lowerBound = lowerBound;
-            if (noMax && upperBound < 0) {
-                this.upperBound = Double.MAX_VALUE;
+        if (min <= max) {
+            this.min = min;
+            if (noMax && max < 0) {
+                this.max = Double.MAX_VALUE;
             } else {
-                this.upperBound = upperBound;
+                this.max = max;
             }
         } else {
-            this.lowerBound = upperBound;
-            if (noMax && (lowerBound < 0)) {
-                this.upperBound = Double.MAX_VALUE;
+            this.min = max;
+            if (noMax && (min < 0)) {
+                this.max = Double.MAX_VALUE;
             } else {
-                this.upperBound = lowerBound;
+                this.max = min;
             }
         }
     }

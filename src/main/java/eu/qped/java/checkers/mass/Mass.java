@@ -129,15 +129,17 @@ public class Mass implements Checker {
             resultIndex += 2;
         } else {
             for (MetricsFeedback metricsFeedback : metricsFeedbacks) {
-                result[resultIndex + 1]
-                        = MarkdownFormatterUtility.asHeading3("In class " + MarkdownFormatterUtility.asMonospace(metricsFeedback.getClassName() + ".java", false, null))
-                        + MarkdownFormatterUtility.asBold(metricsFeedback.getMetric() + " (" + metricsFeedback.getBody() + ")")
-                        + " measured with value: " + MarkdownFormatterUtility.asMonospace(Double.toString(metricsFeedback.getValue()), false, null)
-                        + NEW_LINE
-                        + metricsFeedback.getSuggestion()
-                        + NEW_LINE
-                        + "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -";
-                resultIndex = resultIndex + 2;
+                if (metricsFeedback != null) {
+                    result[resultIndex + 1]
+                            = MarkdownFormatterUtility.asHeading3("In class " + MarkdownFormatterUtility.asMonospace(metricsFeedback.getClassName() + ".java", false, null))
+                            + MarkdownFormatterUtility.asBold(metricsFeedback.getMetric() + " (" + metricsFeedback.getBody() + ")")
+                            + " measured with value: " + MarkdownFormatterUtility.asMonospace(Double.toString(metricsFeedback.getValue()), false, null)
+                            + NEW_LINE
+                            + metricsFeedback.getSuggestion()
+                            + NEW_LINE
+                            + "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -";
+                    resultIndex = resultIndex + 2;
+                }
             }
         }
 

@@ -23,8 +23,8 @@ public class MetricsFeedbackGenerator {
     /**
      * Generates the DesignFeedback to the corresponding classes, metrics, and designSettings (min/max thresholds)
      *
-     * @param classMetricsEntries     the map containing classnames, metrics and corresponding values
-     * @param metricSettings the settings on which the feedback depends on //TODO wip configure design settings
+     * @param classMetricsEntries the map containing classnames, metrics and corresponding values
+     * @param metricSettings      the settings on which the feedback depends on
      * @return the generated Feedback as a List.
      */
     public static List<MetricsFeedback> generateMetricsCheckerFeedbacks(List<ClassMetricsEntry> classMetricsEntries, MetricSettings
@@ -43,7 +43,7 @@ public class MetricsFeedbackGenerator {
                     Metric metric = metricForClass.getMetric();
                     String suggestionString = "";
                     double metricValue;
-                    Map<String, Integer> metricValues;
+                    Map<String, Double> metricValues;
 
                     if (metricForClass instanceof ClassMetricsMessageSingle) {
                         metricValue = ((ClassMetricsMessageSingle) metricForClass).getMetricValue();
@@ -74,7 +74,7 @@ public class MetricsFeedbackGenerator {
 
                     } else {
                         metricValues = ((ClassMetricsMessageMulti) metricForClass).getMetricValues();
-                        for (Map.Entry<String, Integer> entry : metricValues.entrySet()) {
+                        for (Map.Entry<String, Double> entry : metricValues.entrySet()) {
                             suggestionString = "For method " + MarkdownFormatterUtility.asMonospace(entry.getKey(), false, null) + ":\n";
                             lowerThresholdReached = isThresholdReached(metric, metricSettings, entry.getValue(), true);
                             upperThresholdReached = isThresholdReached(metric, metricSettings, entry.getValue(), false);
@@ -88,7 +88,7 @@ public class MetricsFeedbackGenerator {
 
                             boolean addFeedback = (lowerThresholdReached || upperThresholdReached);
                             if (addFeedback) {
-                                feedbacks.add(new MetricsFeedback(className, metric.getDescription(), metric, (double) entry.getValue(), suggestionString));
+                                feedbacks.add(new MetricsFeedback(className, metric.getDescription(), metric, entry.getValue(), suggestionString));
                             }
                         }
                     }
@@ -268,80 +268,80 @@ public class MetricsFeedbackGenerator {
             switch (metric) {
                 case AMC:
                     return lower
-                            ? value < metricSettings.getAmcConfig().getMetricThreshold().getLowerBound()
-                            : value > metricSettings.getAmcConfig().getMetricThreshold().getUpperBound();
+                            ? value < metricSettings.getAmcConfig().getMetricThreshold().getMin()
+                            : value > metricSettings.getAmcConfig().getMetricThreshold().getMax();
                 case CAM:
                     return lower
-                            ? value < metricSettings.getCamConfig().getMetricThreshold().getLowerBound()
-                            : value > metricSettings.getCamConfig().getMetricThreshold().getUpperBound();
+                            ? value < metricSettings.getCamConfig().getMetricThreshold().getMin()
+                            : value > metricSettings.getCamConfig().getMetricThreshold().getMax();
                 case CA:
                     return lower
-                            ? value < metricSettings.getCaConfig().getMetricThreshold().getLowerBound()
-                            : value > metricSettings.getCaConfig().getMetricThreshold().getUpperBound();
+                            ? value < metricSettings.getCaConfig().getMetricThreshold().getMin()
+                            : value > metricSettings.getCaConfig().getMetricThreshold().getMax();
                 case CBM:
                     return lower
-                            ? value < metricSettings.getCbmConfig().getMetricThreshold().getLowerBound()
-                            : value > metricSettings.getCbmConfig().getMetricThreshold().getUpperBound();
+                            ? value < metricSettings.getCbmConfig().getMetricThreshold().getMin()
+                            : value > metricSettings.getCbmConfig().getMetricThreshold().getMax();
                 case CBO:
                     return lower
-                            ? value < metricSettings.getCboConfig().getMetricThreshold().getLowerBound()
-                            : value > metricSettings.getCboConfig().getMetricThreshold().getUpperBound();
+                            ? value < metricSettings.getCboConfig().getMetricThreshold().getMin()
+                            : value > metricSettings.getCboConfig().getMetricThreshold().getMax();
                 case CC:
                     return lower
-                            ? value < metricSettings.getCcConfig().getMetricThreshold().getLowerBound()
-                            : value > metricSettings.getCcConfig().getMetricThreshold().getUpperBound();
+                            ? value < metricSettings.getCcConfig().getMetricThreshold().getMin()
+                            : value > metricSettings.getCcConfig().getMetricThreshold().getMax();
                 case CE:
                     return lower
-                            ? value < metricSettings.getCeConfig().getMetricThreshold().getLowerBound()
-                            : value > metricSettings.getCeConfig().getMetricThreshold().getUpperBound();
+                            ? value < metricSettings.getCeConfig().getMetricThreshold().getMin()
+                            : value > metricSettings.getCeConfig().getMetricThreshold().getMax();
                 case DAM:
                     return lower
-                            ? value < metricSettings.getDamConfig().getMetricThreshold().getLowerBound()
-                            : value > metricSettings.getDamConfig().getMetricThreshold().getUpperBound();
+                            ? value < metricSettings.getDamConfig().getMetricThreshold().getMin()
+                            : value > metricSettings.getDamConfig().getMetricThreshold().getMax();
                 case DIT:
                     return lower
-                            ? value < metricSettings.getDitConfig().getMetricThreshold().getLowerBound()
-                            : value > metricSettings.getDitConfig().getMetricThreshold().getUpperBound();
+                            ? value < metricSettings.getDitConfig().getMetricThreshold().getMin()
+                            : value > metricSettings.getDitConfig().getMetricThreshold().getMax();
                 case IC:
                     return lower
-                            ? value < metricSettings.getIcConfig().getMetricThreshold().getLowerBound()
-                            : value > metricSettings.getIcConfig().getMetricThreshold().getUpperBound();
+                            ? value < metricSettings.getIcConfig().getMetricThreshold().getMin()
+                            : value > metricSettings.getIcConfig().getMetricThreshold().getMax();
                 case LCOM:
                     return lower
-                            ? value < metricSettings.getLcomConfig().getMetricThreshold().getLowerBound()
-                            : value > metricSettings.getLcomConfig().getMetricThreshold().getUpperBound();
+                            ? value < metricSettings.getLcomConfig().getMetricThreshold().getMin()
+                            : value > metricSettings.getLcomConfig().getMetricThreshold().getMax();
                 case LCOM3:
                     return lower
-                            ? value < metricSettings.getLcom3Config().getMetricThreshold().getLowerBound()
-                            : value > metricSettings.getLcom3Config().getMetricThreshold().getUpperBound();
+                            ? value < metricSettings.getLcom3Config().getMetricThreshold().getMin()
+                            : value > metricSettings.getLcom3Config().getMetricThreshold().getMax();
                 case LOC:
                     return lower
-                            ? value < metricSettings.getLocConfig().getMetricThreshold().getLowerBound()
-                            : value > metricSettings.getLocConfig().getMetricThreshold().getUpperBound();
+                            ? value < metricSettings.getLocConfig().getMetricThreshold().getMin()
+                            : value > metricSettings.getLocConfig().getMetricThreshold().getMax();
                 case MOA:
                     return lower
-                            ? value < metricSettings.getMoaConfig().getMetricThreshold().getLowerBound()
-                            : value > metricSettings.getMoaConfig().getMetricThreshold().getUpperBound();
+                            ? value < metricSettings.getMoaConfig().getMetricThreshold().getMin()
+                            : value > metricSettings.getMoaConfig().getMetricThreshold().getMax();
                 case MFA:
                     return lower
-                            ? value < metricSettings.getMfaConfig().getMetricThreshold().getLowerBound()
-                            : value > metricSettings.getMfaConfig().getMetricThreshold().getUpperBound();
+                            ? value < metricSettings.getMfaConfig().getMetricThreshold().getMin()
+                            : value > metricSettings.getMfaConfig().getMetricThreshold().getMax();
                 case NOC:
                     return lower
-                            ? value < metricSettings.getNocConfig().getMetricThreshold().getLowerBound()
-                            : value > metricSettings.getNocConfig().getMetricThreshold().getUpperBound();
+                            ? value < metricSettings.getNocConfig().getMetricThreshold().getMin()
+                            : value > metricSettings.getNocConfig().getMetricThreshold().getMax();
                 case NPM:
                     return lower
-                            ? value < metricSettings.getNpmConfig().getMetricThreshold().getLowerBound()
-                            : value > metricSettings.getNpmConfig().getMetricThreshold().getUpperBound();
+                            ? value < metricSettings.getNpmConfig().getMetricThreshold().getMin()
+                            : value > metricSettings.getNpmConfig().getMetricThreshold().getMax();
                 case RFC:
                     return lower
-                            ? value < metricSettings.getRfcConfig().getMetricThreshold().getLowerBound()
-                            : value > metricSettings.getRfcConfig().getMetricThreshold().getUpperBound();
+                            ? value < metricSettings.getRfcConfig().getMetricThreshold().getMin()
+                            : value > metricSettings.getRfcConfig().getMetricThreshold().getMax();
                 case WMC:
                     return lower
-                            ? value < metricSettings.getWmcConfig().getMetricThreshold().getLowerBound()
-                            : value > metricSettings.getWmcConfig().getMetricThreshold().getUpperBound();
+                            ? value < metricSettings.getWmcConfig().getMetricThreshold().getMin()
+                            : value > metricSettings.getWmcConfig().getMetricThreshold().getMax();
             }
         }
         throw new IllegalArgumentException("Illegal Metric given.");
@@ -352,7 +352,7 @@ public class MetricsFeedbackGenerator {
      *
      * @author Jannik Seus
      */
-    public enum DefaultMetricSuggestion { //TODO will be replaced by field 'default' in settings json file
+    public enum DefaultMetricSuggestion { // will be replaced by field 'default' in settings json file
         AMC("Increase your average method size, e.g. by joining multiple methods with mostly the same functionalities from over-engineering.",
                 "Decrease your average method size, e.g. by delegating functionalities to other newly created methods."),
         CA("This class is used by too few other classes. Is this class even necessary? Can you implement this class's functionalities into already existing classes?",

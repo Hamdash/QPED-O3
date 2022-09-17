@@ -53,7 +53,7 @@ class MetricThresholdTest {
         lowerBoundField.setAccessible(true);
         double lowerBound = (double) lowerBoundField.get(metricThreshold4);
         assertEquals(1.0, lowerBound);
-        assertEquals(1.0, metricThreshold4.getLowerBound());
+        assertEquals(1.0, metricThreshold4.getMin());
         lowerBoundField.setAccessible(false);
     }
 
@@ -63,7 +63,7 @@ class MetricThresholdTest {
         upperBoundField.setAccessible(true);
         double upperBound = (double) upperBoundField.get(metricThreshold4);
         assertEquals(5.4, upperBound);
-        assertEquals(5.4, metricThreshold4.getUpperBound());
+        assertEquals(5.4, metricThreshold4.getMax());
         upperBoundField.setAccessible(false);
     }
 
@@ -73,8 +73,8 @@ class MetricThresholdTest {
         lowerBoundField.setAccessible(true);
         lowerBoundField.set(metricThreshold4, 1.56d);
         assertEquals(1.56d, lowerBoundField.get(metricThreshold4));
-        metricThreshold4.setLowerBound(1.21d);
-        assertEquals(1.21d, metricThreshold4.getLowerBound());
+        metricThreshold4.setMin(1.21d);
+        assertEquals(1.21d, metricThreshold4.getMin());
         lowerBoundField.setAccessible(false);
     }
 
@@ -84,8 +84,8 @@ class MetricThresholdTest {
         upperBoundField.setAccessible(true);
         upperBoundField.set(metricThreshold4, 7.23d);
         assertEquals(7.23d, upperBoundField.get(metricThreshold4));
-        metricThreshold4.setUpperBound(7.97d);
-        assertEquals(7.97d, metricThreshold4.getUpperBound());
+        metricThreshold4.setMax(7.97d);
+        assertEquals(7.97d, metricThreshold4.getMax());
         upperBoundField.setAccessible(false);
     }
 }

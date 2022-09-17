@@ -35,7 +35,7 @@ public class MetricCheckerEntryHandler implements CkjmOutputHandler {
 
         List<ClassMetricsMessage> metricsForClass = new ArrayList<>();
 
-        Map<String, Integer> metricValuesCC = getCCMapInternal(c);
+        Map<String, Double> metricValuesCC = getCCMapInternal(c);
 
         metricsForClass.add(new ClassMetricsMessageSingle(AMC, c.getAmc()));
         metricsForClass.add(new ClassMetricsMessageSingle(CA, c.getCa()));
@@ -66,12 +66,12 @@ public class MetricCheckerEntryHandler implements CkjmOutputHandler {
      * @param classMetrics the given classMetrics
      * @return a map containing CC-values for this class' methods
      */
-    private Map<String, Integer> getCCMapInternal(ClassMetrics classMetrics) {
+    private Map<String, Double> getCCMapInternal(ClassMetrics classMetrics) {
 
         List<String> methodNames = classMetrics.getMethodNames();
-        Map<String, Integer> metricValuesCC = new HashMap<>();
+        Map<String, Double> metricValuesCC = new HashMap<>();
         for (String methodName : methodNames) {
-            metricValuesCC.put(methodName, classMetrics.getCC(methodName));
+            metricValuesCC.put(methodName, (double) classMetrics.getCC(methodName));
         }
         return metricValuesCC;
     }

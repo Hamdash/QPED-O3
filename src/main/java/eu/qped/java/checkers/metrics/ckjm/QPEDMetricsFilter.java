@@ -107,7 +107,6 @@ public class QPEDMetricsFilter implements ICountingProperities {
     private void processClass(JavaClass javaClass) {
 
         if (javaClass != null) {
-            System.out.println("CLASSNAME: "+javaClass.getClassName());
             ClassVisitor visitor = new ClassVisitor(javaClass, metricsContainer, this);
             visitor.start();
             visitor.end();
