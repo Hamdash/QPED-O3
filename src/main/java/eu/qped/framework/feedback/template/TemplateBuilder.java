@@ -55,7 +55,7 @@ public class TemplateBuilder {
     private String getTemplateFormattedCause(String cause) {
         return Arrays.stream(cause.split(NEW_LINE))
                 .map(String::trim)
-                .collect(Collectors.joining(DOT + NEW_LINE)) + DOT + NEW_LINE;
+                .collect(Collectors.joining( NEW_Double_LINE)) + NEW_Double_LINE;
     }
 
     private String getTemplateFormattedHeader(Feedback feedback, Map<String, String> templateTextByLanguage) {
@@ -71,9 +71,9 @@ public class TemplateBuilder {
         StringBuilder feedbackHints = new StringBuilder();
         if (hints == null) hints = Collections.emptyList();
         for (var hint : hints) {
-            feedbackHints.append(hint.getContent()).append(NEW_LINE);
+            feedbackHints.append(hint.getContent()).append(NEW_Double_LINE);
         }
-        return feedbackHints.toString();
+        return feedbackHints.toString() + NEW_Double_LINE;
     }
 
     private String getTemplateFormattedRelatedLocation(RelatedLocation location, Map<String, String> templateTextByLanguage) {
@@ -100,7 +100,7 @@ public class TemplateBuilder {
                     + SPACE + location.getStartLine()
                     + DOT + SPACE;
         }
-        result += NEW_LINE;
+        result += NEW_Double_LINE;
         return result;
     }
 
@@ -125,7 +125,7 @@ public class TemplateBuilder {
                             + StringUtils.join(conceptReference.getPageNumbers(), ",")
                             + SPACE
                     : "")
-                    + NEW_LINE;
+                    + NEW_Double_LINE;
         }
         return result;
     }
