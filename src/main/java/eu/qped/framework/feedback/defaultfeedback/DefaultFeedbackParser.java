@@ -1,6 +1,7 @@
 package eu.qped.framework.feedback.defaultfeedback;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.qped.java.utils.FileExtensions;
 import eu.qped.java.utils.SupportedLanguages;
@@ -18,7 +19,7 @@ public class DefaultFeedbackParser {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public List<DefaultFeedback> parse(@NonNull String dir, @NonNull String fileName) {
-        var result = new ArrayList<DefaultFeedback>();
+        List<DefaultFeedback> result = new ArrayList<DefaultFeedback>();
         try {
             String filePath = dir + fileName;
             String defaultFilePath = dir + SupportedLanguages.ENGLISH + FileExtensions.JSON;
@@ -30,6 +31,10 @@ public class DefaultFeedbackParser {
             }
             result = objectMapper.readValue(jsonFile, new TypeReference<>() {
             });
+        } catch (JsonMappingException exception) {
+            if (!fileName.equals(SupportedLanguages.ENGLISH + FileExtensions.JSON)) {
+                result = parse(dir, SupportedLanguages.ENGLISH + FileExtensions.JSON);
+            }
         } catch (IllegalArgumentException | NullPointerException | IOException e) {
             System.out.println(e.getMessage());
         }

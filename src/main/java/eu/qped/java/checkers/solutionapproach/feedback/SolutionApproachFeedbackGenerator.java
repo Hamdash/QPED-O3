@@ -48,7 +48,7 @@ public class SolutionApproachFeedbackGenerator {
 
     private List<String> buildFeedbackInTemplate(List<Feedback> feedbacks, SolutionApproachGeneralSettings checkerSettings) {
         if (templateBuilder == null) templateBuilder = TemplateBuilder.builder().build();
-        if(checkerSettings.getLanguage() == null) checkerSettings.setLanguage(SupportedLanguages.ENGLISH);
+        if (checkerSettings.getLanguage() == null) checkerSettings.setLanguage(SupportedLanguages.ENGLISH);
         return templateBuilder.buildFeedbacksInTemplate(feedbacks, checkerSettings.getLanguage());
     }
 
@@ -70,17 +70,17 @@ public class SolutionApproachFeedbackGenerator {
         return defaultSolutionApproachFeedbackMapper.map(filteredFeedbacks);
     }
 
-    protected List<Feedback> adaptFeedbackByCheckerSetting(List<Feedback> feedbacks, SolutionApproachGeneralSettings checkerSetting) {
+    private List<Feedback> adaptFeedbackByCheckerSetting(List<Feedback> feedbacks, SolutionApproachGeneralSettings checkerSetting) {
         return feedbacks;
     }
 
-    protected List<Feedback> formatFeedbacks(@NotNull List<Feedback> feedbacks) {
+    private List<Feedback> formatFeedbacks(@NotNull List<Feedback> feedbacks) {
 
         if (markdownFeedbackFormatter == null) markdownFeedbackFormatter = new MarkdownFeedbackFormatter();
         return markdownFeedbackFormatter.format(feedbacks);
     }
 
-    protected List<DefaultSolutionApproachFeedback> filterDefaultFeedbacks(List<SolutionApproachReportItem> reportItems, Map<String, List<DefaultSolutionApproachFeedback>> allDefaultFeedbacksByTechnicalCause) {
+    private List<DefaultSolutionApproachFeedback> filterDefaultFeedbacks(List<SolutionApproachReportItem> reportItems, Map<String, List<DefaultSolutionApproachFeedback>> allDefaultFeedbacksByTechnicalCause) {
         List<DefaultSolutionApproachFeedback> result = new ArrayList<>();
         var keyWordReplacer = KeyWordReplacer.builder().build();
         for (SolutionApproachReportItem reportItem : reportItems) {

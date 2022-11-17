@@ -8,7 +8,6 @@ import eu.qped.java.checkers.metrics.MetricsChecker;
 import eu.qped.java.checkers.metrics.data.feedback.MetricsFeedback;
 import eu.qped.java.checkers.solutionapproach.SolutionApproachChecker;
 import eu.qped.java.checkers.style.StyleChecker;
-import eu.qped.java.checkers.style.StyleFeedback;
 import eu.qped.java.checkers.syntax.SyntaxChecker;
 import eu.qped.java.utils.SupportedLanguages;
 import lombok.Getter;
@@ -32,7 +31,7 @@ public class MassExecutor {
 
 
     private List<String> syntaxFeedbacks;
-    private List<StyleFeedback> styleFeedbacks;
+    private List<String> styleFeedbacks;
     private List<String> solutionApproachFeedbacks;
     private List<ClassFeedback> classFeedbacks;
     private List<MetricsFeedback> metricsFeedbacks;
@@ -91,8 +90,7 @@ public class MassExecutor {
         if (syntaxAnalyseReport.isCompilable()) {
             if (styleNeeded) {
                 styleChecker.setTargetPath(syntaxAnalyseReport.getPath());
-                styleChecker.check();
-                styleFeedbacks = styleChecker.getStyleFeedbacks();
+                styleFeedbacks = styleChecker.check();
             }
             if (semanticNeeded) {
                 solutionApproachChecker.setTargetProjectPath(syntaxAnalyseReport.getPath());
@@ -145,11 +143,11 @@ public class MassExecutor {
 //        for (eu.qped.framework.feedback.Feedback feedback : syntaxFeedbacks) {
 //            translator.translateFeedback(prefLanguage, feedback);
 //        }
-        if (styleNeeded) {
-            for (StyleFeedback feedback : styleFeedbacks) {
-                translator.translateStyleBody(prefLanguage, feedback);
-            }
-        }
+//        if (styleNeeded) {
+//            for (StyleFeedback feedback : styleFeedbacks) {
+//                translator.translateStyleBody(prefLanguage, feedback);
+//            }
+//        }
         if (metricsNeeded) {
             for (MetricsFeedback feedback : metricsFeedbacks) {
                 translator.translateMetricsBody(prefLanguage, feedback);

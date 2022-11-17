@@ -2,8 +2,8 @@ package eu.qped.framework.feedback.template;
 
 import eu.qped.framework.feedback.Type;
 import eu.qped.java.checkers.solutionapproach.SolutionApproachChecker;
-import eu.qped.java.checkers.solutionapproach.analyser.SolutionApproachAnalyser;
 import eu.qped.java.checkers.style.StyleChecker;
+import eu.qped.java.checkers.style.analyse.StyleAnalyser;
 import eu.qped.java.checkers.syntax.SyntaxChecker;
 import eu.qped.java.utils.SupportedLanguages;
 import lombok.NoArgsConstructor;

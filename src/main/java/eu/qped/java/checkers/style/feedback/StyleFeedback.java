@@ -1,4 +1,4 @@
-package eu.qped.java.checkers.style;
+package eu.qped.java.checkers.style.feedback;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
