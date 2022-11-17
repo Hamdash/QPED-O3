@@ -27,6 +27,33 @@ public final class MarkdownFormatterUtility {
 
     /**
      * @param toFormat string to format
+     * @return the markdown formatted heading 1 string
+     */
+    public static String asHeading1(String toFormat) {
+        if (toFormat == null || toFormat.equals("")) return "";
+        return new Heading(toFormat.trim(), 1).toString();
+    }
+
+    /**
+     * @param toFormat string to format
+     * @return the markdown formatted heading 2 string
+     */
+    public static String asHeading2(String toFormat) {
+        if (toFormat == null || toFormat.equals("")) return "";
+        return new Heading(toFormat.trim(), 2).toString();
+    }
+
+    /**
+     * @param toFormat string to format
+     * @return the markdown formatted heading 3 string
+     */
+    public static String asHeading3(String toFormat) {
+        if (toFormat == null || toFormat.equals("")) return "";
+        return new Heading(toFormat.trim(), 3).toString();
+    }
+
+    /**
+     * @param toFormat string to format
      * @return the markdown formatted heading 4 string
      */
     public static String asHeading4(String toFormat) {

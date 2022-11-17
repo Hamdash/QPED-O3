@@ -59,7 +59,7 @@ public class TemplateBuilder {
     }
 
     private String getTemplateFormattedHeader(Feedback feedback, Map<String, String> templateTextByLanguage) {
-        return asHeading4(String.format("%s %02d %s:"
+        return asHeading3(String.format("%s %02d %s:"
                 , templateTextByLanguage.get(feedback.getCheckerName())
                 , counter.incrementAndGet()
                 , templateTextByLanguage.get(String.valueOf(feedback.getType()))
