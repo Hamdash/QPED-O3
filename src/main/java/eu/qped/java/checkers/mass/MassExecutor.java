@@ -35,14 +35,14 @@ public class MassExecutor {
     private List<String> solutionApproachFeedbacks;
     private List<ClassFeedback> classFeedbacks;
     private List<MetricsFeedback> metricsFeedbacks;
-    private String[] coverageFeedbacks;
+    private List<String> coverageFeedbacks;
 
 
     private final StyleChecker styleChecker;
     private final SolutionApproachChecker solutionApproachChecker;
     private final SyntaxChecker syntaxChecker;
     private final ClassChecker classChecker;
-    private MetricsChecker metricsChecker;
+    private final MetricsChecker metricsChecker;
     private final CoverageChecker coverageChecker;
 
     /**
@@ -69,7 +69,6 @@ public class MassExecutor {
         this.classChecker = classChecker;
         this.coverageChecker = coverageChecker;
         this.mainSettings = mainSettings;
-        this.coverageFeedbacks = new String[]{};
     }
 
     /**
@@ -87,7 +86,8 @@ public class MassExecutor {
 
         syntaxFeedbacks = syntaxChecker.check();
         var syntaxAnalyseReport = syntaxChecker.getAnalyseReport();
-        if (syntaxAnalyseReport.isCompilable()) {
+        boolean isCompilable = syntaxAnalyseReport.isCompilable();
+        if (isCompilable) {
             if (styleNeeded) {
                 styleChecker.setTargetPath(syntaxAnalyseReport.getPath());
                 styleFeedbacks = styleChecker.check();
@@ -110,10 +110,11 @@ public class MassExecutor {
                     e.printStackTrace();
                 }
             }
-            if (coverageNeeded)
-                coverageFeedbacks = coverageChecker.check();
-
-        } else if (coverageNeeded) {
+        }
+        if (coverageNeeded) {
+            if(!isCompilable) {
+                syntaxFeedbacks.clear();
+            }
             // Found no other solution:
             // The problem is if the student answer needs a klass from a teacher to compile
             // the syntaxChecker always fails.
@@ -132,6 +133,7 @@ public class MassExecutor {
         solutionApproachFeedbacks = new ArrayList<>();
         metricsFeedbacks = new ArrayList<>();
         classFeedbacks = new ArrayList<>();
+        coverageFeedbacks = new ArrayList<>();
     }
 
 

@@ -4,13 +4,13 @@ import eu.qped.framework.CheckLevel;
 import eu.qped.framework.Checker;
 import eu.qped.framework.FileInfo;
 import eu.qped.framework.QfProperty;
+import eu.qped.framework.feedback.Feedback;
+import eu.qped.framework.feedback.template.TemplateBuilder;
 import eu.qped.framework.qf.QfObject;
 import eu.qped.java.checkers.classdesign.ClassChecker;
 import eu.qped.java.checkers.classdesign.ClassConfigurator;
-import eu.qped.java.checkers.coverage.CoverageBlockChecker;
 import eu.qped.java.checkers.coverage.CoverageChecker;
-import eu.qped.java.checkers.coverage.CoverageMapChecker;
-import eu.qped.java.checkers.coverage.QfCovSetting;
+import eu.qped.java.checkers.coverage.CoverageSetup;
 import eu.qped.java.checkers.metrics.MetricsChecker;
 import eu.qped.java.checkers.metrics.data.feedback.MetricsFeedback;
 import eu.qped.java.checkers.solutionapproach.SolutionApproachChecker;
@@ -20,6 +20,7 @@ import eu.qped.java.checkers.syntax.SyntaxChecker;
 import eu.qped.java.utils.MassFilesUtility;
 import eu.qped.java.utils.markdown.MarkdownFormatterUtility;
 import lombok.NonNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,19 +46,9 @@ public class Mass implements Checker {
         MainSettings mainSettings = new MainSettings(mass, qfObject.getUser().getLanguage());
 
         // Syntax Checker
-        SyntaxChecker syntaxChecker = SyntaxChecker.builder().build();
-        if (file != null) {
-            MassFilesUtility filesUtility = MassFilesUtility.builder()
-                    .dirPath(file.getUnzipped().getPath()).build();
-            var allJavaFiles = filesUtility.filesWithExtension("java");
-            if (allJavaFiles.isEmpty()) {
-                qfObject.setFeedback(new String[]{"No java files are detected in your solution"});
-                return;
-            }
-            syntaxChecker.setTargetProject(file.getUnzipped().getPath());
-        } else {
-            syntaxChecker.setStringAnswer(qfObject.getAnswer());
-        }
+        SyntaxChecker syntaxChecker;
+        syntaxChecker = getSyntaxChecker(file, qfObject.getAnswer(), null);
+        if (syntaxChecker == null) return;
         StyleChecker styleChecker = StyleChecker.builder().qfStyleSettings(mass.getStyle()).build();
 
         var solutionApproachGeneralSettings = SolutionApproachGeneralSettings.builder()
@@ -77,16 +68,11 @@ public class Mass implements Checker {
         //CoverageChecker
         CoverageChecker coverageChecker = null;
         if (mainSettings.isCoverageNeeded()) {
-            QfCovSetting covSetting = mass.getCoverage();
-            covSetting.setAnswer(qfObject.getAnswer());
-            covSetting.setLanguage(mainSettings.getPreferredLanguage());
-            covSetting.setFile(file);
+            QfCoverageSettings covSetting = mass.getCoverage();
 
-            if (covSetting.isUseBlock()) {
-                coverageChecker = new CoverageBlockChecker(covSetting);
-            } else {
-                coverageChecker = new CoverageMapChecker(covSetting);
-            }
+            CoverageSetup coverageSetup = new CoverageSetup(file, covSetting.getPrivateImplementation(), qfObject.getAnswer(), mainSettings.getPreferredLanguage());
+
+            coverageChecker = new CoverageChecker(covSetting, coverageSetup);
         }
 
         //Mass
@@ -100,22 +86,45 @@ public class Mass implements Checker {
         var styleFeedbacks = massExecutor.getStyleFeedbacks();
         var solutionApproachFeedbacks = massExecutor.getSolutionApproachFeedbacks();
         var metricsFeedbacks = massExecutor.getMetricsFeedbacks();
+        var coverageFeedacks = massExecutor.getCoverageFeedbacks();
 
         var resultArray = mergeFeedbacks(
                 syntaxFeedbacks,
                 styleFeedbacks,
                 solutionApproachFeedbacks,
-                metricsFeedbacks
+                metricsFeedbacks,
+                coverageFeedacks,
+                qfObject
         );
 
         qfObject.setFeedback(resultArray);
+    }
+
+    @Nullable
+    public static SyntaxChecker getSyntaxChecker(FileInfo file, String answer, String privateImplUrl) {
+        SyntaxChecker syntaxChecker;
+        syntaxChecker = SyntaxChecker.builder().build();
+        if (file != null) {
+            MassFilesUtility filesUtility = MassFilesUtility.builder()
+                    .dirPath(file.getUnzipped().getPath()).build();
+            var allJavaFiles = filesUtility.filesWithExtension("java");
+            if (allJavaFiles.isEmpty()) {
+                return null;
+            }
+            syntaxChecker.setTargetProject(file.getUnzipped().getPath());
+        } else {
+            syntaxChecker.setStringAnswer(answer);
+        }
+        return syntaxChecker;
     }
 
     private String[] mergeFeedbacks(
             @NonNull List<String> syntaxFeedbacks,
             @NonNull List<String> styleFeedbacks,
             @NonNull List<String> semanticFeedbacks,
-            @NonNull List<MetricsFeedback> metricsFeedbacks
+            @NonNull List<MetricsFeedback> metricsFeedbacks,
+            @NonNull List<String> coverageFeedbacks,
+            @NonNull QfObject qfObject
     ) {
 
         var resultSize =
@@ -152,6 +161,11 @@ public class Mass implements Checker {
                         resultArrayAsList.add(tempFeedbackAsString);
                     }
             );
+            if (!coverageFeedbacks.isEmpty()) {
+                resultArrayAsList.add("## Coverage feedbacks");
+            }
+            resultArrayAsList.addAll(coverageFeedbacks);
+
         }
         if (resultArrayAsList.size() <= 1) {
             resultArrayAsList.add("Our checks could not find any improvements for your code. This does not mean that it is semantically correct but it adheres to the standards of the lecture in regards to syntax and style.");
@@ -159,11 +173,5 @@ public class Mass implements Checker {
         resultArray = resultArrayAsList.toArray(resultArray);
         return resultArray;
     }
-
-    public int sum() {
-        int a = 3;
-        return a;
-    }
-
 
 }
