@@ -59,20 +59,23 @@ public class Feedback {
     @Nullable
     private RelatedLocation relatedLocation;
 
+    @Setter(AccessLevel.PACKAGE)
+    private boolean isFormatted = false;
+
     public void updateFeedback(@NonNull DefaultFeedback defaultFeedback) {
         this.technicalCause = defaultFeedback.getTechnicalCause();
         this.readableCause = defaultFeedback.getReadableCause();
-        if(defaultFeedback.getHints() != null  ){
+        if (defaultFeedback.getHints() != null) {
             this.hints = defaultFeedback.getHints();
         }
     }
 
-    public Feedback format() {
+    protected Feedback format() {
         MarkdownFeedbackFormatter markdownFeedbackFormatter = MarkdownFeedbackFormatter.builder().build();
         return markdownFeedbackFormatter.format(this);
     }
 
-    public String buildFeedbackInTemplate( @NonNull String language) {
+    protected String buildFeedbackInTemplate(@NonNull String language) {
         TemplateBuilder templateBuilder = TemplateBuilder.builder().build();
         return templateBuilder.buildFeedbackInTemplate(this, language);
     }
