@@ -5,7 +5,7 @@ import eu.qped.framework.feedback.Feedback;
 import eu.qped.framework.feedback.RelatedLocation;
 import eu.qped.framework.feedback.defaultfeedback.DefaultFeedback;
 import eu.qped.framework.feedback.defaultfeedback.DefaultFeedbackDirectoryProvider;
-import eu.qped.framework.feedback.defaultfeedback.DefaultFeedbackParser;
+import eu.qped.framework.feedback.defaultfeedback.DefaultFeedbacksStore;
 import eu.qped.framework.feedback.fromatter.KeyWordReplacer;
 import eu.qped.framework.feedback.fromatter.MarkdownFeedbackFormatter;
 import eu.qped.framework.feedback.template.TemplateBuilder;
@@ -38,7 +38,7 @@ public class StyleFeedbackGenerator {
 
     private StyleAnalysisReport report;
 
-    private DefaultFeedbackParser defaultFeedbackParser;
+    private DefaultFeedbacksStore defaultFeedbacksStore;
 
     private String language;
 
@@ -82,11 +82,11 @@ public class StyleFeedbackGenerator {
 
     private Map<String, List<DefaultFeedback>> getDefaultFeedbacksByTechnicalCause() {
         var dirPath = DefaultFeedbackDirectoryProvider.provideDefaultFeedbackDirectory(StyleAnalyser.class);
-        if (defaultFeedbackParser == null) {
-            defaultFeedbackParser = new DefaultFeedbackParser();
+        if (defaultFeedbacksStore == null) {
+            defaultFeedbacksStore = new DefaultFeedbacksStore(dirPath, language + FileExtensions.JSON);
         }
         if (language == null || language.equals("")) setLanguage(SupportedLanguages.ENGLISH);
-        var allDefaultFeedbacks = defaultFeedbackParser.parse(dirPath, language + FileExtensions.JSON);
+        var allDefaultFeedbacks = defaultFeedbacksStore.parse(dirPath, language + FileExtensions.JSON);
         return allDefaultFeedbacks.stream().collect(Collectors.groupingBy(DefaultFeedback::getTechnicalCause));
     }
 
