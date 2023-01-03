@@ -31,8 +31,6 @@ import static eu.qped.framework.feedback.defaultfeedback.DefaultFeedbackDirector
 public class SyntaxFeedbackGenerator {
 
     private DefaultFeedbacksStore defaultFeedbacksStore;
-    private MarkdownFeedbackFormatter markdownFeedbackFormatter;
-    private TemplateBuilder templateBuilder;
     private FeedbackManager feedbackManager;
 
     public List<String> generateFeedbacks(List<SyntaxError> errors, SyntaxSetting syntaxSetting) {
