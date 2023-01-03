@@ -5,6 +5,7 @@ import eu.qped.java.checkers.mass.QfSemanticSettings;
 import eu.qped.java.checkers.solutionapproach.SolutionApproachChecker;
 import eu.qped.java.checkers.solutionapproach.configs.SemanticSettingItem;
 import eu.qped.java.checkers.solutionapproach.configs.SolutionApproachGeneralSettings;
+import eu.qped.java.utils.SupportedLanguages;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,6 +22,7 @@ class SolutionApproachAnalyserTest {
     public void setup() {
         var solutionGeneralSetting = SolutionApproachGeneralSettings.builder()
                 .checkLevel(CheckLevel.BEGINNER)
+                .language(SupportedLanguages.ENGLISH)
                 .build();
         var qfSetting = qfSemanticSettingsFail();
         solutionApproachChecker = SolutionApproachChecker.builder()

@@ -13,8 +13,6 @@ import eu.qped.framework.feedback.template.TemplateBuilder;
 import eu.qped.java.checkers.solutionapproach.SolutionApproachChecker;
 import eu.qped.java.checkers.solutionapproach.configs.SolutionApproachGeneralSettings;
 import eu.qped.java.checkers.solutionapproach.configs.SolutionApproachReportItem;
-import eu.qped.java.checkers.syntax.SyntaxChecker;
-import eu.qped.java.checkers.syntax.analyser.SyntaxError;
 import eu.qped.java.utils.FileExtensions;
 import eu.qped.java.utils.SupportedLanguages;
 import lombok.AllArgsConstructor;
@@ -53,10 +51,10 @@ public class SolutionApproachFeedbackGenerator {
         // naked feedbacks
 //        List<Feedback> feedbacks = mapToFeedbacks(filteredFeedbacks);
         // adapted by check level naked feedbacks
-        nakedFeedbacks = adaptFeedbackByCheckerSetting(nakedFeedbacks, checkerSetting);
-        if(feedbackManager == null)  feedbackManager = FeedbackManager.builder().build();
-        feedbackManager.setFeedbacks(nakedFeedbacks);
-        return  feedbackManager.buildFeedbackInTemplate(checkerSetting.getLanguage());
+        var adaptedFeedbacks = adaptFeedbackByCheckerSetting(nakedFeedbacks, checkerSetting);
+        if (feedbackManager == null) feedbackManager = FeedbackManager.builder().build();
+        feedbackManager.setFeedbacks(adaptedFeedbacks);
+        return feedbackManager.buildFeedbackInTemplate(checkerSetting.getLanguage());
         // formatted feedbacks
 //        var formattedFeedbacks = formatFeedbacks(feedbacks);
 //        // build feedback in template and return result
@@ -71,14 +69,14 @@ public class SolutionApproachFeedbackGenerator {
         List<Feedback> result = new ArrayList<>();
         if (defaultFeedbacksStore == null) {
             defaultFeedbacksStore = new DefaultFeedbacksStore(
-                    provideDefaultFeedbackDirectory(SyntaxChecker.class)
+                    provideDefaultFeedbackDirectory(SolutionApproachChecker.class)
                     , checkerSetting.getLanguage() + FileExtensions.JSON
             );
         }
         var keyWordReplacer = KeyWordReplacer.builder().build();
         for (SolutionApproachReportItem reportItem : reportItems) {
             var defaultFeedback = defaultFeedbacksStore.getRelatedDefaultFeedbackByTechnicalCause(reportItem.getErrorCode());
-            if (defaultFeedback != null ) {
+            if (defaultFeedback != null) {
                 Feedback feedback = Feedback.builder().build();
                 feedback.setType(Type.CORRECTION);
                 feedback.setCheckerName(SolutionApproachChecker.class.getSimpleName());
@@ -137,7 +135,6 @@ public class SolutionApproachFeedbackGenerator {
             defaultSolutionApproachFeedbackMapper = DefaultSolutionApproachFeedbackMapper.builder().build();
         return defaultSolutionApproachFeedbackMapper.map(filteredFeedbacks);
     }
-
 
 
     private List<Feedback> formatFeedbacks(@NotNull List<Feedback> feedbacks) {
