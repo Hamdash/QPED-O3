@@ -141,15 +141,6 @@ public class MassExecutor {
         String prefLanguage = mainSettings.getPreferredLanguage();
         Translator translator = new Translator();
 
-        //List is Empty when the syntax is correct
-//        for (eu.qped.framework.feedback.Feedback feedback : syntaxFeedbacks) {
-//            translator.translateFeedback(prefLanguage, feedback);
-//        }
-//        if (styleNeeded) {
-//            for (StyleFeedback feedback : styleFeedbacks) {
-//                translator.translateStyleBody(prefLanguage, feedback);
-//            }
-//        }
         if (metricsNeeded) {
             for (MetricsFeedback feedback : metricsFeedbacks) {
                 translator.translateMetricsBody(prefLanguage, feedback);

@@ -3,7 +3,6 @@ package eu.qped.framework;
 import eu.qped.framework.feedback.hint.Hint;
 import eu.qped.framework.feedback.hint.HintType;
 import eu.qped.java.checkers.metrics.data.feedback.MetricsFeedback;
-import eu.qped.java.checkers.style.feedback.StyleFeedback;
 import eu.qped.java.utils.SupportedLanguages;
 import org.apache.logging.log4j.LogManager;
 
@@ -93,23 +92,6 @@ public class Translator {
 
     }
 
-    public void translateStyleBody(String pref, StyleFeedback feedback) {
-
-        try {
-            feedback.setContent(translate("en", pref, feedback.getDesc() + "." + feedback.getContent()));
-            String[] words;
-            words = feedback.getContent().split("[.]");
-            StringBuilder result = new StringBuilder();
-            for (String word : words) {
-                result.append(word).append("\n\n");
-            }
-            feedback.setContent(result.toString());
-            feedback.setDesc("");
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        }
-    }
 
     public void translateMetricsBody(String pref, MetricsFeedback feedback) {
 
