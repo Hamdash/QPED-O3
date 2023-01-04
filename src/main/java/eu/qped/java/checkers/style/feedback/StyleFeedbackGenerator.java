@@ -72,7 +72,7 @@ public class StyleFeedbackGenerator {
                 Feedback feedback = Feedback.builder().build();
                 // TODO: can change
                 feedback.setType(Type.IMPROVEMENT);
-                feedback.setCheckerName(SolutionApproachChecker.class.getSimpleName());
+                feedback.setCheckerName(StyleChecker.class.getSimpleName());
                 feedback.updateFeedback(defaultFeedback);
                 File file = new File(violation.getFileName());
                 feedback.setRelatedLocation(
