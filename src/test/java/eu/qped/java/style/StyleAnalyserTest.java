@@ -1,59 +1,62 @@
 package eu.qped.java.style;
 
-import eu.qped.java.checkers.mass.QfStyleSettings;
-import eu.qped.java.checkers.style.StyleChecker;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
+
 import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import eu.qped.java.checkers.mass.QfStyleSettings;
+import eu.qped.java.checkers.style.StyleChecker;
+import eu.qped.java.checkers.style.StyleFeedback;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-class StyleAnalyserTest {
+class StyleCheckerTest {
 
     private static final String METHOD_FAIL_FEEDBACK = "Your method name does not match the rules that are given.";
     private StyleChecker styleChecker;
 
     @BeforeEach
     void setup() {
-        styleChecker = StyleChecker.builder()
-                .qfStyleSettings(getBeginnerStyleSetting())
-                .build();
-
+        styleChecker = StyleChecker.builder().build();
     }
 
     @Test
     void testMethodFail() {
-        styleChecker.setTargetPath("tmp/code-example-for-style-testing-fail");
+        styleChecker.setTargetPath("src/test/resources/code-example-for-style-testing-fail");
         styleChecker.setQfStyleSettings(getBeginnerStyleSetting());
-        var feedbacks = styleChecker.check();
+        styleChecker.check();
+        var feedbacks = styleChecker.getStyleFeedbacks();
+
+
         assertThat(feedbacks).isNotEmpty();
-        Condition<? super List<? extends String>> correctFeedbacks =
+
+        Condition<? super List<? extends StyleFeedback>> correctFeedbacks =
                 new Condition<>(
                         feedbackList ->
                                 feedbackList.stream().anyMatch(
                                         f ->
-                                                f.contains(METHOD_FAIL_FEEDBACK)
+                                                f.getContent().contains(METHOD_FAIL_FEEDBACK)
                                 )
                         , ""
                 );
         assertThat(feedbacks).has(correctFeedbacks);
     }
-
     @Test
     void testMethodPass() {
-        styleChecker.setTargetPath("tmp/code-example-for-style-testing-pass");
+        styleChecker.setTargetPath("src/test/resources/code-example-for-style-testing-pass");
         styleChecker.setQfStyleSettings(getBeginnerStyleSetting());
-        var feedbacks = styleChecker.check();
+        styleChecker.check();
+        var feedbacks = styleChecker.getStyleFeedbacks();
 
-        Condition<? super List<? extends String>> correctFeedbacks =
+        Condition<? super List<? extends StyleFeedback>> correctFeedbacks =
                 new Condition<>(
                         feedbackList ->
                                 feedbackList.stream().noneMatch(
                                         f ->
-                                                f.contains(METHOD_FAIL_FEEDBACK)
+                                                f.getContent().contains(METHOD_FAIL_FEEDBACK)
                                 )
                         , ""
                 );

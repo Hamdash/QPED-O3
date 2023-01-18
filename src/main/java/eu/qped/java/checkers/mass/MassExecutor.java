@@ -8,6 +8,7 @@ import eu.qped.java.checkers.metrics.MetricsChecker;
 import eu.qped.java.checkers.metrics.data.feedback.MetricsFeedback;
 import eu.qped.java.checkers.solutionapproach.SolutionApproachChecker;
 import eu.qped.java.checkers.style.StyleChecker;
+import eu.qped.java.checkers.style.StyleFeedback;
 import eu.qped.java.checkers.syntax.SyntaxChecker;
 import eu.qped.java.utils.SupportedLanguages;
 import lombok.Getter;
@@ -31,7 +32,7 @@ public class MassExecutor {
 
 
     private List<String> syntaxFeedbacks;
-    private List<String> styleFeedbacks;
+    private List<StyleFeedback> styleFeedbacks;
     private List<String> solutionApproachFeedbacks;
     private List<ClassFeedback> classFeedbacks;
     private List<MetricsFeedback> metricsFeedbacks;
@@ -89,36 +90,34 @@ public class MassExecutor {
         boolean isCompilable = syntaxAnalyseReport.isCompilable();
         if (isCompilable) {
             if (styleNeeded) {
-                styleChecker.setTargetPath(syntaxAnalyseReport.getPath());
-                styleFeedbacks = styleChecker.check();
+//                styleChecker.setTargetPath(syntaxAnalyseReport.getPath());
+                styleChecker.check();
+                styleFeedbacks = styleChecker.getStyleFeedbacks();
             }
             if (semanticNeeded) {
-                solutionApproachChecker.setTargetProjectPath(syntaxAnalyseReport.getPath());
+//                solutionApproachChecker.setTargetProjectPath(syntaxAnalyseReport.getPath());
                 solutionApproachFeedbacks = solutionApproachChecker.check();
             }
             if (metricsNeeded) {
-                syntaxChecker.setClassFilesDestination("");
+//                syntaxChecker.setClassFilesDestination("");
                 metricsChecker.check();
                 metricsFeedbacks = metricsChecker.getMetricsFeedbacks();
             }
             if (classNeeded) {
                 try {
-                    classChecker.setTargetPath(syntaxAnalyseReport.getPath());
+//                    classChecker.setTargetPath(syntaxAnalyseReport.getPath());
                     classChecker.check(null);
                     classFeedbacks = classChecker.getClassFeedbacks();
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    throw new RuntimeException(e);
                 }
             }
-        }
-        if (coverageNeeded) {
-            if(!isCompilable) {
-                syntaxFeedbacks.clear();
+            if (coverageNeeded) {
+                // Found no other solution:
+                // The problem is if the student answer needs a klass from a teacher to compile
+                // the syntaxChecker always fails.
+                coverageFeedbacks = coverageChecker.check();
             }
-            // Found no other solution:
-            // The problem is if the student answer needs a klass from a teacher to compile
-            // the syntaxChecker always fails.
-            coverageFeedbacks = coverageChecker.check();
         }
 
         // translate Feedback body if needed
@@ -145,11 +144,11 @@ public class MassExecutor {
 //        for (eu.qped.framework.feedback.Feedback feedback : syntaxFeedbacks) {
 //            translator.translateFeedback(prefLanguage, feedback);
 //        }
-//        if (styleNeeded) {
-//            for (StyleFeedback feedback : styleFeedbacks) {
-//                translator.translateStyleBody(prefLanguage, feedback);
-//            }
-//        }
+        if (styleNeeded) {
+            for (StyleFeedback feedback : styleFeedbacks) {
+                translator.translateStyleBody(prefLanguage, feedback);
+            }
+        }
         if (metricsNeeded) {
             for (MetricsFeedback feedback : metricsFeedbacks) {
                 translator.translateMetricsBody(prefLanguage, feedback);

@@ -1,26 +1,33 @@
 package eu.qped.framework;
 
-import com.fasterxml.jackson.core.exc.StreamReadException;
-import com.fasterxml.jackson.databind.DatabindException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import ro.skyah.comparator.JSONCompare;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-import java.util.stream.Stream;
+import com.fasterxml.jackson.core.exc.StreamReadException;
+import com.fasterxml.jackson.databind.DatabindException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+
+import io.json.compare.CompareMode;
+import io.json.compare.DefaultJsonComparator;
+import io.json.compare.JSONCompare;
+import io.json.compare.JsonComparator;
 
 public class SystemTests {
 	
@@ -55,7 +62,8 @@ public class SystemTests {
 	@DisplayName("QPED Checkers System Tests")
 	@ParameterizedTest(name = "{0}")
 	@MethodSource("provideStringsSystemTest")
-	public void systemTests(String name, SystemTestDescription description, String input, String expected, Exception exception) throws IOException, InterruptedException, AssertionError {
+	public void systemTests(String name, SystemTestDescription description, String input, String expected,
+			Exception exception) throws IOException, InterruptedException, AssertionError {
 		if (exception != null) {
 			throw new AssertionError(exception);
 		} else {
@@ -64,28 +72,50 @@ public class SystemTests {
 //				CheckerRunner.main(new String[0]);
 //			}
 //			else {
-				ProcessBuilder pb = new ProcessBuilder(systemTestConf.getCloudCheckRuner()).directory(new File(".")).inheritIO();
-				pb.environment().put("PATH", pb.environment().get("PATH") + File.pathSeparator + systemTestConf.getMavenLocation());
-				if (IS_DEBUG) {
-					pb.environment().put("DEBUG_MVN", "TRUE");
+			ProcessBuilder pb = new ProcessBuilder(systemTestConf.getCloudCheckRuner()).directory(new File("."))
+					.inheritIO();
+			pb.environment().put("PATH",
+					pb.environment().get("PATH") + File.pathSeparator + systemTestConf.getMavenLocation());
+			if (IS_DEBUG) {
+				pb.environment().put("DEBUG_MVN", "TRUE");
+			}
+			Process process = pb.start();
+			if (IS_DEBUG) {
+				int exitCode = process.waitFor();
+				if (exitCode != 0) {
+					throw new AssertionError("Cloud Check finished with exit code: " + exitCode);
 				}
-				Process process = pb.start();
-				if (IS_DEBUG) {
-					int exitCode = process.waitFor();
-					if (exitCode != 0) {
-						throw new AssertionError("Cloud Check finished with exit code: " + exitCode);
-					}
-				}
-				if (!process.waitFor(TIMEOUT_AMOUNT, TIMEOUT_UNIT)) {
-					throw new AssertionError(new TimeoutException("Timeout expired: " + TIMEOUT_AMOUNT + " " + TIMEOUT_UNIT));
-				}
+			}
+			if (!process.waitFor(TIMEOUT_AMOUNT, TIMEOUT_UNIT)) {
+				throw new AssertionError(
+						new TimeoutException("Timeout expired: " + TIMEOUT_AMOUNT + " " + TIMEOUT_UNIT));
+			}
 //			}
-			
+
 			String actual = FileUtils.readFileToString(QF_OBJECT_FILE, Charset.defaultCharset());
-			JSONCompare.assertEquals(expected, actual);
+
+			// compare only Strings (don't apply regular expressions) and ignore stack
+			// frames
+			JSONCompare.assertMatches(expected, actual, new JsonComparator() {
+
+				public boolean compareValues(Object expected, Object actual) {
+					return pruneStackTraces(expected.toString()).equals(pruneStackTraces(actual.toString()));
+				}
+
+				public boolean compareFields(String expected, String actual) {
+					return pruneStackTraces(expected).equals(pruneStackTraces(actual));
+				}
+			});
 		}
 
 	}
+	
+	public static String pruneStackTraces(String outputString) {
+		return Stream.of(outputString.split("\n")).
+				filter(s -> !s.startsWith("  at ")).
+				collect(Collectors.joining("\n"));
+	}
+
 
 	private static Stream<Arguments> provideStringsSystemTest() {
 		File systemTestsFolder = new File(ClassLoader.getSystemResource(SYSTEM_TESTS_FOLDER_NAME).getPath());
